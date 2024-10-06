@@ -3,10 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3003",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start -p 3003",
+    "clean": "rimraf .next/cache/fetch-cache",
+    "clean-dev": "run-s clean dev",
+    "clean-build": "run-s clean build",
+    "clean-start": "run-s clean build start",
+    "db-migrate-deploy": "prisma migrate deploy",
+    "db-migrate-dev": "prisma migrate dev",
+    "db-push": "prisma db push",
+    "db-seed": "prisma migrate reset",
+    "db-studio": "prisma studio",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "format": "run-s format:*",
+    "format:elint": "eslint --fix './src/**/*.{js,ts,tsx}'",
+    "format:prettier": "prettier --write './src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {
     "react": "^18",
