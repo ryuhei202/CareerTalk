@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3003",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "next build",
     "start": "next start -p 3003",
     "clean": "rimraf .next/cache/fetch-cache",
     "clean-dev": "run-s clean dev",
@@ -15,6 +15,7 @@
     "db-push": "prisma db push",
     "db-seed": "prisma migrate reset",
     "db-studio": "prisma studio",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "run-s format:*",
