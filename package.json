@@ -18,7 +18,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "run-s format:*",
-    "format:elint": "eslint --fix './src/**/*.{js,ts,tsx}'",
+    "format:eslint": "eslint --fix './src/**/*.{js,ts,tsx}'",
     "format:prettier": "prettier --write './src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {
