@@ -18,7 +18,7 @@ enum UserStatus {
   APPROVED
 }
 
-model User {
+model User2 {
   id        String     @id @default(cuid())
   status    UserStatus @default(PENDING)
   createdAt DateTime   @default(now())
