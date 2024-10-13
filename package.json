@@ -11,7 +11,7 @@
     "clean-build": "run-s clean build",
     "clean-start": "run-s clean build start",
     "db-migrate-deploy": "prisma migrate deploy",
-    "migrate": "prisma migrate dev",
+    "migrate": "prisma migrate dev && prisma generate",
     "db-push": "prisma db push",
     "db-seed": "prisma migrate reset",
     "db-studio": "prisma studio",
