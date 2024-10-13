@@ -14,45 +14,43 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @unique
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  job_seeker_id     String  @unique
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  
+  job_seeker JobSeeker @relation(fields: [job_seeker_id], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
-enum UserStatus {
+enum JobSeekerStatus {
   PENDING
   APPROVED
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  status    UserStatus @default(PENDING)
-  profileId     String?
-  profile       Profile?
-  accounts      Account[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-}
+model JobSeeker {
+  id         String           @id @default(cuid())
+  name       String?
+  email      String?          @unique
+  image      String?
+  status     JobSeekerStatus  @default(PENDING)
+  profile    JobSeekerProfile?
+  accounts   Account[]
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
+} 
 
-model Profile {
-  id         String  @id @default(cuid())
-  userId     String  @unique
-  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+model JobSeekerProfile {
+  id             String    @id @default(cuid())
+  job_seeker_id  String    @unique
+  job_seeker     JobSeeker @relation(fields: [job_seeker_id], references: [id], onDelete: Cascade)
 }
