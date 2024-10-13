@@ -6,6 +6,17 @@ import LineProvider from "next-auth/providers/line";
 import { prisma } from "@/lib/prisma";
 import type { NextAuthOptions } from "next-auth";
 
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+    }
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as any), // eslint-disable-line
   session: {
@@ -40,6 +51,8 @@ export const authOptions: NextAuthOptions = {
       };
     },
     async session({ session, token }) {
+      console.log(session);
+      
       if (session.user) {
         session.user.id = token.id as string;
         session.user.name = token.name;

@@ -7,7 +7,7 @@ export default async function SiteLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession();
-  const isLogin = !!session?.user.id;
+  const isLogin = !!session?.user;
   return (
     <div>
       <Header isLogin={isLogin} />
