@@ -2,7 +2,7 @@
 CREATE TYPE "JobSeekerProfile" AS ENUM ('PENDING', 'APPROVED');
 
 -- CreateEnum
-CREATE TYPE "JobSeekerStatus" AS ENUM ('PENDING', 'APPROVED');
+CREATE TYPE IF NOT EXISTS "JobSeekerStatus" AS ENUM ('PENDING', 'APPROVED');
 
 -- CreateEnum
 CREATE TYPE "EmployeeStatus" AS ENUM ('PENDING', 'APPROVED');
