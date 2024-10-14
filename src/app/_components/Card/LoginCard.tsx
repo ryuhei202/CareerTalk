@@ -7,7 +7,6 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { SocialLoginButton } from "../Button/SocialLoginButton";
-import Link from "next/link";
 
 export default function LoginCard({
   description,
