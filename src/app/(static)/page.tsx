@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/app/_components/ui/button";
+import { Input } from "@/app/_components/ui/input";
 import { Briefcase, User } from "lucide-react";
-import { StartFreeButton } from "../_components/Button/StartFreeButton";
+import { StartFreeButton } from "../_components/parts/Button/StartFreeButton";
 
 export default function HomePage() {
   return (

@@ -1,5 +1,5 @@
 "use client";
-import { SocialLoginButton } from "@/app/_components/Button/SocialLoginButton";
+import { SocialLoginButton } from "@/app/_components/parts/Button/SocialLoginButton";
 import {
   Card,
   CardHeader,
@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
+} from "@/app/_components/ui/card";
 import { useState } from "react";
 
 export default function SignInPage() {

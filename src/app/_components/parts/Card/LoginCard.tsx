@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
+} from "@/app/_components/ui/card";
 import { SocialLoginButton } from "../Button/SocialLoginButton";
 
 export default function LoginCard({

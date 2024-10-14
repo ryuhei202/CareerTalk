@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/_components/ui/button";
 import { useRouter } from "next/navigation";
 
 export const LoginButton = () => {

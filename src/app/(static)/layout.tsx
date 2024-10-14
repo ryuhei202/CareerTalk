@@ -1,4 +1,4 @@
-import Header from "../_components/Layout/Header";
+import Header from "../_components/parts/Layout/Header";
 
 export default async function SiteLayout({
   children,
