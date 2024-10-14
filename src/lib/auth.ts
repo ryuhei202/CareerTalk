@@ -52,8 +52,6 @@ export const authOptions: NextAuthOptions = {
       };
     },
     async session({ session, token }) {
-      console.log(session);
-      
       if (session.user) {
         session.user.id = token.id as string;
         session.user.name = token.name;

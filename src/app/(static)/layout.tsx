@@ -1,4 +1,3 @@
-import { getServerSession } from "@/lib/auth";
 import Header from "../_components/Layout/Header";
 
 export default async function SiteLayout({
@@ -6,11 +5,9 @@ export default async function SiteLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
-  const isLogin = !!session?.user;
   return (
     <div>
-      <Header isLogin={isLogin} />
+      <Header />
       {children}
     </div>
   );
