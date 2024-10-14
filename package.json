@@ -15,7 +15,7 @@
     "db-push": "prisma db push",
     "db-seed": "prisma migrate reset",
     "db-studio": "prisma studio",
-    "vercel-build": "prisma migrate reset && prisma migrate deploy && prisma generate && next build",
+    "vercel-build": "prisma migrate reset --force && prisma migrate deploy && prisma generate && next build",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "run-s format:*",
