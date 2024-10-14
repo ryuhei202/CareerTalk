@@ -32,7 +32,7 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-enum UserStatus {
+enum JobSeekerProfile {
   PENDING
   APPROVED
 }
@@ -43,16 +43,37 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  status    UserStatus @default(PENDING)
-  profileId     String?
-  profile       Profile?
   accounts      Account[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  job_seeker    JobSeeker?
+  employee      Employee?
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
 }
 
-model Profile {
-  id         String  @id @default(cuid())
-  userId     String  @unique
-  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+enum JobSeekerStatus {
+  PENDING
+  APPROVED
+}
+
+model JobSeeker {
+  id         String           @id @default(cuid())
+  userId     String           @unique
+  user       User             @relation(fields: [userId], references: [id])
+  status     JobSeekerStatus  @default(PENDING)
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
+} 
+
+enum EmployeeStatus {
+  PENDING
+  APPROVED
+}
+
+model Employee {
+  id         String           @id @default(cuid())
+  userId     String           @unique
+  user       User             @relation(fields: [userId], references: [id])
+  status     JobSeekerStatus  @default(PENDING)
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt
 }
