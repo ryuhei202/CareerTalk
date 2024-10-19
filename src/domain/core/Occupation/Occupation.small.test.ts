@@ -1,33 +1,39 @@
 import { describe, expect, test, vi } from "vitest";
 import { Occupation } from "./Occupation";
-import { OccupationId } from "./OccupationId/OccupationId";
-import { OccupationName } from "./OccupationName/OccupationName";
+import { brand } from "@/util/brand";
+import { ZodError } from "zod";
 
 vi.mock('@paralleldrive/cuid2', () => ({
   createId: () => 'testCuIdWithExactLength0',
 }));
 
 describe("Occupation", () => {
-  test("Occupationを生成する", () => {
-    const occupationId = new OccupationId(1);
-    const occupationName = new OccupationName("エンジニア");
+  describe("Occupationを生成する", () => {
+    const occupationId = brand<number, "OccupationId">(1);
+    const occupationName = brand<string, "OccupationName">("エンジニア");
 
-    const occupation = Occupation.reconstruct({
-      id: occupationId,
-      name: occupationName,
+    test("正常にOccupationを生成できる", () => {
+      const occupation = Occupation.reconstruct({
+        id: occupationId,
+        name: occupationName,
+      });
+
+      expect(occupation.id).toBe(occupationId);
+      expect(occupation.name).toBe(occupationName);
     });
 
-    expect(occupation.id.equals(occupationId)).toBeTruthy();
-    expect(occupation.name.equals(occupationName)).toBeTruthy();
-  });
-
-  test("Occupationを作成する", () => {
-    const occupation = Occupation.create({
-      id: new OccupationId(1),
-      name: new OccupationName("エンジニア"),
+    test("不正なOccupationIdでOccupationを生成しようとするとエラーが発生する", () => {
+      expect(() => Occupation.reconstruct({
+        id: brand<number, "OccupationId">("test123456" as unknown as number),
+        name: occupationName,
+      })).toThrow(ZodError);
     });
 
-    expect(occupation.id.equals(new OccupationId(1))).toBeTruthy();
-    expect(occupation.name.equals(new OccupationName("エンジニア"))).toBeTruthy();
+    test("不正なOccupationNameでOccupationを生成しようとするとエラーが発生する", () => {
+      expect(() => Occupation.reconstruct({
+        id: occupationId,
+        name: brand<string, "OccupationName">(""),
+      })).toThrow(ZodError);
+    });
   });
 });

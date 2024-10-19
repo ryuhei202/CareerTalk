@@ -2,8 +2,10 @@ import { Result } from "@/util/result";
 import { Company } from "./Company";
 
 export type FindCompanyResult = Result<Company | undefined, never>;
-export type SaveCompanyResult = Result<void, never>;
-export interface CompanyRepository {
-  save(company: Company): Promise<SaveCompanyResult>;
+
+/**
+ * CompanyRepository
+ */
+export interface ICompanyRepository {
   findById(companyId: number): Promise<FindCompanyResult>;
 }

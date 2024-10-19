@@ -1,8 +1,14 @@
 import { Occupation } from "./Occupation";
-import { OccupationId } from "./OccupationId/OccupationId";
-import { OccupationName } from "./OccupationName/OccupationName";
+import { brand } from "@/util/brand";
 
-export const occupationDummy = Occupation.create({
-  id: new OccupationId(1),
-  name: new OccupationName("テスト職種"),
+
+/**
+ * Occupationのダミーデータ
+ */
+const occupationId = brand<number, "OccupationId">(1);
+const occupationName = brand<string, "OccupationName">("エンジニア");
+
+export const occupationDummy = Occupation.reconstruct({
+  id: occupationId,
+  name: occupationName,
 });

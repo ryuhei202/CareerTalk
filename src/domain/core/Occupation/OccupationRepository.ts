@@ -6,5 +6,4 @@ export type SaveOccupationResult = Result<void, never>;
 
 export interface OccupationRepository {
   findById(occupationId: number): Promise<FindOccupationResult>;
-  save(occupation: Occupation): Promise<SaveOccupationResult>;
 }

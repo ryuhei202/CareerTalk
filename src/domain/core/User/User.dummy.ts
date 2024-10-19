@@ -1,11 +1,17 @@
 import { createId } from "@paralleldrive/cuid2";
-import { UserId } from "./UserId/UserId";
+import { brand } from "@/util/brand";
 import { User } from "./User";
-import { UserName } from "./UserName/UserName";
-import { Image } from "./Image/Image";
+;
 
-export const userDummy = User.create({
-  id: new UserId(createId()),
-  name: new UserName("テストユーザー"),
-  image: new Image("https://example.com/image.jpg"),
+/**
+ * Userのダミーデータ
+ */
+const userId = brand<string, "UserId">(createId());
+const userName = brand<string, "UserName">("テストユーザー");
+const userImage = brand<string, "UserImage">("https://example.com/image.jpg");
+
+export const userDummy = User.reconstruct({
+  id: userId,
+  name: userName,
+  image: userImage,
 });
