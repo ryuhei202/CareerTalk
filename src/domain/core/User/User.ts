@@ -27,8 +27,8 @@ export type UserImage = Branded<string, 'UserImage'>;
  */
 type UserParams = {
   id: UserId;
-  name: UserName;
-  image: UserImage;
+  name?: UserName;
+  image?: UserImage;
 }
 
 /**
@@ -38,8 +38,8 @@ type UserParams = {
 export class User {
   private constructor(
     private readonly _id: UserId,
-    private  _name: UserName,
-    private  _image: UserImage,
+    private  _name?: UserName,
+    private  _image?: UserImage,
   ) {}
 
   static reconstruct(params: UserParams): User {
@@ -69,11 +69,11 @@ export class User {
     return this._id;
   }
 
-  get name(): UserName {
+  get name(): UserName | undefined{
     return this._name;
   }
 
-  get image(): UserImage {
+  get image(): UserImage | undefined {
     return this._image;
   }
 }

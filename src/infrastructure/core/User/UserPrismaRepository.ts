@@ -1,8 +1,6 @@
 import { User } from "@/domain/core/User/User";
-import { UserId } from "@/domain/core/User/UserId/UserId";
-import { UserName } from "@/domain/core/User/UserName/UserName";
-import { FindUserResult, IUserRepository, SaveUserResult, UpdateUserResult } from "@/domain/core/User/UserRepository";
-import { Image } from "@/domain/core/User/Image/Image";
+import { FindUserResult, IUserRepository, UpdateUserResult } from "@/domain/core/User/UserRepository";
+import { brand } from "@/util/brand";
 import { createSuccess } from "@/util/result";
 import { PrismaClient } from "@prisma/client";
 
@@ -18,32 +16,20 @@ export class UserPrismaRepository implements IUserRepository {
     }
 
     const userData = User.reconstruct({
-      id: new UserId(user.id),
-      name: new UserName(user.name ?? undefined),
-      image: new Image(user.image ?? undefined),
+      id: brand<string, "UserId">(user.id),
+      name: !!user.name ? brand<string, "UserName">(user.name) : undefined,
+      image: !!user.image ? brand<string, "UserImage">(user.image) : undefined,
     });
 
     return createSuccess(userData);
   }
 
-  async save(user: User): Promise<SaveUserResult> {
-    await this.prisma.user.create({
-      data: {
-        id: user.id.value,
-        name: user.name.value,
-        image: user.image.value,
-      },
-    });
-
-    return createSuccess(undefined);
-  }
-
   async update(user: User): Promise<UpdateUserResult> {
     await this.prisma.user.update({
-      where: { id: user.id.value },
+      where: { id: user.id},
       data: {
-        name: user.name.value,
-        image: user.image.value,
+        name: user.name,
+        image: user.image
       },
     });
 

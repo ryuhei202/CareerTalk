@@ -1,18 +1,7 @@
-import { CompanyId } from "@/domain/core/Company/CompanyId/CompanyId";
-import { Birthday } from "@/domain/core/Employee/Birthday/Birthday";
-import { Employee } from "@/domain/core/Employee/Employee";
-import { EmployeeId } from "@/domain/core/Employee/EmployeeId/EmployeeId";
+
+import { Employee, GenderEnum, HiringTypeEnum, MeetingMethodEnum, StatusEnum } from "@/domain/core/Employee/Employee";
 import { EmployeeRepository, FindEmployeeResult, SaveEmployeeResult, UpdateEmployeeResult } from "@/domain/core/Employee/EmployeeRepository";
-import { Gender, GenderEnum } from "@/domain/core/Employee/Gender/Gender";
-import { HiringType, HiringTypeEnum } from "@/domain/core/Employee/HiringType/HiringType";
-import { JoiningDate } from "@/domain/core/Employee/JoiningDate/JoiningDate";
-import { MeetingMethod, MeetingMethodEnum } from "@/domain/core/Employee/MeetingMethod/MeetingMethod";
-import { SelfIntroduction } from "@/domain/core/Employee/SelfIntroduction/SelfIntroduction";
-import { TalkableTopics } from "@/domain/core/Employee/TalkableTopics/TalkableTopics";
-import { WorkLocationId } from "@/domain/core/Employee/WorkLocationId/WorkLocationId";
-import { OccupationId } from "@/domain/core/Occupation/OccupationId/OccupationId";
-import { Status, StatusEnum } from "@/domain/core/shared/Status/Status";
-import { UserId } from "@/domain/core/User/UserId/UserId";
+import { brand } from "@/util/brand";
 import { createSuccess } from "@/util/result";
 import { $Enums, PrismaClient } from "@prisma/client";
 
@@ -21,71 +10,47 @@ export class EmployeePrismaRepository implements EmployeeRepository {
     private readonly prisma: PrismaClient,
   ) {}
 
-  private fromGenderEntity(
-    gender: GenderEnum
-  ): $Enums.Gender | null {
-    switch (gender) {
-      case GenderEnum.OTHER:
-        return 'OTHER';
-      case GenderEnum.MALE:
-        return 'MALE';
-      case GenderEnum.FEMALE:
-        return 'FEMALE';
-      case GenderEnum.PREFER_NOT_TO_SAY:
-        return 'PREFER_NOT_TO_SAY';
-      default:
-        return null;
-    }
-  }
-  private toGenderEntity(gender: $Enums.Gender | null): Gender {
+  private toGenderEnum(gender: $Enums.Gender): GenderEnum {
     switch (gender) {
       case 'OTHER':
-        return new Gender(GenderEnum.OTHER);
+        return GenderEnum.OTHER;
       case 'MALE':
-        return new Gender(GenderEnum.MALE);
+        return GenderEnum.MALE;
       case 'FEMALE':
-        return new Gender(GenderEnum.FEMALE);
+        return GenderEnum.FEMALE;
       case 'PREFER_NOT_TO_SAY':
-        return new Gender(GenderEnum.PREFER_NOT_TO_SAY);
-      default:
-        return new Gender(undefined);
+        return GenderEnum.PREFER_NOT_TO_SAY;
     }
   }
 
-  private toHiringEntity(hiringType: $Enums.HiringType | null): HiringType {
+  private toHiringTypeEnum(hiringType: $Enums.HiringType ): HiringTypeEnum {
     switch (hiringType) {
       case "NEW_GRADUATE":
-        return new HiringType(HiringTypeEnum.NEW_GRADUATE);
+        return HiringTypeEnum.NEW_GRADUATE;
       case "MID_CAREER":
-        return new HiringType(HiringTypeEnum.MID_CAREER);
-      default:
-        return new HiringType(undefined);
+        return HiringTypeEnum.MID_CAREER;
     }
   }
 
-  private toMeetingMethodEntity(meetingMethod: $Enums.MeetingMethod | null): MeetingMethod {
+  private toMeetingMethodEnum(meetingMethod: $Enums.MeetingMethod): MeetingMethodEnum {
     switch (meetingMethod) {
       case "ONLINE":
-        return new MeetingMethod(MeetingMethodEnum.ONLINE);
+        return MeetingMethodEnum.ONLINE;
       case "OFFLINE":
-        return new MeetingMethod(MeetingMethodEnum.OFFLINE);
+        return MeetingMethodEnum.OFFLINE;
       case "BOTH":
-        return new MeetingMethod(MeetingMethodEnum.BOTH);
-      default:
-        return new MeetingMethod(undefined);
+        return MeetingMethodEnum.BOTH;
     }
   }
 
-  private toStatusEntity(status: $Enums.EmployeeStatus | null): Status {
+  private toStatusEnum(status: $Enums.EmployeeStatus): StatusEnum {
     switch (status) {
       case "PENDING":
-        return new Status(StatusEnum.PENDING);
+        return StatusEnum.PENDING;
       case "APPROVED":
-        return new Status(StatusEnum.APPROVED);
+        return StatusEnum.APPROVED;
       case "REJECTED":
-        return new Status(StatusEnum.REJECTED);
-      default:
-        return new Status(undefined);
+        return StatusEnum.REJECTED;
     }
   }
 
@@ -100,19 +65,19 @@ export class EmployeePrismaRepository implements EmployeeRepository {
     }
 
     const employeeData = Employee.reconstruct({
-      id: new EmployeeId(employee.id),
-      userId: new UserId(employee.userId),
-      companyId: new CompanyId(employee.companyId),
-      gender: this.toGenderEntity(employee.gender),
-      birthday: new Birthday(employee.birthday ?? undefined),
-      joiningDate: new JoiningDate(employee.joiningDate),
-      occupationId: new OccupationId(employee.occupationId),
-      workLocationId: new WorkLocationId(employee.workLocationId ?? undefined),
-      hiringType: this.toHiringEntity(employee.hiringType),
-      meetingMethod: this.toMeetingMethodEntity(employee.meetingMethod),
-      selfIntroduction: new SelfIntroduction(employee.selfIntroduction),
-      talkableTopics: new TalkableTopics(employee.talkableTopics),
-      status: this.toStatusEntity(employee.status),
+      id: brand<string, "EmployeeId">(employee.id),
+      userId: brand<string, "UserId">(employee.userId),
+      companyId: brand<number, "CompanyId">(employee.companyId),
+      occupationId: brand<number, "OccupationId">(employee.occupationId),
+      gender: brand<GenderEnum, "Gender">(this.toGenderEnum(employee.gender)),
+      joiningDate: brand<Date, "JoiningDate">(employee.joiningDate),
+      status: brand<StatusEnum, "Status">(this.toStatusEnum(employee.status)),
+      birthday: employee.birthday ? brand<Date, "Birthday">(employee.birthday) : undefined,
+      workLocationId: employee.workLocationId ? brand<number, "WorkLocationId">(employee.workLocationId) : undefined,
+      hiringType: employee.hiringType ? brand<HiringTypeEnum, "HiringType">(this.toHiringTypeEnum(employee.hiringType)) : undefined,
+      meetingMethod: employee.meetingMethod ? brand<MeetingMethodEnum, "MeetingMethod">(this.toMeetingMethodEnum(employee.meetingMethod)) : undefined,
+      selfIntroduction: brand<string, "SelfIntroduction">(employee.selfIntroduction),
+      talkableTopics: brand<string, "TalkableTopics">(employee.talkableTopics),
     });
 
     return createSuccess(employeeData);
@@ -121,19 +86,19 @@ export class EmployeePrismaRepository implements EmployeeRepository {
   async save(employee: Employee): Promise<SaveEmployeeResult> {
     await this.prisma.employee.create({
       data: {
-        id: employee.id.value,
-        userId: employee.userId.value,
-        companyId: employee.companyId.value,
-        gender: employee.gender.value,
-        birthday: employee.birthday.value,
-        joiningDate: employee.joiningDate.value,
-        occupationId: employee.occupationId.value,
-        workLocationId: employee.workLocationId.value,
-        hiringType: employee.hiringType.value,
-        meetingMethod: employee.meetingMethod.value,
-        selfIntroduction: employee.selfIntroduction.value,
-        talkableTopics: employee.talkableTopics.value,
-        status: employee.status.value,
+        id: employee.id,
+        userId: employee.userId,
+        companyId: employee.companyId,
+        gender: employee.gender,
+        birthday: employee.birthday,
+        joiningDate: employee.joiningDate,
+        occupationId: employee.occupationId,
+        workLocationId: employee.workLocationId,
+        hiringType: employee.hiringType,
+        meetingMethod: employee.meetingMethod,
+        selfIntroduction: employee.selfIntroduction,
+        talkableTopics: employee.talkableTopics,
+        status: employee.status,
       },
     });
 
@@ -142,20 +107,20 @@ export class EmployeePrismaRepository implements EmployeeRepository {
 
   async update(employee: Employee): Promise<UpdateEmployeeResult> {
     await this.prisma.employee.update({
-      where: { id: employee.id.value },
+      where: { id: employee.id },
       data: {
-        userId: employee.userId.value,
-        companyId: employee.companyId.value,
-        gender: employee.gender.value,
-        birthday: employee.birthday.value,
-        joiningDate: employee.joiningDate.value,
-        occupationId: employee.occupationId.value,
-        workLocationId: employee.workLocationId.value,
-        hiringType: employee.hiringType.value,
-        meetingMethod: employee.meetingMethod.value,
-        selfIntroduction: employee.selfIntroduction.value,
-        talkableTopics: employee.talkableTopics.value,
-        status: employee.status.value,
+        userId: employee.userId,
+        companyId: employee.companyId,
+        gender: employee.gender,
+        birthday: employee.birthday,
+        joiningDate: employee.joiningDate,
+        occupationId: employee.occupationId,
+        workLocationId: employee.workLocationId,
+        hiringType: employee.hiringType,
+        meetingMethod: employee.meetingMethod,
+        selfIntroduction: employee.selfIntroduction,
+        talkableTopics: employee.talkableTopics,
+        status: employee.status,
       },
     });
 

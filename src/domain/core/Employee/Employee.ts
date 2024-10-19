@@ -1,4 +1,4 @@
-import { brand, Branded } from "@/util/brand";
+import {  Branded } from "@/util/brand";
 import { UserId, userIdSchema } from "../User/User";
 import { CompanyId, companyIdSchema } from "../Company/Company";
 import { OccupationId, occupationIdSchema } from "../Occupation/Occupation";
@@ -176,6 +176,7 @@ export class Employee {
 
   }
 
+  // イミュータブルデータモデルにするか悩み中
   changeOccupationId(newOccupationId: OccupationId): void {
     occupationIdSchema.parse(newOccupationId);
     this._occupationId = newOccupationId;

@@ -23,7 +23,7 @@ const selfIntroduction = brand<string, "SelfIntroduction">("自己紹介");
 const talkableTopics = brand<string, "TalkableTopics">("働き方について");
 const status = brand<StatusEnum, "Status">(StatusEnum.PENDING);
 
-export const employeeDummy =  Employee.reconstruct({
+export const employeeDummy =  Employee.create({
   id: employeeId,
   userId: userId,
   companyId: companyId,
