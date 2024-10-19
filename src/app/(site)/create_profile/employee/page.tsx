@@ -5,6 +5,7 @@ export default async function CreateProfileEmployee() {
   const session = await getServerSession();
   const userId = session?.user.id;
 
+  // ここをusecase層に移行する
   if (userId) {
     const employee = await prisma.employee.findUnique({
       where: { userId: userId },
