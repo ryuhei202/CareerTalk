@@ -1,6 +1,5 @@
 import { Occupation } from "@/domain/core/Occupation/Occupation";
 import { FindAllOccupationResult, FindOccupationResult, OccupationRepository } from "@/domain/core/Occupation/OccupationRepository";
-import { brand } from "@/util/brand";
 import { createSuccess } from "@/util/result";
 import { PrismaClient } from "@prisma/client";
 
@@ -15,9 +14,9 @@ export class OccupationPrismaRepository implements OccupationRepository {
       return createSuccess(undefined);
     }
 
-    const occupationData = Occupation.reconstruct({
-      id: brand<number, "OccupationId">(occupation.id),
-      name: brand<string, "OccupationName">(occupation.name),
+    const occupationData = Occupation.create({
+      id: occupation.id,
+      name: occupation.name,
     });
 
     return createSuccess(occupationData);
@@ -27,9 +26,9 @@ export class OccupationPrismaRepository implements OccupationRepository {
   async findAll(): Promise<FindAllOccupationResult> {
     const occupations = await this.prisma.occupation.findMany();
     const occupationData = occupations.map((occupation) => {
-      return Occupation.reconstruct({
-        id: brand<number, "OccupationId">(occupation.id),
-        name: brand<string, "OccupationName">(occupation.name),
+      return Occupation.create({
+        id: occupation.id,
+        name: occupation.name,
       });
     });
     return createSuccess(occupationData);
