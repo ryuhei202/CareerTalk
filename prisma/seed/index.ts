@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { occupation } from "./occupation";
 import { user } from "./user";
 import { company } from "./company";
+import { workLocation } from "./worklocation";
 
 export const prisma = new PrismaClient();
 
@@ -11,6 +12,7 @@ const main = async () => {
     ...occupation(),
     ...user(),
     ...company(),
+    ...workLocation(),
   ]);
   console.log(`Seeding finished.`);
 };
