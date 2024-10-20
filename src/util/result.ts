@@ -19,3 +19,9 @@ export type Result<T, E extends NamedError> = E[] extends never[]
     success: true,
     data,
   });
+  
+  export const createFailure = <E extends NamedError>(error: E): Failure<E> => ({
+    success: false,
+    error,
+  });
+  
