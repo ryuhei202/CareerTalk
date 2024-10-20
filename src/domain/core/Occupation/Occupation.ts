@@ -1,4 +1,3 @@
-import { Branded } from "@/util/brand";
 import { z } from "zod";
 
 
@@ -14,18 +13,11 @@ export const occupationParamsSchema = z.object({
 });
 
 /**
- * Occupation関連の値
- * 値オブジェクトの代わりにbranded Typesとvalidationを使用する
- */
-export type OccupationId = Branded<number, 'OccupationId'>;
-export type OccupationName = Branded<string, 'OccupationName'>;
-
-/**
  * Occupationパラメータ
  */
 export type OccupationParams = {
-  id: OccupationId;
-  name: OccupationName;
+  id: number;
+  name: string;
 }
 
 /**
@@ -34,11 +26,11 @@ export type OccupationParams = {
  */
 export class Occupation {
   private constructor(
-    private readonly _id: OccupationId,
-    private readonly _name: OccupationName,
+    private readonly _id: number,
+    private readonly _name: string,
   ) {}
 
-  static reconstruct(params: OccupationParams): Occupation {
+  static create(params: OccupationParams): Occupation {
     this.validate(params);
     return new Occupation(
       params.id,
@@ -50,11 +42,11 @@ export class Occupation {
     occupationParamsSchema.parse(params);
   }
 
-  get id(): OccupationId {
+  get id(): number {
     return this._id;
   }
 
-  get name(): OccupationName {
+  get name(): string {
     return this._name;
   }
 }

@@ -9,12 +9,12 @@ vi.mock('@paralleldrive/cuid2', () => ({
 
 describe("Company", () => {
   describe("Companyを生成する", () => {
-    const companyId = brand<number, "CompanyId">(1);
-    const companyName = brand<string, "CompanyName">("testCompany");
-    const code = brand<string, "Code">("testCode");
+    const companyId = 1;
+    const companyName = "testCompany";
+    const code = "testCode";
 
     test("正常にCompanyを生成できる", () => {
-      const company = Company.reconstruct({
+      const company = Company.create({
         id: companyId,
         name: companyName,
         code: code,
@@ -26,38 +26,38 @@ describe("Company", () => {
     });
 
     test("不正なCompanyIdでCompanyを生成しようとするとエラーが発生する", () => {
-      expect(() => Company.reconstruct({
-        id: brand<number, "CompanyId">(0),
+      expect(() => Company.create({
+        id: 0,
         name: companyName,
         code: code,
       })).toThrow(ZodError);
     });
 
     test("不正なCompanyNameでCompanyを生成しようとするとエラーが発生する", () => {
-      expect(() => Company.reconstruct({
+      expect(() => Company.create({
         id: companyId,
-        name: brand<string, "CompanyName">(""),
+        name: "",
         code: code,
       })).toThrow(ZodError);
 
-      expect(() => Company.reconstruct({
+      expect(() => Company.create({
         id: companyId,
-        name: brand<string, "CompanyName">("a".repeat(101)),
+        name: "a".repeat(101),
         code: code,
       })).toThrow(ZodError);
     });
 
     test("不正なCodeでCompanyを生成しようとするとエラーが発生する", () => {
-      expect(() => Company.reconstruct({
+      expect(() => Company.create({
         id: companyId,
         name: companyName,
-        code: brand<string, "Code">(""),
+        code: "",
       })).toThrow(ZodError);
       
-      expect(() => Company.reconstruct({
+      expect(() => Company.create({
         id: companyId,
         name: companyName,
-        code: brand<string, "Code">("あいうえおかきく"), // 全角八文字
+        code: "あいうえおかきく", // 全角八文字
       })).toThrow(ZodError);
     });
   });

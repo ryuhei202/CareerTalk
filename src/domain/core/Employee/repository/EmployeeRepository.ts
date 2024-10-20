@@ -1,5 +1,5 @@
 import { Result } from "@/util/result";
-import { Employee } from "./Employee";
+import { Employee } from "../Employee";
 
 export type FindEmployeeResult = Result<Employee | undefined, never>;
 export type SaveEmployeeResult = Result<void, never>;

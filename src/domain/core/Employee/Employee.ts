@@ -1,7 +1,6 @@
-import {  Branded } from "@/util/brand";
-import { UserId, userIdSchema } from "../User/User";
-import { CompanyId, companyIdSchema } from "../Company/Company";
-import { OccupationId, occupationIdSchema } from "../Occupation/Occupation";
+import { userIdSchema } from "../User/User";
+import { companyIdSchema } from "../Company/Company";
+import { occupationIdSchema } from "../Occupation/Occupation";
 import { z } from "zod";
 
 /**
@@ -77,40 +76,23 @@ const employeeParamsSchema = z.object(
   }
 )
 
-
-/**
- * Employee関連の値
- * 値オブジェクトの代わりにbranded Typesとvalidationを使用する
- */
-type EmployeeId = Branded<string, 'EmployeeId'>;
-type Gender = Branded<GenderEnum, 'Gender'>;
-type Birthday = Branded<Date, 'Birthday'>;
-type JoiningDate = Branded<Date, 'JoiningDate'>;
-type WorkLocationId = Branded<number, 'WorkLocationId'>;
-type HiringType = Branded<HiringTypeEnum, 'HiringType'>;
-type MeetingMethod = Branded<MeetingMethodEnum, 'MeetingMethod'>;
-type SelfIntroduction = Branded<string, 'SelfIntroduction'>;
-type TalkableTopics = Branded<string, 'TalkableTopics'>;
-type Status = Branded<StatusEnum, 'Status'>;
-
-
 /**
  * Employeeパラメータ
  */
 export type EmployeeParams ={
-  id: EmployeeId;
-  userId: UserId;
-  companyId: CompanyId;
-  occupationId: OccupationId;
-  gender: Gender;
-  joiningDate: JoiningDate;
-  status: Status;
-  birthday?: Birthday;
-  workLocationId?: WorkLocationId;
-  hiringType?: HiringType;
-  meetingMethod?: MeetingMethod;
-  selfIntroduction?: SelfIntroduction;
-  talkableTopics?: TalkableTopics;
+  id: string;
+  userId: string;
+  companyId: number;
+  occupationId: number;
+  gender: GenderEnum;
+  joiningDate: Date;
+  status: StatusEnum;
+  birthday?: Date;
+  workLocationId?: number;
+  hiringType?: HiringTypeEnum;
+  meetingMethod?: MeetingMethodEnum;
+  selfIntroduction?: string;
+  talkableTopics?: string;
 }
 
 /**
@@ -118,19 +100,19 @@ export type EmployeeParams ={
  */
 export class Employee {
   private constructor(
-    private readonly _id: EmployeeId,
-    private readonly _userId: UserId,
-    private readonly _companyId: CompanyId,
-    private  _occupationId: OccupationId,
-    private readonly _gender: Gender,
-    private readonly _joiningDate: JoiningDate,
-    private _status: Status,
-    private readonly _birthday?: Birthday,
-    private  _workLocationId?: WorkLocationId,
-    private  _hiringType?: HiringType,
-    private  _meetingMethod?: MeetingMethod,
-    private  _selfIntroduction?: SelfIntroduction,
-    private  _talkableTopics?: TalkableTopics,
+    private readonly _id: string,
+    private readonly _userId: string,
+    private readonly _companyId: number,
+    private readonly _gender: GenderEnum,
+    private readonly _joiningDate: Date,
+    private _occupationId: number,
+    private _status: StatusEnum,
+    private readonly _birthday?: Date,
+    private _workLocationId?: number,
+    private _hiringType?: HiringTypeEnum,
+    private _meetingMethod?: MeetingMethodEnum,
+    private _selfIntroduction?: string,
+    private _talkableTopics?: string,
   ) {}
 
   static create(params: EmployeeParams): Employee {
@@ -139,28 +121,9 @@ export class Employee {
       params.id,
       params.userId,
       params.companyId,
-      params.occupationId,
       params.gender,
       params.joiningDate,
-      params.status,
-      params.birthday,
-      params.workLocationId,
-      params.hiringType,
-      params.meetingMethod,
-      params.selfIntroduction,
-      params.talkableTopics,
-    );
-  }
-
-  static reconstruct(params: EmployeeParams): Employee {
-    this.validate(params);
-    return new Employee(
-      params.id,
-      params.userId,
-      params.companyId,
       params.occupationId,
-      params.gender,
-      params.joiningDate,
       params.status,
       params.birthday,
       params.workLocationId,
@@ -177,92 +140,92 @@ export class Employee {
   }
 
   // イミュータブルデータモデルにするか悩み中
-  changeOccupationId(newOccupationId: OccupationId): void {
+  changeOccupationId(newOccupationId: number): void {
     occupationIdSchema.parse(newOccupationId);
     this._occupationId = newOccupationId;
   }
 
-  changeWorkLocationId(newWorkLocationId: WorkLocationId): void {
+  changeWorkLocationId(newWorkLocationId: number): void {
     workLocationIdSchema.parse(newWorkLocationId);
     this._workLocationId = newWorkLocationId;
   }
 
-  changeHiringType(newHiringType: HiringType): void {
+  changeHiringType(newHiringType: HiringTypeEnum): void {
     hiringTypeSchema.parse(newHiringType);
     this._hiringType = newHiringType;
   }
 
-  changeMeetingMethod(newMeetingMethod: MeetingMethod): void {
+  changeMeetingMethod(newMeetingMethod: MeetingMethodEnum): void {
     meetingMethodSchema.parse(newMeetingMethod);
     this._meetingMethod = newMeetingMethod;
   }
 
-  changeSelfIntroduction(newSelfIntroduction: SelfIntroduction): void {
+  changeSelfIntroduction(newSelfIntroduction: string): void {
     selfIntroductionSchema.parse(newSelfIntroduction);
     this._selfIntroduction = newSelfIntroduction;
   }
 
-  changeTalkableTopics(newTalkableTopics: TalkableTopics): void {
+  changeTalkableTopics(newTalkableTopics: string): void {
     talkableTopicsSchema.parse(newTalkableTopics);
     this._talkableTopics = newTalkableTopics;
   }
 
-  changeStatus(newStatus: Status): void {
+  changeStatus(newStatus: StatusEnum): void {
     statusSchema.parse(newStatus);
     this._status = newStatus;
   }
 
-  get id(): EmployeeId {
+  get id(): string {
     return this._id;
   }
 
-  get userId(): UserId {
+  get userId(): string {
     return this._userId;
   }
 
-  get companyId(): CompanyId {
+  get companyId(): number {
     return this._companyId;
   }
 
-  get gender(): Gender {
+  get gender(): GenderEnum {
     return this._gender;
   }
   
   
-  get joiningDate(): JoiningDate {
+  get joiningDate(): Date {
     return this._joiningDate;
   }
   
-  get occupationId(): OccupationId {
+  get occupationId(): number {
     return this._occupationId;
   }
 
-  get status(): Status {
+  get status(): StatusEnum {
     return this._status;
   }
   
-  get birthday(): Birthday | undefined {
+  get birthday(): Date | undefined {
     return this._birthday;
   }
 
-  get workLocationId(): WorkLocationId | undefined {
+  get workLocationId(): number | undefined {
     return this._workLocationId;
   }
 
 
-  get hiringType(): HiringType | undefined {
+  get hiringType(): HiringTypeEnum | undefined {
     return this._hiringType;
   }
 
-  get meetingMethod(): MeetingMethod | undefined {
+  get meetingMethod(): MeetingMethodEnum | undefined {
     return this._meetingMethod;
   }
 
-  get selfIntroduction(): SelfIntroduction | undefined {
+  get selfIntroduction(): string | undefined {
     return this._selfIntroduction;
   }
 
-  get talkableTopics(): TalkableTopics | undefined {
+  get talkableTopics(): string | undefined {
     return this._talkableTopics
   }
 

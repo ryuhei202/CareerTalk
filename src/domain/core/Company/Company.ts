@@ -1,4 +1,3 @@
-import { Branded } from "@/util/brand";
 import { z } from "zod";
 
 /**
@@ -15,20 +14,12 @@ export const companyParamsSchema = z.object({
 });
 
 /**
- * Company関連の値
- * 値オブジェクトの代わりにbranded Typesとvalidationを使用する
- */
-export type CompanyId = Branded<number, 'CompanyId'>;
-export type CompanyName = Branded<string, 'CompanyName'>;
-export type Code = Branded<string, 'Code'>;
-
-/**
  * Companyパラメータ
  */
 export type CompanyParams = {
-  id: CompanyId;
-  name: CompanyName;
-  code: Code;
+  id: number;
+  name: string;
+  code: string;
 }
 
 /**
@@ -37,12 +28,12 @@ export type CompanyParams = {
  */
 export class Company {
   private constructor(
-    private readonly _id: CompanyId,
-    private readonly _name: CompanyName,
-    private readonly _code: Code,
+    private readonly _id: number,
+    private readonly _name: string,
+    private readonly _code: string,
   ) {}
 
-  static reconstruct(params: CompanyParams): Company {
+  static create(params: CompanyParams): Company {
     this.validate(params);
     return new Company(
       params.id,
@@ -55,15 +46,15 @@ export class Company {
     companyParamsSchema.parse(params);
   }
 
-  get id(): CompanyId {
+  get id(): number {
     return this._id;
   }
 
-  get name(): CompanyName {
+  get name(): string {
     return this._name;
   }
 
-  get code(): Code {
+  get code(): string {
     return this._code;
   }
 }

@@ -1,5 +1,5 @@
-import { Branded } from "@/util/brand";
 import { z } from "zod";
+import { Employee } from "../Employee/Employee";
 
 /**
  * User関連のバリデーションスキーマ
@@ -15,39 +15,37 @@ export const userParamsSchema = z.object({
 });
 
 /**
- * User関連の値
- * 値オブジェクトの代わりにbranded Typesとvalidationを使用する
- */
-export type UserId = Branded<string, 'UserId'>;
-export type UserName = Branded<string, 'UserName'>;
-export type UserImage = Branded<string, 'UserImage'>;
-
-/**
  * Userパラメータ
  */
 type UserParams = {
-  id: UserId;
-  name?: UserName;
-  image?: UserImage;
+  id: string;
+  name?: string;
+  image?: string;
+  employee?: Employee; // 現場社員エンティティ
+  jobSeeker?: any; // 転職希望エンティティ（未実装）
 }
 
 /**
  * Userエンティティ
- * 最初にNextAuthとPrismaによって自動で作成されるため、createメソッドは作成しない。
  */
 export class User {
   private constructor(
-    private readonly _id: UserId,
-    private  _name?: UserName,
-    private  _image?: UserImage,
+    private readonly _id: string,
+    private  _name?: string,
+    private  _image?: string,
+    private readonly _employee?: Employee,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private readonly _jobSeeker?: any
   ) {}
 
-  static reconstruct(params: UserParams): User {
+  static create(params: UserParams): User {
     this.validate(params);
     return new User(
       params.id,
       params.name,
       params.image,
+      params.employee,
+      params.jobSeeker,
     );
   }
 
@@ -55,25 +53,34 @@ export class User {
     userParamsSchema.parse(params);
   }
 
-  changeName(newName: UserName) {
+  changeName(newName: string) {
     userNameSchema.parse(newName);
     this._name = newName;
   }
 
-  changeImage(newImage: UserImage) {
+  changeImage(newImage: string) {
     userImageSchema.parse(newImage);
     this._image = newImage
   }
 
-  get id(): UserId {
+  get id(): string {
     return this._id;
   }
 
-  get name(): UserName | undefined{
+  get name(): string | undefined{
     return this._name;
   }
 
-  get image(): UserImage | undefined {
+  get image(): string | undefined {
     return this._image;
+  }
+
+  get employee(): Employee | undefined {
+    return this._employee;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get jobSeeker(): any | undefined {
+    return this._jobSeeker;
   }
 }

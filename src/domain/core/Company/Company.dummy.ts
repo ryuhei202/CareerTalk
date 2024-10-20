@@ -1,30 +1,24 @@
 import { Company } from "./Company";
-import { brand } from "@/util/brand";
-
 
 /**
  * Companyのダミーデータ
  */
-const companyId = brand<number, "CompanyId">(1);
-const companyName = brand<string, "CompanyName">("テストカンパニー");
-const code = brand<string, "Code">("12345678");
-
-export const companyDummy = Company.reconstruct({
-  id: companyId,
-  name: companyName,
-  code: code,
+export const companyDummy = Company.create({
+  id: 1,
+  name: "テストカンパニー",
+  code: "12345678",
 });
 
 export const companyDummies = [
   companyDummy,
-  Company.reconstruct({
-    id: brand<number, "CompanyId">(2),
-    name: brand<string, "CompanyName">("テストカンパニー2"),
-    code: brand<string, "Code">("12345679"),
+  Company.create({
+    id: 2,
+    name: "テストカンパニー2",
+    code: "12345679",
   }),
-  Company.reconstruct({
-    id: brand<number, "CompanyId">(3),
-    name: brand<string, "CompanyName">("テストカンパニー3"),
-    code: brand<string, "Code">("12345670"),
+  Company.create({
+    id: 3,
+    name: "テストカンパニー3",
+    code: "12345670",
   }),
 ];
