@@ -1,9 +1,9 @@
 
-import { Employee } from "@/domain/core/Employee/Employee";
-import { EmployeeRepository, FindEmployeeResult, SaveEmployeeResult, UpdateEmployeeResult } from "@/domain/core/Employee/EmployeeRepository";
+import { Employee } from "@/domain/core/Employee/Employee";;
 import { createSuccess } from "@/util/result";
 import { PrismaClient } from "@prisma/client";
 import { toGenderEnum, toHiringTypeEnum, toMeetingMethodEnum, toStatusEnum } from "./toEntityEnumFunctions";
+import { EmployeeRepository, FindEmployeeResult, SaveEmployeeResult, UpdateEmployeeResult } from "@/domain/core/Employee/repository/EmployeeRepository";
 
 export class EmployeePrismaRepository implements EmployeeRepository {
   constructor(
