@@ -13,11 +13,11 @@ export class CompanyRepositoryDummy implements CompanyRepository {
     return this.findAllReturnValue ?? createSuccess(companyDummies);
   }
 
-  async findById(_companyId: number): Promise<FindCompanyResult> {
+  async findById(): Promise<FindCompanyResult> {
     return this.findByIdReturnValue ?? createSuccess(companyDummy);
   }
 
-  async findByCode(_companyCode: string): Promise<FindCompanyResult> {
+  async findByCode(): Promise<FindCompanyResult> {
     return this.findByCodeReturnValue ?? createSuccess(companyDummy);
   }
 }

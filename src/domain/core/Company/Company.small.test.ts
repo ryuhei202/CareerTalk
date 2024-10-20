@@ -1,6 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
 import { Company } from "./Company";
-import { brand } from "@/util/brand";
 import { ZodError } from "zod";
 
 vi.mock('@paralleldrive/cuid2', () => ({
