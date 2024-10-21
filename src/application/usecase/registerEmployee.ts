@@ -16,7 +16,6 @@ export interface RegisterEmployeeParams {
   hiringType?: string;
   meetingMethod?: string;
   selfIntroduction?: string;
-  profileImage?: string;
   talkableTopics?: string;
 }
 type RegisterEmployeeUseCaseResult = Result<Employee | undefined, InvalidRegisterEmployeeInputError>;
