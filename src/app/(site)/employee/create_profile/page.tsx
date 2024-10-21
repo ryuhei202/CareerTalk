@@ -18,7 +18,7 @@ export default async function CreateProfileEmployeePage() {
   return (
     <CreateEmployeeProfileContainer
       occupations={occupations}
-      userId={session.user.id}
+      userName={session.user.name ?? ""}
     />
   );
 }

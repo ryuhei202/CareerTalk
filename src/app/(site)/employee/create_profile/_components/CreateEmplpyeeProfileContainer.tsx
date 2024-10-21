@@ -96,15 +96,16 @@ const formSchema = z.object({
 
 export default function CreateProfileEmployee({
   occupations,
+  userName,
 }: {
   occupations: TOccupation[];
-  userId: string;
+  userName: string;
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     mode: "onChange",
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: userName,
       gender: undefined,
       birthday: undefined,
       companyCode: "",
@@ -124,7 +125,7 @@ export default function CreateProfileEmployee({
     message: "",
     data: undefined,
   });
-  console.log("state", state);
+
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6 text-gray-800">
