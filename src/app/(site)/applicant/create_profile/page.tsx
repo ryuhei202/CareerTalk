@@ -20,7 +20,6 @@ import {
 } from "@/app/_components/ui/card";
 
 export default function ProfileSetup() {
-  console.log("profile setup");
   return (
     <Card className="w-full max-w-2xl animate-fade-in">
       <CardHeader>
@@ -66,7 +65,7 @@ export default function ProfileSetup() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="skills">スキル</Label>
-          <Input id="skills" placeholder="例：JavaScript, React, Node.js" />
+          <Input id="skills" placeholder="例:JavaScript, React, Node.js" />
         </div>
         <div className="space-y-2">
           <Label htmlFor="bio">自己紹介</Label>
