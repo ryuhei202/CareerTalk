@@ -3,6 +3,7 @@ import {  InvalidRegisterEmployeeInputError, ValidateRegisterEmployeeInput } fro
 import { createFailure, createSuccess, Result } from "@/util/result";
 import { ITransactionManager } from "../shared/TransactionManager";
 import { Employee } from "@/domain/core/Employee/Employee";
+import { ZodError } from "zod";
 
 export interface RegisterEmployeeParams {
   userId: string;
@@ -18,7 +19,7 @@ export interface RegisterEmployeeParams {
   selfIntroduction?: string;
   talkableTopics?: string;
 }
-type RegisterEmployeeUseCaseResult = Result<Employee | undefined, InvalidRegisterEmployeeInputError>;
+type RegisterEmployeeUseCaseResult = Result<Employee | undefined, InvalidRegisterEmployeeInputError | ZodError>;
 
 export type RegisterEmployeeUseCase = (
   params: RegisterEmployeeParams
@@ -42,9 +43,8 @@ export const buildRegisterEmployeeUseCase = ({
     const createdEmployee = await transactionManager.begin(async () => {
       return await createEmployee(employeeCommand);
     });
-
     return createSuccess(createdEmployee);
   } catch (error) {
-    return createFailure(error as InvalidRegisterEmployeeInputError);
+    return createFailure(error as (InvalidRegisterEmployeeInputError | ZodError));
   }
 }
