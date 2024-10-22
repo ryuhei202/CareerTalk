@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
 import { MessageCircle, Users, MessageSquare, Calendar } from "lucide-react";
 import { LogOutButton } from "../_components/parts/Button/LogOutButton";
+import CareerTalkLogo from "../_components/parts/Logo/CareerTalkLogo";
 
 export default async function SiteLayout({
   children,
@@ -13,12 +14,7 @@ export default async function SiteLayout({
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <nav className="flex justify-between items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <MessageCircle className="h-8 w-8 text-purple-600" />
-              <span className="text-2xl font-bold text-gray-800">
-                CareerTalk
-              </span>
-            </Link>
+            <CareerTalkLogo />
             <ul className="hidden md:flex space-x-6 items-center">
               <li>
                 <Link
