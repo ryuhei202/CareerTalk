@@ -32,11 +32,6 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-enum JobSeekerProfile {
-  PENDING
-  APPROVED
-}
-
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -44,36 +39,91 @@ model User {
   emailVerified DateTime?
   image         String?
   accounts      Account[]
-  job_seeker    JobSeeker?
+  jobSeeker     JobSeeker?
   employee      Employee?
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
 }
 
+enum Gender {
+  OTHER
+  MALE
+  FEMALE
+  PREFER_NOT_TO_SAY
+}
+
 enum JobSeekerStatus {
   PENDING
   APPROVED
+  REJECTED
 }
 
 model JobSeeker {
-  id         String           @id @default(cuid())
-  userId     String           @unique
-  user       User             @relation(fields: [userId], references: [id])
-  status     JobSeekerStatus  @default(PENDING)
-  created_at DateTime         @default(now())
-  updated_at DateTime         @updatedAt
+  id        String          @id 
+  userId    String           @unique
+  user      User            @relation(fields: [userId], references: [id])
+  status    JobSeekerStatus @default(PENDING)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 } 
+
+model Company {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  code      String    @unique
+  employees Employee[]
+}
+
 
 enum EmployeeStatus {
   PENDING
   APPROVED
+  REJECTED
+}
+
+enum HiringType {
+  NEW_GRADUATE
+  MID_CAREER
+}
+
+enum MeetingMethod {
+  ONLINE
+  OFFLINE
+  BOTH
+}
+
+model WorkLocation {
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  employees Employee[]
+}
+
+
+model Occupation {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  employees Employee[]
 }
 
 model Employee {
-  id         String           @id @default(cuid())
-  userId     String           @unique
-  user       User             @relation(fields: [userId], references: [id])
-  status     JobSeekerStatus  @default(PENDING)
-  created_at DateTime         @default(now())
-  updated_at DateTime         @updatedAt
+  id                String           @id
+  userId            String           @unique
+  user              User             @relation(fields: [userId], references: [id])
+  birthday          DateTime?
+  gender            Gender
+  companyId         Int           
+  company           Company          @relation(fields: [companyId], references: [id])
+  occupationId      Int
+  occupation        Occupation       @relation(fields: [occupationId], references: [id])
+  workLocationId    Int?
+  workLocation      WorkLocation?    @relation(fields: [workLocationId], references: [id])
+  joiningDate       DateTime
+  hiringType        HiringType?
+  meetingMethod     MeetingMethod?
+  selfIntroduction  String?          @default("") @db.Text
+  talkableTopics    String?          @default("")
+  status            EmployeeStatus   @default(PENDING)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
 }
+
