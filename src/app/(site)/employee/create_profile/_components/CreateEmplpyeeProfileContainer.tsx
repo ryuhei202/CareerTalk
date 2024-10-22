@@ -27,14 +27,17 @@ import {
 } from "@/domain/core/Employee/Employee";
 import { WORK_LOCATION_OPTIONS } from "@/app/_shared/constants/workLocationOptions";
 import { useFormState } from "react-dom";
-import { registerEmployeeAction } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
+import {
+  CreatedEmployeeResponse,
+  registerEmployeeAction,
+} from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
 import { useRef } from "react";
 import { TOccupation } from "../page";
 
 export type FormState = {
   message: string;
   success: boolean;
-  data: { [key: string]: FormDataEntryValue } | undefined;
+  data: CreatedEmployeeResponse | undefined;
 };
 
 const genderOptions = Object.values(GenderEnum) as [string, ...string[]];
@@ -118,6 +121,8 @@ export default function CreateProfileEmployee({
       talkableTopics: undefined,
     },
   });
+
+  console.log("form", form.getValues());
 
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction] = useFormState(registerEmployeeAction, {

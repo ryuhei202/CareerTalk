@@ -1,41 +1,42 @@
-import { Employee } from "./Employee";
+import { Employee, EmployeeParams } from "./Employee";
 import { companyDummy } from "@/domain/core/Company/Company.dummy";
 import { occupationDummy } from "@/domain/core/Occupation/Occupation.dummy";
-import { createId } from "@paralleldrive/cuid2";
 import { GenderEnum, HiringTypeEnum, MeetingMethodEnum, StatusEnum } from "./Employee";
 import { userDummy } from "../User/User.dummy";
+import { workLocationDummy } from "../WorkLocation/WorkLocation.Dummy";
 
 /**
  * Employeeのダミーデータ
  */
-const employeeId = createId();
+const employeeId = "cm28rzvjg0000t87kop9wo6j";
 const userId = userDummy.id;
-const companyId = companyDummy.id;
-const occupationId = occupationDummy.id;
+const company = companyDummy;
+const occupation = occupationDummy;
 const gender = GenderEnum.MALE;
-const birthday = new Date("1990-01-01");
 const joiningDate = new Date("2020-01-01");
-const workLocationId = 1;
+const status = StatusEnum.PENDING;
+const birthday = new Date("1990-01-01");
+const workLocation = workLocationDummy;
 const hiringType = HiringTypeEnum.NEW_GRADUATE;
 const meetingMethod = MeetingMethodEnum.ONLINE;
 const selfIntroduction = "自己紹介";
 const talkableTopics = "働き方について";
-const status = StatusEnum.PENDING;
 
 
-
-export const employeeDummy =  Employee.create({
+export const employeeDummyParams: EmployeeParams = {
   id: employeeId,
   userId: userId,
-  companyId: companyId,
+  company: company,
   gender: gender,
   birthday: birthday,
   joiningDate: joiningDate,
-  occupationId: occupationId,
-  workLocationId: workLocationId,
+  occupation: occupation,
+  workLocation: workLocation,
   hiringType: hiringType,
   meetingMethod: meetingMethod,
   selfIntroduction: selfIntroduction,
   talkableTopics: talkableTopics,
   status: status,
-});
+}
+
+export const employeeDummy =  Employee.create(employeeDummyParams);

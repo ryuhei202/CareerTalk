@@ -6,6 +6,7 @@ import { OccupationRepository } from "../../Occupation/OccupationRepository";
 import { WorkLocationRepository } from "../../WorkLocation/WorkLocationRepository";
 import { createId } from "@paralleldrive/cuid2";
 import { NamedError } from "@/util/error";
+import { WorkLocation } from "../../WorkLocation/WorkLocation";
 
 export type EmployeeCommand = EmployeeParams
 
@@ -34,7 +35,6 @@ export const buildValidateRegisterEmployeeInput = ({
 }): ValidateRegisterEmployeeInput => async (
   params: RegisterEmployeeParams
 ) => {
-
   // ユーザーが存在しない場合はエラー
   const { data: User } = await userRepository.findById(params.userId);
   if (User == null) {
@@ -54,20 +54,23 @@ export const buildValidateRegisterEmployeeInput = ({
   // 企業コードから企業の存在確認
   const { data: company } = await companyRepository.findByCode(params.companyCode);
   if (company == null) {
-    throw new InvalidRegisterEmployeeInputError('企業が存在しません');
+    throw new InvalidRegisterEmployeeInputError('不正な企業です');
   }
 
   // 職種の存在確認
   const { data: occupation } = await occupationRepository.findById(params.occupationId);
   if (occupation == null) {
-    throw new InvalidRegisterEmployeeInputError('職種が存在しません');
+    throw new InvalidRegisterEmployeeInputError('不正な職種です');
   }
 
   // 勤務地の存在確認
+  let workLocation: WorkLocation | undefined;
+  console.log("params.workLocationId != null", params.workLocationId != null);
+  
   if (params.workLocationId != null) {
-    const { data: workLocation } = await workLocationRepository.findById(params.workLocationId);
+    const workLocation = await workLocationRepository.findById(params.workLocationId);
     if (workLocation == null) {
-      throw new InvalidRegisterEmployeeInputError('勤務地が存在しません');
+      throw new InvalidRegisterEmployeeInputError('不正な勤務地です');
     }
   }
 
@@ -76,13 +79,13 @@ export const buildValidateRegisterEmployeeInput = ({
   return ({
     id: createId(),
     userId: params.userId,
-    companyId: company.id,
-    occupationId: params.occupationId,
+    company: company,
+    occupation: occupation,
     gender: params.gender as GenderEnum,
     birthday: params.birthday,
     joiningDate: params.joiningDate,
     status: StatusEnum.PENDING, // 初期値はPENDING
-    workLocationId: params.workLocationId ?? undefined,
+    workLocation: workLocation,
     hiringType: params.hiringType as HiringTypeEnum ?? undefined,
     meetingMethod: params.meetingMethod as MeetingMethodEnum ?? undefined,
     selfIntroduction: params.selfIntroduction ?? undefined,

@@ -1,7 +1,8 @@
 import { userIdSchema } from "../User/User";
-import { companyIdSchema } from "../Company/Company";
-import { occupationIdSchema } from "../Occupation/Occupation";
+import { Company } from "../Company/Company";
+import { Occupation } from "../Occupation/Occupation";
 import { z } from "zod";
+import { WorkLocation } from "../WorkLocation/WorkLocation";
 
 /**
  * Employee関連のEnum
@@ -12,27 +13,28 @@ export enum GenderEnum {
   FEMALE = "FEMALE",
   PREFER_NOT_TO_SAY = "PREFER_NOT_TO_SAY",
 }
-type GenderLabel = "その他" | "男性" | "女性" | "回答しない";
+
+export type GenderLabel = "その他" | "男性" | "女性" | "回答しない";
 
 export enum HiringTypeEnum {
   NEW_GRADUATE = "NEW_GRADUATE",
   MID_CAREER = "MID_CAREER",
 }
-type HiringTypeLabel = "新卒採用" | "中途採用";
+export type HiringTypeLabel = "新卒採用" | "中途採用";
 
 export enum MeetingMethodEnum {
   ONLINE = "ONLINE",
   OFFLINE = "OFFLINE",
   BOTH = "BOTH",
 }
-type MeetingMethodLabel = "オンライン" | "オフライン" | "オンライン/オフライン";
+export type MeetingMethodLabel = "オンライン" | "オフライン" | "オンライン/オフライン";
 
 export enum StatusEnum {
   PENDING = "PENDING",
   APPROVED = "APPROVED",
   REJECTED = "REJECTED",
 }
-type StatusLabel = "審査中" | "承認済み" | "拒否";
+export type StatusLabel = "審査中" | "承認済み" | "拒否";
 
 
 /**
@@ -40,6 +42,12 @@ type StatusLabel = "審査中" | "承認済み" | "拒否";
  */
 // 必須
 const employeeIdSchema = z.string().length(24, { message: "IDは24文字である必要があります" });
+const companySchema = z.custom<Company>((value) => value instanceof Company, {
+  message: "不正な企業です"
+});
+const occupationSchema = z.custom<Occupation>((value) => value instanceof Occupation, {
+  message: "不正な職種です"
+});
 const genderSchema = z.nativeEnum(GenderEnum, { message: "無効な性別です" });
 const joiningDateSchema = z.date().refine((date) => {
   const now = new Date();
@@ -52,7 +60,9 @@ const birthdaySchema = z.date().refine((date) => {
   const minDate = new Date(now.getFullYear() - 100, now.getMonth(), now.getDate());
   return date <= now && date >= minDate;
 }, { message: "無効な生年月日です" }).optional();
-const workLocationIdSchema = z.number({ message: "無効な勤務地IDです" }).positive().optional();
+const workLocationSchema = z.custom<WorkLocation>((value) => value instanceof WorkLocation, {
+  message: "不正な勤務地です"
+}).optional();
 const hiringTypeSchema = z.nativeEnum(HiringTypeEnum, { message: "無効な入社方法です" }).optional();
 const meetingMethodSchema = z.nativeEnum(MeetingMethodEnum, { message: "無効な訪問方法です" }).optional();
 const selfIntroductionSchema = z.string().max(1000, { message: "自己紹介は1000文字以下である必要があります" }).optional();
@@ -62,13 +72,13 @@ const employeeParamsSchema = z.object(
   {
     id: employeeIdSchema,
     userId: userIdSchema,
-    companyId: companyIdSchema,
-    occupationId: occupationIdSchema,
+    company: companySchema,
+    occupation: occupationSchema,
     gender: genderSchema,
     joiningDate: joiningDateSchema,
     status: statusSchema,
     birthday: birthdaySchema,
-    workLocationId: workLocationIdSchema,
+    workLocation: workLocationSchema,
     hiringType: hiringTypeSchema,
     meetingMethod: meetingMethodSchema,
     selfIntroduction: selfIntroductionSchema,
@@ -82,13 +92,13 @@ const employeeParamsSchema = z.object(
 export type EmployeeParams ={
   id: string;
   userId: string;
-  companyId: number;
-  occupationId: number;
+  company: Company;
+  occupation: Occupation;
   gender: GenderEnum;
   joiningDate: Date;
   status: StatusEnum;
   birthday?: Date;
-  workLocationId?: number;
+  workLocation?: WorkLocation;
   hiringType?: HiringTypeEnum;
   meetingMethod?: MeetingMethodEnum;
   selfIntroduction?: string;
@@ -102,13 +112,13 @@ export class Employee {
   private constructor(
     private readonly _id: string,
     private readonly _userId: string,
-    private readonly _companyId: number,
+    private readonly _company: Company, // 企業エンティティ
     private readonly _gender: GenderEnum,
     private readonly _joiningDate: Date,
-    private _occupationId: number,
+    private _occupation: Occupation, // 職種エンティティ
     private _status: StatusEnum,
     private readonly _birthday?: Date,
-    private _workLocationId?: number,
+    private _workLocation?: WorkLocation, // 勤務地エンティティ
     private _hiringType?: HiringTypeEnum,
     private _meetingMethod?: MeetingMethodEnum,
     private _selfIntroduction?: string,
@@ -120,13 +130,13 @@ export class Employee {
     return new Employee(
       params.id,
       params.userId,
-      params.companyId,
+      params.company,
       params.gender,
       params.joiningDate,
-      params.occupationId,
+      params.occupation,
       params.status,
       params.birthday,
-      params.workLocationId,
+      params.workLocation,
       params.hiringType,
       params.meetingMethod,
       params.selfIntroduction,
@@ -140,14 +150,14 @@ export class Employee {
   }
 
   // イミュータブルデータモデルにするか悩み中
-  changeOccupationId(newOccupationId: number): void {
-    occupationIdSchema.parse(newOccupationId);
-    this._occupationId = newOccupationId;
+  changeOccupation(newOccupation: Occupation): void {
+    occupationSchema.parse(newOccupation);
+    this._occupation = newOccupation;
   }
 
-  changeWorkLocationId(newWorkLocationId: number): void {
-    workLocationIdSchema.parse(newWorkLocationId);
-    this._workLocationId = newWorkLocationId;
+  changeWorkLocation(newWorkLocation: WorkLocation): void {
+    workLocationSchema.parse(newWorkLocation);
+    this._workLocation = newWorkLocation;
   }
 
   changeHiringType(newHiringType: HiringTypeEnum): void {
@@ -183,8 +193,8 @@ export class Employee {
     return this._userId;
   }
 
-  get companyId(): number {
-    return this._companyId;
+  get company(): Company {
+    return this._company;
   }
 
   get gender(): GenderEnum {
@@ -196,8 +206,8 @@ export class Employee {
     return this._joiningDate;
   }
   
-  get occupationId(): number {
-    return this._occupationId;
+  get occupation(): Occupation {
+    return this._occupation;
   }
 
   get status(): StatusEnum {
@@ -208,8 +218,8 @@ export class Employee {
     return this._birthday;
   }
 
-  get workLocationId(): number | undefined {
-    return this._workLocationId;
+  get workLocation(): WorkLocation | undefined {
+    return this._workLocation;
   }
 
 
@@ -229,10 +239,7 @@ export class Employee {
     return this._talkableTopics
   }
 
-  toGenderLabel(): GenderLabel | undefined {
-    if (this._gender == null) {
-      return undefined;
-    }
+  toGenderLabel(): GenderLabel {
     switch (this._gender) {
       case GenderEnum.OTHER:
         return "その他";
@@ -304,5 +311,12 @@ export class Employee {
     }
     
     return age;
+  }
+
+  toYearsOfExperience(): number {
+
+    // 継続年数を返却するロジックを書く
+    // 一旦仮置き
+    return new Date().getFullYear() - this._joiningDate.getFullYear();
   }
 }

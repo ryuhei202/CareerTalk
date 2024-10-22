@@ -1,11 +1,36 @@
 "use server"
-
 import { FormState } from "@/app/(site)/employee/create_profile/_components/CreateEmplpyeeProfileContainer";
 import { RegisterEmployeeParams, RegisterEmployeeUseCase } from "@/application/usecase/registerEmployee";
 import { registerContainer } from "@/di/container";
 import { REGISTER_EMPLOYEE_USE_CASE } from "@/di/container/usecase";
+import { GenderLabel, HiringTypeLabel, MeetingMethodLabel, StatusLabel } from "@/domain/core/Employee/Employee";
 import { getServerSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
+
+export type CreatedEmployeeResponse = {
+  id: string;
+  userId: string;
+  company: {
+    id: number;
+    name: string;
+  };
+  occupation: {
+    id: number;
+    name: string;
+  };
+  gender: GenderLabel;
+  yearsOfExperience: number;
+  status: StatusLabel;
+  age?: number;
+  workLocation?: {
+    id: number;
+    name: string;
+  };
+  hiringType?: HiringTypeLabel;
+  meetingMethod?: MeetingMethodLabel;
+  selfIntroduction?: string;
+  talkableTopics?: string;
+}
 
 export async function registerEmployeeAction(
   _prevState: FormState,
@@ -37,12 +62,11 @@ export async function registerEmployeeAction(
   const selfIntroduction = formData.get("selfIntroduction");
   const talkableTopics = formData.get("talkableTopics");
 
-  const formDataObject = Object.fromEntries(formData.entries());
   if(!name || !companyCode || !occupationId || !gender || !joiningDate){
     return {
       success: false,
       message: "必須項目を入力してください",
-      data: formDataObject
+      data: undefined
     };
   }
 
@@ -54,26 +78,30 @@ export async function registerEmployeeAction(
     gender: gender as string,
     birthday: new Date(birthday as string),
     joiningDate: new Date(joiningDate as string),
-    workLocationId: parseInt(workLocationId as string),
-    hiringType: hiringType as string,
-    meetingMethod: meetingMethod as string,
-    selfIntroduction: selfIntroduction as string,
-    talkableTopics: talkableTopics as string,
+    workLocationId: parseInt(workLocationId as string) || undefined,
+    hiringType: !!hiringType ? hiringType as string : undefined,
+    meetingMethod: !!meetingMethod ? meetingMethod as string : undefined,
+    selfIntroduction: !!selfIntroduction ? selfIntroduction as string : undefined,
+    talkableTopics: !!talkableTopics ? talkableTopics as string : undefined,
   };
 
   console.log("useCaseParams", useCaseParams);
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const useCaseResult = await useCase(useCaseParams);
-
+  console.log("useCaseResult", useCaseResult);
   if (useCaseResult.success) {
 
-    redirect("/home");
+    return { 
+      success: true,
+      message: "現場社員登録が完了しました",
+      data: useCaseResult.data
+    };
+    redirect("/employee/home");
   } else {
     return { 
       success: false,
       message: useCaseResult.error.message,
-      data: formDataObject
+      data: undefined
     };
   }
 }

@@ -4,6 +4,9 @@ import { createSuccess } from "@/util/result";
 import { PrismaClient } from "@prisma/client";
 import { toGenderEnum, toHiringTypeEnum, toMeetingMethodEnum, toStatusEnum } from "./toEntityEnumFunctions";
 import { EmployeeRepository, FindEmployeeResult, SaveEmployeeResult, UpdateEmployeeResult } from "@/domain/core/Employee/repository/EmployeeRepository";
+import { Company } from "@/domain/core/Company/Company";
+import { Occupation } from "@/domain/core/Occupation/Occupation";
+import { WorkLocation } from "@/domain/core/WorkLocation/WorkLocation";
 
 export class EmployeePrismaRepository implements EmployeeRepository {
   constructor(
@@ -15,6 +18,11 @@ export class EmployeePrismaRepository implements EmployeeRepository {
   async findById(employeeId: string): Promise<FindEmployeeResult> {
     const employee = await this.prisma.employee.findUnique({
       where: { id: employeeId },
+      include: {
+        company: true,
+        occupation: true,
+        workLocation: true,
+      },
     });
 
     if (employee == null) {
@@ -24,13 +32,23 @@ export class EmployeePrismaRepository implements EmployeeRepository {
     const employeeData = Employee.create({
       id: employee.id,
       userId: employee.userId,
-      companyId: employee.companyId,
-      occupationId: employee.occupationId,
+      company: Company.create({
+        id: employee.company.id,
+        name: employee.company.name,
+        code: employee.company.code,
+      }),
+      occupation: Occupation.create({
+        id: employee.occupation.id,
+        name: employee.occupation.name,
+      }),
       gender: toGenderEnum(employee.gender),
       joiningDate: employee.joiningDate,
       status: toStatusEnum(employee.status),
       birthday: employee.birthday ?? undefined,
-      workLocationId: employee.workLocationId ?? undefined,
+      workLocation: employee.workLocation ? WorkLocation.create({
+        id: employee.workLocation.id,
+        name: employee.workLocation.name,
+      }) : undefined,
       hiringType: employee.hiringType ? toHiringTypeEnum(employee.hiringType) : undefined,
       meetingMethod: employee.meetingMethod ? toMeetingMethodEnum(employee.meetingMethod) : undefined,
       selfIntroduction: employee.selfIntroduction ?? undefined,
@@ -45,12 +63,12 @@ export class EmployeePrismaRepository implements EmployeeRepository {
       data: {
         id: employee.id,
         userId: employee.userId,
-        companyId: employee.companyId,
+        companyId: employee.company.id,
         gender: employee.gender,
         birthday: employee.birthday,
         joiningDate: employee.joiningDate,
-        occupationId: employee.occupationId,
-        workLocationId: employee.workLocationId,
+        occupationId: employee.occupation.id,
+        workLocationId: employee.workLocation?.id,
         hiringType: employee.hiringType,
         meetingMethod: employee.meetingMethod,
         selfIntroduction: employee.selfIntroduction,
@@ -67,12 +85,12 @@ export class EmployeePrismaRepository implements EmployeeRepository {
       where: { id: employee.id },
       data: {
         userId: employee.userId,
-        companyId: employee.companyId,
+        companyId: employee.company.id,
         gender: employee.gender,
         birthday: employee.birthday,
         joiningDate: employee.joiningDate,
-        occupationId: employee.occupationId,
-        workLocationId: employee.workLocationId,
+        occupationId: employee.occupation.id,
+        workLocationId: employee.workLocation?.id,
         hiringType: employee.hiringType,
         meetingMethod: employee.meetingMethod,
         selfIntroduction: employee.selfIntroduction,

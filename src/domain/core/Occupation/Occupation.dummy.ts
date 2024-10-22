@@ -8,4 +8,9 @@ export const occupationDummy = Occupation.create({
   name: "エンジニア",
 });
 
+export const occupationDummy2 = Occupation.create({
+  id: 2,
+  name: "デザイナー",
+});
+
 
