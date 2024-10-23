@@ -18,11 +18,9 @@
     "db-studio": "prisma studio",
     "postinstall": "prisma generate",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
-    "lint": "next lint",
-    "typecheck": "tsc --noEmit",
-    "format": "run-s format:*",
-    "format:eslint": "eslint --fix './src/**/*.{js,ts,tsx}'",
-    "format:prettier": "prettier --write './src/**/*.{js,ts,tsx}'"
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --write"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
