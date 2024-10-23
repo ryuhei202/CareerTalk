@@ -22,7 +22,7 @@ type UserParams = {
   name?: string;
   image?: string;
   employee?: Employee; // 現場社員エンティティ
-  jobSeeker?: any; // 転職希望エンティティ（未実装）
+  jobSeeker?: unknown; // 転職希望エンティティ（未実装）
 }
 
 /**
@@ -34,8 +34,7 @@ export class User {
     private  _name?: string,
     private  _image?: string,
     private readonly _employee?: Employee,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private readonly _jobSeeker?: any
+    private readonly _jobSeeker?: unknown // 転職希望エンティティ（未実装）
   ) {}
 
   static create(params: UserParams): User {
@@ -78,9 +77,7 @@ export class User {
   get employee(): Employee | undefined {
     return this._employee;
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  get jobSeeker(): any | undefined {
+  get jobSeeker(): unknown | undefined {
     return this._jobSeeker;
   }
 }
