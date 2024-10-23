@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { WorkLocationPrismaRepository } from "./WorkLocationPrismaRepository";
+import { WorkLocationPrismaRepository } from "../WorkLocationPrismaRepository";
 import { beforeAll, describe, test, expect } from "vitest";
 import { createSuccess } from "@/util/result";
 import { workLocationDummy } from "@/domain/core/WorkLocation/test/WorkLocation.Dummy";
