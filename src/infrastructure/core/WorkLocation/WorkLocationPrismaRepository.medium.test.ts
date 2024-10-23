@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { WorkLocationPrismaRepository } from "./WorkLocationPrismaRepository";
 import { beforeAll, describe, test, expect } from "vitest";
 import { createSuccess } from "@/util/result";
-import { workLocationDummy } from "@/domain/core/WorkLocation/WorkLocation.Dummy";
+import { workLocationDummy } from "@/domain/core/WorkLocation/test/WorkLocation.Dummy";
 let repository: WorkLocationPrismaRepository;
 beforeAll(async () => {
   repository = new WorkLocationPrismaRepository(prisma);

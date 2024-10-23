@@ -3,6 +3,7 @@ import { EmployeePrismaRepository } from "./EmployeePrismaRepository";
 import { prisma } from "@/lib/prisma";
 import { createSuccess } from "@/util/result";
 import { employeeDummy } from "@/domain/core/Employee/Employee.dummy";
+import { occupationDummy, occupationDummy2 } from "@/domain/core/Occupation/test/Occupation.dummy";
 let employeeRepository: EmployeePrismaRepository; 
 
 beforeAll(async () => {
@@ -53,7 +54,7 @@ describe("EmployeePrismaRepository", () => {
     test("現場社員を更新できる", async () => {
       await employeeRepository.save(employeeDummy);
 
-      employeeDummy.changeOccupationId(2);
+      employeeDummy.changeOccupation(occupationDummy2);
 
       await employeeRepository.update(employeeDummy);
       const result = await employeeRepository.findById(employeeDummy.id);

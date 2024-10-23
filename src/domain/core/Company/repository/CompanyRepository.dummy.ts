@@ -1,6 +1,6 @@
 import { createSuccess } from "@/util/result";
 import { CompanyRepository, FindAllCompanyResult, FindCompanyResult } from "./CompanyRepository";
-import { companyDummies, companyDummy } from "../Company.dummy";
+import { companyDummies, companyDummy } from "../test/Company.dummy";
 
 export class CompanyRepositoryDummy implements CompanyRepository {
   constructor(

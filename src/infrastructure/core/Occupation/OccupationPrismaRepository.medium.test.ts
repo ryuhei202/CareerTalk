@@ -2,7 +2,7 @@ import { describe, test, expect, beforeAll } from "vitest";
 import { prisma } from "@/lib/prisma";
 import { OccupationPrismaRepository } from "./OccupationPrismaRepository";
 import { createSuccess } from "@/util/result";
-import { occupationDummy } from "@/domain/core/Occupation/Occupation.dummy";
+import { occupationDummy } from "@/domain/core/Occupation/test/Occupation.dummy";
 
 let repository: OccupationPrismaRepository;
 beforeAll(async () => {

@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { UserPrismaRepository } from "./UserPrismaRepository";
 import { createId } from "@paralleldrive/cuid2";
 import { createSuccess } from "@/util/result";
-import { userDummy } from "@/domain/core/User/User.dummy";
+import { userDummy } from "@/domain/core/User/test/User.dummy";
 import { employeeDummy } from "@/domain/core/Employee/Employee.dummy";
 
 let userRepository: UserPrismaRepository;

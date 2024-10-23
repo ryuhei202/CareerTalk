@@ -1,12 +1,12 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
-import { Employee, GenderEnum, HiringTypeEnum, MeetingMethodEnum, StatusEnum } from "./Employee";
+import { Employee, GenderEnum, HiringTypeEnum, MeetingMethodEnum, StatusEnum } from "../Employee";
 import { employeeDummyParams } from "./Employee.dummy";
 import { ZodError } from "zod";
-import { Company } from "../Company/Company";
-import { Occupation } from "../Occupation/Occupation";
-import { WorkLocation } from "../WorkLocation/WorkLocation";
-import { occupationDummy, occupationDummy2 } from "../Occupation/Occupation.dummy";
-import { workLocationDummy, workLocationDummy2 } from "../WorkLocation/WorkLocation.Dummy";
+import { Company } from "../../Company/Company";
+import { Occupation } from "../../Occupation/Occupation";
+import { WorkLocation } from "../../WorkLocation/WorkLocation";
+import { occupationDummy, occupationDummy2 } from "../../Occupation/test/Occupation.dummy";
+import { workLocationDummy, workLocationDummy2 } from "../../WorkLocation/test/WorkLocation.Dummy";
 
 describe("Employee", () => {
   test("Employeeを生成する", () => {
@@ -91,127 +91,126 @@ describe("Employee", () => {
   describe("changeOccupation", () => {
     
     test("正常にoccupationを変更できる", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, occupation: occupationDummy});
 
-      expect(employee.occupation).toBe(employeeDummyParams.occupation);
+      expect(employee.occupation).toBe(occupationDummy);
       employee.changeOccupation(occupationDummy2);
       expect(employee.occupation).toBe(occupationDummy2);
     });
 
     test("不正なoccupationIdでEmployeeを作成しようとするとエラーが発生する", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, occupation: occupationDummy});
 
-      expect(employee.occupation).toBe(employeeDummyParams.occupation);
+      expect(employee.occupation).toBe(occupationDummy);
       expect(() => employee.changeOccupation("INVALID" as unknown as Occupation)).toThrow();
     });
   });
 
   describe("changeWorkLocation", () => {
     test("正常にworkLocationを変更できる", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, workLocation: workLocationDummy});
 
-      expect(employee.workLocation).toBe(employeeDummyParams.workLocation);
+      expect(employee.workLocation).toBe(workLocationDummy);
       employee.changeWorkLocation(workLocationDummy2);
       expect(employee.workLocation).toBe(workLocationDummy2);
     });
 
     test("不正なworkLocationIdでEmployeeを作成しようとするとエラーが発生する", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, workLocation: workLocationDummy});
 
-      expect(employee.workLocation).toBe(employeeDummyParams.workLocation);
+      expect(employee.workLocation).toBe(workLocationDummy);
       expect(() => employee.changeWorkLocation("INVALID" as unknown as WorkLocation)).toThrow();
     });
   });
 
   describe("changeHiringType", () => {
     test("正常にhiringTypeを変更できる", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, hiringType: HiringTypeEnum.NEW_GRADUATE});
 
-      expect(employee.hiringType).toBe(employeeDummyParams.hiringType);
+      expect(employee.hiringType).toBe(HiringTypeEnum.NEW_GRADUATE);
       employee.changeHiringType(HiringTypeEnum.MID_CAREER);
       expect(employee.hiringType).toBe(HiringTypeEnum.MID_CAREER);
     });
 
     test("不正なhiringTypeでEmployeeを作成しようとするとエラーが発生する", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, hiringType: HiringTypeEnum.NEW_GRADUATE});
 
-      expect(employee.hiringType).toBe(employeeDummyParams.hiringType);
+      expect(employee.hiringType).toBe(HiringTypeEnum.NEW_GRADUATE);
       expect(() => employee.changeHiringType("INVALID" as HiringTypeEnum)).toThrow();
     });
   });
 
   describe("changeMeetingMethod", () => {
     test("正常にmeetingMethodを変更できる", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, meetingMethod: MeetingMethodEnum.ONLINE});
 
-      expect(employee.meetingMethod).toBe(employeeDummyParams.meetingMethod);
+      expect(employee.meetingMethod).toBe(MeetingMethodEnum.ONLINE);
       employee.changeMeetingMethod(MeetingMethodEnum.OFFLINE);
       expect(employee.meetingMethod).toBe(MeetingMethodEnum.OFFLINE);
     });
 
     test("不正なmeetingMethodでEmployeeを作成しようとするとエラーが発生する", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, meetingMethod: MeetingMethodEnum.ONLINE});
 
-      expect(employee.meetingMethod).toBe(employeeDummyParams.meetingMethod);
+      expect(employee.meetingMethod).toBe(MeetingMethodEnum.ONLINE);
       expect(() => employee.changeMeetingMethod("INVALID" as MeetingMethodEnum)).toThrow();
     });
   });
 
   describe("changeSelfIntroduction", () => {
     test("正常にselfIntroductionを変更できる", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, selfIntroduction: "自己紹介"});
 
-      expect(employee.selfIntroduction).toBe(employeeDummyParams.selfIntroduction);
+      expect(employee.selfIntroduction).toBe("自己紹介");
       employee.changeSelfIntroduction("自己紹介2");
       expect(employee.selfIntroduction).toBe("自己紹介2");
     });
 
     test("不正なselfIntroductionでEmployeeを作成しようとするとエラーが発生する", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, selfIntroduction: "自己紹介"});
 
-      expect(employee.selfIntroduction).toBe(employeeDummyParams.selfIntroduction);
+      expect(employee.selfIntroduction).toBe("自己紹介");
       expect(() => employee.changeSelfIntroduction("a".repeat(1001))).toThrow();
     });
   });
 
   describe("changeTalkableTopics", () => {
     test("正常にtalkableTopicsを変更できる", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, talkableTopics: "働き方について"});
 
-      expect(employee.talkableTopics).toBe(employeeDummyParams.talkableTopics);
-      employee.changeTalkableTopics("話せるトピック2");
-      expect(employee.talkableTopics).toBe("話せるトピック2");
+      expect(employee.talkableTopics).toBe("働き方について");
+      employee.changeTalkableTopics("やりがいについて");
+      expect(employee.talkableTopics).toBe("やりがいについて");
     });
 
     test("不正なtalkableTopicsでEmployeeを作成しようとするとエラーが発生する", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, talkableTopics: "働き方について"});
 
-      expect(employee.talkableTopics).toBe(employeeDummyParams.talkableTopics);
+      expect(employee.talkableTopics).toBe("働き方について");
       expect(() => employee.changeTalkableTopics("a".repeat(1001))).toThrow();
     });
   });
 
   describe("changeStatus", () => {
     test("正常にstatusを変更できる", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, status: StatusEnum.PENDING});
 
-
-      expect(employee.status).toBe(employeeDummyParams.status);
+      expect(employee.status).toBe(StatusEnum.PENDING);
       employee.changeStatus(StatusEnum.APPROVED);
       expect(employee.status).toBe(StatusEnum.APPROVED);
     });
 
     test("不正なstatusでEmployeeを作成しようとするとエラーが発生する", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, status: StatusEnum.PENDING});
 
-      expect(employee.status).toBe(employeeDummyParams.status);
+      expect(employee.status).toBe(StatusEnum.PENDING);
       expect(() => employee.changeStatus("INVALID" as StatusEnum)).toThrow();
     });
   });
 
   describe("toGenderLabel", () => {
     test("正常にgenderLabelを返す", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, gender: GenderEnum.MALE});
 
       expect(employee.toGenderLabel()).toBe("男性");
     });
@@ -219,7 +218,7 @@ describe("Employee", () => {
 
   describe("toHiringTypeLabel", () => {
     test("正常にhiringTypeLabelを返す", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, hiringType: HiringTypeEnum.NEW_GRADUATE});
 
       expect(employee.toHiringTypeLabel()).toBe("新卒採用");
     });
@@ -227,7 +226,7 @@ describe("Employee", () => {
 
   describe("toMeetingMethodLabel", () => {
     test("正常にmeetingMethodLabelを返す", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, meetingMethod: MeetingMethodEnum.ONLINE});
 
       expect(employee.toMeetingMethodLabel()).toBe("オンライン");
     });
@@ -235,7 +234,7 @@ describe("Employee", () => {
 
   describe("toStatusLabel", () => {
     test("正常にstatusLabelを返す", () => {
-      const employee = Employee.create({...employeeDummyParams});
+      const employee = Employee.create({...employeeDummyParams, status: StatusEnum.PENDING});
 
       expect(employee.toStatusLabel()).toBe("審査中");
     });

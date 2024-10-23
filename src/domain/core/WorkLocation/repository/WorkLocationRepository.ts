@@ -1,4 +1,4 @@
-import { WorkLocation } from "./WorkLocation";
+import { WorkLocation } from "../WorkLocation";
 import { Result } from "@/util/result";
 
 export type FindAllWorkLocationResult = Result<WorkLocation[], never>;

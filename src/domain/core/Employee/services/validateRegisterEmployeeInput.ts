@@ -1,12 +1,12 @@
 import { RegisterEmployeeParams } from "@/application/usecase/registerEmployee";
 import { EmployeeParams, GenderEnum, HiringTypeEnum, MeetingMethodEnum, StatusEnum } from "../Employee";
-import { UserRepository } from "../../User/UserRepository";
-import { CompanyRepository } from "../../Company/repository/CompanyRepository";
-import { OccupationRepository } from "../../Occupation/OccupationRepository";
-import { WorkLocationRepository } from "../../WorkLocation/WorkLocationRepository";
 import { createId } from "@paralleldrive/cuid2";
 import { NamedError } from "@/util/error";
 import { WorkLocation } from "../../WorkLocation/WorkLocation";
+import { UserRepository } from "../../User/repository/UserRepository";
+import { CompanyRepository } from "../../Company/repository/CompanyRepository";
+import { OccupationRepository } from "../../Occupation/repository/OccupationRepository";
+import { WorkLocationRepository } from "../../WorkLocation/repository/WorkLocationRepository";
 
 export type EmployeeCommand = EmployeeParams
 

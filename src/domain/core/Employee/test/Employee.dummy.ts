@@ -1,15 +1,14 @@
-import { Employee, EmployeeParams } from "./Employee";
-import { companyDummy } from "@/domain/core/Company/Company.dummy";
-import { occupationDummy } from "@/domain/core/Occupation/Occupation.dummy";
-import { GenderEnum, HiringTypeEnum, MeetingMethodEnum, StatusEnum } from "./Employee";
-import { userDummy } from "../User/User.dummy";
-import { workLocationDummy } from "../WorkLocation/WorkLocation.Dummy";
+import { Employee, EmployeeParams } from "../Employee";
+import { companyDummy } from "@/domain/core/Company/test/Company.dummy";
+import { occupationDummy } from "@/domain/core/Occupation/test/Occupation.dummy";
+import { GenderEnum, HiringTypeEnum, MeetingMethodEnum, StatusEnum } from "../Employee";
+import { workLocationDummy } from "../../WorkLocation/test/WorkLocation.Dummy";
 
 /**
  * Employeeのダミーデータ
  */
-const employeeId = "cm28rzvjg0000t87kop9wo6j";
-const userId = userDummy.id;
+const employeeId = "employeeId00000000000000";
+const userId = "userId000000000000000000";
 const company = companyDummy;
 const occupation = occupationDummy;
 const gender = GenderEnum.MALE;
@@ -21,7 +20,6 @@ const hiringType = HiringTypeEnum.NEW_GRADUATE;
 const meetingMethod = MeetingMethodEnum.ONLINE;
 const selfIntroduction = "自己紹介";
 const talkableTopics = "働き方について";
-
 
 export const employeeDummyParams: EmployeeParams = {
   id: employeeId,
@@ -38,5 +36,4 @@ export const employeeDummyParams: EmployeeParams = {
   talkableTopics: talkableTopics,
   status: status,
 }
-
 export const employeeDummy =  Employee.create(employeeDummyParams);
