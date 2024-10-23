@@ -1,24 +1,27 @@
 import { Occupation } from "@/domain/core/Occupation/Occupation";
-import { FindOccupationResult, OccupationRepository } from "@/domain/core/Occupation/repository/OccupationRepository";
+import type {
+	FindOccupationResult,
+	OccupationRepository,
+} from "@/domain/core/Occupation/repository/OccupationRepository";
 import { createSuccess } from "@/util/result";
-import { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "@prisma/client";
 
 export class OccupationPrismaRepository implements OccupationRepository {
-  constructor(private readonly prisma: PrismaClient) {}
-  
-  async findById(occupationId: number): Promise<FindOccupationResult> {
-    const occupation = await this.prisma.occupation.findUnique({
-      where: { id: occupationId },
-    });
-    if (occupation == null) {
-      return createSuccess(undefined);
-    }
+	constructor(private readonly prisma: PrismaClient) {}
 
-    const occupationData = Occupation.create({
-      id: occupation.id,
-      name: occupation.name,
-    });
+	async findById(occupationId: number): Promise<FindOccupationResult> {
+		const occupation = await this.prisma.occupation.findUnique({
+			where: { id: occupationId },
+		});
+		if (occupation == null) {
+			return createSuccess(undefined);
+		}
 
-    return createSuccess(occupationData);
-  }  
+		const occupationData = Occupation.create({
+			id: occupation.id,
+			name: occupation.name,
+		});
+
+		return createSuccess(occupationData);
+	}
 }
