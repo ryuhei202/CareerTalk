@@ -1,5 +1,5 @@
 import { User } from "../User";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 import { ZodError } from "zod";
 import { userDummyParams, userDummyWithEmployee } from "./User.dummy";
 import { employeeDummy } from "../../Employee/test/Employee.dummy";

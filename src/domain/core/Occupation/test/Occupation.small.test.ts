@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 import { Occupation } from "../Occupation";
 import { ZodError } from "zod";
 import { occupationDummyParams } from "./Occupation.dummy";
