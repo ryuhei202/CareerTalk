@@ -1,7 +1,8 @@
 import { User } from "../User";
 import { describe, expect, test, vi } from "vitest";
 import { ZodError } from "zod";
-import { userDummyParams } from "./User.dummy";
+import { userDummyParams, userDummyWithEmployee } from "./User.dummy";
+import { employeeDummy } from "../../Employee/test/Employee.dummy";
 
 describe("User", () => {
   describe("Userを生成する", () => {
@@ -11,7 +12,6 @@ describe("User", () => {
       expect(user.id).toBe(userDummyParams.id);
       expect(user.name).toBe(userDummyParams.name);
       expect(user.image).toBe(userDummyParams.image);
-      expect(user.employee).toBe(userDummyParams.employee);
     });
   
 
@@ -76,6 +76,16 @@ describe("User", () => {
     test("不正なUserImageでUserImageを変更しようとするとエラーが発生する", () => {
       const user = User.create({...userDummyParams, image: "https://example.com/image.png"});
       expect(() => user.changeImage("aaa")).toThrow(ZodError);
+    });
+  });
+
+  describe("従業員として登録されている場合", () => {
+    test("従業員を取得できる", () => {
+      const user = User.create(userDummyWithEmployee);
+      expect(user.id).toBe(userDummyParams.id);
+      expect(user.name).toBe(userDummyParams.name);
+      expect(user.image).toBe(userDummyParams.image);
+      expect(user.employee).toBe(employeeDummy);
     });
   });
 });

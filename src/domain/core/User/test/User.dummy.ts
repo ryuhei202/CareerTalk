@@ -13,14 +13,7 @@ export const userDummyParams = {
   id: userId,
   name: userName,
   image: userImage,
-  employee: employeeDummy,
 };
 
 export const userDummy = User.create(userDummyParams);
-
-// export const userDummyWithEmployee = User.create({
-//   id: userId,
-//   name: userName,
-//   image: userImage,
-//   employee: employeeDummy,
-// });
+export const userDummyWithEmployee = User.create({...userDummyParams, employee: employeeDummy});

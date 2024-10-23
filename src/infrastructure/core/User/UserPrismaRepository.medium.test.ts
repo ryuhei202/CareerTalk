@@ -3,12 +3,15 @@ import { prisma } from "@/lib/prisma";
 import { UserPrismaRepository } from "./UserPrismaRepository";
 import { createId } from "@paralleldrive/cuid2";
 import { createSuccess } from "@/util/result";
-import { userDummy } from "@/domain/core/User/test/User.dummy";
-import { employeeDummy } from "@/domain/core/Employee/Employee.dummy";
+import { userDummy, userDummyWithEmployee } from "@/domain/core/User/test/User.dummy";
+import { employeeDummy } from "@/domain/core/Employee/test/Employee.dummy";
+import { EmployeePrismaRepository } from "../Employee/EmployeePrismaRepository";
 
 let userRepository: UserPrismaRepository;
+let employeeRepository: EmployeePrismaRepository;
 beforeAll(async () => {
   userRepository = new UserPrismaRepository(prisma);
+  employeeRepository = new EmployeePrismaRepository(prisma);
 });
 
 beforeEach(async () => {
@@ -37,21 +40,19 @@ describe("UserPrismaRepository", () => {
     });
 
     test("取得対象のユーザーが存在する場合、当該ユーザーを返す", async () => {
-      const id = userDummy.id
+      // 事前にテストユーザーを保存しておく
+      // prisma/seed/user/fixture.json
+      const id = userDummy.id;
       const result = await userRepository.findById(id);
     
       expect(result).toStrictEqual(createSuccess(userDummy));
     });
 
-    // 詰まったので後でやる。
-    // test("ユーザーが現場社員として登録している場合、現場社員を取得できる", async () => {
-    //   console.log(userDummy);
-    //   await employeeRepository.save(employeeDummy)
-    //   const result = await userRepository.findById(userDummy.id);
-    
-    //   console.log(result.data);
+    test("ユーザーが現場社員として登録している場合、現場社員を取得できる", async () => {
+      await employeeRepository.save(employeeDummy)
+      const result = await userRepository.findById(userDummy.id);
       
-    //   expect(result).toStrictEqual(createSuccess(userDummyWithEmployee));
-    // });
+      expect(result).toStrictEqual(createSuccess(userDummyWithEmployee));
+    });
   });
 });

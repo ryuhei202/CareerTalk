@@ -13,8 +13,6 @@ export class EmployeePrismaRepository implements EmployeeRepository {
     private readonly prisma: PrismaClient,
   ) {}
 
-  
-
   async findById(employeeId: string): Promise<FindEmployeeResult> {
     const employee = await this.prisma.employee.findUnique({
       where: { id: employeeId },
