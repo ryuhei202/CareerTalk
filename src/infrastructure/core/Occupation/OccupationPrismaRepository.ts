@@ -1,5 +1,5 @@
 import { Occupation } from "@/domain/core/Occupation/Occupation";
-import { FindAllOccupationResult, FindOccupationResult, OccupationRepository } from "@/domain/core/Occupation/OccupationRepository";
+import { FindOccupationResult, OccupationRepository } from "@/domain/core/Occupation/repository/OccupationRepository";
 import { createSuccess } from "@/util/result";
 import { PrismaClient } from "@prisma/client";
 

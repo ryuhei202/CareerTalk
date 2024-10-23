@@ -2,8 +2,8 @@ import { describe, expect, test, beforeAll, afterAll, beforeEach } from "vitest"
 import { EmployeePrismaRepository } from "./EmployeePrismaRepository";
 import { prisma } from "@/lib/prisma";
 import { createSuccess } from "@/util/result";
-import { employeeDummy } from "@/domain/core/Employee/Employee.dummy";
-import { occupationDummy, occupationDummy2 } from "@/domain/core/Occupation/test/Occupation.dummy";
+import { employeeDummy } from "@/domain/core/Employee/test/Employee.dummy";
+import { occupationDummy2 } from "@/domain/core/Occupation/test/Occupation.dummy";
 let employeeRepository: EmployeePrismaRepository; 
 
 beforeAll(async () => {
