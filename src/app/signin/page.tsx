@@ -28,7 +28,9 @@ export default function SignInPage() {
         <CardContent className="space-y-8 flex flex-col items-center">
           <SocialLoginButton
             callbackUrl={
-              isEmployee ? "/create_profile/employee" : "/create_profile"
+              isEmployee
+                ? "/employee/create_profile"
+                : "/applicant/create_profile"
             }
           />
         </CardContent>

@@ -1,10 +1,11 @@
+import { EmployeeDTO } from "@/application/dto/Employee/EmployeeDTO";
 import { Employee } from "../Employee";
 import { EmployeeRepository } from "../repository/EmployeeRepository";
 import { EmployeeCommand } from "./validateRegisterEmployeeInput";
 
 export type CreateEmployee = (
   employeeCommand: EmployeeCommand
-) => Promise<Employee>;
+) => Promise<EmployeeDTO>;
 
 export const buildCreateEmployee = ({
   employeeRepository,
@@ -13,5 +14,5 @@ export const buildCreateEmployee = ({
   }): CreateEmployee => async (employeeCommand) => {
   const employee = Employee.create(employeeCommand);
   await employeeRepository.save(employee);
-  return employee;
+  return new EmployeeDTO(employee);
 }
