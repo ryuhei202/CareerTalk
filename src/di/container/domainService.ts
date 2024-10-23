@@ -1,12 +1,12 @@
 import { buildValidateRegisterEmployeeInput } from "@/domain/core/Employee/services/validateRegisterEmployeeInput";
 import { Container } from "inversify";
 import { COMPANY_REPOSITORY, EMPLOYEE_REPOSITORY, OCCUPATION_REPOSITORY, USER_REPOSITORY, WORK_LOCATION_REPOSITORY } from "./repository";
-import { UserRepository } from "@/domain/core/User/UserRepository";
 import { CompanyRepository } from "@/domain/core/Company/repository/CompanyRepository";
-import { WorkLocationRepository } from "@/domain/core/WorkLocation/WorkLocationRepository";
-import { OccupationRepository } from "@/domain/core/Occupation/OccupationRepository";
 import { buildCreateEmployee } from "@/domain/core/Employee/services/createEmployee";
 import { EmployeeRepository } from "@/domain/core/Employee/repository/EmployeeRepository";
+import { UserRepository } from "@/domain/core/User/repository/UserRepository";
+import { OccupationRepository } from "@/domain/core/Occupation/repository/OccupationRepository";
+import { WorkLocationRepository } from "@/domain/core/WorkLocation/repository/WorkLocationRepository";
 
 // Employee
 export const VALIDATE_EMPLOYEE = 'VALIDATE_EMPLOYEE' as const;
