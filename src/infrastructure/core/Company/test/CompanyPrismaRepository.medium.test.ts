@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeAll } from "vitest";
 import { prisma } from "@/lib/prisma";
-import { CompanyPrismaRepository } from "./CompanyPrismaRepository";
+import { CompanyPrismaRepository } from "../CompanyPrismaRepository";
 import { createSuccess } from "@/util/result";
 import { companyDummy } from "@/domain/core/Company/test/Company.dummy";
 
@@ -33,13 +33,5 @@ describe("CompanyPrismaRepository", () => {
       expect(result).toStrictEqual(createSuccess(companyDummy));
     });
   });
-
-  // 企業が増えるたびにテスト結果が変わるため、一旦コメントアウト
-  // describe("findAll", () => {
-  //   test("企業が存在する場合、企業を返す", async () => {
-  //     const result = await repository.findAll();
-  //     expect(result).toStrictEqual(createSuccess(companyDummies));
-  //   });
-  // });
 });
 
