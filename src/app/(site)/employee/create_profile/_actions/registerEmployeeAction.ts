@@ -44,6 +44,7 @@ export async function registerEmployeeAction(
       data: undefined
     };
   }
+
   const userId = session.user.id;
   const container = registerContainer();
   const useCase = container.get<RegisterEmployeeUseCase>(
@@ -62,11 +63,13 @@ export async function registerEmployeeAction(
   const selfIntroduction = formData.get("selfIntroduction");
   const talkableTopics = formData.get("talkableTopics");
 
+  const formDataObject = Object.fromEntries(formData.entries());
+
   if(!name || !companyCode || !occupationId || !gender || !joiningDate){
     return {
       success: false,
       message: "必須項目を入力してください",
-      data: undefined
+      data: formDataObject
     };
   }
 
@@ -91,17 +94,12 @@ export async function registerEmployeeAction(
   console.log("useCaseResult", useCaseResult);
   if (useCaseResult.success) {
 
-    return { 
-      success: true,
-      message: "現場社員登録が完了しました",
-      data: useCaseResult.data
-    };
     redirect("/employee/home");
   } else {
     return { 
       success: false,
       message: useCaseResult.error.message,
-      data: undefined
+      data: formDataObject
     };
   }
 }

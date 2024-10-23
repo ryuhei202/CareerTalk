@@ -1,7 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import {
   Select,
@@ -27,17 +26,16 @@ import {
 } from "@/domain/core/Employee/Employee";
 import { WORK_LOCATION_OPTIONS } from "@/app/_shared/constants/workLocationOptions";
 import { useFormState } from "react-dom";
-import {
-  CreatedEmployeeResponse,
-  registerEmployeeAction,
-} from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
+import { registerEmployeeAction } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
 import { useRef } from "react";
 import { TOccupation } from "../page";
+import { SubmitCreateEmployeeProfileButton } from "./SubmitCreateEmployeeProfileButton";
+import { Alert } from "@/app/_components/ui/alert";
 
 export type FormState = {
   message: string;
-  success: boolean;
-  data: CreatedEmployeeResponse | undefined;
+  success: boolean | undefined;
+  data: { [key: string]: FormDataEntryValue } | undefined;
 };
 
 const genderOptions = Object.values(GenderEnum) as [string, ...string[]];
@@ -77,7 +75,7 @@ const formSchema = z.object({
     .length(8, {
       message: "企業コードは8文字で入力してください",
     }),
-  joinDate: z.string().refine(
+  joinDate: z.string({ message: "入社日は必須です" }).refine(
     (date) => {
       const selectedDate = new Date(date);
       const today = new Date();
@@ -104,44 +102,48 @@ export default function CreateProfileEmployee({
   occupations: TOccupation[];
   userName: string;
 }) {
+  const [state, formAction] = useFormState<FormState, FormData>(
+    registerEmployeeAction,
+    {
+      success: undefined,
+      message: "",
+      data: undefined,
+    }
+  );
+
+  console.log("state", state);
+
   const form = useForm<z.infer<typeof formSchema>>({
     mode: "onChange",
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: userName,
-      gender: undefined,
-      birthday: undefined,
-      companyCode: "",
-      joinDate: "",
-      occupation: "",
-      workLocation: undefined,
-      hiringType: undefined,
-      meetingMethod: undefined,
-      selfIntroduction: undefined,
-      talkableTopics: undefined,
+      name: (state.data?.name as string) || userName,
+      gender: (state.data?.gender as string) ?? undefined,
+      birthday: (state.data?.birthday as string) ?? undefined,
+      companyCode: (state.data?.companyCode as string) ?? "",
+      joinDate: (state.data?.joinDate as string) ?? "",
+      occupation: (state.data?.occupation as string) ?? "",
+      workLocation: (state.data?.workLocation as string) ?? undefined,
+      hiringType: (state.data?.hiringType as string) ?? undefined,
+      meetingMethod: (state.data?.meetingMethod as string) ?? undefined,
+      selfIntroduction: (state.data?.selfIntroduction as string) ?? undefined,
+      talkableTopics: (state.data?.talkableTopics as string) ?? undefined,
     },
   });
 
-  console.log("form", form.getValues());
-
   const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction] = useFormState(registerEmployeeAction, {
-    success: false,
-    message: "",
-    data: undefined,
-  });
-  console.log("state", state);
-
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6 text-gray-800">
         プロフィール作成
       </h1>
+      {state.success === false && (
+        <Alert variant="destructive">{state.message}</Alert>
+      )}
       <Form {...form}>
         <form
           ref={formRef}
-          onSubmit={form.handleSubmit((data) => {
-            console.log("data", data);
+          onSubmit={form.handleSubmit(() => {
             formRef.current?.submit();
           })}
           className="space-y-6"
@@ -417,7 +419,7 @@ export default function CreateProfileEmployee({
             )}
           />
           <div className="flex justify-end">
-            <Button type="submit">送信</Button>
+            <SubmitCreateEmployeeProfileButton />
           </div>
         </form>
       </Form>
