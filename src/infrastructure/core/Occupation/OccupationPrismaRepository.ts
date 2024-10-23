@@ -21,17 +21,4 @@ export class OccupationPrismaRepository implements OccupationRepository {
 
     return createSuccess(occupationData);
   }  
-
-  
-  async findAll(): Promise<FindAllOccupationResult> {
-    const occupations = await this.prisma.occupation.findMany();
-    const occupationData = occupations.map((occupation) => {
-      return Occupation.create({
-        id: occupation.id,
-        name: occupation.name,
-      });
-    });
-    return createSuccess(occupationData);
-  }
-
 }
