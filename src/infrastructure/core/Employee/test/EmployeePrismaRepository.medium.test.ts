@@ -4,8 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { createSuccess } from "@/util/result";
 import { employeeDummy } from "@/domain/core/Employee/test/Employee.dummy";
 import { occupationDummy2 } from "@/domain/core/Occupation/test/Occupation.dummy";
-let employeeRepository: EmployeePrismaRepository; 
 
+let employeeRepository: EmployeePrismaRepository; 
 beforeAll(async () => {
   employeeRepository = new EmployeePrismaRepository(prisma);
 
@@ -24,7 +24,6 @@ afterAll(async () => {
 });
 
 describe("EmployeePrismaRepository", () => {
-
   describe("findById", () => {
     test("取得対象の現場社員が存在しない場合、undefined を返す", async () => {
       const result = await employeeRepository.findById(employeeDummy.id)
@@ -53,10 +52,12 @@ describe("EmployeePrismaRepository", () => {
   describe("update", () => {
     test("現場社員を更新できる", async () => {
       await employeeRepository.save(employeeDummy);
+      const employee = await employeeRepository.findById(employeeDummy.id);
+      expect(employee).toStrictEqual(createSuccess(employeeDummy));
 
-      employeeDummy.changeOccupation(occupationDummy2);
-
+      employeeDummy.changeOccupation(occupationDummy2);      
       await employeeRepository.update(employeeDummy);
+
       const result = await employeeRepository.findById(employeeDummy.id);
       expect(result).toStrictEqual(createSuccess(employeeDummy));
     });
