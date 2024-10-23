@@ -1,6 +1,6 @@
-import { employeeDummy } from "@/domain/core/Employee/Employee.dummy";
 import { describe, expect, test } from "vitest";
 import { EmployeeDTO } from "./EmployeeDTO";
+import { employeeDummy } from "@/domain/core/Employee/test/Employee.dummy";
 
 describe("EmployeeDTO", () => {
   test("EmployeeDTOが正常に作成される", () => {
@@ -34,5 +34,15 @@ describe("EmployeeDTO", () => {
     expect(employeeJson).toBeDefined();
     expect(employeeJson.id).toBe(employee.id);
     expect(employeeJson.userId).toBe(employee.userId);
+    expect(employeeJson.company.id).toBe(employee.company.id);
+    expect(employeeJson.company.name).toBe(employee.company.name);
+    expect(employeeJson.occupation.id).toBe(employee.occupation.id);
+    expect(employeeJson.occupation.name).toBe(employee.occupation.name);
+    expect(employeeJson.gender).toBe(employee.toGenderLabel());
+    expect(employeeJson.yearsOfExperience).toBe(employee.toYearsOfExperience());
+    expect(employeeJson.status).toBe(employee.toStatusLabel());
+    expect(employeeJson.age).toBe(employee.getAge());
+    expect(employeeJson.workLocation?.id).toBe(employee.workLocation?.id);
+    expect(employeeJson.workLocation?.name).toBe(employee.workLocation?.name);
   });
 });
