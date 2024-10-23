@@ -52,6 +52,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@testing-library/react": "^16.0.1",
     "@types/lodash": "^4.17.10",
     "@types/node": "^20",
