@@ -2,7 +2,7 @@
 import { Employee } from "@/domain/core/Employee/Employee";;
 import { createSuccess } from "@/util/result";
 import { PrismaClient } from "@prisma/client";
-import { toGenderEnum, toHiringTypeEnum, toMeetingMethodEnum, toStatusEnum } from "./toEntityEnumFunctions";
+import { toGenderEnum, toHiringTypeEnum, toMeetingMethodEnum, toStatusEnum } from "../toEntityEnumFunctions";
 import { EmployeeRepository, FindEmployeeResult, SaveEmployeeResult, UpdateEmployeeResult } from "@/domain/core/Employee/repository/EmployeeRepository";
 import { Company } from "@/domain/core/Company/Company";
 import { Occupation } from "@/domain/core/Occupation/Occupation";

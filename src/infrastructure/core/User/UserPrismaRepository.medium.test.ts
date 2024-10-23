@@ -5,7 +5,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { createSuccess } from "@/util/result";
 import { userDummy, userDummyWithEmployee } from "@/domain/core/User/test/User.dummy";
 import { employeeDummy } from "@/domain/core/Employee/test/Employee.dummy";
-import { EmployeePrismaRepository } from "../Employee/EmployeePrismaRepository";
+import { EmployeePrismaRepository } from "../Employee/test/EmployeePrismaRepository";
 
 let userRepository: UserPrismaRepository;
 let employeeRepository: EmployeePrismaRepository;

@@ -1,5 +1,5 @@
 import { CompanyPrismaRepository } from "@/infrastructure/core/Company/CompanyPrismaRepository";
-import { EmployeePrismaRepository } from "@/infrastructure/core/Employee/EmployeePrismaRepository";
+import { EmployeePrismaRepository } from "@/infrastructure/core/Employee/test/EmployeePrismaRepository";
 import { OccupationPrismaRepository } from "@/infrastructure/core/Occupation/OccupationPrismaRepository";
 import { UserPrismaRepository } from "@/infrastructure/core/User/UserPrismaRepository";
 import { PrismaClient } from "@prisma/client";
