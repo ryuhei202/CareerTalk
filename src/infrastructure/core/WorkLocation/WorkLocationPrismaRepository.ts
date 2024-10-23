@@ -1,5 +1,5 @@
+import { FindWorkLocationResult, WorkLocationRepository } from "@/domain/core/WorkLocation/repository/WorkLocationRepository";
 import { WorkLocation } from "@/domain/core/WorkLocation/WorkLocation";
-import { FindAllWorkLocationResult, FindWorkLocationResult, WorkLocationRepository } from "@/domain/core/WorkLocation/WorkLocationRepository";
 import { createSuccess } from "@/util/result";
 import { PrismaClient } from "@prisma/client";
 
@@ -18,18 +18,6 @@ export class WorkLocationPrismaRepository implements WorkLocationRepository {
       id: workLocation.id,
       name: workLocation.name,
     });
-    return createSuccess(workLocationData);
-  }
-
-  async findAll(): Promise<FindAllWorkLocationResult> {
-    const workLocations = await this.prisma.workLocation.findMany();
-    const workLocationData = workLocations.map((workLocation) => {
-      return WorkLocation.create({
-        id: workLocation.id,
-        name: workLocation.name,
-      });
-    });
-  
     return createSuccess(workLocationData);
   }
 }
