@@ -1,8 +1,8 @@
-import { Container } from 'inversify';
-import { registerRepositories } from './repository';
-import { registerSupports } from './support';
-import { registerDomainServices } from './domainService';
-import { registerUseCases } from './usecase';
+import { Container } from "inversify";
+import { registerDomainServices } from "./domainService";
+import { registerRepositories } from "./repository";
+import { registerSupports } from "./support";
+import { registerUseCases } from "./usecase";
 
 /**
  * DIコンテナに値を登録し、そのDIコンテナを返す
@@ -10,12 +10,12 @@ import { registerUseCases } from './usecase';
  * @returns DIコンテナ
  */
 export const registerContainer = (): Container => {
-  const container = new Container();
+	const container = new Container();
 
-  registerSupports(container);
-  registerRepositories(container);  
-  registerDomainServices(container);
-  registerUseCases(container);
+	registerSupports(container);
+	registerRepositories(container);
+	registerDomainServices(container);
+	registerUseCases(container);
 
-  return container;
+	return container;
 };

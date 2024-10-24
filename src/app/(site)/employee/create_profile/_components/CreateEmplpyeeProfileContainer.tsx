@@ -1,6 +1,14 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { registerEmployeeAction } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
+import { Alert } from "@/app/_components/ui/alert";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/app/_components/ui/form";
 import { Input } from "@/app/_components/ui/input";
 import {
   Select,
@@ -10,27 +18,19 @@ import {
   SelectValue,
 } from "@/app/_components/ui/select";
 import { Textarea } from "@/app/_components/ui/textarea";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/app/_components/ui/form";
-import { useForm } from "react-hook-form";
+import { WORK_LOCATION_OPTIONS } from "@/app/_shared/constants/workLocationOptions";
 import {
   GenderEnum,
   HiringTypeEnum,
   MeetingMethodEnum,
 } from "@/domain/core/Employee/Employee";
-import { WORK_LOCATION_OPTIONS } from "@/app/_shared/constants/workLocationOptions";
-import { useFormState } from "react-dom";
-import { registerEmployeeAction } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
-import { TOccupation } from "../page";
+import { useFormState } from "react-dom";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import type { TOccupation } from "../page";
 import { SubmitCreateEmployeeProfileButton } from "./SubmitCreateEmployeeProfileButton";
-import { Alert } from "@/app/_components/ui/alert";
 
 export type FormState = {
   message: string;
@@ -95,6 +95,7 @@ const formSchema = z.object({
   talkableTopics: z.string().optional(),
 });
 
+// TODO: あとでしっかりとコンポーネントを分割する。（デザイン待ち）
 export default function CreateProfileEmployee({
   occupations,
   userName,

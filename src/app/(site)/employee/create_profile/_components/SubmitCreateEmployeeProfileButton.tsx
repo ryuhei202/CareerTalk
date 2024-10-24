@@ -3,10 +3,10 @@ import { Button } from "@/app/_components/ui/button";
 import { useFormStatus } from "react-dom";
 
 export function SubmitCreateEmployeeProfileButton() {
-  const status = useFormStatus();
-  return (
-    <Button type="submit" disabled={status.pending}>
-      送信
-    </Button>
-  );
+	const status = useFormStatus();
+	return (
+		<Button type="submit" disabled={status.pending}>
+			送信
+		</Button>
+	);
 }

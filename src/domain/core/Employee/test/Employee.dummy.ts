@@ -1,8 +1,13 @@
-import { Employee, EmployeeParams } from "../Employee";
 import { companyDummy } from "@/domain/core/Company/test/Company.dummy";
 import { occupationDummy } from "@/domain/core/Occupation/test/Occupation.dummy";
-import { GenderEnum, HiringTypeEnum, MeetingMethodEnum, StatusEnum } from "../Employee";
 import { workLocationDummy } from "../../WorkLocation/test/WorkLocation.Dummy";
+import { Employee, type EmployeeParams } from "../Employee";
+import {
+	GenderEnum,
+	HiringTypeEnum,
+	MeetingMethodEnum,
+	StatusEnum,
+} from "../Employee";
 
 /**
  * Employeeのダミーデータ
@@ -22,18 +27,18 @@ const selfIntroduction = "自己紹介";
 const talkableTopics = "働き方について";
 
 export const employeeDummyParams: EmployeeParams = {
-  id: employeeId,
-  userId: userId,
-  company: company,
-  gender: gender,
-  birthday: birthday,
-  joiningDate: joiningDate,
-  occupation: occupation,
-  workLocation: workLocation,
-  hiringType: hiringType,
-  meetingMethod: meetingMethod,
-  selfIntroduction: selfIntroduction,
-  talkableTopics: talkableTopics,
-  status: status,
-}
-export const employeeDummy =  Employee.create(employeeDummyParams);
+	id: employeeId,
+	userId: userId,
+	company: company,
+	gender: gender,
+	birthday: birthday,
+	joiningDate: joiningDate,
+	occupation: occupation,
+	workLocation: workLocation,
+	hiringType: hiringType,
+	meetingMethod: meetingMethod,
+	selfIntroduction: selfIntroduction,
+	talkableTopics: talkableTopics,
+	status: status,
+};
+export const employeeDummy = Employee.create(employeeDummyParams);
