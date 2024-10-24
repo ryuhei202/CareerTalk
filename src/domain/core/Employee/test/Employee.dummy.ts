@@ -13,13 +13,13 @@ const employeeId = "employeeId000000000000000";
 const name = "テスト太郎";
 const imageUrl = "https://example.com/image.png";
 const userId = "userId0000000000000000000";
-const company_id = 1;
-const occupation_id = 1;
+const companyId = 1;
+const occupationId = 1;
 const gender = GenderEnum.MALE;
 const joiningDate = new Date("2020-01-01");
 const status = StatusEnum.PENDING;
 const birthday = new Date("1990-01-01");
-const workLocation_id = 1;
+const workLocationId = 1;
 const hiringType = HiringTypeEnum.NEW_GRADUATE;
 const meetingMethod = MeetingMethodEnum.ONLINE;
 const selfIntroduction = "自己紹介";
@@ -30,12 +30,12 @@ export const employeeDummyParams: EmployeeParams = {
 	name: name,
 	imageUrl: imageUrl,
 	userId: userId,
-	company_id: company_id,
-	occupation_id: occupation_id,
+	companyId: companyId,
+	occupationId: occupationId,
 	gender: gender,
 	birthday: birthday,
 	joiningDate: joiningDate,
-	workLocation_id: workLocation_id,
+	workLocationId: workLocationId,
 	hiringType: hiringType,
 	meetingMethod: meetingMethod,
 	selfIntroduction: selfIntroduction,

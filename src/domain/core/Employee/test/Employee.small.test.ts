@@ -17,12 +17,12 @@ describe("Employee", () => {
 		expect(employee.userId).toBe(employeeDummyParams.userId);
 		expect(employee.name).toBe(employeeDummyParams.name);
 		expect(employee.imageUrl).toBe(employeeDummyParams.imageUrl);
-		expect(employee.company_id).toBe(employeeDummyParams.company_id);
-		expect(employee.occupation_id).toBe(employeeDummyParams.occupation_id);
+		expect(employee.companyId).toBe(employeeDummyParams.companyId);
+		expect(employee.occupationId).toBe(employeeDummyParams.occupationId);
 		expect(employee.gender).toBe(employeeDummyParams.gender);
 		expect(employee.birthday).toBe(employeeDummyParams.birthday);
 		expect(employee.joiningDate).toBe(employeeDummyParams.joiningDate);
-		expect(employee.workLocation_id).toBe(employeeDummyParams.workLocation_id);
+		expect(employee.workLocationId).toBe(employeeDummyParams.workLocationId);
 		expect(employee.hiringType).toBe(employeeDummyParams.hiringType);
 		expect(employee.meetingMethod).toBe(employeeDummyParams.meetingMethod);
 		expect(employee.selfIntroduction).toBe(
@@ -35,8 +35,9 @@ describe("Employee", () => {
 	test("未設定のプロパティはundefinedを返す", () => {
 		const employee = Employee.create({
 			...employeeDummyParams,
+			imageUrl: undefined,
 			birthday: undefined,
-			workLocation_id: undefined,
+			workLocationId: undefined,
 			hiringType: undefined,
 			meetingMethod: undefined,
 			selfIntroduction: undefined,
@@ -44,15 +45,17 @@ describe("Employee", () => {
 		});
 
 		expect(employee.id).toBe(employeeDummyParams.id);
+		expect(employee.name).toBe(employeeDummyParams.name);
 		expect(employee.userId).toBe(employeeDummyParams.userId);
-		expect(employee.company_id).toBe(employeeDummyParams.company_id);
-		expect(employee.occupation_id).toBe(employeeDummyParams.occupation_id);
+		expect(employee.companyId).toBe(employeeDummyParams.companyId);
+		expect(employee.occupationId).toBe(employeeDummyParams.occupationId);
 		expect(employee.gender).toBe(employeeDummyParams.gender);
 		expect(employee.joiningDate).toBe(employeeDummyParams.joiningDate);
 		expect(employee.status).toBe(employeeDummyParams.status);
 		// 未設定のプロパティはundefinedを返す
+		expect(employee.imageUrl).toBeUndefined();
 		expect(employee.birthday).toBeUndefined();
-		expect(employee.workLocation_id).toBeUndefined();
+		expect(employee.workLocationId).toBeUndefined();
 		expect(employee.hiringType).toBeUndefined();
 		expect(employee.meetingMethod).toBeUndefined();
 		expect(employee.selfIntroduction).toBeUndefined();
@@ -87,7 +90,7 @@ describe("Employee", () => {
 		expect(() =>
 			Employee.create({
 				...employeeDummyParams,
-				company_id: "test" as unknown as number,
+				companyId: "test" as unknown as number,
 			}),
 		).toThrowError(ZodError);
 
@@ -119,7 +122,7 @@ describe("Employee", () => {
 		expect(() =>
 			Employee.create({
 				...employeeDummyParams,
-				occupation_id: "test" as unknown as number,
+				occupationId: "test" as unknown as number,
 			}),
 		).toThrowError(ZodError);
 
@@ -135,7 +138,7 @@ describe("Employee", () => {
 		expect(() =>
 			Employee.create({
 				...employeeDummyParams,
-				workLocation_id: "test" as unknown as number,
+				workLocationId: "test" as unknown as number,
 			}),
 		).toThrowError(ZodError);
 
@@ -176,21 +179,21 @@ describe("Employee", () => {
 		test("正常にoccupation_idを変更できる", () => {
 			const employee = Employee.create({
 				...employeeDummyParams,
-				occupation_id: 1,
+				occupationId: 1,
 			});
 
-			expect(employee.occupation_id).toBe(1);
+			expect(employee.occupationId).toBe(1);
 			employee.changeOccupationId(2);
-			expect(employee.occupation_id).toBe(2);
+			expect(employee.occupationId).toBe(2);
 		});
 
 		test("不正なoccupationIdでEmployeeを作成しようとするとエラーが発生する", () => {
 			const employee = Employee.create({
 				...employeeDummyParams,
-				occupation_id: 1,
+				occupationId: 1,
 			});
 
-			expect(employee.occupation_id).toBe(1);
+			expect(employee.occupationId).toBe(1);
 			expect(() =>
 				employee.changeOccupationId("INVALID" as unknown as number),
 			).toThrow();
@@ -201,21 +204,21 @@ describe("Employee", () => {
 		test("正常にworkLocation_idを変更できる", () => {
 			const employee = Employee.create({
 				...employeeDummyParams,
-				workLocation_id: 1,
+				workLocationId: 1,
 			});
 
-			expect(employee.workLocation_id).toBe(1);
+			expect(employee.workLocationId).toBe(1);
 			employee.changeWorkLocationId(2);
-			expect(employee.workLocation_id).toBe(2);
+			expect(employee.workLocationId).toBe(2);
 		});
 
 		test("不正なworkLocationIdでEmployeeを作成しようとするとエラーが発生する", () => {
 			const employee = Employee.create({
 				...employeeDummyParams,
-				workLocation_id: 1,
+				workLocationId: 1,
 			});
 
-			expect(employee.workLocation_id).toBe(1);
+			expect(employee.workLocationId).toBe(1);
 			expect(() =>
 				employee.changeWorkLocationId("INVALID" as unknown as number),
 			).toThrow();

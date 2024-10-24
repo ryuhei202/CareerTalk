@@ -42,7 +42,6 @@ const nameSchema = z
 	.string()
 	.min(1, { message: "名前は1文字以上である必要があります" })
 	.max(100, { message: "名前は100文字以下である必要があります" });
-const imageUrlSchema = z.string().url({ message: "無効な画像URLです" });
 const userIdSchema = z.string().length(25, {
 	message: "無効なユーザーIdです。ユーザーIDは25文字である必要があります",
 });
@@ -63,6 +62,10 @@ const joiningDateSchema = z.date().refine(
 const statusSchema = z.nativeEnum(StatusEnum);
 
 // 以下必須ではない項目
+const imageUrlSchema = z
+	.string()
+	.url({ message: "無効な画像URLです" })
+	.optional();
 const birthdaySchema = z
 	.date()
 	.refine(
@@ -102,13 +105,13 @@ const employeeParamsSchema = z.object({
 	name: nameSchema,
 	imageUrl: imageUrlSchema,
 	userId: userIdSchema,
-	company_id: companyIdSchema,
-	occupation_id: occupationIdSchema,
+	companyId: companyIdSchema,
+	occupationId: occupationIdSchema,
 	gender: genderSchema,
 	joiningDate: joiningDateSchema,
 	status: statusSchema,
 	birthday: birthdaySchema,
-	workLocation_id: workLocationIdSchema,
+	workLocationId: workLocationIdSchema,
 	hiringType: hiringTypeSchema,
 	meetingMethod: meetingMethodSchema,
 	selfIntroduction: selfIntroductionSchema,
@@ -121,15 +124,15 @@ const employeeParamsSchema = z.object({
 export type EmployeeParams = {
 	id: string;
 	name: string;
-	imageUrl: string;
 	userId: string;
-	company_id: number;
-	occupation_id: number;
+	occupationId: number;
+	companyId: number;
 	gender: GenderEnum;
 	joiningDate: Date;
 	status: StatusEnum;
+	imageUrl?: string;
 	birthday?: Date;
-	workLocation_id?: number;
+	workLocationId?: number;
 	hiringType?: HiringTypeEnum;
 	meetingMethod?: MeetingMethodEnum;
 	selfIntroduction?: string;
@@ -144,14 +147,14 @@ export class Employee {
 		private readonly _id: string,
 		private readonly _userId: string,
 		private _name: string,
-		private _imageUrl: string,
-		private readonly _company_id: number,
-		private _occupation_id: number,
+		private readonly _companyId: number,
+		private _occupationId: number,
 		private readonly _gender: GenderEnum,
 		private readonly _joiningDate: Date,
 		private _status: StatusEnum,
+		private _imageUrl?: string,
 		private readonly _birthday?: Date,
-		private _workLocation_id?: number,
+		private _workLocationId?: number,
 		private _hiringType?: HiringTypeEnum,
 		private _meetingMethod?: MeetingMethodEnum,
 		private _selfIntroduction?: string,
@@ -164,14 +167,14 @@ export class Employee {
 			params.id,
 			params.userId,
 			params.name,
-			params.imageUrl,
-			params.company_id,
-			params.occupation_id,
+			params.companyId,
+			params.occupationId,
 			params.gender,
 			params.joiningDate,
 			params.status,
+			params.imageUrl,
 			params.birthday,
-			params.workLocation_id,
+			params.workLocationId,
 			params.hiringType,
 			params.meetingMethod,
 			params.selfIntroduction,
@@ -188,20 +191,20 @@ export class Employee {
 		this._name = newName;
 	}
 
+	// イミュータブルデータモデルにするか悩み中
+	changeOccupationId(newOccupationId: number): void {
+		occupationIdSchema.parse(newOccupationId);
+		this._occupationId = newOccupationId;
+	}
+
 	changeImageUrl(newImageUrl: string): void {
 		imageUrlSchema.parse(newImageUrl);
 		this._imageUrl = newImageUrl;
 	}
 
-	// イミュータブルデータモデルにするか悩み中
-	changeOccupationId(newOccupation_id: number): void {
-		occupationIdSchema.parse(newOccupation_id);
-		this._occupation_id = newOccupation_id;
-	}
-
-	changeWorkLocationId(newWorkLocation_id: number): void {
-		workLocationIdSchema.parse(newWorkLocation_id);
-		this._workLocation_id = newWorkLocation_id;
+	changeWorkLocationId(newWorkLocationId: number): void {
+		workLocationIdSchema.parse(newWorkLocationId);
+		this._workLocationId = newWorkLocationId;
 	}
 
 	changeHiringType(newHiringType: HiringTypeEnum): void {
@@ -237,7 +240,7 @@ export class Employee {
 		return this._name;
 	}
 
-	get imageUrl(): string {
+	get imageUrl(): string | undefined {
 		return this._imageUrl;
 	}
 
@@ -245,8 +248,8 @@ export class Employee {
 		return this._userId;
 	}
 
-	get company_id(): number {
-		return this._company_id;
+	get companyId(): number {
+		return this._companyId;
 	}
 
 	get gender(): GenderEnum {
@@ -257,8 +260,8 @@ export class Employee {
 		return this._joiningDate;
 	}
 
-	get occupation_id(): number {
-		return this._occupation_id;
+	get occupationId(): number {
+		return this._occupationId;
 	}
 
 	get status(): StatusEnum {
@@ -269,8 +272,8 @@ export class Employee {
 		return this._birthday;
 	}
 
-	get workLocation_id(): number | undefined {
-		return this._workLocation_id;
+	get workLocationId(): number | undefined {
+		return this._workLocationId;
 	}
 
 	get hiringType(): HiringTypeEnum | undefined {

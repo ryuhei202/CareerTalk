@@ -1,20 +1,47 @@
 import { EmployeeDTO } from "@/application/dto/Employee/EmployeeDTO";
+import { prisma } from "@/lib/prisma";
 import { Employee } from "../Employee";
-import type { EmployeeRepository } from "../repository/EmployeeRepository";
 import type { EmployeeCommand } from "./validateRegisterEmployeeInput";
 
 export type CreateEmployee = (
 	employeeCommand: EmployeeCommand,
 ) => Promise<EmployeeDTO>;
 
-export const buildCreateEmployee =
-	({
-		employeeRepository,
-	}: {
-		employeeRepository: EmployeeRepository;
-	}): CreateEmployee =>
-	async (employeeCommand) => {
-		const employee = Employee.create(employeeCommand);
-		await employeeRepository.save(employee);
-		return new EmployeeDTO(employee);
-	};
+export const createEmployee = async (
+	employeeCommand: EmployeeCommand,
+): Promise<EmployeeDTO> => {
+	const employee = Employee.create(employeeCommand);
+	// 現場社員登録（トランザクション内で実行）
+	await prisma.$transaction(async (tx) => {
+		await tx.employee.create({
+			data: {
+				id: employee.id,
+				userId: employee.userId,
+				companyId: employee.companyId,
+				occupationId: employee.occupationId,
+				gender: employee.gender,
+				joiningDate: employee.joiningDate,
+				status: employee.status,
+				workLocationId: employee.workLocationId,
+				hiringType: employee.hiringType,
+				meetingMethod: employee.meetingMethod,
+				selfIntroduction: employee.selfIntroduction,
+				talkableTopics: employee.talkableTopics,
+				birthday: employee.birthday,
+			},
+		});
+
+		// ユーザー情報更新
+		await tx.user.update({
+			where: {
+				id: employee.userId,
+			},
+			data: {
+				name: employee.name,
+				image: employee.imageUrl,
+			},
+		});
+	});
+
+	return new EmployeeDTO(employee);
+};

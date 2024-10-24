@@ -9,23 +9,16 @@ import type {
 
 export class EmployeeDTO {
 	public readonly id: string;
+	public readonly name: string;
 	public readonly userId: string;
-	public readonly company: {
-		id: number;
-		name: string;
-	};
-	public readonly occupation: {
-		id: number;
-		name: string;
-	};
+	public readonly companyId: number;
+	public readonly occupationId: number;
 	public readonly gender: GenderLabel;
 	public readonly yearsOfExperience: number;
 	public readonly status: StatusLabel;
 	public readonly age?: number;
-	public readonly workLocation?: {
-		id: number;
-		name: string;
-	};
+	public readonly imageUrl?: string;
+	public readonly workLocationId?: number;
 	public readonly hiringType?: HiringTypeLabel;
 	public readonly meetingMethod?: MeetingMethodLabel;
 	public readonly selfIntroduction?: string;
@@ -33,14 +26,16 @@ export class EmployeeDTO {
 
 	constructor(employee: Employee) {
 		this.id = employee.id;
+		this.name = employee.name;
 		this.userId = employee.userId;
-		this.company = employee.company;
-		this.occupation = employee.occupation;
+		this.companyId = employee.companyId;
+		this.occupationId = employee.occupationId;
 		this.gender = employee.toGenderLabel();
 		this.yearsOfExperience = employee.toYearsOfExperience();
 		this.status = employee.toStatusLabel();
 		this.age = employee.getAge();
-		this.workLocation = employee.workLocation;
+		this.imageUrl = employee.imageUrl;
+		this.workLocationId = employee.workLocationId;
 		this.hiringType = employee.toHiringTypeLabel();
 		this.meetingMethod = employee.toMeetingMethodLabel();
 		this.selfIntroduction = employee.selfIntroduction;
@@ -50,20 +45,16 @@ export class EmployeeDTO {
 	toJson(): CreatedEmployeeResponse {
 		return {
 			id: this.id,
+			name: this.name,
 			userId: this.userId,
-			company: {
-				id: this.company.id,
-				name: this.company.name,
-			},
-			occupation: {
-				id: this.occupation.id,
-				name: this.occupation.name,
-			},
+			companyId: this.companyId,
+			occupationId: this.occupationId,
 			gender: this.gender,
 			yearsOfExperience: this.yearsOfExperience,
 			status: this.status,
 			age: this.age,
-			workLocation: this.workLocation,
+			imageUrl: this.imageUrl,
+			workLocationId: this.workLocationId,
 			hiringType: this.hiringType,
 			meetingMethod: this.meetingMethod,
 			selfIntroduction: this.selfIntroduction,

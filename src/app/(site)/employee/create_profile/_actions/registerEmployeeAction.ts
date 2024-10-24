@@ -1,11 +1,9 @@
 "use server";
 import type { FormState } from "@/app/(site)/employee/create_profile/_components/CreateEmplpyeeProfileContainer";
-import type {
-	RegisterEmployeeParams,
-	RegisterEmployeeUseCase,
+import {
+	type RegisterEmployeeParams,
+	registerEmployeeUseCase,
 } from "@/application/usecase/registerEmployee";
-import { registerContainer } from "@/di/container";
-import { REGISTER_EMPLOYEE_USE_CASE } from "@/di/container/usecase";
 import type {
 	GenderLabel,
 	HiringTypeLabel,
@@ -17,23 +15,16 @@ import { redirect } from "next/navigation";
 
 export type CreatedEmployeeResponse = {
 	id: string;
+	name: string;
 	userId: string;
-	company: {
-		id: number;
-		name: string;
-	};
-	occupation: {
-		id: number;
-		name: string;
-	};
+	companyId: number;
+	occupationId: number;
 	gender: GenderLabel;
 	yearsOfExperience: number;
 	status: StatusLabel;
 	age?: number;
-	workLocation?: {
-		id: number;
-		name: string;
-	};
+	imageUrl?: string;
+	workLocationId?: number;
 	hiringType?: HiringTypeLabel;
 	meetingMethod?: MeetingMethodLabel;
 	selfIntroduction?: string;
@@ -54,11 +45,6 @@ export async function registerEmployeeAction(
 	}
 
 	const userId = session.user.id;
-	const container = registerContainer();
-	const useCase = container.get<RegisterEmployeeUseCase>(
-		REGISTER_EMPLOYEE_USE_CASE,
-	);
-
 	const name = formData.get("name");
 	const companyCode = formData.get("companyCode");
 	const occupationId = formData.get("occupation");
@@ -70,6 +56,8 @@ export async function registerEmployeeAction(
 	const meetingMethod = formData.get("meetingMethod");
 	const selfIntroduction = formData.get("selfIntroduction");
 	const talkableTopics = formData.get("talkableTopics");
+	// 後で画像も入れれるようにする
+	// const imageUrl = formData.get("imageUrl");
 
 	const formDataObject = Object.fromEntries(formData.entries());
 
@@ -96,11 +84,12 @@ export async function registerEmployeeAction(
 		meetingMethod: (meetingMethod as string) || undefined,
 		selfIntroduction: (selfIntroduction as string) || undefined,
 		talkableTopics: (talkableTopics as string) || undefined,
+		// imageUrl: (imageUrl as string) || undefined,
 	};
 
 	console.log("useCaseParams", useCaseParams);
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const useCaseResult = await useCase(useCaseParams);
+	const useCaseResult = await registerEmployeeUseCase(useCaseParams);
 	console.log("useCaseResult", useCaseResult);
 	if (useCaseResult.success) {
 		redirect("/employee/home");
