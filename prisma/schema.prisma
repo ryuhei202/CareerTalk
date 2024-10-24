@@ -39,7 +39,7 @@ model User {
   emailVerified DateTime?
   image         String?
   accounts      Account[]
-  jobSeeker     JobSeeker?
+  applicant     Applicant?
   employee      Employee?
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
@@ -52,7 +52,7 @@ enum Gender {
   PREFER_NOT_TO_SAY
 }
 
-enum JobSeekerStatus {
+enum ApplicantStatus {
   PENDING
   APPROVED
   REJECTED
@@ -87,7 +87,7 @@ model WorkLocation {
   id        Int    @id @default(autoincrement())
   name      String @unique
   employees Employee[]
-  jobSeekers JobSeeker[]
+  applicants Applicant[]
 }
 
 
@@ -95,7 +95,7 @@ model Occupation {
   id          Int         @id @default(autoincrement())
   name        String      @unique
   employees   Employee[]
-  jobSeekers  JobSeeker[]
+  applicants  Applicant[]
 }
 
 model Employee {
@@ -120,7 +120,7 @@ model Employee {
   updatedAt         DateTime         @updatedAt
 }
 
-model JobSeeker {
+model Applicant {
   id               String          @id
   userId           String          @unique
   user             User            @relation(fields: [userId], references: [id])
@@ -131,7 +131,7 @@ model JobSeeker {
   workLocationId   Int?
   workLocation     WorkLocation?   @relation(fields: [workLocationId], references: [id])
   selfIntroduction String?         @default("") @db.Text
-  status           JobSeekerStatus @default(PENDING)
+  status           ApplicantStatus @default(PENDING)
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
 }
