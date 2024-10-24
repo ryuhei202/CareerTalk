@@ -1,14 +1,14 @@
 "use server";
 import type { FormState } from "@/app/(site)/employee/create_profile/_components/CreateEmplpyeeProfileContainer";
-import {
-	type RegisterEmployeeParams,
-	registerEmployeeUseCase,
-} from "@/application/usecase/registerEmployee";
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 import type { MeetingMethodLabel } from "@/domain/shared/MeetingMethod";
 import type { StatusLabel } from "@/domain/shared/Status";
 import { getServerSession } from "@/lib/auth";
+import {
+	type RegisterEmployeeParams,
+	registerEmployeeUseCase,
+} from "@/usecase/registerEmployee";
 import { redirect } from "next/navigation";
 
 export type CreatedEmployeeResponse = {

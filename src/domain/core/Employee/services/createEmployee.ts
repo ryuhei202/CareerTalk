@@ -1,5 +1,5 @@
-import { EmployeeDTO } from "@/application/dto/Employee/EmployeeDTO";
 import { prisma } from "@/lib/prisma";
+import { EmployeeDTO } from "@/usecase/dto/Employee/EmployeeDTO";
 import type { Employee } from "../Employee";
 
 export const createEmployee = async (

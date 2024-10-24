@@ -22,9 +22,6 @@ import {
 } from "./EmployeeSchema";
 
 /**
- * Employee関連のEnum
- */
-/**
  * Employeeパラメータ
  */
 export type EmployeeParams = {
@@ -91,12 +88,7 @@ export class Employee {
 	}
 
 	private static validate(params: EmployeeParams): void {
-		try {
-			employeeParamsSchema.parse(params);
-		} catch (error) {
-			console.error("Employee.validate", error);
-			throw error;
-		}
+		employeeParamsSchema.parse(params);
 	}
 
 	changeName(newName: string): void {

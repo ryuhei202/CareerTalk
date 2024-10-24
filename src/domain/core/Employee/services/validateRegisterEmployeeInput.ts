@@ -1,10 +1,10 @@
-import type { RegisterEmployeeParams } from "@/application/usecase/registerEmployee";
 import type { GenderEnum } from "@/domain/shared/Gender";
 import type { HiringTypeEnum } from "@/domain/shared/HiringType";
 import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { StatusEnum } from "@/domain/shared/Status";
 import { createId } from "@/lib/cuid";
 import { prisma } from "@/lib/prisma";
+import type { RegisterEmployeeParams } from "@/usecase/registerEmployee";
 import { NamedError } from "@/util/error";
 import { Employee } from "../Employee";
 
