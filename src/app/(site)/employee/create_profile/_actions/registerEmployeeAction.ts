@@ -4,12 +4,10 @@ import {
 	type RegisterEmployeeParams,
 	registerEmployeeUseCase,
 } from "@/application/usecase/registerEmployee";
-import type {
-	GenderLabel,
-	HiringTypeLabel,
-	MeetingMethodLabel,
-	StatusLabel,
-} from "@/domain/core/Employee/Employee";
+import type { GenderLabel } from "@/domain/shared/Gender";
+import type { HiringTypeLabel } from "@/domain/shared/HiringType";
+import type { MeetingMethodLabel } from "@/domain/shared/MeetingMethod";
+import type { StatusLabel } from "@/domain/shared/Status";
 import { getServerSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 

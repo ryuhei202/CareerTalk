@@ -19,11 +19,9 @@ import {
 } from "@/app/_components/ui/select";
 import { Textarea } from "@/app/_components/ui/textarea";
 import { WORK_LOCATION_OPTIONS } from "@/app/_shared/constants/workLocationOptions";
-import {
-  GenderEnum,
-  HiringTypeEnum,
-  MeetingMethodEnum,
-} from "@/domain/core/Employee/Employee";
+import { GenderEnum } from "@/domain/shared/Gender";
+import { HiringTypeEnum } from "@/domain/shared/HiringType";
+import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
 import { useFormState } from "react-dom";

@@ -1,12 +1,10 @@
+import { GenderEnum } from "@/domain/shared/Gender";
+import { HiringTypeEnum } from "@/domain/shared/HiringType";
+import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
+import { StatusEnum } from "@/domain/shared/Status";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { ZodError } from "zod";
-import {
-	Employee,
-	GenderEnum,
-	HiringTypeEnum,
-	MeetingMethodEnum,
-	StatusEnum,
-} from "../Employee";
+import { Employee } from "../Employee";
 import { employeeDummyParams } from "./Employee.dummy";
 
 describe("Employee", () => {

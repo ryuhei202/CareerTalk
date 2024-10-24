@@ -1,17 +1,12 @@
 import type { RegisterEmployeeParams } from "@/application/usecase/registerEmployee";
+import type { GenderEnum } from "@/domain/shared/Gender";
+import type { HiringTypeEnum } from "@/domain/shared/HiringType";
+import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
+import { StatusEnum } from "@/domain/shared/Status";
 import { createId } from "@/lib/cuid";
 import { prisma } from "@/lib/prisma";
 import { NamedError } from "@/util/error";
-import type { WorkLocation } from "@prisma/client";
-import {
-	type EmployeeParams,
-	type GenderEnum,
-	type HiringTypeEnum,
-	type MeetingMethodEnum,
-	StatusEnum,
-} from "../Employee";
-
-export type EmployeeCommand = EmployeeParams;
+import { Employee } from "../Employee";
 
 export class InvalidRegisterEmployeeInputError extends NamedError {
 	readonly name = "InvalidRegisterEmployeeInputError";
@@ -19,12 +14,11 @@ export class InvalidRegisterEmployeeInputError extends NamedError {
 
 export type ValidateRegisterEmployeeInput = (
 	params: RegisterEmployeeParams,
-) => Promise<EmployeeCommand>;
+) => Promise<Employee>;
 
 export const validateRegisterEmployeeInput = async (
 	params: RegisterEmployeeParams,
-): Promise<EmployeeCommand> => {
-	// ユーザーが存在しない場合はエラー
+): Promise<Employee> => {
 	const user = await prisma.user.findUnique({
 		where: {
 			id: params.userId,
@@ -35,6 +29,7 @@ export const validateRegisterEmployeeInput = async (
 		},
 	});
 
+	// ユーザーが存在しない場合はエラー
 	if (user == null) {
 		throw new InvalidRegisterEmployeeInputError("ユーザーが存在しません");
 	}
@@ -74,7 +69,6 @@ export const validateRegisterEmployeeInput = async (
 	}
 
 	// 勤務地の存在確認
-	let workLocation: WorkLocation | undefined;
 	if (params.workLocationId != null) {
 		const workLocation = await prisma.workLocation.findUnique({
 			where: {
@@ -86,8 +80,8 @@ export const validateRegisterEmployeeInput = async (
 		}
 	}
 
-	// 全ての条件を満たした場合はEmployeeCommandを返す。
-	return {
+	// 全ての条件を満たした場合はEmployeeインスタンスを返す。
+	const employee = Employee.create({
 		id: createId(),
 		name: params.name,
 		userId: params.userId,
@@ -98,10 +92,11 @@ export const validateRegisterEmployeeInput = async (
 		joiningDate: params.joiningDate,
 		status: StatusEnum.PENDING, // 初期値はPENDING
 		imageUrl: params.imageUrl ?? undefined,
-		workLocationId: workLocation?.id ?? undefined,
+		workLocationId: params.workLocationId ?? undefined,
 		hiringType: (params.hiringType as HiringTypeEnum) ?? undefined,
 		meetingMethod: (params.meetingMethod as MeetingMethodEnum) ?? undefined,
 		selfIntroduction: params.selfIntroduction ?? undefined,
 		talkableTopics: params.talkableTopics ?? undefined,
-	};
+	});
+	return employee;
 };

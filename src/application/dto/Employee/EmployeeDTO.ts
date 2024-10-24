@@ -1,11 +1,9 @@
 import type { CreatedEmployeeResponse } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
-import type {
-	Employee,
-	GenderLabel,
-	HiringTypeLabel,
-	MeetingMethodLabel,
-	StatusLabel,
-} from "@/domain/core/Employee/Employee";
+import type { Employee } from "@/domain/core/Employee/Employee";
+import type { GenderLabel } from "@/domain/shared/Gender";
+import type { HiringTypeLabel } from "@/domain/shared/HiringType";
+import type { MeetingMethodLabel } from "@/domain/shared/MeetingMethod";
+import type { StatusLabel } from "@/domain/shared/Status";
 
 export class EmployeeDTO {
 	public readonly id: string;

@@ -1,10 +1,8 @@
+import { GenderEnum } from "@/domain/shared/Gender";
+import { HiringTypeEnum } from "@/domain/shared/HiringType";
+import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
+import { StatusEnum } from "@/domain/shared/Status";
 import { Employee, type EmployeeParams } from "../Employee";
-import {
-	GenderEnum,
-	HiringTypeEnum,
-	MeetingMethodEnum,
-	StatusEnum,
-} from "../Employee";
 
 /**
  * Employeeのダミーデータ

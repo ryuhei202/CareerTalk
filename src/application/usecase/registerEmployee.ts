@@ -39,11 +39,11 @@ export const registerEmployeeUseCase = async (
 		params,
 	});
 	try {
-		// 現場社員登録パラメータのバリデーション
-		const employeeCommand = await validateRegisterEmployeeInput(params);
+		// ドメインサービス① 現場社員登録パラメータのバリデーション
+		const employee = await validateRegisterEmployeeInput(params);
 
-		// 現場社員の登録
-		const createdEmployee = await createEmployee(employeeCommand);
+		// ドメインサービス② 現場社員の登録
+		const createdEmployee = await createEmployee(employee);
 
 		if (createdEmployee == null) {
 			console.error({

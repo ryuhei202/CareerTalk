@@ -1,123 +1,29 @@
-import { z } from "zod";
+import { GenderEnum, type GenderLabel } from "@/domain/shared/Gender";
+import {
+	HiringTypeEnum,
+	type HiringTypeLabel,
+} from "@/domain/shared/HiringType";
+import {
+	MeetingMethodEnum,
+	type MeetingMethodLabel,
+} from "@/domain/shared/MeetingMethod";
+import { StatusEnum, type StatusLabel } from "@/domain/shared/Status";
+import {
+	employeeParamsSchema,
+	hiringTypeSchema,
+	imageUrlSchema,
+	meetingMethodSchema,
+	nameSchema,
+	occupationIdSchema,
+	selfIntroductionSchema,
+	statusSchema,
+	talkableTopicsSchema,
+	workLocationIdSchema,
+} from "./EmployeeSchema";
+
 /**
  * Employee関連のEnum
  */
-export enum GenderEnum {
-	OTHER = "OTHER",
-	MALE = "MALE",
-	FEMALE = "FEMALE",
-	PREFER_NOT_TO_SAY = "PREFER_NOT_TO_SAY",
-}
-
-export type GenderLabel = "その他" | "男性" | "女性" | "回答しない";
-
-export enum HiringTypeEnum {
-	NEW_GRADUATE = "NEW_GRADUATE",
-	MID_CAREER = "MID_CAREER",
-}
-export type HiringTypeLabel = "新卒採用" | "中途採用";
-
-export enum MeetingMethodEnum {
-	ONLINE = "ONLINE",
-	OFFLINE = "OFFLINE",
-	BOTH = "BOTH",
-}
-export type MeetingMethodLabel =
-	| "オンライン"
-	| "オフライン"
-	| "オンライン/オフライン";
-
-export enum StatusEnum {
-	PENDING = "PENDING",
-	APPROVED = "APPROVED",
-	REJECTED = "REJECTED",
-}
-export type StatusLabel = "審査中" | "承認済み" | "拒否";
-
-/**
- * Employee関連のバリデーションスキーマ
- */
-// 必須
-const nameSchema = z
-	.string()
-	.min(1, { message: "名前は1文字以上である必要があります" })
-	.max(100, { message: "名前は100文字以下である必要があります" });
-const userIdSchema = z.string().length(25, {
-	message: "無効なユーザーIdです。ユーザーIDは25文字である必要があります",
-});
-const employeeIdSchema = z
-	.string()
-	.length(25, { message: "IDは25文字である必要があります" });
-
-const companyIdSchema = z.number().min(1, { message: "不正な企業Idです" });
-const occupationIdSchema = z.number().min(1, { message: "不正な職種Idです" });
-const genderSchema = z.nativeEnum(GenderEnum, { message: "無効な性別です" });
-const joiningDateSchema = z.date().refine(
-	(date) => {
-		const now = new Date();
-		return date <= now;
-	},
-	{ message: "無効な入社日です" },
-);
-const statusSchema = z.nativeEnum(StatusEnum);
-
-// 以下必須ではない項目
-const imageUrlSchema = z
-	.string()
-	.url({ message: "無効な画像URLです" })
-	.optional();
-const birthdaySchema = z
-	.date()
-	.refine(
-		(date) => {
-			const now = new Date();
-			const minDate = new Date(
-				now.getFullYear() - 100,
-				now.getMonth(),
-				now.getDate(),
-			);
-			return date <= now && date >= minDate;
-		},
-		{ message: "無効な生年月日です" },
-	)
-	.optional();
-const workLocationIdSchema = z
-	.number()
-	.min(1, { message: "不正な勤務地Idです" })
-	.optional();
-const hiringTypeSchema = z
-	.nativeEnum(HiringTypeEnum, { message: "無効な入社方法です" })
-	.optional();
-const meetingMethodSchema = z
-	.nativeEnum(MeetingMethodEnum, { message: "無効な訪問方法です" })
-	.optional();
-const selfIntroductionSchema = z
-	.string()
-	.max(1000, { message: "自己紹介は1000文字以下である必要があります" })
-	.optional();
-const talkableTopicsSchema = z
-	.string()
-	.max(1000, { message: "話せる内容は1000文字以下である必要があります" })
-	.optional();
-
-const employeeParamsSchema = z.object({
-	id: employeeIdSchema,
-	name: nameSchema,
-	imageUrl: imageUrlSchema,
-	userId: userIdSchema,
-	companyId: companyIdSchema,
-	occupationId: occupationIdSchema,
-	gender: genderSchema,
-	joiningDate: joiningDateSchema,
-	status: statusSchema,
-	birthday: birthdaySchema,
-	workLocationId: workLocationIdSchema,
-	hiringType: hiringTypeSchema,
-	meetingMethod: meetingMethodSchema,
-	selfIntroduction: selfIntroductionSchema,
-	talkableTopics: talkableTopicsSchema,
-});
-
 /**
  * Employeeパラメータ
  */
@@ -162,6 +68,8 @@ export class Employee {
 	) {}
 
 	static create(params: EmployeeParams): Employee {
+		console.log("Employee.create", params);
+
 		Employee.validate(params);
 		return new Employee(
 			params.id,
@@ -183,7 +91,12 @@ export class Employee {
 	}
 
 	private static validate(params: EmployeeParams): void {
-		employeeParamsSchema.parse(params);
+		try {
+			employeeParamsSchema.parse(params);
+		} catch (error) {
+			console.error("Employee.validate", error);
+			throw error;
+		}
 	}
 
 	changeName(newName: string): void {
