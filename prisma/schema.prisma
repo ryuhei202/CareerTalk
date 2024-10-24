@@ -58,15 +58,6 @@ enum JobSeekerStatus {
   REJECTED
 }
 
-model JobSeeker {
-  id        String          @id 
-  userId    String           @unique
-  user      User            @relation(fields: [userId], references: [id])
-  status    JobSeekerStatus @default(PENDING)
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-} 
-
 model Company {
   id        Int       @id @default(autoincrement())
   name      String    @unique
@@ -96,13 +87,15 @@ model WorkLocation {
   id        Int    @id @default(autoincrement())
   name      String @unique
   employees Employee[]
+  jobSeekers JobSeeker[]
 }
 
 
 model Occupation {
-  id        Int        @id @default(autoincrement())
-  name      String     @unique
-  employees Employee[]
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  employees   Employee[]
+  jobSeekers  JobSeeker[]
 }
 
 model Employee {
@@ -127,3 +120,18 @@ model Employee {
   updatedAt         DateTime         @updatedAt
 }
 
+model JobSeeker {
+  id               String          @id
+  userId           String          @unique
+  user             User            @relation(fields: [userId], references: [id])
+  birthday         DateTime?
+  gender           Gender
+  occupationId     Int
+  occupation       Occupation      @relation(fields: [occupationId], references: [id])
+  workLocationId   Int?
+  workLocation     WorkLocation?   @relation(fields: [workLocationId], references: [id])
+  selfIntroduction String?         @default("") @db.Text
+  status           JobSeekerStatus @default(PENDING)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+}
