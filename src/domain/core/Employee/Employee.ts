@@ -1,9 +1,4 @@
 import { z } from "zod";
-import { Company } from "../Company/Company";
-import { Occupation } from "../Occupation/Occupation";
-import { userIdSchema } from "../User/User";
-import { WorkLocation } from "../WorkLocation/WorkLocation";
-
 /**
  * Employee関連のEnum
  */
@@ -43,18 +38,20 @@ export type StatusLabel = "審査中" | "承認済み" | "拒否";
  * Employee関連のバリデーションスキーマ
  */
 // 必須
+const nameSchema = z
+	.string()
+	.min(1, { message: "名前は1文字以上である必要があります" })
+	.max(100, { message: "名前は100文字以下である必要があります" });
+const imageUrlSchema = z.string().url({ message: "無効な画像URLです" });
+const userIdSchema = z.string().length(25, {
+	message: "無効なユーザーIdです。ユーザーIDは25文字である必要があります",
+});
 const employeeIdSchema = z
 	.string()
-	.length(24, { message: "IDは24文字である必要があります" });
-const companySchema = z.custom<Company>((value) => value instanceof Company, {
-	message: "不正な企業です",
-});
-const occupationSchema = z.custom<Occupation>(
-	(value) => value instanceof Occupation,
-	{
-		message: "不正な職種です",
-	},
-);
+	.length(25, { message: "IDは25文字である必要があります" });
+
+const companyIdSchema = z.number().min(1, { message: "不正な企業Idです" });
+const occupationIdSchema = z.number().min(1, { message: "不正な職種Idです" });
 const genderSchema = z.nativeEnum(GenderEnum, { message: "無効な性別です" });
 const joiningDateSchema = z.date().refine(
 	(date) => {
@@ -64,7 +61,8 @@ const joiningDateSchema = z.date().refine(
 	{ message: "無効な入社日です" },
 );
 const statusSchema = z.nativeEnum(StatusEnum);
-// 必須ではない
+
+// 以下必須ではない項目
 const birthdaySchema = z
 	.date()
 	.refine(
@@ -80,10 +78,9 @@ const birthdaySchema = z
 		{ message: "無効な生年月日です" },
 	)
 	.optional();
-const workLocationSchema = z
-	.custom<WorkLocation>((value) => value instanceof WorkLocation, {
-		message: "不正な勤務地です",
-	})
+const workLocationIdSchema = z
+	.number()
+	.min(1, { message: "不正な勤務地Idです" })
 	.optional();
 const hiringTypeSchema = z
 	.nativeEnum(HiringTypeEnum, { message: "無効な入社方法です" })
@@ -102,14 +99,16 @@ const talkableTopicsSchema = z
 
 const employeeParamsSchema = z.object({
 	id: employeeIdSchema,
+	name: nameSchema,
+	imageUrl: imageUrlSchema,
 	userId: userIdSchema,
-	company: companySchema,
-	occupation: occupationSchema,
+	company_id: companyIdSchema,
+	occupation_id: occupationIdSchema,
 	gender: genderSchema,
 	joiningDate: joiningDateSchema,
 	status: statusSchema,
 	birthday: birthdaySchema,
-	workLocation: workLocationSchema,
+	workLocation_id: workLocationIdSchema,
 	hiringType: hiringTypeSchema,
 	meetingMethod: meetingMethodSchema,
 	selfIntroduction: selfIntroductionSchema,
@@ -121,14 +120,16 @@ const employeeParamsSchema = z.object({
  */
 export type EmployeeParams = {
 	id: string;
+	name: string;
+	imageUrl: string;
 	userId: string;
-	company: Company;
-	occupation: Occupation;
+	company_id: number;
+	occupation_id: number;
 	gender: GenderEnum;
 	joiningDate: Date;
 	status: StatusEnum;
 	birthday?: Date;
-	workLocation?: WorkLocation;
+	workLocation_id?: number;
 	hiringType?: HiringTypeEnum;
 	meetingMethod?: MeetingMethodEnum;
 	selfIntroduction?: string;
@@ -142,13 +143,15 @@ export class Employee {
 	private constructor(
 		private readonly _id: string,
 		private readonly _userId: string,
-		private readonly _company: Company, // 企業エンティティ
+		private _name: string,
+		private _imageUrl: string,
+		private readonly _company_id: number,
+		private _occupation_id: number,
 		private readonly _gender: GenderEnum,
 		private readonly _joiningDate: Date,
-		private _occupation: Occupation, // 職種エンティティ
 		private _status: StatusEnum,
 		private readonly _birthday?: Date,
-		private _workLocation?: WorkLocation, // 勤務地エンティティ
+		private _workLocation_id?: number,
 		private _hiringType?: HiringTypeEnum,
 		private _meetingMethod?: MeetingMethodEnum,
 		private _selfIntroduction?: string,
@@ -160,13 +163,15 @@ export class Employee {
 		return new Employee(
 			params.id,
 			params.userId,
-			params.company,
+			params.name,
+			params.imageUrl,
+			params.company_id,
+			params.occupation_id,
 			params.gender,
 			params.joiningDate,
-			params.occupation,
 			params.status,
 			params.birthday,
-			params.workLocation,
+			params.workLocation_id,
 			params.hiringType,
 			params.meetingMethod,
 			params.selfIntroduction,
@@ -178,15 +183,25 @@ export class Employee {
 		employeeParamsSchema.parse(params);
 	}
 
-	// イミュータブルデータモデルにするか悩み中
-	changeOccupation(newOccupation: Occupation): void {
-		occupationSchema.parse(newOccupation);
-		this._occupation = newOccupation;
+	changeName(newName: string): void {
+		nameSchema.parse(newName);
+		this._name = newName;
 	}
 
-	changeWorkLocation(newWorkLocation: WorkLocation): void {
-		workLocationSchema.parse(newWorkLocation);
-		this._workLocation = newWorkLocation;
+	changeImageUrl(newImageUrl: string): void {
+		imageUrlSchema.parse(newImageUrl);
+		this._imageUrl = newImageUrl;
+	}
+
+	// イミュータブルデータモデルにするか悩み中
+	changeOccupationId(newOccupation_id: number): void {
+		occupationIdSchema.parse(newOccupation_id);
+		this._occupation_id = newOccupation_id;
+	}
+
+	changeWorkLocationId(newWorkLocation_id: number): void {
+		workLocationIdSchema.parse(newWorkLocation_id);
+		this._workLocation_id = newWorkLocation_id;
 	}
 
 	changeHiringType(newHiringType: HiringTypeEnum): void {
@@ -218,12 +233,20 @@ export class Employee {
 		return this._id;
 	}
 
+	get name(): string {
+		return this._name;
+	}
+
+	get imageUrl(): string {
+		return this._imageUrl;
+	}
+
 	get userId(): string {
 		return this._userId;
 	}
 
-	get company(): Company {
-		return this._company;
+	get company_id(): number {
+		return this._company_id;
 	}
 
 	get gender(): GenderEnum {
@@ -234,8 +257,8 @@ export class Employee {
 		return this._joiningDate;
 	}
 
-	get occupation(): Occupation {
-		return this._occupation;
+	get occupation_id(): number {
+		return this._occupation_id;
 	}
 
 	get status(): StatusEnum {
@@ -246,8 +269,8 @@ export class Employee {
 		return this._birthday;
 	}
 
-	get workLocation(): WorkLocation | undefined {
-		return this._workLocation;
+	get workLocation_id(): number | undefined {
+		return this._workLocation_id;
 	}
 
 	get hiringType(): HiringTypeEnum | undefined {

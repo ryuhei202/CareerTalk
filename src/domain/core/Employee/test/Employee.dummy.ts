@@ -1,6 +1,3 @@
-import { companyDummy } from "@/domain/core/Company/test/Company.dummy";
-import { occupationDummy } from "@/domain/core/Occupation/test/Occupation.dummy";
-import { workLocationDummy } from "../../WorkLocation/test/WorkLocation.Dummy";
 import { Employee, type EmployeeParams } from "../Employee";
 import {
 	GenderEnum,
@@ -12,15 +9,17 @@ import {
 /**
  * Employeeのダミーデータ
  */
-const employeeId = "employeeId00000000000000";
-const userId = "userId000000000000000000";
-const company = companyDummy;
-const occupation = occupationDummy;
+const employeeId = "employeeId000000000000000";
+const name = "テスト太郎";
+const imageUrl = "https://example.com/image.png";
+const userId = "userId0000000000000000000";
+const company_id = 1;
+const occupation_id = 1;
 const gender = GenderEnum.MALE;
 const joiningDate = new Date("2020-01-01");
 const status = StatusEnum.PENDING;
 const birthday = new Date("1990-01-01");
-const workLocation = workLocationDummy;
+const workLocation_id = 1;
 const hiringType = HiringTypeEnum.NEW_GRADUATE;
 const meetingMethod = MeetingMethodEnum.ONLINE;
 const selfIntroduction = "自己紹介";
@@ -28,13 +27,15 @@ const talkableTopics = "働き方について";
 
 export const employeeDummyParams: EmployeeParams = {
 	id: employeeId,
+	name: name,
+	imageUrl: imageUrl,
 	userId: userId,
-	company: company,
+	company_id: company_id,
+	occupation_id: occupation_id,
 	gender: gender,
 	birthday: birthday,
 	joiningDate: joiningDate,
-	occupation: occupation,
-	workLocation: workLocation,
+	workLocation_id: workLocation_id,
 	hiringType: hiringType,
 	meetingMethod: meetingMethod,
 	selfIntroduction: selfIntroduction,

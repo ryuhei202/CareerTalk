@@ -1,16 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { ZodError } from "zod";
-import type { Company } from "../../Company/Company";
-import type { Occupation } from "../../Occupation/Occupation";
-import {
-	occupationDummy,
-	occupationDummy2,
-} from "../../Occupation/test/Occupation.dummy";
-import type { WorkLocation } from "../../WorkLocation/WorkLocation";
-import {
-	workLocationDummy,
-	workLocationDummy2,
-} from "../../WorkLocation/test/WorkLocation.Dummy";
 import {
 	Employee,
 	GenderEnum,
@@ -26,12 +15,14 @@ describe("Employee", () => {
 
 		expect(employee.id).toBe(employeeDummyParams.id);
 		expect(employee.userId).toBe(employeeDummyParams.userId);
-		expect(employee.company).toBe(employeeDummyParams.company);
+		expect(employee.name).toBe(employeeDummyParams.name);
+		expect(employee.imageUrl).toBe(employeeDummyParams.imageUrl);
+		expect(employee.company_id).toBe(employeeDummyParams.company_id);
+		expect(employee.occupation_id).toBe(employeeDummyParams.occupation_id);
 		expect(employee.gender).toBe(employeeDummyParams.gender);
 		expect(employee.birthday).toBe(employeeDummyParams.birthday);
-		expect(employee.occupation).toBe(employeeDummyParams.occupation);
-		expect(employee.workLocation).toBe(employeeDummyParams.workLocation);
 		expect(employee.joiningDate).toBe(employeeDummyParams.joiningDate);
+		expect(employee.workLocation_id).toBe(employeeDummyParams.workLocation_id);
 		expect(employee.hiringType).toBe(employeeDummyParams.hiringType);
 		expect(employee.meetingMethod).toBe(employeeDummyParams.meetingMethod);
 		expect(employee.selfIntroduction).toBe(
@@ -45,7 +36,7 @@ describe("Employee", () => {
 		const employee = Employee.create({
 			...employeeDummyParams,
 			birthday: undefined,
-			workLocation: undefined,
+			workLocation_id: undefined,
 			hiringType: undefined,
 			meetingMethod: undefined,
 			selfIntroduction: undefined,
@@ -54,14 +45,14 @@ describe("Employee", () => {
 
 		expect(employee.id).toBe(employeeDummyParams.id);
 		expect(employee.userId).toBe(employeeDummyParams.userId);
-		expect(employee.company).toBe(employeeDummyParams.company);
-		expect(employee.occupation).toBe(employeeDummyParams.occupation);
+		expect(employee.company_id).toBe(employeeDummyParams.company_id);
+		expect(employee.occupation_id).toBe(employeeDummyParams.occupation_id);
 		expect(employee.gender).toBe(employeeDummyParams.gender);
 		expect(employee.joiningDate).toBe(employeeDummyParams.joiningDate);
 		expect(employee.status).toBe(employeeDummyParams.status);
 		// 未設定のプロパティはundefinedを返す
 		expect(employee.birthday).toBeUndefined();
-		expect(employee.workLocation).toBeUndefined();
+		expect(employee.workLocation_id).toBeUndefined();
 		expect(employee.hiringType).toBeUndefined();
 		expect(employee.meetingMethod).toBeUndefined();
 		expect(employee.selfIntroduction).toBeUndefined();
@@ -74,16 +65,29 @@ describe("Employee", () => {
 			Employee.create({ ...employeeDummyParams, id: "" }),
 		).toThrowError(ZodError);
 
+		// 不正なname
+		expect(() =>
+			Employee.create({ ...employeeDummyParams, name: "" }),
+		).toThrowError(ZodError);
+		expect(() =>
+			Employee.create({ ...employeeDummyParams, name: "a".repeat(101) }),
+		).toThrowError(ZodError);
+
+		// 不正なimageUrl
+		expect(() =>
+			Employee.create({ ...employeeDummyParams, imageUrl: "invalid" }),
+		).toThrowError(ZodError);
+
 		// 不正なuserId
 		expect(() =>
 			Employee.create({ ...employeeDummyParams, userId: "" }),
 		).toThrowError(ZodError);
 
-		// 不正なcompany
+		// 不正なcompany_id
 		expect(() =>
 			Employee.create({
 				...employeeDummyParams,
-				company: undefined as unknown as Company,
+				company_id: "test" as unknown as number,
 			}),
 		).toThrowError(ZodError);
 
@@ -111,11 +115,11 @@ describe("Employee", () => {
 			}),
 		).toThrowError(ZodError);
 
-		// 不正なoccupation
+		// 不正なoccupation_id
 		expect(() =>
 			Employee.create({
 				...employeeDummyParams,
-				occupation: undefined as unknown as Occupation,
+				occupation_id: "test" as unknown as number,
 			}),
 		).toThrowError(ZodError);
 
@@ -127,11 +131,11 @@ describe("Employee", () => {
 			}),
 		).toThrowError(ZodError);
 
-		// 不正なworkLocation
+		// 不正なworkLocation_id
 		expect(() =>
 			Employee.create({
 				...employeeDummyParams,
-				workLocation: "INVALID" as unknown as WorkLocation,
+				workLocation_id: "test" as unknown as number,
 			}),
 		).toThrowError(ZodError);
 
@@ -168,52 +172,52 @@ describe("Employee", () => {
 		).toThrowError(ZodError);
 	});
 
-	describe("changeOccupation", () => {
-		test("正常にoccupationを変更できる", () => {
+	describe("changeOccupationId", () => {
+		test("正常にoccupation_idを変更できる", () => {
 			const employee = Employee.create({
 				...employeeDummyParams,
-				occupation: occupationDummy,
+				occupation_id: 1,
 			});
 
-			expect(employee.occupation).toBe(occupationDummy);
-			employee.changeOccupation(occupationDummy2);
-			expect(employee.occupation).toBe(occupationDummy2);
+			expect(employee.occupation_id).toBe(1);
+			employee.changeOccupationId(2);
+			expect(employee.occupation_id).toBe(2);
 		});
 
 		test("不正なoccupationIdでEmployeeを作成しようとするとエラーが発生する", () => {
 			const employee = Employee.create({
 				...employeeDummyParams,
-				occupation: occupationDummy,
+				occupation_id: 1,
 			});
 
-			expect(employee.occupation).toBe(occupationDummy);
+			expect(employee.occupation_id).toBe(1);
 			expect(() =>
-				employee.changeOccupation("INVALID" as unknown as Occupation),
+				employee.changeOccupationId("INVALID" as unknown as number),
 			).toThrow();
 		});
 	});
 
-	describe("changeWorkLocation", () => {
-		test("正常にworkLocationを変更できる", () => {
+	describe("changeWorkLocationId", () => {
+		test("正常にworkLocation_idを変更できる", () => {
 			const employee = Employee.create({
 				...employeeDummyParams,
-				workLocation: workLocationDummy,
+				workLocation_id: 1,
 			});
 
-			expect(employee.workLocation).toBe(workLocationDummy);
-			employee.changeWorkLocation(workLocationDummy2);
-			expect(employee.workLocation).toBe(workLocationDummy2);
+			expect(employee.workLocation_id).toBe(1);
+			employee.changeWorkLocationId(2);
+			expect(employee.workLocation_id).toBe(2);
 		});
 
 		test("不正なworkLocationIdでEmployeeを作成しようとするとエラーが発生する", () => {
 			const employee = Employee.create({
 				...employeeDummyParams,
-				workLocation: workLocationDummy,
+				workLocation_id: 1,
 			});
 
-			expect(employee.workLocation).toBe(workLocationDummy);
+			expect(employee.workLocation_id).toBe(1);
 			expect(() =>
-				employee.changeWorkLocation("INVALID" as unknown as WorkLocation),
+				employee.changeWorkLocationId("INVALID" as unknown as number),
 			).toThrow();
 		});
 	});
