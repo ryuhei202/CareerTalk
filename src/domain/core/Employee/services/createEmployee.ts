@@ -1,10 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { EmployeeDTO } from "@/usecase/dto/Employee/EmployeeDTO";
 import type { Employee } from "../Employee";
 
-export const createEmployee = async (
-	employee: Employee,
-): Promise<EmployeeDTO> => {
+export const createEmployee = async (employee: Employee): Promise<Employee> => {
 	// 現場社員登録（トランザクション内で実行）
 	await prisma.$transaction(async (tx) => {
 		await tx.employee.create({
@@ -37,5 +34,5 @@ export const createEmployee = async (
 		});
 	});
 
-	return new EmployeeDTO(employee);
+	return employee;
 };
