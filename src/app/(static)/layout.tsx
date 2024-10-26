@@ -1,4 +1,3 @@
-import { getServerSession } from "@/lib/auth";
 import { LoginButton } from "../_components/parts/Button/LoginButton";
 import CareerTalkLogo from "../_components/parts/Logo/CareerTalkLogo";
 
@@ -7,7 +6,6 @@ export default async function SiteLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
   return (
     <div>
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
