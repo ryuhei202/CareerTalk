@@ -1,68 +1,93 @@
-import { Button } from "@/app/_components/ui/button";
-import { Calendar, MessageCircle, MessageSquare, Users } from "lucide-react";
+import {
+  Calendar,
+  MessageCircle,
+  MessageSquare,
+  Search,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
-import { LogOutButton } from "../_components/parts/Button/LogOutButton";
-import CareerTalkLogo from "../_components/parts/Logo/CareerTalkLogo";
 
 export default async function SiteLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<>
-			<header className="bg-white shadow-sm">
-				<div className="container mx-auto px-4 py-4">
-					<nav className="flex justify-between items-center">
-						<CareerTalkLogo />
-						<ul className="hidden md:flex space-x-6 items-center">
-							<li>
-								<Link
-									href="/"
-									className="text-gray-600 hover:text-purple-600 flex items-center"
-								>
-									<MessageCircle className="h-5 w-5 mr-1" />
-									ホーム
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/employees"
-									className="text-gray-600 hover:text-purple-600 flex items-center"
-								>
-									<Users className="h-5 w-5 mr-1" />
-									現場社員一覧
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/messages"
-									className="text-gray-600 hover:text-purple-600 flex items-center"
-								>
-									<MessageSquare className="h-5 w-5 mr-1" />
-									DM
-								</Link>
-							</li>
-							<li>
-								<Link
-									href="/events"
-									className="text-gray-600 hover:text-purple-600 flex items-center"
-								>
-									<Calendar className="h-5 w-5 mr-1" />
-									イベント
-								</Link>
-							</li>
-							<li>
-								<LogOutButton />
-							</li>
-						</ul>
-						<Button className="md:hidden" variant="ghost">
-							メニュー
-						</Button>
-					</nav>
-				</div>
-			</header>
-			{children}
-		</>
-	);
+  return (
+    <>
+      <header className="bg-white border-b border-gray-200">
+        <div className="flex items-center justify-between h-20">
+          <div className="flex items-center space-x-4 pl-8">
+            <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <div className="w-6 h-6 bg-black rounded-full" />
+              </div>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-black">キャリトーク</h1>
+              <p className="text-sm text-gray-600">
+                社会人のためのキャリア訪問
+              </p>
+            </div>
+          </div>
+          <nav className="hidden md:flex items-center h-full flex-grow justify-end">
+            <Link
+              href="/employee-search"
+              className="flex flex-col items-center justify-center h-full px-8 text-gray-600 hover:text-gray-900 border-r border-gray-200"
+            >
+              <Search className="w-8 h-8 mb-1" />
+              <span className="text-sm">社員検索</span>
+            </Link>
+            <Link
+              href="/dm"
+              className="flex flex-col items-center justify-center h-full px-8 text-gray-600 hover:text-gray-900 border-r border-gray-200"
+            >
+              <MessageCircle className="w-8 h-8 mb-1" />
+              <span className="text-sm">DM</span>
+            </Link>
+            <Link
+              href="/events"
+              className="flex flex-col items-center justify-center h-full px-8 text-gray-600 hover:text-gray-900 border-r border-gray-200"
+            >
+              <Calendar className="w-8 h-8 mb-1" />
+              <span className="text-sm">イベント</span>
+            </Link>
+            <Link
+              href="/my-page"
+              className="relative bg-blue-400 text-black px-12 h-full flex items-center justify-center overflow-hidden"
+            >
+              <span className="relative z-10 text-lg font-semibold text-white pl-8">
+                MY PAGE
+              </span>
+              <span
+                className="absolute top-0 left-0 w-16 h-full bg-white transform -skew-x-12 -translate-x-8"
+                aria-hidden="true"
+              />
+            </Link>
+          </nav>
+          <button className="md:hidden mr-4" type="button">
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-labelledby="menuIconTitle menuIconDesc"
+            >
+              <title id="menuIconTitle">メニュー</title>
+              <desc id="menuIconDesc">
+                メニューを開くためのハンバーガーアイコン
+              </desc>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+      {children}
+    </>
+  );
 }
