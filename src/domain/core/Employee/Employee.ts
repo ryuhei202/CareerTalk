@@ -8,6 +8,7 @@ import {
 	type MeetingMethodLabel,
 } from "@/domain/shared/MeetingMethod";
 import { StatusEnum, type StatusLabel } from "@/domain/shared/Status";
+import { NamedError } from "@/util/error";
 import {
 	employeeParamsSchema,
 	hiringTypeSchema,
@@ -20,6 +21,10 @@ import {
 	talkableTopicsSchema,
 	workLocationIdSchema,
 } from "./EmployeeSchema";
+
+export class EmployeeDomainError extends NamedError {
+	readonly name = "EmployeeDomainError";
+}
 
 /**
  * Employeeパラメータ
@@ -65,8 +70,6 @@ export class Employee {
 	) {}
 
 	static create(params: EmployeeParams): Employee {
-		console.log("Employee.create", params);
-
 		Employee.validate(params);
 		return new Employee(
 			params.id,
@@ -208,7 +211,7 @@ export class Employee {
 			case GenderEnum.PREFER_NOT_TO_SAY:
 				return "回答しない";
 			default:
-				throw new Error("無効な性別です");
+				throw new EmployeeDomainError("無効な性別です");
 		}
 	}
 
@@ -222,7 +225,7 @@ export class Employee {
 			case HiringTypeEnum.MID_CAREER:
 				return "中途採用";
 			default:
-				throw new Error("無効な入社方法です");
+				throw new EmployeeDomainError("無効な入社方法です");
 		}
 	}
 
@@ -238,7 +241,7 @@ export class Employee {
 			case MeetingMethodEnum.BOTH:
 				return "オンライン/オフライン";
 			default:
-				throw new Error("無効な訪問方法です");
+				throw new EmployeeDomainError("無効な訪問方法です");
 		}
 	}
 
@@ -251,7 +254,7 @@ export class Employee {
 			case StatusEnum.REJECTED:
 				return "拒否";
 			default:
-				throw new Error("無効なステータスです");
+				throw new EmployeeDomainError("無効なステータスです");
 		}
 	}
 
