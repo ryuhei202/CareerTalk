@@ -1,10 +1,4 @@
-import {
-  Calendar,
-  MessageCircle,
-  MessageSquare,
-  Search,
-  Users,
-} from "lucide-react";
+import { Calendar, MessageCircle, Search } from "lucide-react";
 import Link from "next/link";
 
 export default async function SiteLayout({
