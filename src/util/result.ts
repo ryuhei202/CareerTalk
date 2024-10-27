@@ -1,28 +1,37 @@
-import type { ZodError } from "zod";
-import type { NamedError } from "./error";
-
 export interface Success<T> {
 	success: true;
+	message: string;
 	data: T;
 }
 
-export interface Failure<E extends NamedError | ZodError> {
+export interface Failure<E> {
 	success: false;
-	error: E;
+	message: string;
+	data: E;
 }
 
-export type Result<T, E extends NamedError | ZodError> = E[] extends never[]
-	? Success<T>
-	: Success<T> | Failure<E>;
+export type Result<T, E> = Success<T> | Failure<E>;
 
-export const createSuccess = <T>(data: T): Success<T> => ({
+export const createSuccess = <T>({
+	message,
+	data,
+}: {
+	data: T;
+	message: string;
+}): Success<T> => ({
 	success: true,
+	message,
 	data,
 });
 
-export const createFailure = <E extends NamedError | ZodError>(
-	error: E,
-): Failure<E> => ({
+export const createFailure = <E>({
+	message,
+	data,
+}: {
+	message: string;
+	data: E;
+}): Failure<E> => ({
 	success: false,
-	error,
+	message,
+	data,
 });

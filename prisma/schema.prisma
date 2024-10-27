@@ -34,13 +34,14 @@ model Account {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
+  name          String
   email         String?   @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
-  jobSeeker     JobSeeker?
+  applicant     Applicant?
   employee      Employee?
+  messages      Message[]
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
 }
@@ -52,17 +53,18 @@ enum Gender {
   PREFER_NOT_TO_SAY
 }
 
-enum JobSeekerStatus {
+enum ApplicantStatus {
   PENDING
   APPROVED
   REJECTED
 }
 
-model JobSeeker {
+model Applicant {
   id        String          @id 
   userId    String           @unique
   user      User            @relation(fields: [userId], references: [id])
-  status    JobSeekerStatus @default(PENDING)
+  status    ApplicantStatus @default(PENDING)
+  conversations Conversation[]
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
 } 
@@ -123,7 +125,50 @@ model Employee {
   selfIntroduction  String?          @default("") @db.Text
   talkableTopics    String?          @default("")
   status            EmployeeStatus   @default(PENDING)
+  conversations     Conversation[]
   createdAt         DateTime         @default(now())
   updatedAt         DateTime         @updatedAt
 }
+
+enum ConversationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model ConversationPurpose {
+  id        String    @id
+  reason String @unique
+  conversations Conversation[]
+}
+
+model Conversation {
+  id        String    @id
+  applicantId String
+  applicant Applicant @relation(fields: [applicantId], references: [id])
+  employeeId String
+  employee Employee @relation(fields: [employeeId], references: [id])
+  purposeId String
+  purpose ConversationPurpose @relation(fields: [purposeId], references: [id])
+  status ConversationStatus @default(PENDING)
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        String    @id
+  conversationId String
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  senderId String
+  sendUser User @relation(fields: [senderId], references: [id])
+  content String
+  isRead Boolean @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+
+
+
 
