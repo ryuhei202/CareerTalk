@@ -1,10 +1,10 @@
+import type { RegisterEmployeeParams } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
 import type { GenderEnum } from "@/domain/shared/Gender";
 import type { HiringTypeEnum } from "@/domain/shared/HiringType";
 import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { StatusEnum } from "@/domain/shared/Status";
 import { createId } from "@/lib/cuid";
 import { prisma } from "@/lib/prisma";
-import type { RegisterEmployeeParams } from "@/usecase/registerEmployee";
 import { NamedError } from "@/util/error";
 import { Employee } from "../Employee";
 
@@ -25,24 +25,26 @@ export const validateRegisterEmployeeInput = async (
 		},
 		include: {
 			employee: true,
-			jobSeeker: true,
+			applicant: true,
 		},
 	});
 
 	// ユーザーが存在しない場合はエラー
 	if (user == null) {
-		throw new InvalidRegisterEmployeeInputError("ユーザーが存在しません");
+		throw new InvalidRegisterEmployeeInputError(
+			"ユーザーが存在しません。再度ログインしてください。",
+		);
 	}
 
 	// 登録済み現場社員がすでに存在する場合はエラー
 	if (user?.employee != null) {
 		throw new InvalidRegisterEmployeeInputError(
-			"登録済み現場社員がすでに存在します",
+			"登録済み現場社員がすでに存在します。",
 		);
 	}
 
 	// 登録ずみ転職希望者が既に存在する場合はエラー
-	if (user?.jobSeeker != null) {
+	if (user?.applicant != null) {
 		throw new InvalidRegisterEmployeeInputError(
 			"登録済み転職希望者がすでに存在します",
 		);
@@ -55,7 +57,7 @@ export const validateRegisterEmployeeInput = async (
 		},
 	});
 	if (company == null) {
-		throw new InvalidRegisterEmployeeInputError("不正な企業です");
+		throw new InvalidRegisterEmployeeInputError("企業コードが不正です");
 	}
 
 	// 職種の存在確認

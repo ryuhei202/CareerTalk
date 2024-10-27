@@ -3,22 +3,37 @@ import { describe, expect, test } from "vitest";
 import { EmployeeDTO } from "./EmployeeDTO";
 
 describe("EmployeeDTO", () => {
+	const employee = employeeDummy;
+	const company = {
+		id: 1,
+		name: "テストカンパニー1",
+	};
+	const occupation = {
+		id: 1,
+		name: "営業職",
+	};
+	const workLocation = {
+		id: 1,
+		name: "北海道",
+	};
 	test("EmployeeDTOが正常に作成される", () => {
-		const employee = employeeDummy;
-		const employeeDTO = new EmployeeDTO(employee);
+		const employeeDTO = new EmployeeDTO({
+			employee,
+			company,
+			occupation,
+			workLocation,
+		});
 
 		expect(employeeDTO).toBeDefined();
 		expect(employeeDTO.name).toBe(employee.name);
 		expect(employeeDTO.id).toBe(employee.id);
-		expect(employeeDTO.userId).toBe(employee.userId);
-		expect(employeeDTO.companyId).toBe(employee.companyId);
-		expect(employeeDTO.occupationId).toBe(employee.occupationId);
+		expect(employeeDTO.company).toBe(company);
+		expect(employeeDTO.occupation).toBe(occupation);
 		expect(employeeDTO.gender).toBe(employee.toGenderLabel());
 		expect(employeeDTO.yearsOfExperience).toBe(employee.toYearsOfExperience());
-		expect(employeeDTO.status).toBe(employee.toStatusLabel());
 		expect(employeeDTO.age).toBe(employee.getAge());
 		expect(employeeDTO.imageUrl).toBe(employee.imageUrl);
-		expect(employeeDTO.workLocationId).toBe(employee.workLocationId);
+		expect(employeeDTO.workLocation).toBe(workLocation);
 		expect(employeeDTO.hiringType).toBe(employee.toHiringTypeLabel());
 		expect(employeeDTO.meetingMethod).toBe(employee.toMeetingMethodLabel());
 		expect(employeeDTO.selfIntroduction).toBe(employee.selfIntroduction);
@@ -26,21 +41,24 @@ describe("EmployeeDTO", () => {
 	});
 
 	test("toJson", () => {
-		const employee = employeeDummy;
-		const employeeDTO = new EmployeeDTO(employee);
+		const employeeDTO = new EmployeeDTO({
+			employee,
+			company,
+			occupation,
+			workLocation,
+		});
+
 		const employeeJson = employeeDTO.toJson();
 
 		expect(employeeJson).toBeDefined();
 		expect(employeeJson.name).toBe(employee.name);
 		expect(employeeJson.id).toBe(employee.id);
-		expect(employeeJson.userId).toBe(employee.userId);
-		expect(employeeJson.companyId).toBe(employee.companyId);
-		expect(employeeJson.occupationId).toBe(employee.occupationId);
+		expect(employeeJson.company).toBe(company);
+		expect(employeeJson.occupation).toBe(occupation);
 		expect(employeeJson.gender).toBe(employee.toGenderLabel());
 		expect(employeeJson.yearsOfExperience).toBe(employee.toYearsOfExperience());
-		expect(employeeJson.status).toBe(employee.toStatusLabel());
 		expect(employeeJson.age).toBe(employee.getAge());
-		expect(employeeJson.workLocationId).toBe(employee.workLocationId);
+		expect(employeeJson.workLocation).toBe(workLocation);
 		expect(employeeJson.imageUrl).toBe(employee.imageUrl);
 	});
 });

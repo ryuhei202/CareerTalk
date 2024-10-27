@@ -1,33 +1,27 @@
 "use server";
-import type { FormState } from "@/app/(site)/employee/create_profile/_components/CreateEmplpyeeProfileContainer";
-import type { GenderLabel } from "@/domain/shared/Gender";
-import type { HiringTypeLabel } from "@/domain/shared/HiringType";
-import type { MeetingMethodLabel } from "@/domain/shared/MeetingMethod";
-import type { StatusLabel } from "@/domain/shared/Status";
+import type { FormState } from "@/app/(site)/employee/create_profile/_components/CreateEmplopyeeProfileContainer";
 import { getServerSession } from "@/lib/auth";
-import {
-	type RegisterEmployeeParams,
-	registerEmployeeUseCase,
-} from "@/usecase/registerEmployee";
+import { registerEmployeeUseCase } from "@/usecase/registerEmployee";
+import { getZodErrorMessages } from "@/util/error";
 import { redirect } from "next/navigation";
+import { ZodError } from "zod";
+import { validateRegisterEmployeeUseCaseParams } from "../_util/validateRegisterEmployeeUseCaseParams";
 
-export type CreatedEmployeeResponse = {
-	id: string;
-	name: string;
+export interface RegisterEmployeeParams {
 	userId: string;
-	companyId: number;
+	name: string;
+	companyCode: string;
 	occupationId: number;
-	gender: GenderLabel;
-	yearsOfExperience: number;
-	status: StatusLabel;
-	age?: number;
+	gender: string;
+	joiningDate: Date;
+	birthday?: Date;
 	imageUrl?: string;
 	workLocationId?: number;
-	hiringType?: HiringTypeLabel;
-	meetingMethod?: MeetingMethodLabel;
+	hiringType?: string;
+	meetingMethod?: string;
 	selfIntroduction?: string;
 	talkableTopics?: string;
-};
+}
 
 export async function registerEmployeeAction(
 	_prevState: FormState,
@@ -47,25 +41,16 @@ export async function registerEmployeeAction(
 	const companyCode = formData.get("companyCode");
 	const occupationId = formData.get("occupation");
 	const gender = formData.get("gender");
-	const birthday = formData.get("birthday");
 	const joiningDate = formData.get("joinDate");
+	const birthday = formData.get("birthday");
 	const workLocationId = formData.get("workLocation");
 	const hiringType = formData.get("hiringType");
 	const meetingMethod = formData.get("meetingMethod");
 	const selfIntroduction = formData.get("selfIntroduction");
 	const talkableTopics = formData.get("talkableTopics");
-	// 後で画像も入れれるようにする
-	// const imageUrl = formData.get("imageUrl");
+	// const imageUrl = formData.get("imageUrl"); // 後で画像も入れれるようにする
 
 	const formDataObject = Object.fromEntries(formData.entries());
-
-	if (!name || !companyCode || !occupationId || !gender || !joiningDate) {
-		return {
-			success: false,
-			message: "必須項目を入力してください",
-			data: formDataObject,
-		};
-	}
 
 	const useCaseParams: RegisterEmployeeParams = {
 		userId: userId,
@@ -73,8 +58,8 @@ export async function registerEmployeeAction(
 		companyCode: companyCode as string,
 		occupationId: Number.parseInt(occupationId as string),
 		gender: gender as string,
-		birthday: new Date(birthday as string),
 		joiningDate: new Date(joiningDate as string),
+		birthday: birthday ? new Date(birthday as string) : undefined,
 		workLocationId: workLocationId
 			? Number.parseInt(workLocationId as string)
 			: undefined,
@@ -85,16 +70,28 @@ export async function registerEmployeeAction(
 		// imageUrl: (imageUrl as string) || undefined,
 	};
 
-	console.log("useCaseParams", useCaseParams);
+	// パラメーターのバリデーション
+	try {
+		validateRegisterEmployeeUseCaseParams(useCaseParams);
+	} catch (error) {
+		if (error instanceof ZodError) {
+			return {
+				success: false,
+				message: getZodErrorMessages(error),
+				data: formDataObject,
+			};
+		}
+	}
+
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const useCaseResult = await registerEmployeeUseCase(useCaseParams);
-	console.log("useCaseResult", useCaseResult);
+
 	if (useCaseResult.success) {
 		redirect("/employee/home");
 	} else {
 		return {
 			success: false,
-			message: useCaseResult.error.message,
+			message: useCaseResult.message,
 			data: formDataObject,
 		};
 	}
