@@ -1,6 +1,9 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
+// TODO: Next15以降、next/formの<Form />コンポーネントに置き換える
+// @see https://nextjs.org/docs/app/api-reference/components/form
+// @see https://nextjs.org/blog/next-15#form-component
 export const useSearchParamsUpdate = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
