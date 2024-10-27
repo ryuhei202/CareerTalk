@@ -25,7 +25,7 @@ export const validateRegisterEmployeeInput = async (
 		},
 		include: {
 			employee: true,
-			jobSeeker: true,
+			applicant: true,
 		},
 	});
 
@@ -42,7 +42,7 @@ export const validateRegisterEmployeeInput = async (
 	}
 
 	// 登録ずみ転職希望者が既に存在する場合はエラー
-	if (user?.jobSeeker != null) {
+	if (user?.applicant != null) {
 		throw new InvalidRegisterEmployeeInputError(
 			"登録済み転職希望者がすでに存在します",
 		);
