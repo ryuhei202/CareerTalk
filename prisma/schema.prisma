@@ -87,7 +87,6 @@ model WorkLocation {
   id        Int    @id @default(autoincrement())
   name      String @unique
   employees Employee[]
-  applicants Applicant[]
 }
 
 
@@ -128,8 +127,7 @@ model Applicant {
   gender           Gender
   occupationId     Int
   occupation       Occupation      @relation(fields: [occupationId], references: [id])
-  workLocationId   Int?
-  workLocation     WorkLocation?   @relation(fields: [workLocationId], references: [id])
+  joiningDate      DateTime
   selfIntroduction String?         @default("") @db.Text
   status           ApplicantStatus @default(PENDING)
   createdAt        DateTime        @default(now())
