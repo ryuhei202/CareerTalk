@@ -1,23 +1,13 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
-import type { GenderLabel } from "@/domain/shared/Gender";
-import type {
-  HiringTypeEnum,
-  HiringTypeLabel,
-} from "@/domain/shared/HiringType";
-import type {
-  MeetingMethodEnum,
-  MeetingMethodLabel,
-} from "@/domain/shared/MeetingMethod";
+import type { HiringTypeEnum } from "@/domain/shared/HiringType";
+import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { prisma } from "@/lib/prisma";
 import {
   type SearchEmployeeUseCaseResult,
   getFilteredEmployeesUseCase,
 } from "@/usecase/getFilteredEmployees";
-import { getZodErrorMessages } from "@/util/error";
-import { ZodError } from "zod";
 import SearchEmployeeContainer from "./_components/SearchEmployeeContainer";
 import { getParamsFromQueryStrings } from "./_util/getParamsFromQueryStrings";
-import { validateFilteredEmployeeUseCaseParams } from "./_util/validateFilteredEmployeeUseCaseParams";
 
 export type Occupation = {
   id: number;
@@ -46,22 +36,6 @@ export type SearchParams = {
   experience?: string;
   hiringType?: string;
   meetingMethod?: string;
-};
-
-export type FilteredEmployee = {
-  id: string;
-  name: string;
-  company: Company;
-  occupation: Occupation;
-  gender: GenderLabel;
-  yearsOfExperience: number;
-  age?: number;
-  imageUrl?: string;
-  workLocation?: WorkLocation;
-  hiringType?: HiringTypeLabel;
-  meetingMethod?: MeetingMethodLabel;
-  selfIntroduction?: string;
-  talkableTopics?: string;
 };
 
 /**
@@ -107,19 +81,6 @@ export default async function SearchEmployeePage({
       meetingMethod: currentMeetingMethod,
     },
   };
-
-  try {
-    validateFilteredEmployeeUseCaseParams(getFilteredEmployeesUseCaseParams);
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return (
-        <ErrorPage
-          message={getZodErrorMessages(error)}
-          data={getFilteredEmployeesUseCaseParams}
-        />
-      );
-    }
-  }
 
   const result: SearchEmployeeUseCaseResult = await getFilteredEmployeesUseCase(
     getFilteredEmployeesUseCaseParams

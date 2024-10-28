@@ -25,7 +25,7 @@ export default async function SiteLayout({
           </div>
           <nav className="hidden md:flex items-center h-full flex-grow justify-end">
             <Link
-              href="/employee-search"
+              href="/applicant/search_employees"
               className="flex flex-col items-center justify-center h-full px-8 text-gray-600 hover:text-gray-900 border-r border-gray-200"
             >
               <Search className="w-8 h-8 mb-1" />
