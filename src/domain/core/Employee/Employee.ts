@@ -10,12 +10,16 @@ import {
 import { StatusEnum, type StatusLabel } from "@/domain/shared/Status";
 import { NamedError } from "@/util/error";
 import {
+	careerDescriptionSchema,
 	employeeParamsSchema,
 	hiringTypeSchema,
 	imageUrlSchema,
+	jobDescriptionSchema,
+	joiningDescriptionSchema,
 	meetingMethodSchema,
 	nameSchema,
 	occupationIdSchema,
+	otherDescriptionSchema,
 	selfIntroductionSchema,
 	statusSchema,
 	talkableTopicsSchema,
@@ -45,6 +49,10 @@ export type EmployeeParams = {
 	meetingMethod?: MeetingMethodEnum;
 	selfIntroduction?: string;
 	talkableTopics?: string;
+	careerDescription?: string;
+	jobDescription?: string;
+	joiningDescription?: string;
+	otherDescription?: string;
 };
 
 /**
@@ -67,6 +75,10 @@ export class Employee {
 		private _meetingMethod?: MeetingMethodEnum,
 		private _selfIntroduction?: string,
 		private _talkableTopics?: string,
+		private _careerDescription?: string,
+		private _jobDescription?: string,
+		private _joiningDescription?: string,
+		private _otherDescription?: string,
 	) {}
 
 	static create(params: EmployeeParams): Employee {
@@ -87,6 +99,10 @@ export class Employee {
 			params.meetingMethod,
 			params.selfIntroduction,
 			params.talkableTopics,
+			params.careerDescription,
+			params.jobDescription,
+			params.joiningDescription,
+			params.otherDescription,
 		);
 	}
 
@@ -133,6 +149,26 @@ export class Employee {
 	changeTalkableTopics(newTalkableTopics: string): void {
 		talkableTopicsSchema.parse(newTalkableTopics);
 		this._talkableTopics = newTalkableTopics;
+	}
+
+	changeCareerDescription(newCareerDescription: string): void {
+		careerDescriptionSchema.parse(newCareerDescription);
+		this._careerDescription = newCareerDescription;
+	}
+
+	changeJobDescription(newJobDescription: string): void {
+		jobDescriptionSchema.parse(newJobDescription);
+		this._jobDescription = newJobDescription;
+	}
+
+	changeJoiningDescription(newJoiningDescription: string): void {
+		joiningDescriptionSchema.parse(newJoiningDescription);
+		this._joiningDescription = newJoiningDescription;
+	}
+
+	changeOtherDescription(newOtherDescription: string): void {
+		otherDescriptionSchema.parse(newOtherDescription);
+		this._otherDescription = newOtherDescription;
 	}
 
 	changeStatus(newStatus: StatusEnum): void {
@@ -198,6 +234,22 @@ export class Employee {
 
 	get talkableTopics(): string | undefined {
 		return this._talkableTopics;
+	}
+
+	get careerDescription(): string | undefined {
+		return this._careerDescription;
+	}
+
+	get jobDescription(): string | undefined {
+		return this._jobDescription;
+	}
+
+	get joiningDescription(): string | undefined {
+		return this._joiningDescription;
+	}
+
+	get otherDescription(): string | undefined {
+		return this._otherDescription;
 	}
 
 	toGenderLabel(): GenderLabel {
