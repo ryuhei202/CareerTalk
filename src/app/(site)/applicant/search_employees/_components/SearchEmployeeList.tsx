@@ -1,4 +1,4 @@
-import type { FilteredEmployee } from "../page";
+import type { FilteredEmployee } from "@/usecase/getFilteredEmployees";
 import SearchEmployeeListItem from "./SearchEmployeeListItem";
 import SearchEmployeePagenation from "./SearchEmployeePagenation";
 

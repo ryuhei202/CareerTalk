@@ -80,6 +80,26 @@ export const talkableTopicsSchema = z
 	.trim()
 	.max(1000, { message: "話せる内容は1000文字以下である必要があります" })
 	.optional();
+export const careerDescriptionSchema = z
+	.string()
+	.trim()
+	.max(1000, { message: "経歴は1000文字以下である必要があります" })
+	.optional();
+export const jobDescriptionSchema = z
+	.string()
+	.trim()
+	.max(1000, { message: "職務内容は1000文字以下である必要があります" })
+	.optional();
+export const joiningDescriptionSchema = z
+	.string()
+	.trim()
+	.max(1000, { message: "入社説明は1000文字以下である必要があります" })
+	.optional();
+export const otherDescriptionSchema = z
+	.string()
+	.trim()
+	.max(1000, { message: "その他は1000文字以下である必要があります" })
+	.optional();
 
 export const employeeParamsSchema = z.object({
 	id: employeeIdSchema,
@@ -97,4 +117,8 @@ export const employeeParamsSchema = z.object({
 	meetingMethod: meetingMethodSchema,
 	selfIntroduction: selfIntroductionSchema,
 	talkableTopics: talkableTopicsSchema,
+	careerDescription: careerDescriptionSchema,
+	jobDescription: jobDescriptionSchema,
+	joiningDescription: joiningDescriptionSchema,
+	otherDescription: otherDescriptionSchema,
 });

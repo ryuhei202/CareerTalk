@@ -108,26 +108,30 @@ model Occupation {
 }
 
 model Employee {
-  id                String           @id
-  userId            String           @unique
-  user              User             @relation(fields: [userId], references: [id])
-  birthday          DateTime?
-  gender            Gender
-  companyId         Int           
-  company           Company          @relation(fields: [companyId], references: [id])
-  occupationId      Int
-  occupation        Occupation       @relation(fields: [occupationId], references: [id])
-  workLocationId    Int?
-  workLocation      WorkLocation?    @relation(fields: [workLocationId], references: [id])
-  joiningDate       DateTime
-  hiringType        HiringType?
-  meetingMethod     MeetingMethod?
-  selfIntroduction  String?          @default("") @db.Text
-  talkableTopics    String?          @default("")
-  status            EmployeeStatus   @default(PENDING)
-  conversations     Conversation[]
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  id                 String           @id
+  userId             String           @unique
+  user               User             @relation(fields: [userId], references: [id])
+  birthday           DateTime?
+  gender             Gender
+  companyId          Int           
+  company            Company          @relation(fields: [companyId], references: [id])
+  occupationId       Int
+  occupation         Occupation       @relation(fields: [occupationId], references: [id])
+  workLocationId     Int?
+  workLocation       WorkLocation?    @relation(fields: [workLocationId], references: [id])
+  joiningDate        DateTime
+  hiringType         HiringType?
+  meetingMethod      MeetingMethod?
+  selfIntroduction   String?          @default("") @db.Text
+  talkableTopics     String?          @default("")
+  status             EmployeeStatus   @default(PENDING)
+  conversations      Conversation[]
+  careerDescription  String?          @default("") @db.Text
+  jobDescription     String?          @default("") @db.Text
+  joiningDescription String?          @default("") @db.Text
+  otherDescription   String?          @default("") @db.Text
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
 }
 
 enum ConversationStatus {

@@ -19,7 +19,7 @@ export const validateFilteredEmployeeUseCaseParams = (
 	const hiringTypeSchema = z.nativeEnum(HiringTypeEnum).optional();
 	const meetingMethodSchema = z.nativeEnum(MeetingMethodEnum).optional();
 
-	// バリデーション実行
+	// パラメータスキーマ
 	const paramsSchema = z.object({
 		page: pageSchema,
 		filter: z.object({

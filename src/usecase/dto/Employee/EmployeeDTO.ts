@@ -1,8 +1,8 @@
-import type { FilteredEmployee } from "@/app/(site)/applicant/search_employees/page";
 import type { Employee } from "@/domain/core/Employee/Employee";
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 import type { MeetingMethodLabel } from "@/domain/shared/MeetingMethod";
+import type { FilteredEmployee } from "@/usecase/getFilteredEmployees";
 
 export type Occupation = {
 	id: number;

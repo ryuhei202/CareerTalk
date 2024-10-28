@@ -1,8 +1,9 @@
 "use client";
 
+import type { FilteredEmployee } from "@/usecase/getFilteredEmployees";
 import { useCallback, useState } from "react";
 import { useSearchParamsUpdate } from "../_util/useSearchParamsUpdate";
-import type { Company, FilteredEmployee, Occupation } from "../page";
+import type { Company, Occupation } from "../page";
 import SearchEmployeeBox from "./SearchEmployeeBox";
 import SearchEmployeeList from "./SearchEmployeeList";
 
