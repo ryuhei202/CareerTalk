@@ -1,12 +1,7 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/app/_components/ui/card";
+import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
 import type { EmployeeDetailResponse } from "@/usecase/dto/Employee/EmployeeDetailDto";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
