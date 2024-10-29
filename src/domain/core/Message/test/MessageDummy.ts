@@ -18,3 +18,11 @@ export const messageDummyParams: MessageParams = {
 };
 
 export const messageDummy = Message.create(messageDummyParams);
+
+export const messageDummy2 = Message.create({
+	id: "messageId0000000000000001",
+	conversationId: conversationId,
+	senderId: senderId,
+	content: "テストメッセージ2",
+	isRead: isRead,
+});

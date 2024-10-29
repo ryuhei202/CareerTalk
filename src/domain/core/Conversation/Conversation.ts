@@ -49,13 +49,11 @@ export class Conversation {
 		this._status = newStatus;
 	}
 
-	// メッセージ追加
 	addMessage(newMessage: Message): void {
 		messageParamsSchema.parse(newMessage);
 		this._messages.push(newMessage);
 	}
 
-	// 最新メッセージ取得
 	getLatestMessage(): Message | undefined {
 		return this._messages[this._messages.length - 1];
 	}

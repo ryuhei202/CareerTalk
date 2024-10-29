@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { ZodError } from "zod";
 import type { Message } from "../../Message/Message";
+import { messageDummy, messageDummy2 } from "../../Message/test/MessageDummy";
 import { Conversation } from "../Conversation";
 import { ConversationStatusEnum } from "../ConversationStatus";
 import { conversationDummyParams } from "./Conversation.dummy";
@@ -81,6 +82,29 @@ describe("Conversation", () => {
 			expect(conversation.status).toBe(ConversationStatusEnum.APPROVED);
 			conversation.changeStatus(ConversationStatusEnum.REJECTED);
 			expect(conversation.status).toBe(ConversationStatusEnum.REJECTED);
+		});
+	});
+
+	describe("addMessage", () => {
+		test("メッセージを追加する", () => {
+			const conversation = Conversation.create(conversationDummyParams);
+			expect(conversation.messages.length).toBe(1);
+			conversation.addMessage(messageDummy2);
+			expect(conversation.messages.length).toBe(2);
+			expect(conversation.messages[1].id).toBe(messageDummy2.id);
+			expect(conversation.messages[1].content).toBe(messageDummy2.content);
+		});
+	});
+
+	describe("getLatestMessage", () => {
+		test("最新メッセージを取得する", () => {
+			const params = {
+				...conversationDummyParams,
+				messages: [messageDummy],
+			};
+			const conversation = Conversation.create(params);
+			expect(conversation.messages.length).toBe(1);
+			expect(conversation.getLatestMessage()).toEqual(params.messages[0]);
 		});
 	});
 });
