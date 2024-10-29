@@ -1,70 +1,50 @@
-import type { CreatedEmployeeResponse } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
+import "server-only";
+import type { RegisterEmployeeParams } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
+import type { EmployeeDomainError } from "@/domain/core/Employee/Employee";
 import { createEmployee } from "@/domain/core/Employee/services/createEmployee";
 import {
-	InvalidRegisterEmployeeInputError,
+	type InvalidRegisterEmployeeInputError,
 	validateRegisterEmployeeInput,
 } from "@/domain/core/Employee/services/validateRegisterEmployeeInput";
+import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
-import type { ZodError } from "zod";
+import { ZodError } from "zod";
 
-export interface RegisterEmployeeParams {
-	userId: string;
-	name: string;
-	companyCode: string;
-	occupationId: number;
-	gender: string;
-	birthday: Date;
-	joiningDate: Date;
-	imageUrl?: string;
-	workLocationId?: number;
-	hiringType?: string;
-	meetingMethod?: string;
-	selfIntroduction?: string;
-	talkableTopics?: string;
-}
-type RegisterEmployeeUseCaseResult = Result<
-	CreatedEmployeeResponse,
-	InvalidRegisterEmployeeInputError | ZodError
->;
-
-export type RegisterEmployeeUseCase = (
-	params: RegisterEmployeeParams,
-) => Promise<RegisterEmployeeUseCaseResult>;
+type RegisterEmployeeUseCaseResult = Result<undefined, undefined>;
 
 export const registerEmployeeUseCase = async (
 	params: RegisterEmployeeParams,
 ): Promise<RegisterEmployeeUseCaseResult> => {
-	console.log({
-		message: `${registerEmployeeUseCase.name}`,
-		params,
-	});
 	try {
 		// ドメインサービス① 現場社員登録パラメータのバリデーション
 		const employee = await validateRegisterEmployeeInput(params);
 
 		// ドメインサービス② 現場社員の登録
-		const createdEmployee = await createEmployee(employee);
+		const mayBeCreatedEmployee = await createEmployee(employee);
 
-		if (createdEmployee == null) {
-			console.error({
+		if (mayBeCreatedEmployee == null) {
+			return createFailure({
 				message: "現場社員の登録に失敗しました",
-				createdEmployee,
+				data: mayBeCreatedEmployee,
 			});
-			return createFailure(
-				new InvalidRegisterEmployeeInputError("現場社員登録に失敗しました"),
-			);
 		}
 
-		console.log({
+		return createSuccess({
 			message: "現場社員の登録に成功しました",
-			createdEmployee,
+			data: undefined,
 		});
-		return createSuccess(createdEmployee.toJson());
 	} catch (error) {
-		console.error({
-			message: "現場社員の登録に失敗しました",
-			error,
+		if (error instanceof ZodError) {
+			return createFailure({
+				message: getZodErrorMessages(error),
+				data: undefined,
+			});
+		}
+		return createFailure({
+			message: (
+				error as InvalidRegisterEmployeeInputError | EmployeeDomainError
+			).message,
+			data: undefined,
 		});
-		return createFailure(error as InvalidRegisterEmployeeInputError | ZodError);
 	}
 };

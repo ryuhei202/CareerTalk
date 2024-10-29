@@ -67,6 +67,7 @@ const formSchema = z.object({
     .optional(),
   companyCode: z
     .string()
+    .trim()
     .min(1, {
       message: "企業コードは必須です",
     })

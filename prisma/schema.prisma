@@ -34,13 +34,14 @@ model Account {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
+  name          String
   email         String?   @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   applicant     Applicant?
   employee      Employee?
+  messages      Message[]
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
 }
@@ -98,31 +99,37 @@ model Occupation {
 }
 
 model Employee {
-  id                String           @id
-  userId            String           @unique
-  user              User             @relation(fields: [userId], references: [id])
-  birthday          DateTime?
-  gender            Gender
-  companyId         Int           
-  company           Company          @relation(fields: [companyId], references: [id])
-  occupationId      Int
-  occupation        Occupation       @relation(fields: [occupationId], references: [id])
-  workLocationId    Int?
-  workLocation      WorkLocation?    @relation(fields: [workLocationId], references: [id])
-  joiningDate       DateTime
-  hiringType        HiringType?
-  meetingMethod     MeetingMethod?
-  selfIntroduction  String?          @default("") @db.Text
-  talkableTopics    String?          @default("")
-  status            EmployeeStatus   @default(PENDING)
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  id                 String           @id
+  userId             String           @unique
+  user               User             @relation(fields: [userId], references: [id])
+  birthday           DateTime?
+  gender             Gender
+  companyId          Int           
+  company            Company          @relation(fields: [companyId], references: [id])
+  occupationId       Int
+  occupation         Occupation       @relation(fields: [occupationId], references: [id])
+  workLocationId     Int?
+  workLocation       WorkLocation?    @relation(fields: [workLocationId], references: [id])
+  joiningDate        DateTime
+  hiringType         HiringType?
+  meetingMethod      MeetingMethod?
+  selfIntroduction   String?          @default("") @db.Text
+  talkableTopics     String?          @default("")
+  status             EmployeeStatus   @default(PENDING)
+  conversations      Conversation[]
+  careerDescription  String?          @default("") @db.Text
+  jobDescription     String?          @default("") @db.Text
+  joiningDescription String?          @default("") @db.Text
+  otherDescription   String?          @default("") @db.Text
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
 }
 
 model Applicant {
   id               String          @id
   userId           String          @unique
   user             User            @relation(fields: [userId], references: [id])
+  conversations    Conversation[]
   birthday         DateTime?
   gender           Gender
   occupationId     Int
@@ -133,3 +140,44 @@ model Applicant {
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
 }
+
+enum ConversationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model ConversationPurpose {
+  id        String    @id
+  reason String @unique
+  conversations Conversation[]
+}
+
+model Conversation {
+  id        String    @id
+  applicantId String
+  applicant Applicant @relation(fields: [applicantId], references: [id])
+  employeeId String
+  employee Employee @relation(fields: [employeeId], references: [id])
+  purposeId String
+  purpose ConversationPurpose @relation(fields: [purposeId], references: [id])
+  status ConversationStatus @default(PENDING)
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        String    @id
+  conversationId String
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  senderId String
+  sendUser User @relation(fields: [senderId], references: [id])
+  content String
+  isRead Boolean @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+
+

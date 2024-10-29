@@ -22,6 +22,12 @@ const hiringType = HiringTypeEnum.NEW_GRADUATE;
 const meetingMethod = MeetingMethodEnum.ONLINE;
 const selfIntroduction = "自己紹介";
 const talkableTopics = "働き方について";
+const careerDescription =
+	"現在はSI事業部デジタルコマースユニットで旅行会社の予約サイト運用保守を行なっております。";
+const jobDescription = "フロントエンド開発を行なっております。";
+const joiningDescription =
+	"前職でアプリの運用保守を行なっていましたが、マネジメントに興味がありました。";
+const otherDescription = "その他";
 
 export const employeeDummyParams: EmployeeParams = {
 	id: employeeId,
@@ -39,5 +45,9 @@ export const employeeDummyParams: EmployeeParams = {
 	selfIntroduction: selfIntroduction,
 	talkableTopics: talkableTopics,
 	status: status,
+	careerDescription: careerDescription,
+	jobDescription: jobDescription,
+	joiningDescription: joiningDescription,
+	otherDescription: otherDescription,
 };
 export const employeeDummy = Employee.create(employeeDummyParams);

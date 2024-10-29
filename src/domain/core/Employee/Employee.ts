@@ -8,18 +8,27 @@ import {
 	type MeetingMethodLabel,
 } from "@/domain/shared/MeetingMethod";
 import { StatusEnum, type StatusLabel } from "@/domain/shared/Status";
+import { NamedError } from "@/util/error";
 import {
+	careerDescriptionSchema,
 	employeeParamsSchema,
 	hiringTypeSchema,
 	imageUrlSchema,
+	jobDescriptionSchema,
+	joiningDescriptionSchema,
 	meetingMethodSchema,
 	nameSchema,
 	occupationIdSchema,
+	otherDescriptionSchema,
 	selfIntroductionSchema,
 	statusSchema,
 	talkableTopicsSchema,
 	workLocationIdSchema,
 } from "./EmployeeSchema";
+
+export class EmployeeDomainError extends NamedError {
+	readonly name = "EmployeeDomainError";
+}
 
 /**
  * Employeeパラメータ
@@ -40,6 +49,10 @@ export type EmployeeParams = {
 	meetingMethod?: MeetingMethodEnum;
 	selfIntroduction?: string;
 	talkableTopics?: string;
+	careerDescription?: string;
+	jobDescription?: string;
+	joiningDescription?: string;
+	otherDescription?: string;
 };
 
 /**
@@ -62,11 +75,13 @@ export class Employee {
 		private _meetingMethod?: MeetingMethodEnum,
 		private _selfIntroduction?: string,
 		private _talkableTopics?: string,
+		private _careerDescription?: string,
+		private _jobDescription?: string,
+		private _joiningDescription?: string,
+		private _otherDescription?: string,
 	) {}
 
 	static create(params: EmployeeParams): Employee {
-		console.log("Employee.create", params);
-
 		Employee.validate(params);
 		return new Employee(
 			params.id,
@@ -84,6 +99,10 @@ export class Employee {
 			params.meetingMethod,
 			params.selfIntroduction,
 			params.talkableTopics,
+			params.careerDescription,
+			params.jobDescription,
+			params.joiningDescription,
+			params.otherDescription,
 		);
 	}
 
@@ -130,6 +149,26 @@ export class Employee {
 	changeTalkableTopics(newTalkableTopics: string): void {
 		talkableTopicsSchema.parse(newTalkableTopics);
 		this._talkableTopics = newTalkableTopics;
+	}
+
+	changeCareerDescription(newCareerDescription: string): void {
+		careerDescriptionSchema.parse(newCareerDescription);
+		this._careerDescription = newCareerDescription;
+	}
+
+	changeJobDescription(newJobDescription: string): void {
+		jobDescriptionSchema.parse(newJobDescription);
+		this._jobDescription = newJobDescription;
+	}
+
+	changeJoiningDescription(newJoiningDescription: string): void {
+		joiningDescriptionSchema.parse(newJoiningDescription);
+		this._joiningDescription = newJoiningDescription;
+	}
+
+	changeOtherDescription(newOtherDescription: string): void {
+		otherDescriptionSchema.parse(newOtherDescription);
+		this._otherDescription = newOtherDescription;
 	}
 
 	changeStatus(newStatus: StatusEnum): void {
@@ -197,6 +236,22 @@ export class Employee {
 		return this._talkableTopics;
 	}
 
+	get careerDescription(): string | undefined {
+		return this._careerDescription;
+	}
+
+	get jobDescription(): string | undefined {
+		return this._jobDescription;
+	}
+
+	get joiningDescription(): string | undefined {
+		return this._joiningDescription;
+	}
+
+	get otherDescription(): string | undefined {
+		return this._otherDescription;
+	}
+
 	toGenderLabel(): GenderLabel {
 		switch (this._gender) {
 			case GenderEnum.OTHER:
@@ -208,7 +263,7 @@ export class Employee {
 			case GenderEnum.PREFER_NOT_TO_SAY:
 				return "回答しない";
 			default:
-				throw new Error("無効な性別です");
+				throw new EmployeeDomainError("無効な性別です");
 		}
 	}
 
@@ -222,7 +277,7 @@ export class Employee {
 			case HiringTypeEnum.MID_CAREER:
 				return "中途採用";
 			default:
-				throw new Error("無効な入社方法です");
+				throw new EmployeeDomainError("無効な入社方法です");
 		}
 	}
 
@@ -238,7 +293,7 @@ export class Employee {
 			case MeetingMethodEnum.BOTH:
 				return "オンライン/オフライン";
 			default:
-				throw new Error("無効な訪問方法です");
+				throw new EmployeeDomainError("無効な訪問方法です");
 		}
 	}
 
@@ -251,7 +306,7 @@ export class Employee {
 			case StatusEnum.REJECTED:
 				return "拒否";
 			default:
-				throw new Error("無効なステータスです");
+				throw new EmployeeDomainError("無効なステータスです");
 		}
 	}
 

@@ -10,13 +10,15 @@ import { z } from "zod";
 // 必須
 export const nameSchema = z
 	.string()
+	.trim()
 	.min(1, { message: "名前は1文字以上である必要があります" })
 	.max(100, { message: "名前は100文字以下である必要があります" });
-export const userIdSchema = z.string().length(25, {
+export const userIdSchema = z.string().trim().length(25, {
 	message: "無効なユーザーIdです。ユーザーIDは25文字である必要があります",
 });
 export const employeeIdSchema = z
 	.string()
+	.trim()
 	.length(25, { message: "IDは25文字である必要があります" });
 
 export const companyIdSchema = z
@@ -40,6 +42,7 @@ export const statusSchema = z.nativeEnum(StatusEnum);
 // 以下必須ではない項目
 export const imageUrlSchema = z
 	.string()
+	.trim()
 	.url({ message: "無効な画像URLです" })
 	.optional();
 export const birthdaySchema = z
@@ -69,11 +72,33 @@ export const meetingMethodSchema = z
 	.optional();
 export const selfIntroductionSchema = z
 	.string()
+	.trim()
 	.max(1000, { message: "自己紹介は1000文字以下である必要があります" })
 	.optional();
 export const talkableTopicsSchema = z
 	.string()
+	.trim()
 	.max(1000, { message: "話せる内容は1000文字以下である必要があります" })
+	.optional();
+export const careerDescriptionSchema = z
+	.string()
+	.trim()
+	.max(1000, { message: "経歴は1000文字以下である必要があります" })
+	.optional();
+export const jobDescriptionSchema = z
+	.string()
+	.trim()
+	.max(1000, { message: "職務内容は1000文字以下である必要があります" })
+	.optional();
+export const joiningDescriptionSchema = z
+	.string()
+	.trim()
+	.max(1000, { message: "入社説明は1000文字以下である必要があります" })
+	.optional();
+export const otherDescriptionSchema = z
+	.string()
+	.trim()
+	.max(1000, { message: "その他は1000文字以下である必要があります" })
 	.optional();
 
 export const employeeParamsSchema = z.object({
@@ -92,4 +117,8 @@ export const employeeParamsSchema = z.object({
 	meetingMethod: meetingMethodSchema,
 	selfIntroduction: selfIntroductionSchema,
 	talkableTopics: talkableTopicsSchema,
+	careerDescription: careerDescriptionSchema,
+	jobDescription: jobDescriptionSchema,
+	joiningDescription: joiningDescriptionSchema,
+	otherDescription: otherDescriptionSchema,
 });

@@ -28,6 +28,16 @@ describe("Employee", () => {
 		);
 		expect(employee.talkableTopics).toBe(employeeDummyParams.talkableTopics);
 		expect(employee.status).toBe(employeeDummyParams.status);
+		expect(employee.careerDescription).toBe(
+			employeeDummyParams.careerDescription,
+		);
+		expect(employee.jobDescription).toBe(employeeDummyParams.jobDescription);
+		expect(employee.joiningDescription).toBe(
+			employeeDummyParams.joiningDescription,
+		);
+		expect(employee.otherDescription).toBe(
+			employeeDummyParams.otherDescription,
+		);
 	});
 
 	test("未設定のプロパティはundefinedを返す", () => {
@@ -40,6 +50,10 @@ describe("Employee", () => {
 			meetingMethod: undefined,
 			selfIntroduction: undefined,
 			talkableTopics: undefined,
+			careerDescription: undefined,
+			jobDescription: undefined,
+			joiningDescription: undefined,
+			otherDescription: undefined,
 		});
 
 		expect(employee.id).toBe(employeeDummyParams.id);
@@ -58,6 +72,10 @@ describe("Employee", () => {
 		expect(employee.meetingMethod).toBeUndefined();
 		expect(employee.selfIntroduction).toBeUndefined();
 		expect(employee.talkableTopics).toBeUndefined();
+		expect(employee.careerDescription).toBeUndefined();
+		expect(employee.jobDescription).toBeUndefined();
+		expect(employee.joiningDescription).toBeUndefined();
+		expect(employee.otherDescription).toBeUndefined();
 	});
 
 	test("不正な値でEmployeeを生成しようとするとエラーが発生する", () => {
@@ -169,6 +187,38 @@ describe("Employee", () => {
 			Employee.create({
 				...employeeDummyParams,
 				talkableTopics: "a".repeat(1001),
+			}),
+		).toThrowError(ZodError);
+
+		// 不正なcareerDescription
+		expect(() =>
+			Employee.create({
+				...employeeDummyParams,
+				careerDescription: "a".repeat(1001),
+			}),
+		).toThrowError(ZodError);
+
+		// 不正なjobDescription
+		expect(() =>
+			Employee.create({
+				...employeeDummyParams,
+				jobDescription: "a".repeat(1001),
+			}),
+		).toThrowError(ZodError);
+
+		// 不正なjoiningDescription
+		expect(() =>
+			Employee.create({
+				...employeeDummyParams,
+				joiningDescription: "a".repeat(1001),
+			}),
+		).toThrowError(ZodError);
+
+		// 不正なotherDescription
+		expect(() =>
+			Employee.create({
+				...employeeDummyParams,
+				otherDescription: "a".repeat(1001),
 			}),
 		).toThrowError(ZodError);
 	});
@@ -316,6 +366,102 @@ describe("Employee", () => {
 
 			expect(employee.talkableTopics).toBe("働き方について");
 			expect(() => employee.changeTalkableTopics("a".repeat(1001))).toThrow();
+		});
+	});
+
+	describe("changeCareerDescription", () => {
+		test("正常にcareerDescriptionを変更できる", () => {
+			const employee = Employee.create({
+				...employeeDummyParams,
+				careerDescription: "経歴について",
+			});
+
+			expect(employee.careerDescription).toBe("経歴について");
+			employee.changeCareerDescription("経歴について2");
+			expect(employee.careerDescription).toBe("経歴について2");
+		});
+
+		test("不正なcareerDescriptionでEmployeeを作成しようとするとエラーが発生する", () => {
+			const employee = Employee.create({
+				...employeeDummyParams,
+				careerDescription: "経歴について",
+			});
+
+			expect(employee.careerDescription).toBe("経歴について");
+			expect(() =>
+				employee.changeCareerDescription("a".repeat(1001)),
+			).toThrow();
+		});
+	});
+
+	describe("changeJobDescription", () => {
+		test("正常にjobDescriptionを変更できる", () => {
+			const employee = Employee.create({
+				...employeeDummyParams,
+				jobDescription: "職務内容について",
+			});
+
+			expect(employee.jobDescription).toBe("職務内容について");
+			employee.changeJobDescription("職務内容について2");
+			expect(employee.jobDescription).toBe("職務内容について2");
+		});
+
+		test("不正なjobDescriptionでEmployeeを作成しようとするとエラーが発生する", () => {
+			const employee = Employee.create({
+				...employeeDummyParams,
+				jobDescription: "職務内容について",
+			});
+
+			expect(employee.jobDescription).toBe("職務内容について");
+			expect(() => employee.changeJobDescription("a".repeat(1001))).toThrow();
+		});
+	});
+
+	describe("changeJoiningDescription", () => {
+		test("正常にjoiningDescriptionを変更できる", () => {
+			const employee = Employee.create({
+				...employeeDummyParams,
+				joiningDescription: "入社した理由について",
+			});
+
+			expect(employee.joiningDescription).toBe("入社した理由について");
+			employee.changeJoiningDescription("入社した理由について2");
+			expect(employee.joiningDescription).toBe("入社した理由について2");
+		});
+
+		test("不正なjoiningDescriptionでEmployeeを作成しようとするとエラーが発生する", () => {
+			const employee = Employee.create({
+				...employeeDummyParams,
+				joiningDescription: "入社した理由について",
+			});
+
+			expect(employee.joiningDescription).toBe("入社した理由について");
+			expect(() =>
+				employee.changeJoiningDescription("a".repeat(1001)),
+			).toThrow();
+		});
+	});
+
+	describe("changeOtherDescription", () => {
+		test("正常にotherDescriptionを変更できる", () => {
+			const employee = Employee.create({
+				...employeeDummyParams,
+				otherDescription: "その他",
+			});
+
+			expect(employee.otherDescription).toBe("その他");
+			employee.changeOtherDescription("その他2");
+			expect(employee.otherDescription).toBe("その他2");
+		});
+
+		test("不正なotherDescriptionでEmployeeを作成しようとするとエラーが発生する", () => {
+			const employee = Employee.create({
+				...employeeDummyParams,
+				otherDescription: "その他",
+			});
+
+			expect(employee.otherDescription).toBe("その他");
+			expect(() => employee.changeOtherDescription("a".repeat(1001))).toThrow();
 		});
 	});
 

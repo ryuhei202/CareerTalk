@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'profile.line-scdn.net',
       },
+      {
+        protocol: "https",
+        hostname: "example.com",
+      },
     ],
   },
 };
