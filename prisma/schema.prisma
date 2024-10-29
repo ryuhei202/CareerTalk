@@ -59,16 +59,6 @@ enum ApplicantStatus {
   REJECTED
 }
 
-model Applicant {
-  id        String          @id 
-  userId    String           @unique
-  user      User            @relation(fields: [userId], references: [id])
-  status    ApplicantStatus @default(PENDING)
-  conversations Conversation[]
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-} 
-
 model Company {
   id        Int       @id @default(autoincrement())
   name      String    @unique
@@ -102,9 +92,10 @@ model WorkLocation {
 
 
 model Occupation {
-  id        Int        @id @default(autoincrement())
-  name      String     @unique
-  employees Employee[]
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  employees   Employee[]
+  applicants  Applicant[]
 }
 
 model Employee {
@@ -132,6 +123,22 @@ model Employee {
   otherDescription   String?          @default("") @db.Text
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
+}
+
+model Applicant {
+  id               String          @id
+  userId           String          @unique
+  user             User            @relation(fields: [userId], references: [id])
+  conversations    Conversation[]
+  birthday         DateTime?
+  gender           Gender
+  occupationId     Int
+  occupation       Occupation      @relation(fields: [occupationId], references: [id])
+  joiningDate      DateTime
+  selfIntroduction String?         @default("") @db.Text
+  status           ApplicantStatus @default(PENDING)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
 }
 
 enum ConversationStatus {
@@ -171,8 +178,6 @@ model Message {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
-
-
 
 
 
