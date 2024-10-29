@@ -46,7 +46,7 @@ const meetingMethodOptions = Object.values(MeetingMethodEnum) as [
   ...string[]
 ];
 const formSchema = z.object({
-  name: z.string().min(1, {
+  name: z.string().trim().min(1, {
     message: "名前は必須です",
   }),
   gender: z.enum(genderOptions, {
@@ -83,14 +83,14 @@ const formSchema = z.object({
       message: "入社日は今日以前の日付を選択してください",
     }
   ),
-  occupation: z.string().min(1, {
+  occupation: z.string().trim().min(1, {
     message: "職種は必須です",
   }),
-  workLocation: z.string().optional(),
+  workLocation: z.string().trim().optional(),
   hiringType: z.enum(hiringTypeOptions).optional(),
   meetingMethod: z.enum(meetingMethodOptions).optional(),
-  selfIntroduction: z.string().optional(),
-  talkableTopics: z.string().optional(),
+  selfIntroduction: z.string().trim().optional(),
+  talkableTopics: z.string().trim().optional(),
 });
 
 // TODO: あとでしっかりとコンポーネントを分割する。（デザイン待ち）
