@@ -3,11 +3,16 @@ import { HiringTypeEnum } from "@/domain/shared/HiringType";
 import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { StatusEnum } from "@/domain/shared/Status";
 import { z } from "zod";
+
 /**
  * Employee関連のバリデーションスキーマ
  */
-
-// 必須
+export const employeeIdSchema = z
+	.string()
+	.trim()
+	.length(25, {
+		message: "無効な従業員Idです。従業員IDは25文字である必要があります",
+	});
 export const nameSchema = z
 	.string()
 	.trim()
@@ -16,10 +21,6 @@ export const nameSchema = z
 export const userIdSchema = z.string().trim().length(25, {
 	message: "無効なユーザーIdです。ユーザーIDは25文字である必要があります",
 });
-export const employeeIdSchema = z
-	.string()
-	.trim()
-	.length(25, { message: "IDは25文字である必要があります" });
 
 export const companyIdSchema = z
 	.number()
