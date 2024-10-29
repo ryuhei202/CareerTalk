@@ -130,6 +130,7 @@ model Employee {
   jobDescription     String?          @default("") @db.Text
   joiningDescription String?          @default("") @db.Text
   otherDescription   String?          @default("") @db.Text
+  barkerMessage      String?          @default("") @db.Text
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
 }
