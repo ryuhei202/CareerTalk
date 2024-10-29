@@ -19,8 +19,6 @@ export default function EmployeeCardContainer({
 }) {
   const router = useRouter();
   const [isRequestFormOpen, setIsRequestFormOpen] = useState(false);
-  console.log(isRequestFormOpen);
-
   return (
     <>
       {isRequestFormOpen ? (
