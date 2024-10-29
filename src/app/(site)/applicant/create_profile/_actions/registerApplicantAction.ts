@@ -77,7 +77,7 @@ export async function registerApplicantAction(
 	} else {
 		return {
 			success: false,
-			message: useCaseResult.error.message,
+			message: useCaseResult.message,
 			data: formDataObject,
 		};
 	}

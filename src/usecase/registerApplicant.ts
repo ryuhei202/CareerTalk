@@ -1,7 +1,6 @@
-import type { CreatedApplicantResponse } from "@/app/(site)/applicant/create_profile/_actions/registerApplicantAction";
 import { createApplicant } from "@/domain/core/Applicant/services/createApplicant";
 import {
-	InvalidRegisterApplicantInputError,
+	type InvalidRegisterApplicantInputError,
 	validateRegisterApplicantInput,
 } from "@/domain/core/Applicant/services/validateRegisterApplicantInput";
 import { type Result, createFailure, createSuccess } from "@/util/result";
@@ -17,10 +16,7 @@ export interface RegisterApplicantParams {
 	imageUrl?: string;
 	selfIntroduction?: string;
 }
-type RegisterApplicantUseCaseResult = Result<
-	CreatedApplicantResponse,
-	InvalidRegisterApplicantInputError | ZodError
->;
+type RegisterApplicantUseCaseResult = Result<undefined, undefined>;
 
 export type RegisterApplicantUseCase = (
 	params: RegisterApplicantParams,
@@ -38,30 +34,23 @@ export const registerApplicantUseCase = async (
 		const applicant = await validateRegisterApplicantInput(params);
 
 		// ドメインサービス② 転職者の登録
-		const createdApplicant = await createApplicant(applicant);
+		const mayBeCreatedApplicant = await createApplicant(applicant);
 
-		if (createdApplicant == null) {
-			console.error({
-				message: "転職者の登録に失敗しました",
-				createdApplicant,
+		if (mayBeCreatedApplicant == null) {
+			return createFailure({
+				message: "転職者登録に失敗しました",
+				data: mayBeCreatedApplicant,
 			});
-			return createFailure(
-				new InvalidRegisterApplicantInputError("転職者登録に失敗しました"),
-			);
 		}
 
-		console.log({
-			message: "転職者の登録に成功しました",
-			createdApplicant,
+		return createSuccess({
+			message: "転職者登録に成功しました",
+			data: undefined,
 		});
-		return createSuccess(createdApplicant.toJson());
 	} catch (error) {
-		console.error({
-			message: "転職者の登録に失敗しました",
-			error,
+		return createFailure({
+			message: (error as InvalidRegisterApplicantInputError | ZodError).message,
+			data: undefined,
 		});
-		return createFailure(
-			error as InvalidRegisterApplicantInputError | ZodError,
-		);
 	}
 };
