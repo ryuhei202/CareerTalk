@@ -87,8 +87,6 @@ export default function CreateProfileApplicant({
     }
   );
 
-  console.log("state", state);
-
   const form = useForm<z.infer<typeof formSchema>>({
     mode: "onChange",
     resolver: zodResolver(formSchema),

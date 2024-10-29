@@ -26,8 +26,6 @@ export async function registerApplicantAction(
 	_prevState: FormState,
 	formData: FormData,
 ) {
-	console.log("ああああ");
-
 	const session = await getServerSession();
 	if (!session) {
 		return {
@@ -73,7 +71,7 @@ export async function registerApplicantAction(
 	const useCaseResult = await registerApplicantUseCase(useCaseParams);
 	console.log("useCaseResult", useCaseResult);
 	if (useCaseResult.success) {
-		redirect("/applicant/home");
+		redirect("/applicant/search_employees");
 	} else {
 		return {
 			success: false,
