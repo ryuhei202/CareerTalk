@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { company } from "./company";
-import { employee } from "./employee";
+// import { employee } from "./employee";
 import { occupation } from "./occupation";
-import { user } from "./user";
+// import { user } from "./user";
 import { workLocation } from "./worklocation";
 
 export const prisma = new PrismaClient();
