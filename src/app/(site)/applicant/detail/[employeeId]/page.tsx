@@ -1,10 +1,11 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
+import { prisma } from "@/lib/prisma";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,
 } from "@/usecase/getEmployeeDetail";
 import type { ReactElement } from "react";
-import EmployeeCard from "./_components/EmployeeCard";
+import EmployeeCardContainer from "./_components/EmployeeCardContainer";
 
 /**
  * 詳細取得のRequest Paramsの型
@@ -39,5 +40,12 @@ export default async function EmployeeDetailPage({
     );
   }
 
-  return <EmployeeCard employee={result.data} />;
+  const conversationPurpose = await prisma.conversationPurpose.findMany();
+
+  return (
+    <EmployeeCardContainer
+      employee={result.data}
+      options={conversationPurpose}
+    />
+  );
 }

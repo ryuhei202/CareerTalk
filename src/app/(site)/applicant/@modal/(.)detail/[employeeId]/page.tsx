@@ -1,9 +1,10 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
+import { prisma } from "@/lib/prisma";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,
 } from "@/usecase/getEmployeeDetail";
-import EmployeeCard from "../../../detail/[employeeId]/_components/EmployeeCard";
+import EmployeeCardContainer from "../../../detail/[employeeId]/_components/EmployeeCardContainer";
 import type { GetEmployeeDetailParams } from "../../../detail/[employeeId]/page";
 import { Modal } from "./_components/Modal";
 
@@ -30,9 +31,14 @@ export default async function EmployeeDetailModalPage({ params }: Props) {
       />
     );
   }
+
+  const conversationPurpose = await prisma.conversationPurpose.findMany();
   return (
     <Modal>
-      <EmployeeCard employee={result.data} />
+      <EmployeeCardContainer
+        employee={result.data}
+        options={conversationPurpose}
+      />
     </Modal>
   );
 }
