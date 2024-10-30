@@ -42,9 +42,6 @@ export const filterEmployees = async (
 	const existingEmployeeUserIds = existingConversations.map(
 		(c) => c.employee.userId,
 	);
-
-	console.log("existingEmployeeUserIds", existingEmployeeUserIds);
-
 	const whereCondition = {
 		companyId,
 		occupationId,
