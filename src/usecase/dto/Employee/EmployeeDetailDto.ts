@@ -31,6 +31,7 @@ export type EmployeeDetailResponse = {
 	hiringType: HiringTypeLabel | "";
 	workLocationName: string;
 	imageUrl: string;
+	meetingMethodName: string;
 };
 
 export class EmployeeDetailDto {
@@ -47,6 +48,7 @@ export class EmployeeDetailDto {
 	public readonly hiringType: HiringTypeLabel | "";
 	public readonly workLocationName: string;
 	public readonly imageUrl: string;
+	public readonly meetingMethodName: string;
 
 	constructor({
 		employee,
@@ -72,6 +74,7 @@ export class EmployeeDetailDto {
 		this.hiringType = employee.toHiringTypeLabel() ?? "";
 		this.workLocationName = workLocation?.name ?? "";
 		this.imageUrl = employee.imageUrl ?? "";
+		this.meetingMethodName = employee.meetingMethod ?? "";
 	}
 
 	// あえてわかりやすいように分割代入はしない
@@ -90,6 +93,7 @@ export class EmployeeDetailDto {
 			hiringType: this.hiringType,
 			workLocationName: this.workLocationName,
 			imageUrl: this.imageUrl,
+			meetingMethodName: this.meetingMethodName,
 		};
 	}
 }
