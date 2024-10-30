@@ -6,15 +6,14 @@ import { revalidatePath } from "next/cache";
 import type { FormState } from "../../../create_profile/_components/CreateApplicantProfileContainer";
 
 export interface SendDMRequestParams {
-	applicantUserId: string;
 	employeeUserId: string;
+	applicantUserId: string;
 	conversationPurposeId: number;
 	message?: string;
 }
 
 export async function sendDMRequestAction(
 	_prevState: FormState,
-	applicantUserId: string,
 	employeeUserId: string,
 	formData: FormData,
 ) {
@@ -27,14 +26,12 @@ export async function sendDMRequestAction(
 		};
 	}
 
-	console.log("session", session.user.id);
-
 	const conversationPurposeId = formData.get("conversationPurposeId");
 	const message = formData.get("message");
 	const formDataObject = Object.fromEntries(formData.entries());
 
 	const useCaseParams: SendDMRequestParams = {
-		applicantUserId: applicantUserId as string,
+		applicantUserId: session.user.id as string,
 		employeeUserId: employeeUserId as string,
 		conversationPurposeId: Number.parseInt(conversationPurposeId as string),
 		message: (message as string) || undefined,

@@ -35,7 +35,6 @@ export default async function EmployeeDetailModalPage({ params }: Props) {
       <EmployeeCardContainer
         employee={result.data}
         options={conversationPurpose}
-        applicantUserId={session.user.id}
       />
     </Modal>
   );

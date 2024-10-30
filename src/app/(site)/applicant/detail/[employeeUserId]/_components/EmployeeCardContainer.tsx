@@ -22,22 +22,15 @@ type ConversationPurpose = {
 export default function EmployeeCardContainer({
   employee,
   options,
-  applicantUserId,
 }: {
   employee: EmployeeDetailResponse;
   options: ConversationPurpose[];
-  applicantUserId: string;
 }) {
   const router = useRouter();
   const [isRequestFormOpen, setIsRequestFormOpen] = useState(false);
   const [state, formAction] = useFormState<FormState, FormData>(
     (prevState: FormState, formData: FormData) =>
-      sendDMRequestAction(
-        prevState,
-        applicantUserId,
-        employee.userId,
-        formData
-      ),
+      sendDMRequestAction(prevState, employee.userId, formData),
     {
       success: undefined,
       message: "",

@@ -53,7 +53,6 @@ export default async function EmployeeDetailPage({
     <EmployeeCardContainer
       employee={result.data}
       options={conversationPurpose}
-      applicantUserId={session.user.id}
     />
   );
 }
