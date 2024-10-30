@@ -1,15 +1,15 @@
-import type { Message } from "../Message/Message";
-import { messageParamsSchema } from "../Message/MessageSchema";
 import {
 	conversationParamsSchema,
 	conversationStatusSchema,
 } from "./ConversationParamsSchema";
 import type { ConversationStatusEnum } from "./ConversationStatus";
+import type { Message } from "./Message/Message";
+import { messageParamsSchema } from "./Message/MessageSchema";
 
 export type ConversationParams = {
 	id: string;
-	applicantId: string;
-	employeeId: string;
+	applicantUserId: string;
+	employeeUserId: string;
 	purposeId: number;
 	status: ConversationStatusEnum;
 	messages: Message[];
@@ -21,8 +21,8 @@ export type ConversationParams = {
 export class Conversation {
 	private constructor(
 		private readonly _id: string,
-		private readonly _applicantId: string,
-		private readonly _employeeId: string,
+		private readonly _applicantUserId: string,
+		private readonly _employeeUserId: string,
 		private readonly _purposeId: number,
 		private _status: ConversationStatusEnum,
 		private readonly _messages: Message[], // Messageエンティティ
@@ -32,8 +32,8 @@ export class Conversation {
 		Conversation.validate(params);
 		return new Conversation(
 			params.id,
-			params.applicantId,
-			params.employeeId,
+			params.applicantUserId,
+			params.employeeUserId,
 			params.purposeId,
 			params.status,
 			params.messages,
@@ -62,12 +62,12 @@ export class Conversation {
 		return this._id;
 	}
 
-	get applicantId(): string {
-		return this._applicantId;
+	get applicantUserId(): string {
+		return this._applicantUserId;
 	}
 
-	get employeeId(): string {
-		return this._employeeId;
+	get employeeUserId(): string {
+		return this._employeeUserId;
 	}
 
 	get purposeId(): number {

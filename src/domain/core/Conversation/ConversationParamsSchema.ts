@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { employeeIdSchema } from "../Employee/EmployeeSchema";
-import { Message } from "../Message/Message";
+import { userIdSchema } from "../Applicant/ApplicantSchema";
 import { ConversationStatusEnum } from "./ConversationStatus";
+import { Message } from "./Message/Message";
 
 /**
  * Conversation関連のバリデーションスキーマ
@@ -10,11 +10,11 @@ export const conversationIdSchema = z.string().trim().length(25, {
 	message: "無効な会話Idです。会話IDは25文字である必要があります",
 });
 
-export const applicantIdSchema = z.string().trim().length(25, {
+export const applicantUserIdSchema = z.string().trim().length(25, {
 	message: "無効な転職希望者Idです。転職希望者IDは25文字である必要があります",
 });
 
-export const purposeIdSchema = z.number().min(1, {
+export const purposeIdSchema = z.number().int().positive({
 	message: "不正な目的Idです",
 });
 export const conversationStatusSchema = z.nativeEnum(ConversationStatusEnum);
@@ -28,8 +28,8 @@ export const messagesSchema = z
 
 export const conversationParamsSchema = z.object({
 	id: conversationIdSchema,
-	applicantId: applicantIdSchema,
-	employeeId: employeeIdSchema,
+	applicantUserId: userIdSchema,
+	employeeUserId: userIdSchema,
 	purposeId: purposeIdSchema,
 	status: conversationStatusSchema,
 	messages: messagesSchema,

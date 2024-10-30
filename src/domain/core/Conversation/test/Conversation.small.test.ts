@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
 import { ZodError } from "zod";
-import type { Message } from "../../Message/Message";
-import { messageDummy, messageDummy2 } from "../../Message/test/MessageDummy";
 import { Conversation } from "../Conversation";
 import { ConversationStatusEnum } from "../ConversationStatus";
+import type { Message } from "../Message/Message";
+import { messageDummy, messageDummy2 } from "../Message/test/MessageDummy";
 import { conversationDummyParams } from "./Conversation.dummy";
 
 describe("Conversation", () => {
@@ -11,8 +11,12 @@ describe("Conversation", () => {
 		const conversation = Conversation.create(conversationDummyParams);
 
 		expect(conversation.id).toBe(conversationDummyParams.id);
-		expect(conversation.applicantId).toBe(conversationDummyParams.applicantId);
-		expect(conversation.employeeId).toBe(conversationDummyParams.employeeId);
+		expect(conversation.applicantUserId).toBe(
+			conversationDummyParams.applicantUserId,
+		);
+		expect(conversation.employeeUserId).toBe(
+			conversationDummyParams.employeeUserId,
+		);
 		expect(conversation.purposeId).toBe(conversationDummyParams.purposeId);
 		expect(conversation.status).toBe(conversationDummyParams.status);
 		expect(conversation.messages).toEqual(conversationDummyParams.messages);
@@ -24,11 +28,17 @@ describe("Conversation", () => {
 		).toThrowError(ZodError);
 
 		expect(() =>
-			Conversation.create({ ...conversationDummyParams, applicantId: "" }),
+			Conversation.create({
+				...conversationDummyParams,
+				applicantUserId: "",
+			}),
 		).toThrowError(ZodError);
 
 		expect(() =>
-			Conversation.create({ ...conversationDummyParams, employeeId: "" }),
+			Conversation.create({
+				...conversationDummyParams,
+				employeeUserId: "",
+			}),
 		).toThrowError(ZodError);
 
 		expect(() =>
