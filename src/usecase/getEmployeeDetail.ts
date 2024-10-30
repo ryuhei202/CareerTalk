@@ -1,7 +1,6 @@
 import "server-only";
 
-import { validateGetEmployeeDetailUseCaseParams } from "@/app/(site)/applicant/detail/[employeeId]/_util/validateGetEmployeeDetailUseCaseParams";
-import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/detail/[employeeId]/page";
+import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/detail/[employeeUserId]/page";
 import type { EmployeeDomainError } from "@/domain/core/Employee/Employee";
 import {
 	type GetEmployeeDetailError,
@@ -11,6 +10,7 @@ import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
 import type { EmployeeDetailResponse } from "./dto/Employee/EmployeeDetailDto";
+import { validateGetEmployeeDetailUseCaseParams } from "./validateParams/validateGetEmployeeDetailUseCaseParams";
 
 export type GetEmployeeDetailUseCaseResult = Result<
 	EmployeeDetailResponse,

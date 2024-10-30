@@ -43,8 +43,6 @@ export class Applicant {
 	) {}
 
 	static create(params: ApplicantParams): Applicant {
-		console.log("Applicant.create", params);
-
 		Applicant.validate(params);
 		return new Applicant(
 			params.id,

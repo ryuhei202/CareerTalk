@@ -1,7 +1,8 @@
+import type { SearchEmployeeParams } from "@/app/(site)/applicant/search_employees/page";
+import { applicantUserIdSchema } from "@/domain/core/Conversation/ConversationParamsSchema";
 import { HiringTypeEnum } from "@/domain/shared/HiringType";
 import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { z } from "zod";
-import type { SearchEmployeeParams } from "../page";
 
 export const validateFilteredEmployeeUseCaseParams = (
 	params: SearchEmployeeParams,
@@ -29,6 +30,7 @@ export const validateFilteredEmployeeUseCaseParams = (
 			hiringType: hiringTypeSchema,
 			meetingMethod: meetingMethodSchema,
 		}),
+		applicantUserId: applicantUserIdSchema,
 	});
 
 	// バリデーション実行

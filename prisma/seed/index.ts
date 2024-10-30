@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import { company } from "./company";
-// import { employee } from "./employee";
+import { conversationPurpose } from "./conversationPurpose";
 import { occupation } from "./occupation";
+// import { employee } from "./employee";
 // import { user } from "./user";
 import { workLocation } from "./worklocation";
-
 export const prisma = new PrismaClient();
 
 const main = async () => {
@@ -13,6 +13,7 @@ const main = async () => {
 		...occupation(),
 		...company(),
 		...workLocation(),
+		...conversationPurpose(),
 		// ...user(),  // テストデータを入れたい時だけコメントアウトをはずしてください
 		// ...employee(),
 	]);

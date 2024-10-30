@@ -149,35 +149,36 @@ enum ConversationStatus {
 }
 
 model ConversationPurpose {
-  id        String    @id
-  reason String @unique
+  id            Int    @id @default(autoincrement())
+  reason        String @unique
   conversations Conversation[]
 }
 
 model Conversation {
-  id        String    @id
-  applicantId String
-  applicant Applicant @relation(fields: [applicantId], references: [id])
-  employeeId String
-  employee Employee @relation(fields: [employeeId], references: [id])
-  purposeId String
-  purpose ConversationPurpose @relation(fields: [purposeId], references: [id])
-  status ConversationStatus @default(PENDING)
-  messages  Message[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id          String    @id
+  applicantUserId String
+  applicant   Applicant @relation(fields: [applicantUserId], references: [userId])
+  employeeUserId  String
+  employee    Employee  @relation(fields: [employeeUserId], references: [userId])
+  purposeId   Int
+  purpose     ConversationPurpose @relation(fields: [purposeId], references: [id])
+  status      ConversationStatus @default(PENDING)
+  messages    Message[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
 
+
 model Message {
-  id        String    @id
+  id             String       @id
   conversationId String
-  conversation Conversation @relation(fields: [conversationId], references: [id])
-  senderId String
-  sendUser User @relation(fields: [senderId], references: [id])
-  content String
-  isRead Boolean @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id])
+  content        String
+  isRead         Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
 
 

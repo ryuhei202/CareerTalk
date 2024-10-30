@@ -1,3 +1,6 @@
+import "server-only";
+
+import type { RegisterApplicantParams } from "@/app/(site)/applicant/create_profile/_actions/registerApplicantAction";
 import { createApplicant } from "@/domain/core/Applicant/services/createApplicant";
 import {
 	type InvalidRegisterApplicantInputError,
@@ -5,17 +8,8 @@ import {
 } from "@/domain/core/Applicant/services/validateRegisterApplicantInput";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import type { ZodError } from "zod";
+import { validateRegisterApplicantUseCaseParams } from "./validateParams/validateRegisterApplicantUseCaseParams";
 
-export interface RegisterApplicantParams {
-	userId: string;
-	name: string;
-	occupationId: number;
-	gender: string;
-	birthday: Date;
-	joiningDate: Date;
-	imageUrl?: string;
-	selfIntroduction?: string;
-}
 type RegisterApplicantUseCaseResult = Result<undefined, undefined>;
 
 export type RegisterApplicantUseCase = (
@@ -25,13 +19,12 @@ export type RegisterApplicantUseCase = (
 export const registerApplicantUseCase = async (
 	params: RegisterApplicantParams,
 ): Promise<RegisterApplicantUseCaseResult> => {
-	console.log({
-		message: `${registerApplicantUseCase.name}`,
-		params,
-	});
 	try {
-		// ドメインサービス① 転職者登録パラメータのバリデーション
-		const applicant = await validateRegisterApplicantInput(params);
+		// パラメータのバリデーション
+		const validatedParams = validateRegisterApplicantUseCaseParams(params);
+
+		// ドメインサービス① 転職者登録インプットのバリデーション
+		const applicant = await validateRegisterApplicantInput(validatedParams);
 
 		// ドメインサービス② 転職者の登録
 		const mayBeCreatedApplicant = await createApplicant(applicant);

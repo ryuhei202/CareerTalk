@@ -1,19 +1,19 @@
-"use client";
-
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
 import type { EmployeeDetailResponse } from "@/usecase/dto/Employee/EmployeeDetailDto";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import EmployeeComment from "./EmployeeComment";
 
 export default function EmployeeCard({
   employee,
+  onClickBack,
+  onClickOpenDMRequest,
 }: {
   employee: EmployeeDetailResponse;
+  onClickBack: () => void;
+  onClickOpenDMRequest: () => void;
 }) {
-  const router = useRouter();
   return (
     <Card className="w-full max-w-md mx-auto h-[calc(100vh-80px)] overflow-y-auto my-4">
       <CardHeader className="bg-blue-500 text-white p-3 sticky top-0 z-10">
@@ -27,14 +27,16 @@ export default function EmployeeCard({
             variant="ghost"
             size="sm"
             className="text-blue-600 hover:text-white hover:bg-blue-600 p-1"
-            onClick={() => router.back()}
+            onClick={onClickBack}
           >
             <ArrowLeft className="h-4 w-4" />
             <span className="sr-only">戻る</span>
           </Button>
           <Button
+            type="button"
             size="sm"
             className="bg-white text-blue-600 hover:bg-blue-50 rounded-full text-xs"
+            onClick={onClickOpenDMRequest}
           >
             この社員とトークする
           </Button>
@@ -85,7 +87,11 @@ export default function EmployeeCard({
         </div>
       </CardContent>
       <div className="sticky bottom-0 bg-white p-4 border-t">
-        <Button className="w-full bg-blue-600 text-white hover:bg-blue-700 rounded-full py-3 text-sm font-medium">
+        <Button
+          type="button"
+          className="w-full bg-blue-600 text-white hover:bg-blue-700 rounded-full py-3 text-sm font-medium"
+          onClick={onClickOpenDMRequest}
+        >
           この社員とトークする
         </Button>
       </div>
