@@ -46,7 +46,7 @@ export default async function SiteLayout({
               <span className="text-sm">イベント</span>
             </Link>
             <Link
-              href="/my-page"
+              href="my_page"
               className="relative bg-blue-400 text-black px-12 h-full flex items-center justify-center overflow-hidden"
             >
               <span className="relative z-10 text-lg font-semibold text-white pl-8">
