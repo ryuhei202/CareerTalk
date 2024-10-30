@@ -66,3 +66,14 @@ export const authOptions: NextAuthOptions = {
 export const getServerSession = cache(async () => {
 	return originalGetServerSession(authOptions);
 });
+
+export const getEmployeeId = cache(async () => {
+	const session = await getServerSession();
+	if (!session) {
+		return null;
+	}
+	const employee = await prisma.employee.findFirst({
+		where: { userId: session.user.id },
+	});
+	return employee?.id;
+});
