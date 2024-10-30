@@ -1,5 +1,4 @@
 import "server-only";
-import { validateFilteredEmployeeUseCaseParams } from "@/app/(site)/applicant/search_employees/_util/validateFilteredEmployeeUseCaseParams";
 import type {
 	Company,
 	Occupation,
@@ -17,9 +16,10 @@ import type { MeetingMethodLabel } from "@/domain/shared/MeetingMethod";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
+import { validateFilteredEmployeeUseCaseParams } from "./validateParams/validateFilteredEmployeeUseCaseParams";
 
 export type FilteredEmployee = {
-	id: string;
+	userId: string;
 	name: string;
 	company: Company;
 	occupation: Occupation;

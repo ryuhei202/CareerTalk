@@ -20,8 +20,8 @@ export type WorkLocation = {
 };
 
 export class EmployeeDTO {
-	public readonly id: string;
 	public readonly name: string;
+	public readonly userId: string;
 	public readonly company: Company;
 	public readonly occupation: Occupation;
 	public readonly gender: GenderLabel;
@@ -45,8 +45,8 @@ export class EmployeeDTO {
 		occupation: Occupation;
 		workLocation?: WorkLocation;
 	}) {
-		this.id = employee.id;
 		this.name = employee.name;
+		this.userId = employee.userId;
 		this.company = company;
 		this.occupation = occupation;
 		this.gender = employee.toGenderLabel();
@@ -62,7 +62,7 @@ export class EmployeeDTO {
 
 	toJson(): FilteredEmployee {
 		return {
-			id: this.id,
+			userId: this.userId,
 			name: this.name,
 			company: this.company,
 			occupation: this.occupation,

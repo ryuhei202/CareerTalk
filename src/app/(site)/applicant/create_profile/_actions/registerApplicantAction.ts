@@ -2,10 +2,7 @@
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { StatusLabel } from "@/domain/shared/Status";
 import { getServerSession } from "@/lib/auth";
-import {
-	type RegisterApplicantParams,
-	registerApplicantUseCase,
-} from "@/usecase/registerApplicant";
+import { registerApplicantUseCase } from "@/usecase/registerApplicant";
 import { redirect } from "next/navigation";
 import type { FormState } from "../_components/CreateApplicantProfileContainer";
 
@@ -21,6 +18,17 @@ export type CreatedApplicantResponse = {
 	imageUrl?: string;
 	selfIntroduction?: string;
 };
+
+export interface RegisterApplicantParams {
+	userId: string;
+	name: string;
+	occupationId: number;
+	gender: string;
+	birthday: Date;
+	joiningDate: Date;
+	imageUrl?: string;
+	selfIntroduction?: string;
+}
 
 export async function registerApplicantAction(
 	_prevState: FormState,
@@ -44,16 +52,7 @@ export async function registerApplicantAction(
 	const selfIntroduction = formData.get("selfIntroduction");
 	// 後で画像も入れれるようにする
 	// const imageUrl = formData.get("imageUrl");
-
 	const formDataObject = Object.fromEntries(formData.entries());
-
-	if (!name || !occupationId || !gender || !joiningDate) {
-		return {
-			success: false,
-			message: "必須項目を入力してください",
-			data: formDataObject,
-		};
-	}
 
 	const useCaseParams: RegisterApplicantParams = {
 		userId: userId,
@@ -65,11 +64,9 @@ export async function registerApplicantAction(
 		selfIntroduction: (selfIntroduction as string) || undefined,
 		// imageUrl: (imageUrl as string) || undefined,
 	};
-
-	console.log("useCaseParams", useCaseParams);
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const useCaseResult = await registerApplicantUseCase(useCaseParams);
-	console.log("useCaseResult", useCaseResult);
+
 	if (useCaseResult.success) {
 		redirect("/applicant/search_employees");
 	} else {

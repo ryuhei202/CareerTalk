@@ -1,4 +1,4 @@
-import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/detail/[employeeId]/page";
+import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/detail/[employeeUserId]/page";
 import type { GenderEnum } from "@/domain/shared/Gender";
 import type { HiringTypeEnum } from "@/domain/shared/HiringType";
 import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
@@ -18,11 +18,11 @@ export class GetEmployeeDetailError extends NamedError {
 export const getEmployeeDetail = async (
 	params: GetEmployeeDetailParams,
 ): Promise<EmployeeDetailResponse> => {
-	const employeeId = params.employeeId;
+	const employeeUserId = params.employeeUserId;
 
 	const employee = await prisma.employee.findUnique({
 		where: {
-			id: employeeId,
+			userId: employeeUserId,
 		},
 		include: {
 			user: true,

@@ -9,6 +9,7 @@ import {
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
+import { validateRegisterEmployeeUseCaseParams } from "./validateParams/validateRegisterEmployeeUseCaseParams";
 
 type RegisterEmployeeUseCaseResult = Result<undefined, undefined>;
 
@@ -16,8 +17,10 @@ export const registerEmployeeUseCase = async (
 	params: RegisterEmployeeParams,
 ): Promise<RegisterEmployeeUseCaseResult> => {
 	try {
-		// ドメインサービス① 現場社員登録パラメータのバリデーション
-		const employee = await validateRegisterEmployeeInput(params);
+		// パラメータのバリデーション
+		const validatedParams = validateRegisterEmployeeUseCaseParams(params);
+		// ドメインサービス① 現場社員登録インプットのバリデーション
+		const employee = await validateRegisterEmployeeInput(validatedParams);
 
 		// ドメインサービス② 現場社員の登録
 		const mayBeCreatedEmployee = await createEmployee(employee);

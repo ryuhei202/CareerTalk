@@ -1,10 +1,13 @@
 import { prisma } from "@/lib/prisma";
+import type { Employee as PrismaEmployee } from "@prisma/client";
 import type { Employee } from "../Employee";
 
-export const createEmployee = async (employee: Employee): Promise<Employee> => {
+export const createEmployee = async (
+	employee: Employee,
+): Promise<PrismaEmployee> => {
 	// 現場社員登録（トランザクション内で実行）
-	await prisma.$transaction(async (tx) => {
-		await tx.employee.create({
+	const createdEmployee = await prisma.$transaction(async (tx) => {
+		const createdEmployee = await tx.employee.create({
 			data: {
 				id: employee.id,
 				userId: employee.userId,
@@ -32,7 +35,9 @@ export const createEmployee = async (employee: Employee): Promise<Employee> => {
 				image: employee.imageUrl,
 			},
 		});
+
+		return createdEmployee;
 	});
 
-	return employee;
+	return createdEmployee;
 };

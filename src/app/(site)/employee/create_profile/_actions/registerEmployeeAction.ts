@@ -2,10 +2,7 @@
 import type { FormState } from "@/app/(site)/employee/create_profile/_components/CreateEmplopyeeProfileContainer";
 import { getServerSession } from "@/lib/auth";
 import { registerEmployeeUseCase } from "@/usecase/registerEmployee";
-import { getZodErrorMessages } from "@/util/error";
 import { redirect } from "next/navigation";
-import { ZodError } from "zod";
-import { validateRegisterEmployeeUseCaseParams } from "../_util/validateRegisterEmployeeUseCaseParams";
 
 export interface RegisterEmployeeParams {
 	userId: string;
@@ -70,20 +67,6 @@ export async function registerEmployeeAction(
 		// imageUrl: (imageUrl as string) || undefined,
 	};
 
-	// パラメーターのバリデーション
-	try {
-		validateRegisterEmployeeUseCaseParams(useCaseParams);
-	} catch (error) {
-		if (error instanceof ZodError) {
-			return {
-				success: false,
-				message: getZodErrorMessages(error),
-				data: formDataObject,
-			};
-		}
-	}
-
-	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const useCaseResult = await registerEmployeeUseCase(useCaseParams);
 
 	if (useCaseResult.success) {

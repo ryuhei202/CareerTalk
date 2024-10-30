@@ -1,9 +1,11 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
+import { getServerSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,
 } from "@/usecase/getEmployeeDetail";
+import { redirect } from "next/navigation";
 import type { ReactElement } from "react";
 import EmployeeCardContainer from "./_components/EmployeeCardContainer";
 
@@ -11,24 +13,29 @@ import EmployeeCardContainer from "./_components/EmployeeCardContainer";
  * 詳細取得のRequest Paramsの型
  */
 export type GetEmployeeDetailParams = {
-  employeeId: string;
+  employeeUserId: string;
 };
 
 type Props = {
   params: {
-    employeeId: string;
+    employeeUserId: string;
   };
 };
 
 export default async function EmployeeDetailPage({
   params,
 }: Props): Promise<ReactElement> {
+  const session = await getServerSession();
+  if (!session) {
+    redirect("/");
+  }
+
   const getEmployeeDetailUseCaseParams: GetEmployeeDetailParams = {
-    employeeId: params.employeeId,
+    employeeUserId: params.employeeUserId,
   };
 
   const result: GetEmployeeDetailUseCaseResult = await getEmployeeDetailUseCase(
-    getEmployeeDetailUseCaseParams
+    { employeeUserId: params.employeeUserId }
   );
 
   if (!result.success) {
@@ -46,6 +53,7 @@ export default async function EmployeeDetailPage({
     <EmployeeCardContainer
       employee={result.data}
       options={conversationPurpose}
+      applicantUserId={session.user.id}
     />
   );
 }

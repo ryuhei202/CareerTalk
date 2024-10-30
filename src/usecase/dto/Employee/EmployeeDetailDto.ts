@@ -18,6 +18,7 @@ type WorkLocation = {
 };
 
 export type EmployeeDetailResponse = {
+	userId: string;
 	name: string;
 	companyName: string;
 	occupationName: string;
@@ -34,6 +35,7 @@ export type EmployeeDetailResponse = {
 };
 
 export class EmployeeDetailDto {
+	public readonly userId: string;
 	public readonly name: string;
 	public readonly companyName: string;
 	public readonly occupationName: string;
@@ -59,6 +61,7 @@ export class EmployeeDetailDto {
 		occupation: Occupation;
 		workLocation?: WorkLocation;
 	}) {
+		this.userId = employee.userId;
 		this.name = employee.name;
 		this.companyName = company.name;
 		this.occupationName = occupation.name;
@@ -77,6 +80,7 @@ export class EmployeeDetailDto {
 	// あえてわかりやすいように分割代入はしない
 	toJson(): EmployeeDetailResponse {
 		return {
+			userId: this.userId,
 			name: this.name,
 			companyName: this.companyName,
 			occupationName: this.occupationName,

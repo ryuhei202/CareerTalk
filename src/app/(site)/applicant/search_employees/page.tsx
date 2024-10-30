@@ -1,11 +1,13 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import type { HiringTypeEnum } from "@/domain/shared/HiringType";
 import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
+import { getServerSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
   type SearchEmployeeUseCaseResult,
   getFilteredEmployeesUseCase,
 } from "@/usecase/getFilteredEmployees";
+import { redirect } from "next/navigation";
 import SearchEmployeeContainer from "./_components/SearchEmployeeContainer";
 import { getParamsFromQueryStrings } from "./_util/getParamsFromQueryStrings";
 
@@ -50,6 +52,7 @@ export type SearchEmployeeParams = {
     hiringType?: HiringTypeEnum;
     meetingMethod?: MeetingMethodEnum;
   };
+  applicantUserId: string;
 };
 
 export default async function SearchEmployeePage({
@@ -57,6 +60,11 @@ export default async function SearchEmployeePage({
 }: {
   searchParams: SearchParams;
 }) {
+  const session = await getServerSession();
+  if (!session) {
+    redirect("/");
+  }
+
   const [occupation, company] = await Promise.all([
     prisma.occupation.findMany(),
     prisma.company.findMany(),
@@ -80,6 +88,7 @@ export default async function SearchEmployeePage({
       hiringType: currentHiringType,
       meetingMethod: currentMeetingMethod,
     },
+    applicantUserId: session.user.id,
   };
 
   const result: SearchEmployeeUseCaseResult = await getFilteredEmployeesUseCase(
