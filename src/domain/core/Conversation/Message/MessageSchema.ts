@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { conversationIdSchema } from "../Conversation/ConversationParamsSchema";
+import { userIdSchema } from "../../Applicant/ApplicantSchema";
 
 /**
  * Message関連のバリデーションスキーマ
@@ -7,9 +7,10 @@ import { conversationIdSchema } from "../Conversation/ConversationParamsSchema";
 export const messageIdSchema = z.string().trim().length(25, {
 	message: "無効なメッセージIdです。メッセージIDは25文字である必要があります",
 });
-export const senderIdSchema = z.string().trim().length(25, {
-	message: "無効な送信者Idです。送信者IDは25文字である必要があります",
+export const conversationIdSchema = z.string().trim().length(25, {
+	message: "無効な会話Idです。会話IDは25文字である必要があります",
 });
+
 export const contentSchema = z
 	.string()
 	.trim()
@@ -24,7 +25,7 @@ export const isReadSchema = z.boolean();
 export const messageParamsSchema = z.object({
 	id: messageIdSchema,
 	conversationId: conversationIdSchema,
-	senderId: senderIdSchema,
+	senderId: userIdSchema,
 	content: contentSchema,
 	isRead: isReadSchema,
 });
