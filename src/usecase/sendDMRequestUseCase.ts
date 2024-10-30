@@ -1,3 +1,4 @@
+import "server-only";
 import type { SendDMRequestParams } from "@/app/(site)/applicant/detail/[employeeUserId]/actions/sendDMRequestAction";
 import { createConversation } from "@/domain/core/Conversation/services/createConversation";
 import {
@@ -8,7 +9,6 @@ import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
 import { validateSendDMRequestParams } from "./validateParams/validateSendDMRequestParams";
-import "server-only";
 
 type SendDMRequestUseCaseResult = Result<undefined, undefined>;
 export const sendDMRequestUseCase = async (

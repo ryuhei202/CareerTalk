@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { RegisterApplicantParams } from "@/app/(site)/applicant/create_profile/_actions/registerApplicantAction";
 import { createApplicant } from "@/domain/core/Applicant/services/createApplicant";
 import {
