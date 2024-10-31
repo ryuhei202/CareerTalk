@@ -36,18 +36,16 @@ export const validateRegisterEmployeeInput = async (
 
 	// バリデーションチェック
 	if (!user) {
-		throw new InvalidRegisterEmployeeInputError(
-			"ユーザーが存在しません。再度ログインしてください。",
-		);
+		throw new InvalidRegisterEmployeeInputError("再度ログインしてください。");
 	}
 	if (user.employee) {
 		throw new InvalidRegisterEmployeeInputError(
-			"登録済み現場社員がすでに存在します。",
+			"このアカウントは既に現場社員として登録済みです。",
 		);
 	}
 	if (user.applicant) {
 		throw new InvalidRegisterEmployeeInputError(
-			"登録済み転職希望者がすでに存在します",
+			"このアカウントは既に転職希望者として登録済みです。",
 		);
 	}
 	if (!company) {
