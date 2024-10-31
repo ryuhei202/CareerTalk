@@ -31,7 +31,7 @@ export const validateRegisterApplicantInput = async (
 	// バリデーションチェック
 	if (!user) {
 		throw new InvalidRegisterApplicantInputError(
-			"ユーザーが存在しません。再度ログインしてください",
+			"ユーザーが存在しません。再度ホームからログインしてください。",
 		);
 	}
 	if (user.employee) {

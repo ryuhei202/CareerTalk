@@ -36,7 +36,9 @@ export const validateRegisterEmployeeInput = async (
 
 	// バリデーションチェック
 	if (!user) {
-		throw new InvalidRegisterEmployeeInputError("再度ログインしてください。");
+		throw new InvalidRegisterEmployeeInputError(
+			"ユーザーが見つかりません。再度ホームからログインしてください。",
+		);
 	}
 	if (user.employee) {
 		throw new InvalidRegisterEmployeeInputError(

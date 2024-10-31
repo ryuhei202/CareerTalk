@@ -18,16 +18,15 @@ import {
   SelectValue,
 } from "@/app/_components/ui/select";
 import { Textarea } from "@/app/_components/ui/textarea";
-import { WORK_LOCATION_OPTIONS } from "@/app/_shared/constants/workLocationOptions";
 import { GenderEnum } from "@/domain/shared/Gender";
 import { HiringTypeEnum } from "@/domain/shared/HiringType";
 import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { Occupation, WorkLocation } from "@prisma/client";
 import { useRef } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import type { TOccupation } from "../page";
 import { SubmitCreateEmployeeProfileButton } from "./SubmitCreateEmployeeProfileButton";
 
 export type FormState = {
@@ -98,9 +97,11 @@ const formSchema = z.object({
 export default function CreateProfileEmployee({
   occupations,
   userName,
+  workLocations,
 }: {
-  occupations: TOccupation[];
+  occupations: Occupation[];
   userName: string;
+  workLocations: WorkLocation[];
 }) {
   const [state, formAction] = useFormState<FormState, FormData>(
     registerEmployeeAction,
@@ -308,7 +309,7 @@ export default function CreateProfileEmployee({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {WORK_LOCATION_OPTIONS.map((workLocation) => (
+                      {workLocations.map((workLocation) => (
                         <SelectItem
                           key={workLocation.id}
                           value={workLocation.id.toString()}
