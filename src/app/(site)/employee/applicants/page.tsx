@@ -8,8 +8,6 @@ export default async function ApplicantsPage() {
     redirect("/");
   }
 
-  console.log("session", session);
-
   const conversations = await prisma.conversation.findMany({
     where: {
       employeeUserId: session.user.id,

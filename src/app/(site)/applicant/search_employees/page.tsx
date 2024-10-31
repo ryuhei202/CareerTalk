@@ -1,7 +1,7 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import type { HiringTypeEnum } from "@/domain/shared/HiringType";
 import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
-import { getServerSession } from "@/lib/auth";
+import { getApplicantUserId } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
   type SearchEmployeeUseCaseResult,
@@ -60,9 +60,9 @@ export default async function SearchEmployeePage({
 }: {
   searchParams: SearchParams;
 }) {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/");
+  const applicantUserId = await getApplicantUserId();
+  if (!applicantUserId) {
+    redirect("/applicant/create_profile");
   }
 
   const [occupation, company] = await Promise.all([
@@ -88,7 +88,7 @@ export default async function SearchEmployeePage({
       hiringType: currentHiringType,
       meetingMethod: currentMeetingMethod,
     },
-    applicantUserId: session.user.id,
+    applicantUserId: applicantUserId,
   };
 
   const result: SearchEmployeeUseCaseResult = await getFilteredEmployeesUseCase(

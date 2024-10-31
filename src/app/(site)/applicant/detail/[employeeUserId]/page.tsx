@@ -1,5 +1,5 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
-import { getServerSession } from "@/lib/auth";
+import { getApplicantUserId } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
   type GetEmployeeDetailUseCaseResult,
@@ -25,9 +25,9 @@ type Props = {
 export default async function EmployeeDetailPage({
   params,
 }: Props): Promise<ReactElement> {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/");
+  const applicantUserId = await getApplicantUserId();
+  if (!applicantUserId) {
+    redirect("/applicant/create_profile");
   }
 
   const getEmployeeDetailUseCaseParams: GetEmployeeDetailParams = {
