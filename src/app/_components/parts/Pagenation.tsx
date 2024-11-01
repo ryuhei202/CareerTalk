@@ -1,4 +1,4 @@
-export default function SearchEmployeePagenation({
+export default function Pagenation({
   currentPage,
   totalPages,
   onPageChange,

@@ -1,28 +1,44 @@
-import { getServerSession } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import ErrorPage from "@/app/_components/page/ErrorPage";
+import { getEmployeeUserId } from "@/lib/auth";
+import {
+  type GetLikedApplicantsUseCaseParams,
+  getLikedApplicantsUseCase,
+} from "@/usecase/getLikedApplicants";
 import { redirect } from "next/navigation";
-
-export default async function ApplicantsPage() {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/");
+import { getParamsFromQueryStrings } from "../../applicant/search_employees/_util/getParamsFromQueryStrings";
+import type { SearchParams } from "../../applicant/search_employees/page";
+import LikeApplicationsContainer from "./_components/LikeApplicationsContainer";
+export default async function MatchesPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const employeeUserId = await getEmployeeUserId();
+  if (!employeeUserId) {
+    redirect("/employee/create_profile");
   }
 
-  const conversations = await prisma.conversation.findMany({
-    where: {
-      employeeUserId: session.user.id,
-      status: "PENDING",
-    },
-  });
-  console.log("conversations", conversations);
+  const { currentPage } = getParamsFromQueryStrings(searchParams);
+
+  const getLikedApplicantsUseCaseParams: GetLikedApplicantsUseCaseParams = {
+    page: currentPage,
+    employeeUserId,
+  };
+
+  const result = await getLikedApplicantsUseCase(
+    getLikedApplicantsUseCaseParams
+  );
+
+  if (!result.success) {
+    return <ErrorPage message={result.message} data={result.data} />;
+  }
+
+  console.log(result.data.applicants);
+
   return (
-    <div>
-      <h1>転職希望者</h1>
-      <ul>
-        {conversations.map((conversation) => (
-          <li key={conversation.id}>{conversation.id}</li>
-        ))}
-      </ul>
-    </div>
+    <LikeApplicationsContainer
+      totalCount={result.data.totalCount}
+      applicants={result.data.applicants}
+    />
   );
 }
