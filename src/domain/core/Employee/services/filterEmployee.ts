@@ -32,6 +32,16 @@ export const filterEmployees = async (
 		? getExperienceYearsAgo(yearsOfExperience)
 		: { minJoiningDate: undefined, maxJoiningDate: undefined };
 
+	// すでにリクエストを送信した転職希望者は除外
+	const existingConversations = await prisma.conversation.findMany({
+		where: { applicantUserId: params.applicantUserId },
+		include: {
+			employee: true,
+		},
+	});
+	const existingEmployeeUserIds = existingConversations.map(
+		(c) => c.employee.userId,
+	);
 	const whereCondition = {
 		companyId,
 		occupationId,
@@ -41,6 +51,9 @@ export const filterEmployees = async (
 		},
 		hiringType,
 		meetingMethod,
+		NOT: {
+			userId: { in: existingEmployeeUserIds },
+		},
 	};
 
 	const [totalCount, employees] = await Promise.all([

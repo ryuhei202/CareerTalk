@@ -1,15 +1,15 @@
+import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/detail/[employeeUserId]/page";
 import { z } from "zod";
-import type { GetEmployeeDetailParams } from "../page";
 
 export const validateGetEmployeeDetailUseCaseParams = (
 	params: GetEmployeeDetailParams,
 ) => {
 	// スキーマ定義
-	const employeeIdSchema = z.string().trim().length(25);
+	const employeeUserIdSchema = z.string().trim().length(25);
 
 	// パラメータスキーマ
 	const paramsSchema = z.object({
-		employeeId: employeeIdSchema,
+		employeeUserId: employeeUserIdSchema,
 	});
 
 	return paramsSchema.parse(params);

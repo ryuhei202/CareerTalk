@@ -1,6 +1,6 @@
 import { employeeDummy } from "@/domain/core/Employee/test/Employee.dummy";
 import { describe, expect, test } from "vitest";
-import { EmployeeDTO } from "./EmployeeDTO";
+import { EmployeeDTO } from "../EmployeeDTO";
 
 describe("EmployeeDTO", () => {
 	const employee = employeeDummy;
@@ -26,7 +26,7 @@ describe("EmployeeDTO", () => {
 
 		expect(employeeDTO).toBeDefined();
 		expect(employeeDTO.name).toBe(employee.name);
-		expect(employeeDTO.id).toBe(employee.id);
+		expect(employeeDTO.userId).toBe(employee.userId);
 		expect(employeeDTO.company).toBe(company);
 		expect(employeeDTO.occupation).toBe(occupation);
 		expect(employeeDTO.gender).toBe(employee.toGenderLabel());
@@ -52,7 +52,7 @@ describe("EmployeeDTO", () => {
 
 		expect(employeeJson).toBeDefined();
 		expect(employeeJson.name).toBe(employee.name);
-		expect(employeeJson.id).toBe(employee.id);
+		expect(employeeJson.userId).toBe(employee.userId);
 		expect(employeeJson.company).toBe(company);
 		expect(employeeJson.occupation).toBe(occupation);
 		expect(employeeJson.gender).toBe(employee.toGenderLabel());

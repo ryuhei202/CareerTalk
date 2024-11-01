@@ -1,8 +1,8 @@
+import type { RegisterApplicantParams } from "@/app/(site)/applicant/create_profile/_actions/registerApplicantAction";
 import type { GenderEnum } from "@/domain/shared/Gender";
 import { StatusEnum } from "@/domain/shared/Status";
 import { createId } from "@/lib/cuid";
 import { prisma } from "@/lib/prisma";
-import type { RegisterApplicantParams } from "@/usecase/registerApplicant";
 import { NamedError } from "@/util/error";
 import { Applicant } from "../Applicant";
 
@@ -17,47 +17,39 @@ export type ValidateRegisterApplicantInput = (
 export const validateRegisterApplicantInput = async (
 	params: RegisterApplicantParams,
 ): Promise<Applicant> => {
-	const user = await prisma.user.findUnique({
-		where: {
-			id: params.userId,
-		},
-		include: {
-			employee: true,
-			applicant: true,
-		},
-	});
+	// 全てのクエリを並列実行
+	const [user, occupation] = await Promise.all([
+		prisma.user.findUnique({
+			where: { id: params.userId },
+			include: { employee: true, applicant: true },
+		}),
+		prisma.occupation.findUnique({
+			where: { id: params.occupationId },
+		}),
+	]);
 
-	// ユーザーが存在しない場合はエラー
-	if (user == null) {
-		throw new InvalidRegisterApplicantInputError("ユーザーが存在しません");
-	}
-
-	// 登録済み現場社員がすでに存在する場合はエラー
-	if (user?.employee != null) {
+	// バリデーションチェック
+	if (!user) {
 		throw new InvalidRegisterApplicantInputError(
-			"登録済み現場社員がすでに存在します",
+			"ユーザーが存在しません。再度ホームからログインしてください。",
 		);
 	}
-
-	// 登録ずみ転職希望者が既に存在する場合はエラー
-	if (user?.applicant != null) {
+	if (user.employee) {
 		throw new InvalidRegisterApplicantInputError(
-			"登録済み転職希望者がすでに存在します",
+			"このアカウントは既に現場社員として登録済みです。",
 		);
 	}
-
-	// 職種の存在確認
-	const occupation = await prisma.occupation.findUnique({
-		where: {
-			id: params.occupationId,
-		},
-	});
-	if (occupation == null) {
+	if (user.applicant) {
+		throw new InvalidRegisterApplicantInputError(
+			"このアカウントは既に転職希望者として登録済みです。",
+		);
+	}
+	if (!occupation) {
 		throw new InvalidRegisterApplicantInputError("不正な職種です");
 	}
 
-	// 全ての条件を満たした場合はApplicantインスタンスを返す。
-	const applicant = Applicant.create({
+	// Applicantインスタンスの作成
+	return Applicant.create({
 		id: createId(),
 		name: params.name,
 		userId: params.userId,
@@ -65,9 +57,8 @@ export const validateRegisterApplicantInput = async (
 		gender: params.gender as GenderEnum,
 		birthday: params.birthday,
 		joiningDate: params.joiningDate,
-		status: StatusEnum.PENDING, // 初期値はPENDING
+		status: StatusEnum.PENDING,
 		imageUrl: params.imageUrl ?? undefined,
 		selfIntroduction: params.selfIntroduction ?? undefined,
 	});
-	return applicant;
 };

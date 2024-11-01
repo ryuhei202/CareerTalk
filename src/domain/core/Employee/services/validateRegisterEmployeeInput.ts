@@ -12,78 +12,56 @@ export class InvalidRegisterEmployeeInputError extends NamedError {
 	readonly name = "InvalidRegisterEmployeeInputError";
 }
 
-export type ValidateRegisterEmployeeInput = (
-	params: RegisterEmployeeParams,
-) => Promise<Employee>;
-
 export const validateRegisterEmployeeInput = async (
 	params: RegisterEmployeeParams,
 ): Promise<Employee> => {
-	const user = await prisma.user.findUnique({
-		where: {
-			id: params.userId,
-		},
-		include: {
-			employee: true,
-			applicant: true,
-		},
-	});
+	// 全てのクエリを並列実行
+	const [user, company, occupation, workLocation] = await Promise.all([
+		prisma.user.findUnique({
+			where: { id: params.userId },
+			include: { employee: true, applicant: true },
+		}),
+		prisma.company.findUnique({
+			where: { code: params.companyCode },
+		}),
+		prisma.occupation.findUnique({
+			where: { id: params.occupationId },
+		}),
+		params.workLocationId
+			? prisma.workLocation.findUnique({
+					where: { id: params.workLocationId },
+				})
+			: Promise.resolve(null),
+	]);
 
-	// ユーザーが存在しない場合はエラー
-	if (user == null) {
+	// バリデーションチェック
+	if (!user) {
 		throw new InvalidRegisterEmployeeInputError(
-			"ユーザーが存在しません。再度ログインしてください。",
+			"ユーザーが見つかりません。再度ホームからログインしてください。",
 		);
 	}
-
-	// 登録済み現場社員がすでに存在する場合はエラー
-	if (user?.employee != null) {
+	if (user.employee) {
 		throw new InvalidRegisterEmployeeInputError(
-			"登録済み現場社員がすでに存在します。",
+			"このアカウントは既に現場社員として登録済みです。",
 		);
 	}
-
-	// 登録ずみ転職希望者が既に存在する場合はエラー
-	if (user?.applicant != null) {
+	if (user.applicant) {
 		throw new InvalidRegisterEmployeeInputError(
-			"登録済み転職希望者がすでに存在します",
+			"このアカウントは既に転職希望者として登録済みです。",
 		);
 	}
-
-	// 企業コードから企業の存在確認
-	const company = await prisma.company.findUnique({
-		where: {
-			code: params.companyCode,
-		},
-	});
-	if (company == null) {
+	if (!company) {
 		throw new InvalidRegisterEmployeeInputError("企業コードが不正です");
 	}
-
-	// 職種の存在確認
-	const occupation = await prisma.occupation.findUnique({
-		where: {
-			id: params.occupationId,
-		},
-	});
-	if (occupation == null) {
+	if (!occupation) {
 		throw new InvalidRegisterEmployeeInputError("不正な職種です");
 	}
-
-	// 勤務地の存在確認
-	if (params.workLocationId != null) {
-		const workLocation = await prisma.workLocation.findUnique({
-			where: {
-				id: params.workLocationId,
-			},
-		});
-		if (workLocation == null) {
-			throw new InvalidRegisterEmployeeInputError("不正な勤務地です");
-		}
+	if (params.workLocationId && !workLocation) {
+		throw new InvalidRegisterEmployeeInputError("不正な勤務地です");
 	}
 
-	// 全ての条件を満たした場合はEmployeeインスタンスを返す。
-	const employee = Employee.create({
+	// Employeeインスタンスの作成
+	return Employee.create({
 		id: createId(),
 		name: params.name,
 		userId: params.userId,
@@ -92,7 +70,7 @@ export const validateRegisterEmployeeInput = async (
 		gender: params.gender as GenderEnum,
 		birthday: params.birthday,
 		joiningDate: params.joiningDate,
-		status: StatusEnum.PENDING, // 初期値はPENDING
+		status: StatusEnum.PENDING,
 		imageUrl: params.imageUrl ?? undefined,
 		workLocationId: params.workLocationId ?? undefined,
 		hiringType: (params.hiringType as HiringTypeEnum) ?? undefined,
@@ -100,5 +78,4 @@ export const validateRegisterEmployeeInput = async (
 		selfIntroduction: params.selfIntroduction ?? undefined,
 		talkableTopics: params.talkableTopics ?? undefined,
 	});
-	return employee;
 };

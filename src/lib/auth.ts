@@ -67,13 +67,26 @@ export const getServerSession = cache(async () => {
 	return originalGetServerSession(authOptions);
 });
 
-export const getEmployeeId = cache(async () => {
+export const getApplicantUserId = cache(async () => {
+	const session = await getServerSession();
+	if (!session) {
+		return null;
+	}
+	const applicant = await prisma.applicant.findFirst({
+		where: { userId: session.user.id },
+		include: { user: true },
+	});
+	return applicant?.user.id;
+});
+
+export const getEmployeeUserId = cache(async () => {
 	const session = await getServerSession();
 	if (!session) {
 		return null;
 	}
 	const employee = await prisma.employee.findFirst({
 		where: { userId: session.user.id },
+		include: { user: true },
 	});
-	return employee?.id;
+	return employee?.user.id;
 });
