@@ -54,6 +54,7 @@ export class Applicant {
 			params.status,
 			params.imageUrl,
 			params.birthday,
+			params.selfIntroduction,
 		);
 	}
 
@@ -66,7 +67,6 @@ export class Applicant {
 		this._name = newName;
 	}
 
-	// イミュータブルデータモデルにするか悩み中
 	changeOccupationId(newOccupationId: number): void {
 		occupationIdSchema.parse(newOccupationId);
 		this._occupationId = newOccupationId;
@@ -126,6 +126,7 @@ export class Applicant {
 	get selfIntroduction(): string | undefined {
 		return this._selfIntroduction;
 	}
+
 	toGenderLabel(): GenderLabel {
 		switch (this._gender) {
 			case GenderEnum.OTHER:
