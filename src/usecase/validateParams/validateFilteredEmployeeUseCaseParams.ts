@@ -8,7 +8,7 @@ export const validateFilteredEmployeeUseCaseParams = (
 	params: SearchEmployeeParams,
 ) => {
 	// スキーマ定義
-	const pageSchema = z.number().int().min(1);
+	const pageSchema = z.number().int().positive();
 	const companyIdSchema = z.number().int().positive().optional();
 	const occupationIdSchema = z.number().int().positive().optional();
 	const yearsOfExperienceSchema = z

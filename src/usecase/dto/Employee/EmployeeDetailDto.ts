@@ -1,21 +1,7 @@
 import type { Employee } from "@/domain/core/Employee/Employee";
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { HiringTypeLabel } from "@/domain/shared/HiringType";
-
-type Occupation = {
-	id: number;
-	name: string;
-};
-
-type Company = {
-	id: number;
-	name: string;
-};
-
-type WorkLocation = {
-	id: number;
-	name: string;
-};
+import type { Company, Occupation, WorkLocation } from "@prisma/client";
 
 export type EmployeeDetailResponse = {
 	userId: string;

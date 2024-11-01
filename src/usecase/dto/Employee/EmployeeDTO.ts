@@ -3,22 +3,8 @@ import type { GenderLabel } from "@/domain/shared/Gender";
 import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 import type { MeetingMethodLabel } from "@/domain/shared/MeetingMethod";
 import type { FilteredEmployee } from "@/usecase/getFilteredEmployees";
-
-export type Occupation = {
-	id: number;
-	name: string;
-};
-
-export type Company = {
-	id: number;
-	name: string;
-};
-
-export type WorkLocation = {
-	id: number;
-	name: string;
-};
-
+import type { Company, Occupation, WorkLocation } from "@prisma/client";
+// TODO: FilteredEmployeeに名前を変更する
 export class EmployeeDTO {
 	public readonly name: string;
 	public readonly userId: string;
