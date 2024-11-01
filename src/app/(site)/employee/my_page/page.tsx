@@ -1,6 +1,6 @@
 import { Button } from "@/app/_components/ui/button";
 import { getEmployeeDetail } from "@/domain/core/Employee/services/getEmployeeDetail";
-import { getEmployeeId, getServerSession } from "@/lib/auth";
+import { getServerSession } from "@/lib/auth";
 import * as Avatar from "@radix-ui/react-avatar";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -10,12 +10,7 @@ export default async function MyPage() {
   if (!session) {
     redirect("/signin");
   }
-  const employeeId = await getEmployeeId()
-  console.log(employeeId);
-  if (!employeeId) {
-    redirect("/signin");
-  }
-  const employee = await getEmployeeDetail({ employeeId })
+  const employee = await getEmployeeDetail({ employeeUserId: session.user.id })
   if (!employee) {
     redirect("/signin")
   }
