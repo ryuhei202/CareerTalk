@@ -1,5 +1,5 @@
 "use client";
-import type { LikedApplicant } from "@/usecase/getLikedApplicants";
+import type { LikedApplicant } from "@/usecase/getLikedApplicants/getLikedApplicantsUseCase";
 import { useRouter } from "next/navigation";
 import ApplicantCard from "../ApplicantCard";
 

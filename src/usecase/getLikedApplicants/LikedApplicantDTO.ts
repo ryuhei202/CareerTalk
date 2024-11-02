@@ -1,6 +1,6 @@
 import type { Applicant } from "@/domain/core/Applicant/Applicant";
 import type { GenderLabel } from "@/domain/shared/Gender";
-import type { LikedApplicant } from "@/usecase/getLikedApplicants";
+import type { LikedApplicant } from "@/usecase/getLikedApplicants/getLikedApplicantsUseCase";
 import type { Occupation } from "@prisma/client";
 
 export class LikedApplicantDTO {

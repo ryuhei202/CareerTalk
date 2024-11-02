@@ -1,11 +1,11 @@
 import type { GenderEnum } from "@/domain/shared/Gender";
 import type { StatusEnum } from "@/domain/shared/Status";
 import { prisma } from "@/lib/prisma";
-import { LikedApplicantDTO } from "@/usecase/dto/Applicant/LikedApplicantDTO";
+import { LikedApplicantDTO } from "@/usecase/getLikedApplicants/LikedApplicantDTO";
 import type {
 	GetLikedApplicantsUseCaseParams,
 	LikedApplicantResponse,
-} from "@/usecase/getLikedApplicants";
+} from "@/usecase/getLikedApplicants/getLikedApplicantsUseCase";
 import { NamedError } from "@/util/error";
 import { ConversationStatusEnum } from "../../Conversation/ConversationEnum";
 import { Applicant } from "../Applicant";
@@ -65,6 +65,7 @@ export const getLikedApplicants = async (
 		}).toJson();
 	});
 
+	// TODO :totalCountも含めたapplicantsをDTOにするようにする。
 	return {
 		totalCount,
 		applicants: result,

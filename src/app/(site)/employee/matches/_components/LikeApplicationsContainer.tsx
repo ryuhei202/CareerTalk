@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParamsUpdate } from "@/app/(site)/applicant/search_employees/_util/useSearchParamsUpdate";
-import type { LikedApplicant } from "@/usecase/getLikedApplicants";
+import type { LikedApplicant } from "@/usecase/getLikedApplicants/getLikedApplicantsUseCase";
 import LikedApplicantList from "./LikedApplicantList";
 
 export default function LikeApplicationsContainer({

@@ -3,12 +3,12 @@ import type { ApplicantDomainError } from "@/domain/core/Applicant/Applicant";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import type { LikedApplicant } from "./getLikedApplicants";
 
 import {
 	type GetLikedApplicantDetailError,
 	getLikedApplicantDetail,
 } from "@/domain/core/Applicant/services/getLikedApplicantDetail";
+import type { LikedApplicant } from "./getLikedApplicants/getLikedApplicantsUseCase";
 import { validateGetLikedApplicantDetailUseCaseParams } from "./validateParams/validateGetLikedApplicantDetailUseCaseParams";
 
 export type ApplicantDetailResponse = {
