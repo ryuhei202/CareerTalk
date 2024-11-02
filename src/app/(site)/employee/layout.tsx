@@ -3,8 +3,10 @@ import { Calendar, MessageCircle, Search } from "lucide-react";
 
 export default function EmployeeLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <>
@@ -25,6 +27,8 @@ export default function EmployeeLayout({
           label: "イベント",
         }}
       />
+
+      {modal}
       {children}
     </>
   );

@@ -5,6 +5,7 @@ import {
   getLikedApplicantDetailUseCase,
 } from "@/usecase/getLikedApplicantDetail";
 import { redirect } from "next/navigation";
+import ApplicantCardContainer from "./_components/ApplicantCardContainer";
 
 export type GetLikedApplicantDetailParams = {
   applicantUserId: string;
@@ -42,5 +43,11 @@ export default async function ApplicantDetailPage({ params }: Props) {
     );
   }
 
-  return <div>ApplicantDetailPage</div>;
+  return (
+    <ApplicantCardContainer
+      applicant={result.data.applicant}
+      likeReason={result.data.likeReason}
+      likeMessage={result.data.likeMessage}
+    />
+  );
 }

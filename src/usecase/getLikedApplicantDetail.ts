@@ -1,4 +1,4 @@
-import type { GetLikedApplicantDetailParams } from "@/app/(site)/employee/detail/[applicantUserId]/page";
+import type { GetLikedApplicantDetailParams } from "@/app/(site)/employee/matches/detail/[applicantUserId]/page";
 import type { ApplicantDomainError } from "@/domain/core/Applicant/Applicant";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";

@@ -1,4 +1,4 @@
-import type { GetLikedApplicantDetailParams } from "@/app/(site)/employee/detail/[applicantUserId]/page";
+import type { GetLikedApplicantDetailParams } from "@/app/(site)/employee/matches/detail/[applicantUserId]/page";
 import type { GenderEnum } from "@/domain/shared/Gender";
 import type { StatusEnum } from "@/domain/shared/Status";
 import { prisma } from "@/lib/prisma";

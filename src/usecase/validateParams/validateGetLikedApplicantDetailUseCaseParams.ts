@@ -1,4 +1,4 @@
-import type { GetLikedApplicantDetailParams } from "@/app/(site)/employee/detail/[applicantUserId]/page";
+import type { GetLikedApplicantDetailParams } from "@/app/(site)/employee/matches/detail/[applicantUserId]/page";
 import { z } from "zod";
 
 export const validateGetLikedApplicantDetailUseCaseParams = (

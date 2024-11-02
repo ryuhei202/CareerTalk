@@ -1,4 +1,4 @@
-export default function EmployeeComment({
+export default function CardCommentBox({
   title,
   comment,
 }: {
