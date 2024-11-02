@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/card";
-import type { LikedApplicant } from "@/usecase/getLikedApplicants";
+import type { LikedApplicant } from "@/usecase/getLikedApplicants/getLikedApplicantsUseCase";
 import { Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

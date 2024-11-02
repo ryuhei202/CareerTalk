@@ -1,5 +1,5 @@
 import Pagenation from "@/app/_components/parts/Pagenation";
-import type { LikedApplicant } from "@/usecase/getLikedApplicants";
+import type { LikedApplicant } from "@/usecase/getLikedApplicants/getLikedApplicantsUseCase";
 import LikedApplicantListItem from "./LikedApplicantListItem";
 
 export default function LikedApplicantList({

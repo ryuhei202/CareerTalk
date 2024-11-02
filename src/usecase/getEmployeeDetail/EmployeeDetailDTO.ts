@@ -1,10 +1,10 @@
 import type { Employee } from "@/domain/core/Employee/Employee";
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { HiringTypeLabel } from "@/domain/shared/HiringType";
-import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail";
 import type { Company, Occupation, WorkLocation } from "@prisma/client";
+import type { EmployeeDetailResponse } from "./getEmployeeDetailUseCase";
 
-export class EmployeeDetailDto {
+export class EmployeeDetailDTO {
 	public readonly userId: string;
 	public readonly name: string;
 	public readonly companyName: string;

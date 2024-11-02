@@ -1,9 +1,10 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { getEmployeeUserId } from "@/lib/auth";
+
 import {
   type GetLikedApplicantsUseCaseParams,
   getLikedApplicantsUseCase,
-} from "@/usecase/getLikedApplicants";
+} from "@/usecase/getLikedApplicants/getLikedApplicantsUseCase";
 import { redirect } from "next/navigation";
 import { getParamsFromQueryStrings } from "../../applicant/search_employees/_util/getParamsFromQueryStrings";
 import type { SearchParams } from "../../applicant/search_employees/page";

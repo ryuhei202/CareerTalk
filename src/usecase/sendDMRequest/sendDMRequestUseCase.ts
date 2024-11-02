@@ -8,7 +8,7 @@ import {
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import { validateSendDMRequestParams } from "./validateParams/validateSendDMRequestParams";
+import { validateSendDMRequestParams } from "./validateSendDMRequestParams";
 
 type SendDMRequestUseCaseResult = Result<undefined, undefined>;
 export const sendDMRequestUseCase = async (
@@ -23,10 +23,8 @@ export const sendDMRequestUseCase = async (
 			await validateSendDMRequestInput(validatedParams);
 
 		// ドメインサービス2 メッセージの送信
-		const mayBeCreatedConversation = await createConversation(
-			validatedConversation,
-		);
-		if (mayBeCreatedConversation == null) {
+		const createdConversation = await createConversation(validatedConversation);
+		if (createdConversation == null) {
 			return createFailure({
 				message: "DMリクエストの送信に失敗しました",
 				data: undefined,

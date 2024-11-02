@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import {
   type SearchEmployeeUseCaseResult,
   getFilteredEmployeesUseCase,
-} from "@/usecase/getFilteredEmployees";
+} from "@/usecase/getFilteredEmployee/getFilteredEmployeesUseCase";
 import { redirect } from "next/navigation";
 import SearchEmployeeContainer from "./_components/SearchEmployeeContainer";
 import { getParamsFromQueryStrings } from "./_util/getParamsFromQueryStrings";

@@ -2,8 +2,8 @@ import type { GetLikedApplicantDetailParams } from "@/app/(site)/employee/matche
 import type { GenderEnum } from "@/domain/shared/Gender";
 import type { StatusEnum } from "@/domain/shared/Status";
 import { prisma } from "@/lib/prisma";
-import { LikedApplicantDetailDTO } from "@/usecase/dto/Applicant/LIkedApplicantDetailDOT";
-import type { ApplicantDetailResponse } from "@/usecase/getLikedApplicantDetail";
+import { LikedApplicantDetailDTO } from "@/usecase/getLikedApplicantDetail/LIkedApplicantDetailDOT";
+import type { ApplicantDetailResponse } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
 import { NamedError } from "@/util/error";
 import { Conversation } from "../../Conversation/Conversation";
 import {
@@ -68,13 +68,16 @@ export const getLikedApplicantDetail = async (
 		selfIntroduction: applicant.selfIntroduction ?? undefined,
 	});
 
-	const firstMessageEntity = Message.create({
-		id: conversation.messages[0].id,
-		conversationId: conversation.id,
-		senderId: conversation.messages[0].senderId,
-		content: conversation.messages[0].content,
-		isRead: conversation.messages[0].isRead,
-	});
+	let firstMessageEntity: Message | undefined;
+	if (conversation.messages[0] != null) {
+		firstMessageEntity = Message.create({
+			id: conversation.messages[0].id,
+			conversationId: conversation.id,
+			senderId: conversation.messages[0].senderId,
+			content: conversation.messages[0].content,
+			isRead: conversation.messages[0].isRead,
+		});
+	}
 
 	const conversationEntity = Conversation.create({
 		id: conversation.id,
@@ -82,7 +85,7 @@ export const getLikedApplicantDetail = async (
 		employeeUserId: conversation.employeeUserId,
 		purpose: conversation.purpose as ConversationPurposeEnum,
 		status: conversation.status as ConversationStatusEnum,
-		messages: [firstMessageEntity],
+		messages: firstMessageEntity != null ? [firstMessageEntity] : [],
 	});
 
 	return new LikedApplicantDetailDTO({

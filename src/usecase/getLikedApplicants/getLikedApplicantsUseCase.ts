@@ -9,7 +9,7 @@ import type { GenderLabel } from "@/domain/shared/Gender";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import { validateGetLikedApplicantsUseCaseParams } from "./validateParams/validateGetLikedApplicantsUseCaseParams";
+import { validateGetLikedApplicantsUseCaseParams } from "./validateGetLikedApplicantsUseCaseParams";
 
 export type LikedApplicant = {
 	userId: string;
@@ -41,9 +41,9 @@ export const getLikedApplicantsUseCase = async (
 	params: GetLikedApplicantsUseCaseParams,
 ): Promise<GetLikedApplicantsUseCaseResult> => {
 	try {
-		const validateResult = validateGetLikedApplicantsUseCaseParams(params);
+		const validatedParams = validateGetLikedApplicantsUseCaseParams(params);
 		// いいねした転職希望者を取得して返却する
-		const likedApplicantsResponse = await getLikedApplicants(validateResult);
+		const likedApplicantsResponse = await getLikedApplicants(validatedParams);
 
 		return createSuccess({
 			message: "いいねした転職希望者の取得に成功しました",

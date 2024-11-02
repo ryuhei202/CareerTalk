@@ -11,7 +11,7 @@ import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import { validateGetEmployeeDetailUseCaseParams } from "./validateParams/validateGetEmployeeDetailUseCaseParams";
+import { validateGetEmployeeDetailUseCaseParams } from "./validateGetEmployeeDetailUseCaseParams";
 
 export type EmployeeDetailResponse = {
 	userId: string;
@@ -40,9 +40,9 @@ export const getEmployeeDetailUseCase = async (
 ): Promise<GetEmployeeDetailUseCaseResult> => {
 	try {
 		// パラメータのバリデーション
-		const validateResult = validateGetEmployeeDetailUseCaseParams(params);
+		const validatedParams = validateGetEmployeeDetailUseCaseParams(params);
 		// 現場社員の詳細を取得する
-		const employeeDetail = await getEmployeeDetail(validateResult);
+		const employeeDetail = await getEmployeeDetail(validatedParams);
 
 		return createSuccess({
 			message: "現場社員の取得に成功しました",

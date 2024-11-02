@@ -1,7 +1,7 @@
 "use server";
 import type { FormState } from "@/app/(site)/employee/create_profile/_components/CreateEmplopyeeProfileContainer";
 import { getServerSession } from "@/lib/auth";
-import { registerEmployeeUseCase } from "@/usecase/registerEmployee";
+import { registerEmployeeUseCase } from "@/usecase/registerEmployee/registerEmployeeUseCase";
 import { redirect } from "next/navigation";
 
 export interface RegisterEmployeeParams {
@@ -70,7 +70,7 @@ export async function registerEmployeeAction(
 	const useCaseResult = await registerEmployeeUseCase(useCaseParams);
 
 	if (useCaseResult.success) {
-		redirect("/employee/home");
+		redirect("/employee/matches");
 	} else {
 		return {
 			success: false,

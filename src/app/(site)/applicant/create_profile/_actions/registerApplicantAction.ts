@@ -2,7 +2,7 @@
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { StatusLabel } from "@/domain/shared/Status";
 import { getServerSession } from "@/lib/auth";
-import { registerApplicantUseCase } from "@/usecase/registerApplicant";
+import { registerApplicantUseCase } from "@/usecase/registerApplicant/registerApplicantUseCase";
 import { redirect } from "next/navigation";
 import type { FormState } from "../_components/CreateApplicantProfileContainer";
 
@@ -64,7 +64,8 @@ export async function registerApplicantAction(
 		selfIntroduction: (selfIntroduction as string) || undefined,
 		// imageUrl: (imageUrl as string) || undefined,
 	};
-	// eslint-disable-next-line react-hooks/rules-of-hooks
+
+	// ここ
 	const useCaseResult = await registerApplicantUseCase(useCaseParams);
 
 	if (useCaseResult.success) {

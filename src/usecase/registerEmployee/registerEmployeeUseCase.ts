@@ -10,7 +10,7 @@ import {
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import { validateRegisterEmployeeUseCaseParams } from "./validateParams/validateRegisterEmployeeUseCaseParams";
+import { validateRegisterEmployeeUseCaseParams } from "./validateRegisterEmployeeUseCaseParams";
 
 type RegisterEmployeeUseCaseResult = Result<undefined, undefined>;
 
@@ -24,12 +24,12 @@ export const registerEmployeeUseCase = async (
 		const employee = await validateRegisterEmployeeInput(validatedParams);
 
 		// ドメインサービス② 現場社員の登録
-		const mayBeCreatedEmployee = await createEmployee(employee);
+		const createdEmployee = await createEmployee(employee);
 
-		if (mayBeCreatedEmployee == null) {
+		if (createdEmployee == null) {
 			return createFailure({
 				message: "現場社員の登録に失敗しました",
-				data: mayBeCreatedEmployee,
+				data: createdEmployee,
 			});
 		}
 

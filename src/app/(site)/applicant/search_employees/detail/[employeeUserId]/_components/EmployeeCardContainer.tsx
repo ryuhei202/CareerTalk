@@ -1,6 +1,6 @@
 "use client";
 
-import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail";
+import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useFormState } from "react-dom";

@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/card";
-import type { FilteredEmployee } from "@/usecase/getFilteredEmployees";
+import type { FilteredEmployee } from "@/usecase/getFilteredEmployee/getFilteredEmployeesUseCase";
 import { Briefcase, MapPin, PhoneCall, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
