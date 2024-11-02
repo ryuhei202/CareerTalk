@@ -1,4 +1,5 @@
-import type { SendDMRequestParams } from "@/app/(site)/applicant/detail/[employeeUserId]/actions/sendDMRequestAction";
+import type { SendDMRequestParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/actions/sendDMRequestAction";
+import { ConversationPurposeEnum } from "@/domain/core/Conversation/ConversationEnum";
 import { z } from "zod";
 
 export const validateSendDMRequestParams = (
@@ -11,8 +12,8 @@ export const validateSendDMRequestParams = (
 	const employeeUserIdSchema = z.string().trim().length(25, {
 		message: "無効な社員IDです。社員IDは25文字である必要があります",
 	});
-	const conversationPurposeIdSchema = z.number().int().positive({
-		message: "無効な会話目的IDです。会話目的IDは正の整数である必要があります",
+	const conversationPurposeSchema = z.nativeEnum(ConversationPurposeEnum, {
+		message: "無効な会話目的です。",
 	});
 	const messageSchema = z
 		.string()
@@ -29,7 +30,7 @@ export const validateSendDMRequestParams = (
 	const paramsSchema = z.object({
 		applicantUserId: applicantUserIdSchema,
 		employeeUserId: employeeUserIdSchema,
-		conversationPurposeId: conversationPurposeIdSchema,
+		conversationPurpose: conversationPurposeSchema,
 		message: messageSchema,
 	});
 

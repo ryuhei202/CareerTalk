@@ -7,6 +7,7 @@ describe("EmployeeDTO", () => {
 	const company = {
 		id: 1,
 		name: "テストカンパニー1",
+		code: "12345678",
 	};
 	const occupation = {
 		id: 1,

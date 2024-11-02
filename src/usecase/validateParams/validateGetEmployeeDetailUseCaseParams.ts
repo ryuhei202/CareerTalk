@@ -1,4 +1,4 @@
-import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/detail/[employeeUserId]/page";
+import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/page";
 import { z } from "zod";
 
 export const validateGetEmployeeDetailUseCaseParams = (

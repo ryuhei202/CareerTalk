@@ -1,38 +1,8 @@
 import type { Employee } from "@/domain/core/Employee/Employee";
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { HiringTypeLabel } from "@/domain/shared/HiringType";
-
-type Occupation = {
-	id: number;
-	name: string;
-};
-
-type Company = {
-	id: number;
-	name: string;
-};
-
-type WorkLocation = {
-	id: number;
-	name: string;
-};
-
-export type EmployeeDetailResponse = {
-	userId: string;
-	name: string;
-	companyName: string;
-	occupationName: string;
-	yearsOfExperience: number;
-	gender: GenderLabel;
-	talkableTopics: string;
-	careerDescription: string;
-	jobDescription: string;
-	joiningDescription: string;
-	otherDescription: string;
-	hiringType: HiringTypeLabel | "";
-	workLocationName: string;
-	imageUrl: string;
-};
+import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail";
+import type { Company, Occupation, WorkLocation } from "@prisma/client";
 
 export class EmployeeDetailDto {
 	public readonly userId: string;

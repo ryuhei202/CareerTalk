@@ -1,9 +1,12 @@
-import type { SendDMRequestParams } from "@/app/(site)/applicant/detail/[employeeUserId]/actions/sendDMRequestAction";
+import type { SendDMRequestParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/actions/sendDMRequestAction";
 import { createId } from "@/lib/cuid";
 import { prisma } from "@/lib/prisma";
 import { NamedError } from "@/util/error";
 import { Conversation } from "../Conversation";
-import { ConversationStatusEnum } from "../ConversationStatus";
+import {
+	ConversationPurposeEnum,
+	ConversationStatusEnum,
+} from "../ConversationEnum";
 import { Message } from "../Message/Message";
 
 export class InvalidSendDMRequestInputError extends NamedError {
@@ -13,24 +16,20 @@ export const validateSendDMRequestInput = async (
 	params: SendDMRequestParams,
 ): Promise<Conversation> => {
 	// 1つのクエリで必要なデータを取得
-	const [applicant, employee, conversationPurpose, conversation] =
-		await Promise.all([
-			prisma.applicant.findUnique({
-				where: { userId: params.applicantUserId },
-			}),
-			prisma.employee.findUnique({
-				where: { userId: params.employeeUserId },
-			}),
-			prisma.conversationPurpose.findUnique({
-				where: { id: params.conversationPurposeId },
-			}),
-			prisma.conversation.findFirst({
-				where: {
-					applicant: { userId: params.applicantUserId },
-					employee: { userId: params.employeeUserId },
-				},
-			}),
-		]);
+	const [applicant, employee, conversation] = await Promise.all([
+		prisma.applicant.findUnique({
+			where: { userId: params.applicantUserId },
+		}),
+		prisma.employee.findUnique({
+			where: { userId: params.employeeUserId },
+		}),
+		prisma.conversation.findFirst({
+			where: {
+				applicant: { userId: params.applicantUserId },
+				employee: { userId: params.employeeUserId },
+			},
+		}),
+	]);
 
 	if (!applicant) {
 		throw new InvalidSendDMRequestInputError("ログインしてください");
@@ -38,11 +37,14 @@ export const validateSendDMRequestInput = async (
 	if (!employee) {
 		throw new InvalidSendDMRequestInputError("該当の社員が存在しません。");
 	}
-	if (!conversationPurpose) {
-		throw new InvalidSendDMRequestInputError("不正な選択肢です。");
-	}
 	if (conversation) {
 		throw new InvalidSendDMRequestInputError("すでに存在する会話です。");
+	}
+
+	if (
+		!Object.values(ConversationPurposeEnum).includes(params.conversationPurpose)
+	) {
+		throw new InvalidSendDMRequestInputError("不正な選択肢です。");
 	}
 
 	// メッセージの作成
@@ -62,7 +64,7 @@ export const validateSendDMRequestInput = async (
 		id: createId(),
 		applicantUserId: params.applicantUserId,
 		employeeUserId: params.employeeUserId,
-		purposeId: params.conversationPurposeId,
+		purpose: params.conversationPurpose,
 		status: ConversationStatusEnum.PENDING,
 		messages: message ? [message] : [],
 	});
