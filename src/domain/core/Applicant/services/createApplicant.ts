@@ -1,13 +1,13 @@
 import { prisma } from "@/lib/prisma";
-import { ApplicantDTO } from "@/usecase/dto/Applicant/ApplicantDTO";
+import type { Applicant as PrismaApplicant } from "@prisma/client";
 import type { Applicant } from "../Applicant";
 
 export const createApplicant = async (
 	applicant: Applicant,
-): Promise<ApplicantDTO> => {
+): Promise<PrismaApplicant> => {
 	// 現場社員登録（トランザクション内で実行）
-	await prisma.$transaction(async (tx) => {
-		await tx.applicant.create({
+	const createdApplicant = await prisma.$transaction(async (tx) => {
+		const createdApplicant = await tx.applicant.create({
 			data: {
 				id: applicant.id,
 				userId: applicant.userId,
@@ -30,7 +30,9 @@ export const createApplicant = async (
 				image: applicant.imageUrl,
 			},
 		});
+
+		return createdApplicant;
 	});
 
-	return new ApplicantDTO(applicant);
+	return createdApplicant;
 };

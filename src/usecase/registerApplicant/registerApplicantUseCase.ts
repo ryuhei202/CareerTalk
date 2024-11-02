@@ -8,7 +8,7 @@ import {
 } from "@/domain/core/Applicant/services/validateRegisterApplicantInput";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import type { ZodError } from "zod";
-import { validateRegisterApplicantUseCaseParams } from "./validateParams/validateRegisterApplicantUseCaseParams";
+import { validateRegisterApplicantUseCaseParams } from "./validateRegisterApplicantUseCaseParams";
 
 type RegisterApplicantUseCaseResult = Result<undefined, undefined>;
 
@@ -27,12 +27,12 @@ export const registerApplicantUseCase = async (
 		const applicant = await validateRegisterApplicantInput(validatedParams);
 
 		// ドメインサービス② 転職者の登録
-		const mayBeCreatedApplicant = await createApplicant(applicant);
+		const createdApplicant = await createApplicant(applicant);
 
-		if (mayBeCreatedApplicant == null) {
+		if (createdApplicant == null) {
 			return createFailure({
 				message: "転職者登録に失敗しました",
-				data: mayBeCreatedApplicant,
+				data: createdApplicant,
 			});
 		}
 
