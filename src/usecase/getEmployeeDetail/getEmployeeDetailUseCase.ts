@@ -11,7 +11,7 @@ import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import { validateGetEmployeeDetailUseCaseParams } from "./validateParams/validateGetEmployeeDetailUseCaseParams";
+import { validateGetEmployeeDetailUseCaseParams } from "./validateGetEmployeeDetailUseCaseParams";
 
 export type EmployeeDetailResponse = {
 	userId: string;

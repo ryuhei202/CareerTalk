@@ -5,7 +5,7 @@ import { getServerSession } from "@/lib/auth";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,
-} from "@/usecase/getEmployeeDetail";
+} from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import { redirect } from "next/navigation";
 type Props = {
   params: {
@@ -18,7 +18,7 @@ export default async function EmployeeDetailModalPage({ params }: Props) {
   if (!session) {
     redirect("/");
   }
-  console.log("モーダル");
+
   const result: GetEmployeeDetailUseCaseResult = await getEmployeeDetailUseCase(
     { employeeUserId: params.employeeUserId }
   );

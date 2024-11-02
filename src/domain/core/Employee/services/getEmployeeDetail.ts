@@ -4,8 +4,8 @@ import type { HiringTypeEnum } from "@/domain/shared/HiringType";
 import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import type { StatusEnum } from "@/domain/shared/Status";
 import { prisma } from "@/lib/prisma";
-import { EmployeeDetailDto } from "@/usecase/dto/Employee/EmployeeDetailDto";
-import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail";
+import { EmployeeDetailDto } from "@/usecase/getEmployeeDetail/EmployeeDetailDto";
+import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import { NamedError } from "@/util/error";
 import { Employee } from "../Employee";
 

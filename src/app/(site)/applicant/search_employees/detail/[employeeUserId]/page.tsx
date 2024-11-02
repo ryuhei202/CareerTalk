@@ -3,7 +3,7 @@ import { getApplicantUserId } from "@/lib/auth";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,
-} from "@/usecase/getEmployeeDetail";
+} from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import { redirect } from "next/navigation";
 import EmployeeCardContainer from "./_components/EmployeeCardContainer";
 

@@ -1,7 +1,7 @@
 import CardCommentBox from "@/app/_components/parts/CardCommentBox";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
-import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail";
+import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 
