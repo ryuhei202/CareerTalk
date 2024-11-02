@@ -148,10 +148,11 @@ enum ConversationStatus {
   REJECTED
 }
 
-model ConversationPurpose {
-  id            Int    @id @default(autoincrement())
-  reason        String @unique
-  conversations Conversation[]
+enum ConversationPurposeEnum {
+  INTERESTED_IN_RECRUITMENT
+  INTERESTED_IN_PERSON
+  INTERESTED_IN_COMPANY
+  OTHER
 }
 
 model Conversation {
@@ -160,8 +161,7 @@ model Conversation {
   applicant   Applicant @relation(fields: [applicantUserId], references: [userId])
   employeeUserId  String
   employee    Employee  @relation(fields: [employeeUserId], references: [userId])
-  purposeId   Int
-  purpose     ConversationPurpose @relation(fields: [purposeId], references: [id])
+  purpose     ConversationPurposeEnum
   status      ConversationStatus @default(PENDING)
   messages    Message[]
   createdAt   DateTime         @default(now())

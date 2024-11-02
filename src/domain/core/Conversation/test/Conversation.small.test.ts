@@ -1,7 +1,10 @@
 import { describe, expect, test } from "vitest";
 import { ZodError } from "zod";
 import { Conversation } from "../Conversation";
-import { ConversationStatusEnum } from "../ConversationStatus";
+import {
+	ConversationPurposeEnum,
+	ConversationStatusEnum,
+} from "../ConversationEnum";
 import type { Message } from "../Message/Message";
 import { messageDummy, messageDummy2 } from "../Message/test/MessageDummy";
 import { conversationDummyParams } from "./Conversation.dummy";
@@ -17,7 +20,7 @@ describe("Conversation", () => {
 		expect(conversation.employeeUserId).toBe(
 			conversationDummyParams.employeeUserId,
 		);
-		expect(conversation.purposeId).toBe(conversationDummyParams.purposeId);
+		expect(conversation.purpose).toBe(conversationDummyParams.purpose);
 		expect(conversation.status).toBe(conversationDummyParams.status);
 		expect(conversation.messages).toEqual(conversationDummyParams.messages);
 	});
@@ -42,7 +45,10 @@ describe("Conversation", () => {
 		).toThrowError(ZodError);
 
 		expect(() =>
-			Conversation.create({ ...conversationDummyParams, purposeId: 0 }),
+			Conversation.create({
+				...conversationDummyParams,
+				purpose: "invalid" as ConversationPurposeEnum,
+			}),
 		).toThrowError(ZodError);
 
 		expect(() =>
@@ -115,6 +121,16 @@ describe("Conversation", () => {
 			const conversation = Conversation.create(params);
 			expect(conversation.messages.length).toBe(1);
 			expect(conversation.getLatestMessage()).toEqual(params.messages[0]);
+		});
+	});
+
+	describe("toPurposeLabel", () => {
+		test("話してみたいと思った理由を取得できる", () => {
+			const conversation = Conversation.create({
+				...conversationDummyParams,
+				purpose: ConversationPurposeEnum.INTERESTED_IN_RECRUITMENT,
+			});
+			expect(conversation.toPurposeLabel()).toBe("募集内容に興味がある");
 		});
 	});
 });
