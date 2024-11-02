@@ -5,19 +5,35 @@ import { Label } from "@/app/_components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
 import { Textarea } from "@/app/_components/ui/textarea";
 import kamihikouki from "@/assets/images/kamihikouki.svg";
-import type { ConversationPurpose } from "@prisma/client";
 import { ArrowLeft, LightbulbIcon } from "lucide-react";
 import Image from "next/image";
 import type { FormState } from "./EmployeeCardContainer";
 
+const conversationPurposeOptions = [
+  {
+    id: 1,
+    reason: "募集内容に興味がある",
+  },
+  {
+    id: 2,
+    reason: "募集している人に興味がある",
+  },
+  {
+    id: 3,
+    reason: "募集している会社・部署に興味がある",
+  },
+  {
+    id: 4,
+    reason: "その他（他に話したい事がある）",
+  },
+];
+
 export default function DMRequestCard({
   onClickBack,
-  options,
   state,
   action,
 }: {
   onClickBack: () => void;
-  options: ConversationPurpose[];
   state: FormState;
   action: (payload: FormData) => void;
 }) {
@@ -84,7 +100,7 @@ export default function DMRequestCard({
                     className="space-y-2"
                     required
                   >
-                    {options.map((option) => (
+                    {conversationPurposeOptions.map((option) => (
                       <div
                         key={option.id}
                         className="flex items-center space-x-2"

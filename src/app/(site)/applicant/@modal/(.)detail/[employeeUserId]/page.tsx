@@ -29,13 +29,9 @@ export default async function EmployeeDetailModalPage({ params }: Props) {
     return <ErrorPage message={result.message} data={params} />;
   }
 
-  const conversationPurpose = await prisma.conversationPurpose.findMany();
   return (
     <Modal>
-      <EmployeeCardContainer
-        employee={result.data}
-        options={conversationPurpose}
-      />
+      <EmployeeCardContainer employee={result.data} />
     </Modal>
   );
 }

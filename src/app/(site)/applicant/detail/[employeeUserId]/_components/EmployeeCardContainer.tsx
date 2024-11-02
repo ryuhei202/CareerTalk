@@ -1,6 +1,6 @@
 "use client";
 
-import type { EmployeeDetailResponse } from "@/usecase/dto/Employee/EmployeeDetailDto";
+import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useFormState } from "react-dom";
@@ -14,17 +14,10 @@ export type FormState = {
   data: { [key: string]: FormDataEntryValue } | undefined;
 };
 
-type ConversationPurpose = {
-  id: number;
-  reason: string;
-};
-
 export default function EmployeeCardContainer({
   employee,
-  options,
 }: {
   employee: EmployeeDetailResponse;
-  options: ConversationPurpose[];
 }) {
   const router = useRouter();
   const [isRequestFormOpen, setIsRequestFormOpen] = useState(false);
@@ -42,7 +35,6 @@ export default function EmployeeCardContainer({
       {isRequestFormOpen ? (
         <DMRequestCard
           onClickBack={() => setIsRequestFormOpen(false)}
-          options={options}
           state={state}
           action={formAction}
         />

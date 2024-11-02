@@ -1,12 +1,10 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { getApplicantUserId } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,
 } from "@/usecase/getEmployeeDetail";
 import { redirect } from "next/navigation";
-import type { ReactElement } from "react";
 import EmployeeCardContainer from "./_components/EmployeeCardContainer";
 
 /**
@@ -22,9 +20,7 @@ type Props = {
   };
 };
 
-export default async function EmployeeDetailPage({
-  params,
-}: Props): Promise<ReactElement> {
+export default async function EmployeeDetailPage({ params }: Props) {
   const applicantUserId = await getApplicantUserId();
   if (!applicantUserId) {
     redirect("/applicant/create_profile");
@@ -47,12 +43,5 @@ export default async function EmployeeDetailPage({
     );
   }
 
-  const conversationPurpose = await prisma.conversationPurpose.findMany();
-
-  return (
-    <EmployeeCardContainer
-      employee={result.data}
-      options={conversationPurpose}
-    />
-  );
+  return <EmployeeCardContainer employee={result.data} />;
 }
