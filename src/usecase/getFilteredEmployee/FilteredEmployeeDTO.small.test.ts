@@ -1,6 +1,6 @@
 import { employeeDummy } from "@/domain/core/Employee/test/Employee.dummy";
 import { describe, expect, test } from "vitest";
-import { EmployeeDTO } from "../EmployeeDTO";
+import { FilteredEmployeeDTO } from "./FilteredEmployeeDTO";
 
 describe("EmployeeDTO", () => {
 	const employee = employeeDummy;
@@ -18,7 +18,7 @@ describe("EmployeeDTO", () => {
 		name: "北海道",
 	};
 	test("EmployeeDTOが正常に作成される", () => {
-		const employeeDTO = new EmployeeDTO({
+		const employeeDTO = new FilteredEmployeeDTO({
 			employee,
 			company,
 			occupation,
@@ -42,7 +42,7 @@ describe("EmployeeDTO", () => {
 	});
 
 	test("toJson", () => {
-		const employeeDTO = new EmployeeDTO({
+		const employeeDTO = new FilteredEmployeeDTO({
 			employee,
 			company,
 			occupation,
