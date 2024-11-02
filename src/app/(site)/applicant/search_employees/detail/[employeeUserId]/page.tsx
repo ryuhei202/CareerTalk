@@ -26,6 +26,8 @@ export default async function EmployeeDetailPage({ params }: Props) {
     redirect("/applicant/create_profile");
   }
 
+  console.log("普通のなう");
+
   const getEmployeeDetailUseCaseParams: GetEmployeeDetailParams = {
     employeeUserId: params.employeeUserId,
   };

@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/detail/[employeeUserId]/page";
+import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/page";
 import type { EmployeeDomainError } from "@/domain/core/Employee/Employee";
 import {
 	type GetEmployeeDetailError,

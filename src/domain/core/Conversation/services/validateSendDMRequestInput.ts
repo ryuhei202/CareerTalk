@@ -1,4 +1,4 @@
-import type { SendDMRequestParams } from "@/app/(site)/applicant/detail/[employeeUserId]/actions/sendDMRequestAction";
+import type { SendDMRequestParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/actions/sendDMRequestAction";
 import { createId } from "@/lib/cuid";
 import { prisma } from "@/lib/prisma";
 import { NamedError } from "@/util/error";

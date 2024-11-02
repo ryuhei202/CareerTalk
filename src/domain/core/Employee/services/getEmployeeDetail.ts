@@ -1,4 +1,4 @@
-import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/detail/[employeeUserId]/page";
+import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/page";
 import type { GenderEnum } from "@/domain/shared/Gender";
 import type { HiringTypeEnum } from "@/domain/shared/HiringType";
 import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";

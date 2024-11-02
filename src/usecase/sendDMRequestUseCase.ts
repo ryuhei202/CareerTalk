@@ -1,5 +1,5 @@
 import "server-only";
-import type { SendDMRequestParams } from "@/app/(site)/applicant/detail/[employeeUserId]/actions/sendDMRequestAction";
+import type { SendDMRequestParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/actions/sendDMRequestAction";
 import { createConversation } from "@/domain/core/Conversation/services/createConversation";
 import {
 	type InvalidSendDMRequestInputError,

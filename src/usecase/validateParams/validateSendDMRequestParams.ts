@@ -1,4 +1,4 @@
-import type { SendDMRequestParams } from "@/app/(site)/applicant/detail/[employeeUserId]/actions/sendDMRequestAction";
+import type { SendDMRequestParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/actions/sendDMRequestAction";
 import { ConversationPurposeEnum } from "@/domain/core/Conversation/ConversationEnum";
 import { z } from "zod";
 
