@@ -1,6 +1,5 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { getServerSession } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,

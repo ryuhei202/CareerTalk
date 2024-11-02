@@ -1,5 +1,6 @@
 "use server";
 
+import type { ConversationPurposeEnum } from "@/domain/core/Conversation/ConversationEnum";
 import { getServerSession } from "@/lib/auth";
 import { sendDMRequestUseCase } from "@/usecase/sendDMRequestUseCase";
 import { revalidatePath } from "next/cache";
@@ -8,7 +9,7 @@ import type { FormState } from "../../../create_profile/_components/CreateApplic
 export interface SendDMRequestParams {
 	employeeUserId: string;
 	applicantUserId: string;
-	conversationPurposeId: number;
+	conversationPurpose: ConversationPurposeEnum;
 	message?: string;
 }
 
@@ -26,14 +27,14 @@ export async function sendDMRequestAction(
 		};
 	}
 
-	const conversationPurposeId = formData.get("conversationPurposeId");
+	const conversationPurpose = formData.get("conversationPurpose");
 	const message = formData.get("message");
 	const formDataObject = Object.fromEntries(formData.entries());
 
 	const useCaseParams: SendDMRequestParams = {
 		applicantUserId: session.user.id as string,
 		employeeUserId: employeeUserId as string,
-		conversationPurposeId: Number.parseInt(conversationPurposeId as string),
+		conversationPurpose: conversationPurpose as ConversationPurposeEnum,
 		message: (message as string) || undefined,
 	};
 

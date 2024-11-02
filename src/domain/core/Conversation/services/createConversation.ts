@@ -6,8 +6,6 @@ export const createConversation = async (
 	conversation: Conversation,
 ): Promise<PrismaConversation> => {
 	const createdConversation = await prisma.$transaction(async (tx) => {
-		console.log("employeeUserId", conversation.employeeUserId);
-
 		try {
 			return await tx.conversation.create({
 				data: {
@@ -22,11 +20,7 @@ export const createConversation = async (
 							userId: conversation.employeeUserId,
 						},
 					},
-					purpose: {
-						connect: {
-							id: conversation.purposeId,
-						},
-					},
+					purpose: conversation.purpose,
 					messages:
 						conversation.messages.length > 0
 							? {
@@ -45,5 +39,6 @@ export const createConversation = async (
 			throw error;
 		}
 	});
+
 	return createdConversation;
 };

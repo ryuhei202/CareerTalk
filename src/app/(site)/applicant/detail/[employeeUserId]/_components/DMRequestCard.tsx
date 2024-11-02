@@ -5,25 +5,26 @@ import { Label } from "@/app/_components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
 import { Textarea } from "@/app/_components/ui/textarea";
 import kamihikouki from "@/assets/images/kamihikouki.svg";
+import { ConversationPurposeEnum } from "@/domain/core/Conversation/ConversationEnum";
 import { ArrowLeft, LightbulbIcon } from "lucide-react";
 import Image from "next/image";
 import type { FormState } from "./EmployeeCardContainer";
 
 const conversationPurposeOptions = [
   {
-    id: 1,
+    id: ConversationPurposeEnum.INTERESTED_IN_RECRUITMENT,
     reason: "募集内容に興味がある",
   },
   {
-    id: 2,
+    id: ConversationPurposeEnum.INTERESTED_IN_PERSON,
     reason: "募集している人に興味がある",
   },
   {
-    id: 3,
+    id: ConversationPurposeEnum.INTERESTED_IN_COMPANY,
     reason: "募集している会社・部署に興味がある",
   },
   {
-    id: 4,
+    id: ConversationPurposeEnum.OTHER,
     reason: "その他（他に話したい事がある）",
   },
 ];
@@ -96,7 +97,7 @@ export default function DMRequestCard({
                     この社員と話したいと思ったきっかけを教えてください
                   </h3>
                   <RadioGroup
-                    name="conversationPurposeId"
+                    name="conversationPurpose"
                     className="space-y-2"
                     required
                   >
