@@ -1,6 +1,6 @@
 import { employeeDummy } from "@/domain/core/Employee/test/Employee.dummy";
 import { describe, expect, test } from "vitest";
-import { EmployeeDetailDTO } from "./EmployeeDetailDTO";
+import { EmployeeDetailDTO } from "./EmployeeDetailDTO_1";
 
 describe("EmployeeDetailDTO", () => {
 	const employee = employeeDummy;
