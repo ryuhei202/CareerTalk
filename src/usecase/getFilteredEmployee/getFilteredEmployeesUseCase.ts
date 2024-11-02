@@ -49,9 +49,9 @@ export const getFilteredEmployeesUseCase = async (
 ): Promise<SearchEmployeeUseCaseResult> => {
 	try {
 		// パラメータのバリデーション
-		const validateResult = validateGetFilteredEmployeeUseCaseParams(params);
+		const validatedParams = validateGetFilteredEmployeeUseCaseParams(params);
 		// 現場社員のフィルタリングして返却する
-		const filteredEmployeeResponse = await filterEmployees(validateResult);
+		const filteredEmployeeResponse = await filterEmployees(validatedParams);
 
 		return createSuccess({
 			message: "現場社員の取得に成功しました",
