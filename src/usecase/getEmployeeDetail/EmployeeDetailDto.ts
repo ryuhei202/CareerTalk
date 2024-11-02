@@ -4,7 +4,7 @@ import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 import type { Company, Occupation, WorkLocation } from "@prisma/client";
 import type { EmployeeDetailResponse } from "./getEmployeeDetailUseCase";
 
-export class EmployeeDetailDto {
+export class EmployeeDetailDTO {
 	public readonly userId: string;
 	public readonly name: string;
 	public readonly companyName: string;
