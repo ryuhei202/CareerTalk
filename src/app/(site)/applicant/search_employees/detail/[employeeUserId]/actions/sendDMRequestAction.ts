@@ -2,7 +2,7 @@
 
 import type { ConversationPurposeEnum } from "@/domain/core/Conversation/ConversationEnum";
 import { getServerSession } from "@/lib/auth";
-import { sendDMRequestUseCase } from "@/usecase/sendDMRequestUseCase";
+import { sendDMRequestUseCase } from "@/usecase/sendDMRequest/sendDMRequestUseCase";
 import { revalidatePath } from "next/cache";
 import type { FormState } from "../../../../create_profile/_components/CreateApplicantProfileContainer";
 
@@ -38,10 +38,8 @@ export async function sendDMRequestAction(
 		message: (message as string) || undefined,
 	};
 
-	console.log("useCaseParams", useCaseParams);
 	const useCaseResult = await sendDMRequestUseCase(useCaseParams);
 
-	console.log("useCaseResult", useCaseResult);
 	if (!useCaseResult.success) {
 		return {
 			success: false,
