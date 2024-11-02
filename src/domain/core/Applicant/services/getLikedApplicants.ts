@@ -65,7 +65,7 @@ export const getLikedApplicants = async (
 		}).toJson();
 	});
 
-	// TODO :totalCountも含めたapplicantsをDTOにするようにする。
+	//TODO:totalCountもDTOに含めるようにする（レスポンス全体をDTOにする）
 	return {
 		totalCount,
 		applicants: result,

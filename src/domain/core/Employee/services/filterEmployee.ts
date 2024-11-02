@@ -100,6 +100,7 @@ export const filterEmployees = async (
 		}).toJson();
 	});
 
+	//TODO:totalCountもDTOに含めるようにする（レスポンス全体をDTOにする）
 	return {
 		totalCount,
 		employees: result,
