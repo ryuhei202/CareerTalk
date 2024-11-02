@@ -17,8 +17,7 @@ import type { MeetingMethodLabel } from "@/domain/shared/MeetingMethod";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import { validateFilteredEmployeeUseCaseParams } from "./validateParams/validateFilteredEmployeeUseCaseParams";
-
+import { validateGetFilteredEmployeeUseCaseParams } from "./validateGetFilteredEmployeeUseCaseParams";
 export type FilteredEmployee = {
 	userId: string;
 	name: string;
@@ -50,7 +49,7 @@ export const getFilteredEmployeesUseCase = async (
 ): Promise<SearchEmployeeUseCaseResult> => {
 	try {
 		// パラメータのバリデーション
-		const validateResult = validateFilteredEmployeeUseCaseParams(params);
+		const validateResult = validateGetFilteredEmployeeUseCaseParams(params);
 		// 現場社員のフィルタリングして返却する
 		const filteredEmployeeResponse = await filterEmployees(validateResult);
 

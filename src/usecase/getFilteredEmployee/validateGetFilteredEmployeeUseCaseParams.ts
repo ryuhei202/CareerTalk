@@ -4,7 +4,7 @@ import { HiringTypeEnum } from "@/domain/shared/HiringType";
 import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { z } from "zod";
 
-export const validateFilteredEmployeeUseCaseParams = (
+export const validateGetFilteredEmployeeUseCaseParams = (
 	params: SearchEmployeeParams,
 ) => {
 	// スキーマ定義

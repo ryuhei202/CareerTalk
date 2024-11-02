@@ -2,10 +2,10 @@ import type { Employee } from "@/domain/core/Employee/Employee";
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 import type { MeetingMethodLabel } from "@/domain/shared/MeetingMethod";
-import type { FilteredEmployee } from "@/usecase/getFilteredEmployees";
 import type { Company, Occupation, WorkLocation } from "@prisma/client";
-// TODO: FilteredEmployeeに名前を変更する
-export class EmployeeDTO {
+import type { FilteredEmployee } from "./getFilteredEmployeesUseCase";
+
+export class FilteredEmployeeDTO {
 	public readonly name: string;
 	public readonly userId: string;
 	public readonly company: Company;

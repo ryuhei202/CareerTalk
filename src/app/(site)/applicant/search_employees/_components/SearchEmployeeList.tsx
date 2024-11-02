@@ -1,5 +1,5 @@
 import Pagenation from "@/app/_components/parts/Pagenation";
-import type { FilteredEmployee } from "@/usecase/getFilteredEmployees";
+import type { FilteredEmployee } from "@/usecase/getFilteredEmployee/getFilteredEmployeesUseCase";
 import SearchEmployeeListItem from "./SearchEmployeeListItem";
 
 export default function SearchEmployeeList({
