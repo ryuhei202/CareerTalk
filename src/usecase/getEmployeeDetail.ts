@@ -6,11 +6,29 @@ import {
 	type GetEmployeeDetailError,
 	getEmployeeDetail,
 } from "@/domain/core/Employee/services/getEmployeeDetail";
+import type { GenderLabel } from "@/domain/shared/Gender";
+import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import type { EmployeeDetailResponse } from "./dto/Employee/EmployeeDetailDto";
 import { validateGetEmployeeDetailUseCaseParams } from "./validateParams/validateGetEmployeeDetailUseCaseParams";
+
+export type EmployeeDetailResponse = {
+	userId: string;
+	name: string;
+	companyName: string;
+	occupationName: string;
+	yearsOfExperience: number;
+	gender: GenderLabel;
+	talkableTopics: string;
+	careerDescription: string;
+	jobDescription: string;
+	joiningDescription: string;
+	otherDescription: string;
+	hiringType: HiringTypeLabel | "";
+	workLocationName: string;
+	imageUrl: string;
+};
 
 export type GetEmployeeDetailUseCaseResult = Result<
 	EmployeeDetailResponse,
