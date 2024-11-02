@@ -1,8 +1,14 @@
 import "server-only";
 
-import { getLikedApplicants } from "@/domain/core/Applicant/services/getLikedApplicants";
+import type { ApplicantDomainError } from "@/domain/core/Applicant/Applicant";
+import {
+	type GetLikedApplicantsError,
+	getLikedApplicants,
+} from "@/domain/core/Applicant/services/getLikedApplicants";
 import type { GenderLabel } from "@/domain/shared/Gender";
+import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
+import { ZodError } from "zod";
 import { validateGetLikedApplicantsUseCaseParams } from "./validateParams/validateGetLikedApplicantsUseCaseParams";
 
 export type LikedApplicant = {
@@ -44,14 +50,15 @@ export const getLikedApplicantsUseCase = async (
 			data: likedApplicantsResponse,
 		});
 	} catch (error) {
-		if (error instanceof Error) {
+		if (error instanceof ZodError) {
 			return createFailure({
-				message: error.message,
+				message: getZodErrorMessages(error),
 				data: undefined,
 			});
 		}
 		return createFailure({
-			message: "いいねした転職希望者一覧の取得に失敗しました",
+			message: (error as GetLikedApplicantsError | ApplicantDomainError)
+				.message,
 			data: undefined,
 		});
 	}

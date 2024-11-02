@@ -1,5 +1,6 @@
 import { GenderEnum, type GenderLabel } from "@/domain/shared/Gender";
 import { StatusEnum, type StatusLabel } from "@/domain/shared/Status";
+import { NamedError } from "@/util/error";
 import {
 	applicantParamsSchema,
 	imageUrlSchema,
@@ -8,6 +9,10 @@ import {
 	selfIntroductionSchema,
 	statusSchema,
 } from "./ApplicantSchema";
+
+export class ApplicantDomainError extends NamedError {
+	readonly name = "ApplicantDomainError";
+}
 
 /**
  * Applicantパラメータ
@@ -138,7 +143,7 @@ export class Applicant {
 			case GenderEnum.PREFER_NOT_TO_SAY:
 				return "回答しない";
 			default:
-				throw new Error("無効な性別です");
+				throw new ApplicantDomainError("無効な性別です");
 		}
 	}
 
@@ -151,7 +156,7 @@ export class Applicant {
 			case StatusEnum.REJECTED:
 				return "拒否";
 			default:
-				throw new Error("無効なステータスです");
+				throw new ApplicantDomainError("無効なステータスです");
 		}
 	}
 

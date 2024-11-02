@@ -6,8 +6,13 @@ import type {
 	GetLikedApplicantsUseCaseParams,
 	LikedApplicantResponse,
 } from "@/usecase/getLikedApplicants";
-import { ConversationStatusEnum } from "../../Conversation/ConversationStatus";
+import { NamedError } from "@/util/error";
+import { ConversationStatusEnum } from "../../Conversation/ConversationEnum";
 import { Applicant } from "../Applicant";
+
+export class GetLikedApplicantsError extends NamedError {
+	readonly name = "GetLikedApplicantsError";
+}
 
 export const getLikedApplicants = async (
 	params: GetLikedApplicantsUseCaseParams,
@@ -59,8 +64,6 @@ export const getLikedApplicants = async (
 			occupation: conversation.applicant.occupation,
 		}).toJson();
 	});
-
-	console.log("result", result);
 
 	return {
 		totalCount,

@@ -15,7 +15,7 @@ export default function LikedApplicantListItem({
   applicant: LikedApplicant;
 }) {
   return (
-    <Link href={`/applicant/detail/${applicant.userId}`}>
+    <Link href={`/employee/detail/${applicant.userId}`}>
       <Card key={applicant.userId} className="relative overflow-hidden">
         <div className="absolute top-0 right-0 bg-blue-500 text-white px-2 py-1 text-xs">
           話してみたい

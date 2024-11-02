@@ -7,7 +7,6 @@ describe("LikedApplicantDTO", () => {
 		id: 1,
 		name: "営業職",
 	};
-
 	test("LikedApplicantDTOが正常に作成される", () => {
 		const likedApplicantDTO = new LikedApplicantDTO({
 			applicant,
