@@ -10,7 +10,7 @@ import {
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import { validateRegisterEmployeeUseCaseParams } from "./validateParams/validateRegisterEmployeeUseCaseParams";
+import { validateRegisterEmployeeUseCaseParams } from "./validateRegisterEmployeeUseCaseParams";
 
 type RegisterEmployeeUseCaseResult = Result<undefined, undefined>;
 
