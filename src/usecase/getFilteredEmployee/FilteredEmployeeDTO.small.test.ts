@@ -2,7 +2,7 @@ import { employeeDummy } from "@/domain/core/Employee/test/Employee.dummy";
 import { describe, expect, test } from "vitest";
 import { FilteredEmployeeDTO } from "./FilteredEmployeeDTO";
 
-describe("EmployeeDTO", () => {
+describe("FilteredEmployeeDTO", () => {
 	const employee = employeeDummy;
 	const company = {
 		id: 1,
