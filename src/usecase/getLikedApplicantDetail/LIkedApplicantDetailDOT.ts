@@ -1,8 +1,8 @@
 import type { Applicant } from "@/domain/core/Applicant/Applicant";
 import type { Conversation } from "@/domain/core/Conversation/Conversation";
 import type { GenderLabel } from "@/domain/shared/Gender";
-import type { ApplicantDetailResponse } from "@/usecase/getLikedApplicantDetail";
 import type { Occupation } from "@prisma/client";
+import type { ApplicantDetailResponse } from "./getLikedApplicantDetailUseCase";
 
 export class LikedApplicantDetailDTO {
 	public readonly userId: string;
@@ -34,7 +34,7 @@ export class LikedApplicantDetailDTO {
 		this.selfIntroduction = applicant.selfIntroduction;
 		this.imageUrl = applicant.imageUrl;
 		this.likeReason = conversation.toPurposeLabel();
-		this.likeMessage = conversation.getLatestMessage()?.content ?? undefined;
+		this.likeMessage = conversation.getLatestMessage()?.content;
 	}
 
 	toJson(): ApplicantDetailResponse {

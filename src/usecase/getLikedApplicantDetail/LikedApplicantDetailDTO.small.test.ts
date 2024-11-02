@@ -1,7 +1,7 @@
 import { applicantDummy } from "@/domain/core/Applicant/test/Applicant.dummy";
 import { conversationDummy } from "@/domain/core/Conversation/test/Conversation.dummy";
 import { describe, expect, test } from "vitest";
-import { LikedApplicantDetailDTO } from "../LIkedApplicantDetailDOT";
+import { LikedApplicantDetailDTO } from "./LIkedApplicantDetailDOT";
 describe("LikedApplicantDetailDTO", () => {
 	const applicant = applicantDummy;
 	const occupation = {
