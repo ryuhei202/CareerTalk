@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { userIdSchema } from "../Applicant/ApplicantSchema";
-import { ConversationStatusEnum } from "./ConversationStatus";
+import {
+	ConversationPurposeEnum,
+	ConversationStatusEnum,
+} from "./ConversationEnum";
 import { Message } from "./Message/Message";
 
 /**
@@ -14,9 +17,7 @@ export const applicantUserIdSchema = z.string().trim().length(25, {
 	message: "無効な転職希望者Idです。転職希望者IDは25文字である必要があります",
 });
 
-export const purposeIdSchema = z.number().int().positive({
-	message: "不正な目的Idです",
-});
+export const purposeSchema = z.nativeEnum(ConversationPurposeEnum);
 export const conversationStatusSchema = z.nativeEnum(ConversationStatusEnum);
 // Messageクラスのインスタンスであることを確認
 export const messagesSchema = z
@@ -30,7 +31,7 @@ export const conversationParamsSchema = z.object({
 	id: conversationIdSchema,
 	applicantUserId: userIdSchema,
 	employeeUserId: userIdSchema,
-	purposeId: purposeIdSchema,
+	purpose: purposeSchema,
 	status: conversationStatusSchema,
 	messages: messagesSchema,
 });

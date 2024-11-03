@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { company } from "./company";
-import { conversationPurpose } from "./conversationPurpose";
 import { occupation } from "./occupation";
 // import { employee } from "./employee";
 // import { user } from "./user";
@@ -13,7 +12,6 @@ const main = async () => {
 		...occupation(),
 		...company(),
 		...workLocation(),
-		...conversationPurpose(),
 		// ...user(),  // テストデータを入れたい時だけコメントアウトをはずしてください
 		// ...employee(),
 	]);

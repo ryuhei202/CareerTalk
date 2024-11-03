@@ -4,8 +4,8 @@ import type { HiringTypeEnum } from "@/domain/shared/HiringType";
 import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import type { StatusEnum } from "@/domain/shared/Status";
 import { prisma } from "@/lib/prisma";
-import { EmployeeDTO } from "@/usecase/dto/Employee/EmployeeDTO";
-import type { SearchEmployeeResponse } from "@/usecase/getFilteredEmployees";
+import { FilteredEmployeeDTO } from "@/usecase/getFilteredEmployee/FilteredEmployeeDTO";
+import type { SearchEmployeeResponse } from "@/usecase/getFilteredEmployee/getFilteredEmployeesUseCase";
 import { getExperienceYearsAgo } from "@/util/date";
 import { NamedError } from "@/util/error";
 import { Employee } from "../Employee";
@@ -92,7 +92,7 @@ export const filterEmployees = async (
 			talkableTopics: employee.talkableTopics ?? undefined,
 		});
 
-		return new EmployeeDTO({
+		return new FilteredEmployeeDTO({
 			employee: employeeEntity,
 			company: employee.company,
 			occupation: employee.occupation,
@@ -100,6 +100,7 @@ export const filterEmployees = async (
 		}).toJson();
 	});
 
+	//TODO:totalCountもDTOに含めるようにする（レスポンス全体をDTOにする）
 	return {
 		totalCount,
 		employees: result,

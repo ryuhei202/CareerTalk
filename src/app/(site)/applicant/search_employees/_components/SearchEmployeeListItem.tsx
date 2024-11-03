@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/card";
-import type { FilteredEmployee } from "@/usecase/getFilteredEmployees";
+import type { FilteredEmployee } from "@/usecase/getFilteredEmployee/getFilteredEmployeesUseCase";
 import { Briefcase, MapPin, PhoneCall, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +16,7 @@ export default function SearchEmployeeListItem({
   employee: FilteredEmployee;
 }) {
   return (
-    <Link href={`/applicant/detail/${employee.userId}`}>
+    <Link href={`/applicant/search_employees/detail/${employee.userId}`}>
       <Card key={employee.userId} className="relative overflow-hidden">
         <div className="absolute top-0 right-0 bg-blue-500 text-white px-2 py-1 text-xs">
           企業公開

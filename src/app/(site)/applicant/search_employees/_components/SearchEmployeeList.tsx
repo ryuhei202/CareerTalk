@@ -1,6 +1,6 @@
-import type { FilteredEmployee } from "@/usecase/getFilteredEmployees";
+import Pagenation from "@/app/_components/parts/Pagenation";
+import type { FilteredEmployee } from "@/usecase/getFilteredEmployee/getFilteredEmployeesUseCase";
 import SearchEmployeeListItem from "./SearchEmployeeListItem";
-import SearchEmployeePagenation from "./SearchEmployeePagenation";
 
 export default function SearchEmployeeList({
   employees,
@@ -30,7 +30,7 @@ export default function SearchEmployeeList({
               />
             ))}
           </div>
-          <SearchEmployeePagenation
+          <Pagenation
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={onPageChange}
