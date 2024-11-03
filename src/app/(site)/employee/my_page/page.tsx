@@ -1,14 +1,19 @@
 import { LogOutButton } from "@/app/_components/parts/Button/LogOutButton";
 import { Button } from "@/app/_components/ui/button";
-import { getServerSession } from "@/lib/auth";
+import { getEmployeeUserId, getServerSession } from "@/lib/auth";
 import { getEmployeeDetailUseCase } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import * as Avatar from "@radix-ui/react-avatar";
+
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function MyPage() {
   const session = await getServerSession();
   if (!session) {
+    redirect("/signin");
+  }
+  const userId = getEmployeeUserId()
+  if (!userId) {
     redirect("/signin");
   }
   const employee = await getEmployeeDetailUseCase({ employeeUserId: session.user.id })
