@@ -1,3 +1,4 @@
+import { LogOutButton } from "@/app/_components/parts/Button/LogOutButton";
 import { Button } from "@/app/_components/ui/button";
 import { getServerSession } from "@/lib/auth";
 import { getEmployeeDetailUseCase } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
@@ -56,8 +57,7 @@ export default async function MyPage() {
                 <div className="ms-4 mt-2">{employee.data.meetingMethod ? employee.data.meetingMethod : "選択されていません"}</div>
               </div>
               <div className="mt-12  mb-5 flex justify-center">
-                <Button
-                  className="border border-red-400 bg-white text-red-500 shadow-sm hover:bg-destructive/90 hover:text-white">ログアウト</Button>
+                <LogOutButton />
               </div>
             </div>
           </div>
