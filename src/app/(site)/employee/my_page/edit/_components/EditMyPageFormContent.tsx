@@ -2,12 +2,32 @@
 
 import { Button } from "@/app/_components/ui/button";
 import { Textarea } from "@/app/_components/ui/textarea";
+import { HiringTypeEnum } from "@/domain/shared/HiringType";
+import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/EmployeeDetailDTO";
 import type { Occupation, WorkLocation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
 import type { Session } from "next-auth"
 import Link from "next/link";
 // SearchEmployeeBox.tsxと共通化したい
+const HIRING_TYPE = [
+  {
+    id: 1,
+    value: "NEW_GRADUATE",
+    label: "新卒入社",
+  },
+  {
+    id: 2,
+    value: "MID_CAREER",
+    label: "中途入社",
+  },
+  {
+    id: 3,
+    value: "BOTH",
+    label: "両方",
+  },
+] as const;
+
 const MEETING_METHOD = [
   {
     id: 1,
@@ -62,6 +82,23 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
                     value={occupation.id}
                   >
                     {occupation.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="my-5 flex flex-col items-start">
+              <div className="bg-gray-100 p-2 rounded-md">入社歴</div>
+              <span className="ms-4 mt-2">{employee.yearsOfExperience}年</span>
+            </div>
+            <div className="my-5 flex flex-col items-start">
+              <div className="bg-gray-100 p-2 rounded-md">入社方法</div>
+              <select name="meetingMethod" className="ms-4 mt-2 border p-2 rounded" defaultValue={employee.hiringType}>
+                {HIRING_TYPE.map(hiringType => (
+                  <option
+                    key={hiringType.id}
+                    value={hiringType.value}
+                  >
+                    {hiringType.label}
                   </option>
                 ))}
               </select>
