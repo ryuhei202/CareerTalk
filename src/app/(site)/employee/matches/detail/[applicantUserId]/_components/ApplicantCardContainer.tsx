@@ -1,7 +1,7 @@
 "use client";
 import type { LikedApplicant } from "@/usecase/getLikedApplicants/getLikedApplicantsUseCase";
 import { useRouter } from "next/navigation";
-import ApplicantCard from "../ApplicantCard";
+import ApplicantCard from "./ApplicantCard";
 
 export default function ApplicantCardContainer({
   applicant,

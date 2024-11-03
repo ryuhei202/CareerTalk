@@ -4,8 +4,7 @@ import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
 import type { LikedApplicant } from "@/usecase/getLikedApplicants/getLikedApplicantsUseCase";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
-import LikeReasonCard from "./_components/LikeReasonCard";
-
+import LikeReasonCard from "./LikeReasonCard";
 export default function ApplicantCard({
   applicant,
   likeReason,
