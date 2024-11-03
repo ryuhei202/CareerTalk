@@ -2,17 +2,17 @@ import type { Employee } from "@/domain/core/Employee/Employee";
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 
-type Occupation = {
+export type Occupation = {
 	id: number;
 	name: string;
 };
 
-type Company = {
+export type Company = {
 	id: number;
 	name: string;
 };
 
-type WorkLocation = {
+export type WorkLocation = {
 	id: number;
 	name: string;
 };
@@ -30,8 +30,9 @@ export type EmployeeDetailResponse = {
 	joiningDescription: string;
 	otherDescription: string;
 	hiringType: HiringTypeLabel | "";
-	workLocationName: string;
+	workLocation: WorkLocation | undefined;
 	imageUrl: string;
+	meetingMethod: string;
 };
 
 export class EmployeeDetailDto {
@@ -47,8 +48,9 @@ export class EmployeeDetailDto {
 	public readonly joiningDescription: string;
 	public readonly otherDescription: string;
 	public readonly hiringType: HiringTypeLabel | "";
-	public readonly workLocationName: string;
+	public readonly workLocation: WorkLocation | undefined;
 	public readonly imageUrl: string;
+	public readonly meetingMethod: string;
 
 	constructor({
 		employee,
@@ -59,7 +61,7 @@ export class EmployeeDetailDto {
 		employee: Employee;
 		company: Company;
 		occupation: Occupation;
-		workLocation?: WorkLocation;
+		workLocation: WorkLocation | undefined;
 	}) {
 		this.userId = employee.userId;
 		this.name = employee.name;
@@ -73,7 +75,8 @@ export class EmployeeDetailDto {
 		this.joiningDescription = employee.joiningDescription ?? "";
 		this.otherDescription = employee.otherDescription ?? "";
 		this.hiringType = employee.toHiringTypeLabel() ?? "";
-		this.workLocationName = workLocation?.name ?? "";
+		this.workLocation = workLocation;
+		this.meetingMethod = employee.toMeetingMethodLabel() ?? "";
 		this.imageUrl = employee.imageUrl ?? "";
 	}
 
@@ -92,7 +95,8 @@ export class EmployeeDetailDto {
 			joiningDescription: this.joiningDescription,
 			otherDescription: this.otherDescription,
 			hiringType: this.hiringType,
-			workLocationName: this.workLocationName,
+			workLocation: this.workLocation,
+			meetingMethod: this.meetingMethod,
 			imageUrl: this.imageUrl,
 		};
 	}

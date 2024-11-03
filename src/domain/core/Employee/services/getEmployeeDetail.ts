@@ -4,7 +4,7 @@ import type { HiringTypeEnum } from "@/domain/shared/HiringType";
 import type { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import type { StatusEnum } from "@/domain/shared/Status";
 import { prisma } from "@/lib/prisma";
-import { EmployeeDetailDTO } from "@/usecase/getEmployeeDetail/EmployeeDetailDTO";
+import { EmployeeDetailDto } from "@/usecase/getEmployeeDetail/EmployeeDetailDTO";
 import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import { NamedError } from "@/util/error";
 import { Employee } from "../Employee";
@@ -56,7 +56,7 @@ export const getEmployeeDetail = async (
 		otherDescription: employee.otherDescription ?? undefined,
 	});
 
-	return new EmployeeDetailDTO({
+	return new EmployeeDetailDto({
 		employee: employeeEntity,
 		company: employee.company,
 		occupation: employee.occupation,
