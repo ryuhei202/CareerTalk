@@ -1,4 +1,4 @@
-import ErrorPage from "@/app/_components/page/ErrorPage";
+import DMResultCard from "@/app/_components/parts/DMRequestCard";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
 import { Label } from "@/app/_components/ui/label";
@@ -7,8 +7,6 @@ import { Textarea } from "@/app/_components/ui/textarea";
 import kamihikouki from "@/assets/images/kamihikouki.svg";
 import { ConversationPurposeEnum } from "@/domain/core/Conversation/ConversationEnum";
 import { ArrowLeft, LightbulbIcon } from "lucide-react";
-import Image from "next/image";
-import type { FormState } from "./EmployeeCardContainer";
 
 const conversationPurposeOptions = [
   {
@@ -31,44 +29,23 @@ const conversationPurposeOptions = [
 
 export default function DMRequestCard({
   onClickBack,
-  state,
+  onClickBackToSearch,
+  isSuccess,
   action,
 }: {
   onClickBack: () => void;
-  state: FormState;
+  onClickBackToSearch: () => void;
+  isSuccess: true | undefined;
   action: (payload: FormData) => void;
 }) {
-  if (state.success === false) {
-    return <ErrorPage message={state.message} data={state.data} />;
-  }
   return (
     <>
-      {state.success ? (
-        <Card className="w-full max-w-md mx-auto">
-          <CardHeader className="pb-0">
-            <Button
-              variant="ghost"
-              className="flex items-center text-muted-foreground w-fit -ml-4"
-              onClick={() => window.history.back()}
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              検索画面へ戻る
-            </Button>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center justify-center pt-12 pb-16">
-            <h2 className="text-xl text-primary mb-12">
-              リクエストを送信しました！
-            </h2>
-            <div className="relative">
-              <Image
-                src={kamihikouki}
-                alt="送信完了"
-                width={120}
-                height={120}
-              />
-            </div>
-          </CardContent>
-        </Card>
+      {isSuccess ? (
+        <DMResultCard
+          imageSrc={kamihikouki}
+          title="リクエストを送信しました！"
+          onClickBack={onClickBackToSearch}
+        />
       ) : (
         <Card className="w-full max-w-md mx-auto h-[calc(100vh-80px)] overflow-y-auto my-4">
           <CardHeader className="bg-blue-500 text-white p-3 sticky top-0 z-10">

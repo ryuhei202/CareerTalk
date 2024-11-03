@@ -1,5 +1,6 @@
 "use client";
 
+import ErrorPage from "@/app/_components/page/ErrorPage";
 import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -30,12 +31,17 @@ export default function EmployeeCardContainer({
       data: undefined,
     }
   );
+
+  if (state.success === false) {
+    return <ErrorPage message={state.message} data={state.data} />;
+  }
   return (
     <>
       {isRequestFormOpen ? (
         <DMRequestCard
           onClickBack={() => setIsRequestFormOpen(false)}
-          state={state}
+          onClickBackToSearch={() => router.back()}
+          isSuccess={state.success}
           action={formAction}
         />
       ) : (

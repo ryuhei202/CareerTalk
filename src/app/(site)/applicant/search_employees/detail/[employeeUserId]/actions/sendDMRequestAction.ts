@@ -4,7 +4,7 @@ import type { ConversationPurposeEnum } from "@/domain/core/Conversation/Convers
 import { getServerSession } from "@/lib/auth";
 import { sendDMRequestUseCase } from "@/usecase/sendDMRequest/sendDMRequestUseCase";
 import { revalidatePath } from "next/cache";
-import type { FormState } from "../../../../create_profile/_components/CreateApplicantProfileContainer";
+import type { FormState } from "../_components/EmployeeCardContainer";
 
 export interface SendDMRequestParams {
 	employeeUserId: string;
