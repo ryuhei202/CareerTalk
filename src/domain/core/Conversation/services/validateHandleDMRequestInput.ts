@@ -1,4 +1,4 @@
-import type { HandleDMRequestParams } from "@/app/(site)/employee/matches/detail/[applicantUserId]/_actions/approveApplicantAction";
+import type { HandleDMRequestParams } from "@/app/(site)/employee/matches/detail/[applicantUserId]/_actions/handleDMRequestAction";
 import { prisma } from "@/lib/prisma";
 import { NamedError } from "@/util/error";
 import { Conversation } from "../Conversation";

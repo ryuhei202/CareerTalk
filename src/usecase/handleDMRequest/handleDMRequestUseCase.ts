@@ -1,5 +1,5 @@
 import "server-only";
-import type { HandleDMRequestParams } from "@/app/(site)/employee/matches/detail/[applicantUserId]/_actions/approveApplicantAction";
+import type { HandleDMRequestParams } from "@/app/(site)/employee/matches/detail/[applicantUserId]/_actions/handleDMRequestAction";
 import type { ConversationDomainError } from "@/domain/core/Conversation/Conversation";
 import type { ConversationStatusEnum } from "@/domain/core/Conversation/ConversationEnum";
 import {

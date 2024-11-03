@@ -1,4 +1,4 @@
-import type { HandleDMRequestParams } from "@/app/(site)/employee/matches/detail/[applicantUserId]/_actions/approveApplicantAction";
+import type { HandleDMRequestParams } from "@/app/(site)/employee/matches/detail/[applicantUserId]/_actions/handleDMRequestAction";
 import { z } from "zod";
 
 export const validateHandleDMRequestParams = (
