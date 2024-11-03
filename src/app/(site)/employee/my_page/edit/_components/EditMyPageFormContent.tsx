@@ -3,15 +3,16 @@
 import { Button } from "@/app/_components/ui/button";
 import { Textarea } from "@/app/_components/ui/textarea";
 import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/EmployeeDetailDTO";
-import { useForm } from '@conform-to/react';
+import { type SubmissionResult, useForm } from '@conform-to/react';
 import { parseWithZod } from "@conform-to/zod";
 import type { Occupation, WorkLocation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
 import type { Session } from "next-auth"
 import Link from "next/link";
 import { useFormState } from "react-dom";
-import { updateEmployeeAction } from "../_actions/updateEmployeeAction";
+import { type UpdateEmployeeForMyPageActionResult, updateEmployeeForMyPageAction } from "../_actions/updateEmployeeForMyPageAction";
 import { updateEmployeeSchema } from "../_schema/updateEmployeeSchema";
+
 // SearchEmployeeBox.tsxと共通化したい
 const HIRING_TYPE = [
   {
@@ -51,7 +52,7 @@ const MEETING_METHOD = [
 
 export const EditMyPageFormContent = ({ employee, session, occupations, workLocations }:
   { session: Session, employee: EmployeeDetailResponse, occupations: Occupation[], workLocations: WorkLocation[] }) => {
-  const [lastResult, action] = useFormState(updateEmployeeAction, undefined);
+  const [lastResult, action] = useFormState(updateEmployeeForMyPageAction, undefined);
   const [form, fields] = useForm({
     // 前回の送信結果を同期
     lastResult,
@@ -67,6 +68,7 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
       onSubmit={form.onSubmit}
       action={action}
       className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12" >
+      <input type="text" name="userId" hidden value={employee.userId} />
       <div className="col-span-4">
         <div className="flex flex-col items-center shadow rounded-xl py-4 px-8">
           <div className="flex items-center gap-4">
@@ -117,7 +119,7 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
                   </option>
                 ))}
               </select>
-              <div>{fields.meetingMethod.errors}</div>
+              <div>{fields.hiringType.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">勤務地</div>
@@ -159,28 +161,33 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
           </Link>
         </div>
         <div className="mt-6">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">自己紹介</h2>
+          <Textarea name="selfIntroduction" className="h-44 mb-14" defaultValue={employee.selfIntroduction} />
+          <div>{fields.selfIntroduction.errors}</div>
+        </div>
+        <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">話せる内容</h2>
-          <Textarea name="talkableTopics" className="h-44 mb-14" value={employee.talkableTopics} />
+          <Textarea name="talkableTopics" className="h-44 mb-14" defaultValue={employee.talkableTopics} />
           <div>{fields.talkableTopics.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">所属・経歴</h2>
-          <Textarea name="careerDescription" className="h-44 mb-14" value={employee.careerDescription} />
+          <Textarea name="careerDescription" className="h-44 mb-14" defaultValue={employee.careerDescription} />
           <div>{fields.careerDescription.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">業務内容</h2>
-          <Textarea name="jobDescription" className="h-44 mb-14" value={employee.jobDescription} />
+          <Textarea name="jobDescription" className="h-44 mb-14" defaultValue={employee.jobDescription} />
           <div>{fields.jobDescription.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">入社経緯</h2>
-          <Textarea name="joiningDescription" className="h-44 mb-14" value={employee.joiningDescription} />
+          <Textarea name="joiningDescription" className="h-44 mb-14" defaultValue={employee.joiningDescription} />
           <div>{fields.joiningDescription.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">その他</h2>
-          <Textarea name="otherDescription" className="h-44 mb-14" value={employee.otherDescription} />
+          <Textarea name="otherDescription" className="h-44 mb-14" defaultValue={employee.otherDescription} />
           <div>{fields.otherDescription.errors}</div>
         </div>
         <div className="flex justify-end">

@@ -71,6 +71,10 @@ export default async function MyPage() {
             </Link>
           </div>
           <div className="mt-6">
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">自己紹介</h2>
+            <div className="mb-14">{employee.data.selfIntroduction}</div>
+          </div>
+          <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">話せる内容</h2>
             <div className="mb-4 border-b"> </div>
             <div className="mb-14">{employee.data.talkableTopics}</div>

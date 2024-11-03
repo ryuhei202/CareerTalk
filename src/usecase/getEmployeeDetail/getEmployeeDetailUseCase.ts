@@ -30,6 +30,7 @@ export type EmployeeDetailResponse = {
 	workLocation: WorkLocation | undefined;
 	imageUrl: string;
 	meetingMethod: string;
+	selfIntroduction: string;
 };
 
 export type GetEmployeeDetailUseCaseResult = Result<
