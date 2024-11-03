@@ -3,14 +3,14 @@
 import { Button } from "@/app/_components/ui/button";
 import { Textarea } from "@/app/_components/ui/textarea";
 import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/EmployeeDetailDTO";
-import { type SubmissionResult, useForm } from '@conform-to/react';
+import { useForm } from '@conform-to/react';
 import { parseWithZod } from "@conform-to/zod";
 import type { Occupation, WorkLocation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
 import type { Session } from "next-auth"
 import Link from "next/link";
 import { useFormState } from "react-dom";
-import { type UpdateEmployeeForMyPageActionResult, updateEmployeeForMyPageAction } from "../_actions/updateEmployeeForMyPageAction";
+import { updateEmployeeForMyPageAction } from "../_actions/updateEmployeeForMyPageAction";
 import { updateEmployeeSchema } from "../_schema/updateEmployeeSchema";
 
 // SearchEmployeeBox.tsxと共通化したい
