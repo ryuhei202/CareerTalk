@@ -40,6 +40,7 @@ export default function EmployeeCardContainer({
       {isRequestFormOpen ? (
         <DMRequestCard
           onClickBack={() => setIsRequestFormOpen(false)}
+          onClickBackToSearch={() => router.back()}
           isSuccess={state.success}
           action={formAction}
         />

@@ -29,10 +29,12 @@ const conversationPurposeOptions = [
 
 export default function DMRequestCard({
   onClickBack,
+  onClickBackToSearch,
   isSuccess,
   action,
 }: {
   onClickBack: () => void;
+  onClickBackToSearch: () => void;
   isSuccess: true | undefined;
   action: (payload: FormData) => void;
 }) {
@@ -42,7 +44,7 @@ export default function DMRequestCard({
         <DMResultCard
           imageSrc={kamihikouki}
           title="リクエストを送信しました！"
-          onClickBack={onClickBack}
+          onClickBack={onClickBackToSearch}
         />
       ) : (
         <Card className="w-full max-w-md mx-auto h-[calc(100vh-80px)] overflow-y-auto my-4">
