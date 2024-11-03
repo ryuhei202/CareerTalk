@@ -34,8 +34,6 @@ export default async function MatchesPage({
     return <ErrorPage message={result.message} data={result.data} />;
   }
 
-  console.log(result.data.applicants);
-
   return (
     <LikeApplicationsContainer
       totalCount={result.data.totalCount}

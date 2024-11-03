@@ -33,8 +33,6 @@ export default async function ApplicantDetailPage({ params }: Props) {
   const result: GetLikedApplicantDetailUseCaseResult =
     await getLikedApplicantDetailUseCase(getLikedApplicantDetailUseCaseParams);
 
-  console.log(result);
-
   if (!result.success) {
     return (
       <ErrorPage

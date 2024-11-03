@@ -1,5 +1,6 @@
 import type { Applicant } from "@/domain/core/Applicant/Applicant";
 import type { Conversation } from "@/domain/core/Conversation/Conversation";
+import type { ConversationStatusEnum } from "@/domain/core/Conversation/ConversationEnum";
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { Occupation } from "@prisma/client";
 import type { ApplicantDetailResponse } from "./getLikedApplicantDetailUseCase";
@@ -15,7 +16,7 @@ export class LikedApplicantDetailDTO {
 	public readonly selfIntroduction?: string;
 	public readonly imageUrl?: string;
 	public readonly likeMessage?: string;
-
+	public readonly conversationStatus: ConversationStatusEnum;
 	constructor({
 		applicant,
 		occupation,
@@ -35,6 +36,7 @@ export class LikedApplicantDetailDTO {
 		this.imageUrl = applicant.imageUrl;
 		this.likeReason = conversation.toPurposeLabel();
 		this.likeMessage = conversation.getLatestMessage()?.content;
+		this.conversationStatus = conversation.status;
 	}
 
 	toJson(): ApplicantDetailResponse {
@@ -48,6 +50,7 @@ export class LikedApplicantDetailDTO {
 				occupationName: this.occupationName,
 				selfIntroduction: this.selfIntroduction,
 				imageUrl: this.imageUrl,
+				conversationStatus: this.conversationStatus,
 			},
 			likeReason: this.likeReason,
 			likeMessage: this.likeMessage,

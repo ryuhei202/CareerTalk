@@ -7,7 +7,7 @@ export const validateSendDMRequestParams = (
 ): SendDMRequestParams => {
 	// スキーマ定義
 	const applicantUserIdSchema = z.string().trim().length(25, {
-		message: "無効な応募者IDです。応募者IDは25文字である必要があります",
+		message: "無効な応募者IDです。転職希望者のIDは25文字である必要があります",
 	});
 	const employeeUserIdSchema = z.string().trim().length(25, {
 		message: "無効な社員IDです。社員IDは25文字である必要があります",

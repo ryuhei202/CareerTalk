@@ -8,11 +8,15 @@ import {
 	type GetLikedApplicantDetailError,
 	getLikedApplicantDetail,
 } from "@/domain/core/Applicant/services/getLikedApplicantDetail";
+import type { ConversationStatusEnum } from "@/domain/core/Conversation/ConversationEnum";
 import type { LikedApplicant } from "../getLikedApplicants/getLikedApplicantsUseCase";
 import { validateGetLikedApplicantDetailUseCaseParams } from "./validateGetLikedApplicantDetailUseCaseParams";
 
+export type ApplicantDetail = LikedApplicant & {
+	conversationStatus: ConversationStatusEnum;
+};
 export type ApplicantDetailResponse = {
-	applicant: LikedApplicant;
+	applicant: ApplicantDetail;
 	likeReason: string;
 	likeMessage?: string;
 };
@@ -28,7 +32,6 @@ export const getLikedApplicantDetailUseCase = async (
 	try {
 		const validatedParams =
 			validateGetLikedApplicantDetailUseCaseParams(params);
-
 		const applicantDetail = await getLikedApplicantDetail(validatedParams);
 
 		return createSuccess({
@@ -36,7 +39,6 @@ export const getLikedApplicantDetailUseCase = async (
 			data: applicantDetail,
 		});
 	} catch (error) {
-		console.error("error", error);
 		if (error instanceof ZodError) {
 			return createFailure({
 				message: getZodErrorMessages(error),
