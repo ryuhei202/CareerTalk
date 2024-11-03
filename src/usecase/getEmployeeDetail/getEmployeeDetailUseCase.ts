@@ -11,14 +11,14 @@ import type { HiringTypeLabel } from "@/domain/shared/HiringType";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
-import type { WorkLocation } from "./EmployeeDetailDTO";
+import type { Occupation, WorkLocation } from "./EmployeeDetailDTO";
 import { validateGetEmployeeDetailUseCaseParams } from "./validateGetEmployeeDetailUseCaseParams";
 
 export type EmployeeDetailResponse = {
 	userId: string;
 	name: string;
 	companyName: string;
-	occupationName: string;
+	occupation: Occupation | undefined;
 	yearsOfExperience: number;
 	gender: GenderLabel;
 	talkableTopics: string;

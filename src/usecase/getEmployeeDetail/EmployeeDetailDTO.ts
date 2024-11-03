@@ -21,7 +21,7 @@ export type EmployeeDetailResponse = {
 	userId: string;
 	name: string;
 	companyName: string;
-	occupationName: string;
+	occupation: Occupation | undefined;
 	yearsOfExperience: number;
 	gender: GenderLabel;
 	talkableTopics: string;
@@ -39,7 +39,7 @@ export class EmployeeDetailDto {
 	public readonly userId: string;
 	public readonly name: string;
 	public readonly companyName: string;
-	public readonly occupationName: string;
+	public readonly occupation: Occupation;
 	public readonly yearsOfExperience: number;
 	public readonly gender: GenderLabel;
 	public readonly talkableTopics: string;
@@ -66,7 +66,7 @@ export class EmployeeDetailDto {
 		this.userId = employee.userId;
 		this.name = employee.name;
 		this.companyName = company.name;
-		this.occupationName = occupation.name;
+		this.occupation = occupation;
 		this.yearsOfExperience = employee.toYearsOfExperience();
 		this.gender = employee.toGenderLabel();
 		this.talkableTopics = employee.talkableTopics ?? "";
@@ -86,7 +86,7 @@ export class EmployeeDetailDto {
 			userId: this.userId,
 			name: this.name,
 			companyName: this.companyName,
-			occupationName: this.occupationName,
+			occupation: this.occupation,
 			yearsOfExperience: this.yearsOfExperience,
 			gender: this.gender,
 			talkableTopics: this.talkableTopics,
