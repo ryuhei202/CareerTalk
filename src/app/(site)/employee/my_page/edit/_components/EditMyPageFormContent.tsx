@@ -2,13 +2,16 @@
 
 import { Button } from "@/app/_components/ui/button";
 import { Textarea } from "@/app/_components/ui/textarea";
-import { HiringTypeEnum } from "@/domain/shared/HiringType";
-import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/EmployeeDetailDTO";
+import { useForm } from '@conform-to/react';
+import { parseWithZod } from "@conform-to/zod";
 import type { Occupation, WorkLocation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
 import type { Session } from "next-auth"
 import Link from "next/link";
+import { useFormState } from "react-dom";
+import { updateEmployeeAction } from "../_actions/updateEmployeeAction";
+import { updateEmployeeSchema } from "../_schema/updateEmployeeSchema";
 // SearchEmployeeBox.tsxと共通化したい
 const HIRING_TYPE = [
   {
@@ -44,12 +47,26 @@ const MEETING_METHOD = [
     value: "BOTH",
     label: "全て",
   },
-];
+] as const;
+
 export const EditMyPageFormContent = ({ employee, session, occupations, workLocations }:
   { session: Session, employee: EmployeeDetailResponse, occupations: Occupation[], workLocations: WorkLocation[] }) => {
+  const [lastResult, action] = useFormState(updateEmployeeAction, undefined);
+  const [form, fields] = useForm({
+    // 前回の送信結果を同期
+    lastResult,
 
+    // クライアントでバリデーション・ロジックを再利用する
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: updateEmployeeSchema });
+    },
+  });
   return (
-    <form className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12" action={""} >
+    <form
+      id={form.id}
+      onSubmit={form.onSubmit}
+      action={action}
+      className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12" >
       <div className="col-span-4">
         <div className="flex flex-col items-center shadow rounded-xl py-4 px-8">
           <div className="flex items-center gap-4">
@@ -70,11 +87,8 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
             <div className="my-5">
               <span>{employee.companyName}</span>
             </div>
-            <div className="my-5">
-              <span>{employee.yearsOfExperience}</span>
-            </div>
             <div className="my-5 flex flex-col items-start">
-              <div className="bg-gray-100 p-2 rounded-md">職種</div>
+              <div className="bg-gray-100 p-2 rounded-md">職種(必須)</div>
               <select name="occupation" className="ms-4 mt-2 border p-2 rounded" defaultValue={employee.occupation ? employee.occupation.id : ""}>
                 {occupations.map(occupation => (
                   <option
@@ -85,6 +99,7 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
                   </option>
                 ))}
               </select>
+              <div>{fields.occupation.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">入社歴</div>
@@ -92,7 +107,7 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">入社方法</div>
-              <select name="meetingMethod" className="ms-4 mt-2 border p-2 rounded" defaultValue={employee.hiringType}>
+              <select name="hiringType" className="ms-4 mt-2 border p-2 rounded" defaultValue={employee.hiringType}>
                 {HIRING_TYPE.map(hiringType => (
                   <option
                     key={hiringType.id}
@@ -102,6 +117,7 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
                   </option>
                 ))}
               </select>
+              <div>{fields.meetingMethod.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">勤務地</div>
@@ -115,6 +131,7 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
                   </option>
                 ))}
               </select>
+              <div>{fields.workLocation.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">面談方法</div>
@@ -128,12 +145,12 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
                   </option>
                 ))}
               </select>
+              <div>{fields.meetingMethod.errors}</div>
             </div>
           </div>
         </div>
       </div>
       <div className="col-span-8">
-
         <div className="flex justify-end">
           <Link href={"/employee/my_page"}>
             <Button variant={"secondary"}>
@@ -143,26 +160,31 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">話せる内容</h2>
-          <Textarea className="h-44 mb-14" value={employee.talkableTopics} />
+          <Textarea name="talkableTopics" className="h-44 mb-14" value={employee.talkableTopics} />
+          <div>{fields.talkableTopics.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">所属・経歴</h2>
-          <Textarea className="h-44 mb-14" value={employee.careerDescription} />
+          <Textarea name="careerDescription" className="h-44 mb-14" value={employee.careerDescription} />
+          <div>{fields.careerDescription.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">業務内容</h2>
-          <Textarea className="h-44 mb-14" value={employee.jobDescription} />
+          <Textarea name="jobDescription" className="h-44 mb-14" value={employee.jobDescription} />
+          <div>{fields.jobDescription.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">入社経緯</h2>
-          <Textarea className="h-44 mb-14" value={employee.joiningDescription} />
+          <Textarea name="joiningDescription" className="h-44 mb-14" value={employee.joiningDescription} />
+          <div>{fields.joiningDescription.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">その他</h2>
-          <Textarea className="h-44 mb-14" value={employee.otherDescription} />
+          <Textarea name="otherDescription" className="h-44 mb-14" value={employee.otherDescription} />
+          <div>{fields.otherDescription.errors}</div>
         </div>
         <div className="flex justify-end">
-          <Button>保存</Button>
+          <Button type="submit">保存</Button>
         </div>
       </div >
     </form >
