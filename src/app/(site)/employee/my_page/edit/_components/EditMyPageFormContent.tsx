@@ -2,15 +2,32 @@
 
 import { Button } from "@/app/_components/ui/button";
 import { Textarea } from "@/app/_components/ui/textarea";
-import type { EmployeeDetailResponse } from "@/usecase/dto/Employee/EmployeeDetailDto"
+import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/EmployeeDetailDTO";
 import type { Occupation, WorkLocation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
 import type { Session } from "next-auth"
 import Link from "next/link";
 export const EditMyPageFormContent = ({ employee, session, occupations, workLocations }:
   { session: Session, employee: EmployeeDetailResponse, occupations: Occupation[], workLocations: WorkLocation[] }) => {
-  const currentWorkLocation = workLocations.find(workLocation => workLocation.name === employee.workLocationName);
 
+  // SearchEmployeeBox.tsxと共通化したい
+  const MEETING_METHOD = [
+    {
+      id: 1,
+      value: "ONLINE",
+      label: "オンライン",
+    },
+    {
+      id: 2,
+      value: "OFFLINE",
+      label: "対面",
+    },
+    {
+      id: 3,
+      value: "BOTH",
+      label: "全て",
+    },
+  ];
   return (
     <form className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12" action={""} >
       <div className="col-span-4">
@@ -38,7 +55,7 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">職種</div>
-              <select name="occupation" className="ms-4 mt-2 border p-2 rounded" defaultValue={currentWorkLocation?.id}>
+              <select name="occupation" className="ms-4 mt-2 border p-2 rounded" defaultValue={employee.occupation ? employee.occupation.id : ""}>
                 {occupations.map(occupation => (
                   <option
                     key={occupation.id}
@@ -51,7 +68,7 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">勤務地</div>
-              <select name="workLocation" className="ms-4 mt-2 border p-2 rounded" defaultValue={currentWorkLocation?.id}>
+              <select name="workLocation" className="ms-4 mt-2 border p-2 rounded" defaultValue={employee.workLocation?.id}>
                 {workLocations.map(workLocation => (
                   <option
                     key={workLocation.id}
@@ -64,7 +81,16 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">面談方法</div>
-              <input className="ms-4 mt-2" value={employee.meetingMethodName} />
+              <select name="meetingMethod" className="ms-4 mt-2 border p-2 rounded" defaultValue={employee.meetingMethod}>
+                {MEETING_METHOD.map(method => (
+                  <option
+                    key={method.id}
+                    value={method.value}
+                  >
+                    {method.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>

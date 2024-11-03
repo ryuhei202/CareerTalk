@@ -41,7 +41,7 @@ export default async function MyPage() {
               </div>
               <div className="my-5 flex flex-col items-start">
                 <div className="bg-gray-100 p-2 rounded-md">職種</div>
-                <span className="ms-4 mt-2">{employee.data.occupationName}</span>
+                <span className="ms-4 mt-2">{employee.data.occupation ? employee.data.occupation?.name : "選択されていません"}</span>
               </div>
               <div className="my-5 flex flex-col items-start">
                 <div className="bg-gray-100 p-2 rounded-md">入社歴</div>
@@ -49,11 +49,11 @@ export default async function MyPage() {
               </div>
               <div className="my-5 flex flex-col items-start">
                 <div className="bg-gray-100 p-2 rounded-md">勤務地</div>
-                <div className="ms-4 mt-2">{employee.data.workLocation ? employee.data.workLocation.name : "選択されていません。"}</div>
+                <div className="ms-4 mt-2">{employee.data.workLocation ? employee.data.workLocation.name : "選択されていません"}</div>
               </div>
               <div className="my-5 flex flex-col items-start">
                 <div className="bg-gray-100 p-2 rounded-md">面談方法</div>
-                <div className="ms-4 mt-2">{employee.data.meetingMethod ? employee.data.meetingMethod : "選択されていません。"}</div>
+                <div className="ms-4 mt-2">{employee.data.meetingMethod ? employee.data.meetingMethod : "選択されていません"}</div>
               </div>
               <div className="mt-12  mb-5 flex justify-center">
                 <Button

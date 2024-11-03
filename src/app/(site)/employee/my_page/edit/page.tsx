@@ -1,6 +1,6 @@
-import { getEmployeeDetail } from "@/domain/core/Employee/services/getEmployeeDetail";
 import { getServerSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getEmployeeDetailUseCase } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import { redirect } from "next/navigation";
 import { EditMyPageFormContent } from "./_components/EditMyPageFormContent";
 
@@ -10,8 +10,9 @@ export default async function MyPageEdit() {
   if (!session) {
     redirect("/signin");
   }
-  const employee = await getEmployeeDetail({ employeeUserId: session.user.id })
-  if (!employee) {
+  const employee = await getEmployeeDetailUseCase({ employeeUserId: session.user.id })
+
+  if (!employee.success) {
     redirect("/signin")
   }
 
@@ -22,7 +23,12 @@ export default async function MyPageEdit() {
 
   return (
     <>
-      <EditMyPageFormContent employee={employee} session={session} occupations={occupations} workLocations={workLocations} />
+      <EditMyPageFormContent
+        employee={employee.data}
+        session={session}
+        occupations={occupations}
+        workLocations={workLocations}
+      />
     </>
   );
 }
