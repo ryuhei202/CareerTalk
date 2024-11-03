@@ -7,27 +7,27 @@ import type { Occupation, WorkLocation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
 import type { Session } from "next-auth"
 import Link from "next/link";
+// SearchEmployeeBox.tsxと共通化したい
+const MEETING_METHOD = [
+  {
+    id: 1,
+    value: "ONLINE",
+    label: "オンライン",
+  },
+  {
+    id: 2,
+    value: "OFFLINE",
+    label: "対面",
+  },
+  {
+    id: 3,
+    value: "BOTH",
+    label: "全て",
+  },
+];
 export const EditMyPageFormContent = ({ employee, session, occupations, workLocations }:
   { session: Session, employee: EmployeeDetailResponse, occupations: Occupation[], workLocations: WorkLocation[] }) => {
 
-  // SearchEmployeeBox.tsxと共通化したい
-  const MEETING_METHOD = [
-    {
-      id: 1,
-      value: "ONLINE",
-      label: "オンライン",
-    },
-    {
-      id: 2,
-      value: "OFFLINE",
-      label: "対面",
-    },
-    {
-      id: 3,
-      value: "BOTH",
-      label: "全て",
-    },
-  ];
   return (
     <form className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12" action={""} >
       <div className="col-span-4">
