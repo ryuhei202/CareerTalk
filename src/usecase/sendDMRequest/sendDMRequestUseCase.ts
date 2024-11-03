@@ -22,7 +22,7 @@ export const sendDMRequestUseCase = async (
 		const validatedConversation =
 			await validateSendDMRequestInput(validatedParams);
 
-		// ドメインサービス2 メッセージの送信
+		// ドメインサービス2 DMリクエストの送信
 		const createdConversation = await createConversation(validatedConversation);
 		if (createdConversation == null) {
 			return createFailure({

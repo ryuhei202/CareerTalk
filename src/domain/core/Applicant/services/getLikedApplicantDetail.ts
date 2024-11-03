@@ -6,8 +6,8 @@ import { LikedApplicantDetailDTO } from "@/usecase/getLikedApplicantDetail/LIked
 import type { ApplicantDetailResponse } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
 import { NamedError } from "@/util/error";
 import { Conversation } from "../../Conversation/Conversation";
-import {
-	type ConversationPurposeEnum,
+import type {
+	ConversationPurposeEnum,
 	ConversationStatusEnum,
 } from "../../Conversation/ConversationEnum";
 import { Message } from "../../Conversation/Message/Message";
@@ -37,7 +37,6 @@ export const getLikedApplicantDetail = async (
 			where: {
 				applicantUserId,
 				employeeUserId,
-				status: ConversationStatusEnum.PENDING,
 			},
 			include: {
 				messages: true,
@@ -51,7 +50,7 @@ export const getLikedApplicantDetail = async (
 
 	if (conversation == null) {
 		throw new GetLikedApplicantDetailError(
-			"このユーザーからはいいねをもらっていません。",
+			"このユーザーとの会話が存在しません。",
 		);
 	}
 

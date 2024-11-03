@@ -7,12 +7,9 @@ import { z } from "zod";
 /**
  * Employee関連のバリデーションスキーマ
  */
-export const employeeIdSchema = z
-	.string()
-	.trim()
-	.length(25, {
-		message: "無効な従業員Idです。従業員IDは25文字である必要があります",
-	});
+export const employeeIdSchema = z.string().trim().length(25, {
+	message: "無効な従業員Idです。従業員IDは25文字である必要があります",
+});
 export const nameSchema = z
 	.string()
 	.trim()
@@ -65,6 +62,7 @@ export const workLocationIdSchema = z
 	.number()
 	.min(1, { message: "不正な勤務地Idです" })
 	.optional();
+
 export const hiringTypeSchema = z
 	.nativeEnum(HiringTypeEnum, { message: "無効な入社方法です" })
 	.optional();
