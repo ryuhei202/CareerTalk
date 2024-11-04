@@ -38,7 +38,6 @@ export const getConversationUseCase = async (
 			data: conversations,
 		});
 	} catch (error) {
-		console.error(error);
 		if (error instanceof ZodError) {
 			return createFailure({
 				message: getZodErrorMessages(error),
