@@ -1,16 +1,18 @@
 "use server";
 import { getEmployeeUserId } from "@/lib/auth";
-import { updateEmployeeForMyPageUseCase } from "@/usecase/updateEmployeeForMyPage/updateEmployeeForMyPageUseCase";
+import {
+	type UpdateEmployeeUseCaseResult,
+	updateEmployeeForMyPageUseCase,
+} from "@/usecase/updateEmployeeForMyPage/updateEmployeeForMyPageUseCase";
 import type { SubmissionResult } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { redirect } from "next/navigation";
 import { updateEmployeeSchema } from "../_schema/updateEmployeeSchema";
 
 export type UpdateEmployeeForMyPageActionResult = {
-	success: boolean;
-	message: string;
+	result: UpdateEmployeeUseCaseResult | null;
 	submission: SubmissionResult<string[]>;
-};
+} | null;
 
 export type UpdateEmployeeForMyPageParams = {
 	userId: string;
@@ -27,17 +29,19 @@ export type UpdateEmployeeForMyPageParams = {
 };
 
 export async function updateEmployeeForMyPageAction(
-	prevState: unknown,
+	_prevState: UpdateEmployeeForMyPageActionResult,
 	formData: FormData,
-) {
+): Promise<UpdateEmployeeForMyPageActionResult> {
 	const submission = parseWithZod(formData, {
 		schema: updateEmployeeSchema,
 	});
 
 	if (submission.status !== "success") {
-		return submission.reply();
+		return {
+			result: null,
+			submission: submission.reply(),
+		};
 	}
-
 	const employeeData: UpdateEmployeeForMyPageParams = {
 		userId: (await getEmployeeUserId()) as string,
 		occupationId: Number(formData.get("occupation")), // occupationからoccupationIdに変更し、Number型に変換
@@ -62,6 +66,9 @@ export async function updateEmployeeForMyPageAction(
 	if (useCaseResult.success) {
 		redirect("/employee/my_page");
 	} else {
-		return submission.reply();
+		return {
+			result: useCaseResult,
+			submission: submission.reply(),
+		};
 	}
 }

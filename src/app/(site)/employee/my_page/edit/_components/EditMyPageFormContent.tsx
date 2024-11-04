@@ -10,7 +10,7 @@ import * as Avatar from "@radix-ui/react-avatar";
 import type { Session } from "next-auth";
 import Link from "next/link";
 import { useFormState } from "react-dom";
-import { updateEmployeeForMyPageAction } from "../_actions/updateEmployeeForMyPageAction";
+import { type UpdateEmployeeForMyPageActionResult, updateEmployeeForMyPageAction } from "../_actions/updateEmployeeForMyPageAction";
 import { updateEmployeeSchema } from "../_schema/updateEmployeeSchema";
 
 // SearchEmployeeBox.tsxと共通化したい
@@ -52,16 +52,27 @@ const MEETING_METHOD = [
 
 export const EditMyPageFormContent = ({ employee, user, occupations, workLocations }:
   { user: Session["user"], employee: EmployeeDetailResponse, occupations: Occupation[], workLocations: WorkLocation[] }) => {
-  const [lastResult, action] = useFormState(updateEmployeeForMyPageAction, undefined);
+  const [lastResult, action] = useFormState<UpdateEmployeeForMyPageActionResult, FormData>(
+    updateEmployeeForMyPageAction,
+    null
+  );
+
   const [form, fields] = useForm({
     // 前回の送信結果を同期
-    lastResult,
-
+    lastResult: lastResult?.submission,
+    shouldValidate: 'onBlur',
     // クライアントでバリデーション・ロジックを再利用する
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: updateEmployeeSchema });
     },
+
+    onSubmit() {
+      if (lastResult?.result && lastResult.result.success === false) {
+        alert(`入力に間違いがあります。¥n${lastResult.result.message}`);
+      }
+    }
   });
+
   return (
     <form
       id={form.id}
@@ -160,34 +171,34 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
             </Button>
           </Link>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">自己紹介</h2>
-          <Textarea name="selfIntroduction" className="h-44 mb-14" defaultValue={employee.selfIntroduction} />
+          <Textarea name="selfIntroduction" className="h-44" defaultValue={employee.selfIntroduction} />
           <div className="text-red-500">{fields.selfIntroduction.errors}</div>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">話せる内容</h2>
-          <Textarea name="talkableTopics" className="h-44 mb-14" defaultValue={employee.talkableTopics} />
+          <Textarea name="talkableTopics" className="h-44" defaultValue={employee.talkableTopics} />
           <div className="text-red-500">{fields.talkableTopics.errors}</div>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">所属・経歴</h2>
-          <Textarea name="careerDescription" className="h-44 mb-14" defaultValue={employee.careerDescription} />
+          <Textarea name="careerDescription" className="h-44" defaultValue={employee.careerDescription} />
           <div className="text-red-500">{fields.careerDescription.errors}</div>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">業務内容</h2>
-          <Textarea name="jobDescription" className="h-44 mb-14" defaultValue={employee.jobDescription} />
+          <Textarea name="jobDescription" className="h-44" defaultValue={employee.jobDescription} />
           <div className="text-red-500">{fields.jobDescription.errors}</div>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">入社経緯</h2>
-          <Textarea name="joiningDescription" className="h-44 mb-14" defaultValue={employee.joiningDescription} />
+          <Textarea name="joiningDescription" className="h-44" defaultValue={employee.joiningDescription} />
           <div className="text-red-500">{fields.joiningDescription.errors}</div>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">その他</h2>
-          <Textarea name="otherDescription" className="h-44 mb-14" defaultValue={employee.otherDescription} />
+          <Textarea name="otherDescription" className="h-44" defaultValue={employee.otherDescription} />
           <div className="text-red-500">{fields.otherDescription.errors}</div>
         </div>
         <div className="flex justify-end">

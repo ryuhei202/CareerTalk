@@ -12,7 +12,7 @@ import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
 import { validateUpdateEmployeeForMyPageUseCaseParams } from "./validateUpdateEmployeeForMyPageUseCaseParams";
 
-type UpdateEmployeeUseCaseResult = Result<undefined, undefined>;
+export type UpdateEmployeeUseCaseResult = Result<undefined, undefined>;
 
 export const updateEmployeeForMyPageUseCase = async (
 	params: UpdateEmployeeForMyPageParams,
