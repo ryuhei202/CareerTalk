@@ -60,13 +60,13 @@ export default function EmployeeCard({
             </h2>
             <h3 className="text-lg font-bold mt-1">{employee.name}</h3>
             <ul className="mt-1 space-y-0.5 text-xs">
-              <li>・{employee.occupationName}</li>
+              <li>・{employee.occupation?.name}</li>
               <li>
                 ・入社{employee.yearsOfExperience}年目({employee.hiringType})
               </li>
               <li>・{employee.gender}</li>
-              {employee.workLocationName && (
-                <li>・{employee.workLocationName}</li>
+              {employee.workLocation?.name && (
+                <li>・{employee.workLocation?.name}</li>
               )}
             </ul>
           </div>
