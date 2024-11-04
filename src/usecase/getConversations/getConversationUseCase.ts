@@ -1,8 +1,8 @@
-import { type Result, createFailure, createSuccess } from "@/util/result";
 import "server-only";
 import { getConversations } from "@/domain/core/Conversation/services/getConversations";
 import { validateGetConversationsInput } from "@/domain/core/Conversation/services/validateGetConversationsInput";
 import { getZodErrorMessages } from "@/util/error";
+import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
 import { validateGetConversationUseCaseParams } from "./validateGetConversationUseCaseParams";
 
