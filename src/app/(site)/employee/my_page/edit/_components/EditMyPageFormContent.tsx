@@ -100,7 +100,7 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
                   </option>
                 ))}
               </select>
-              <div className="text-red-500 ms-4">亜fジェあlkfjうぇおいあj
+              <div className="text-red-500 ms-4">
                 {fields.occupation.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
