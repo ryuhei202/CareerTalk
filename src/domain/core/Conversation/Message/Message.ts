@@ -9,6 +9,7 @@ export type MessageParams = {
 	senderId: string;
 	content: string;
 	isRead: boolean;
+	createdAt: Date;
 };
 
 /**
@@ -21,6 +22,7 @@ export class Message {
 		private readonly _senderId: string,
 		private readonly _content: string,
 		private _isRead: boolean,
+		private readonly _createdAt: Date,
 	) {}
 
 	static create(params: MessageParams): Message {
@@ -31,6 +33,7 @@ export class Message {
 			params.senderId,
 			params.content,
 			params.isRead,
+			params.createdAt,
 		);
 	}
 
@@ -61,5 +64,9 @@ export class Message {
 
 	get isRead(): boolean {
 		return this._isRead;
+	}
+
+	get createdAt(): Date {
+		return this._createdAt;
 	}
 }
