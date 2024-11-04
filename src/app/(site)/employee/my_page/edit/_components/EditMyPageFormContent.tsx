@@ -100,7 +100,8 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
                   </option>
                 ))}
               </select>
-              <div>{fields.occupation.errors}</div>
+              <div className="text-red-500 ms-4">亜fジェあlkfjうぇおいあj
+                {fields.occupation.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">入社歴</div>
@@ -118,7 +119,7 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
                   </option>
                 ))}
               </select>
-              <div>{fields.hiringType.errors}</div>
+              <div className="text-red-500 ms-4">{fields.hiringType.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">勤務地</div>
@@ -132,7 +133,7 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
                   </option>
                 ))}
               </select>
-              <div>{fields.workLocation.errors}</div>
+              <div className="text-red-500 ms-4">{fields.workLocation.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">面談方法</div>
@@ -146,7 +147,7 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
                   </option>
                 ))}
               </select>
-              <div>{fields.meetingMethod.errors}</div>
+              <div className="text-red-500 ms-4">{fields.meetingMethod.errors}</div>
             </div>
           </div>
         </div>
@@ -162,32 +163,32 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">自己紹介</h2>
           <Textarea name="selfIntroduction" className="h-44 mb-14" defaultValue={employee.selfIntroduction} />
-          <div>{fields.selfIntroduction.errors}</div>
+          <div className="text-red-500">{fields.selfIntroduction.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">話せる内容</h2>
           <Textarea name="talkableTopics" className="h-44 mb-14" defaultValue={employee.talkableTopics} />
-          <div>{fields.talkableTopics.errors}</div>
+          <div className="text-red-500">{fields.talkableTopics.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">所属・経歴</h2>
           <Textarea name="careerDescription" className="h-44 mb-14" defaultValue={employee.careerDescription} />
-          <div>{fields.careerDescription.errors}</div>
+          <div className="text-red-500">{fields.careerDescription.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">業務内容</h2>
           <Textarea name="jobDescription" className="h-44 mb-14" defaultValue={employee.jobDescription} />
-          <div>{fields.jobDescription.errors}</div>
+          <div className="text-red-500">{fields.jobDescription.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">入社経緯</h2>
           <Textarea name="joiningDescription" className="h-44 mb-14" defaultValue={employee.joiningDescription} />
-          <div>{fields.joiningDescription.errors}</div>
+          <div className="text-red-500">{fields.joiningDescription.errors}</div>
         </div>
         <div className="mt-6">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">その他</h2>
           <Textarea name="otherDescription" className="h-44 mb-14" defaultValue={employee.otherDescription} />
-          <div>{fields.otherDescription.errors}</div>
+          <div className="text-red-500">{fields.otherDescription.errors}</div>
         </div>
         <div className="flex justify-end">
           <Button type="submit">保存</Button>
