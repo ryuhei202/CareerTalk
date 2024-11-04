@@ -1,6 +1,7 @@
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import "server-only";
 import { getConversations } from "@/domain/core/Conversation/services/getConversations";
+import { validateGetConversationsInput } from "@/domain/core/Conversation/services/validateGetConversationsInput";
 import { getZodErrorMessages } from "@/util/error";
 import { ZodError } from "zod";
 import { validateGetConversationUseCaseParams } from "./validateGetConversationUseCaseParams";
@@ -31,7 +32,9 @@ export const getConversationUseCase = async (
 ): Promise<GetConversationUseCaseResult> => {
 	try {
 		const validatedParams = validateGetConversationUseCaseParams(params);
-		const conversations = await getConversations(validatedParams);
+		const validatedResult =
+			await validateGetConversationsInput(validatedParams);
+		const conversations = await getConversations(validatedResult);
 
 		return createSuccess({
 			message: "チャットの取得に成功しました",

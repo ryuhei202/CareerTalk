@@ -1,68 +1,33 @@
-import { prisma } from "@/lib/prisma";
-import type {
-	GetConversationUseCaseParams,
-	GetConversationsUseCaseResponse,
-} from "@/usecase/getConversations/getConversationUseCase";
+import type { GetConversationsUseCaseResponse } from "@/usecase/getConversations/getConversationUseCase";
 import { NamedError } from "@/util/error";
+import type {
+	Applicant,
+	Employee,
+	Conversation as PrismaConversation,
+	Message as PrismaMessage,
+	User,
+} from "@prisma/client";
 import { Conversation } from "../Conversation";
-import {
-	type ConversationPurposeEnum,
-	ConversationStatusEnum,
-} from "../ConversationEnum";
+import type { ConversationStatusEnum } from "../ConversationEnum";
+import type { ConversationPurposeEnum } from "../ConversationEnum";
 import { Message } from "../Message/Message";
+import type { ValidatedResult } from "./validateGetConversationsInput";
 
 export class GetConversationsError extends NamedError {
 	readonly name = "GetConversationsError";
 }
 
 export const getConversations = async (
-	params: GetConversationUseCaseParams,
+	validatedResult: ValidatedResult,
 ): Promise<GetConversationsUseCaseResponse> => {
-	const userId = params.userId;
-
-	const [user, conversations] = await Promise.all([
-		prisma.user.findUnique({
-			where: {
-				id: userId,
-			},
-		}),
-		prisma.conversation.findMany({
-			where: {
-				OR: [{ applicantUserId: userId }, { employeeUserId: userId }],
-				status: ConversationStatusEnum.APPROVED,
-			},
-			include: {
-				employee: {
-					include: {
-						user: true,
-					},
-				},
-				applicant: {
-					include: {
-						user: true,
-					},
-				},
-				messages: true,
-			},
-		}),
-	]);
-
-	if (!user) {
-		throw new GetConversationsError(
-			"ユーザーが見つかりません。再度ログインしてください",
-		);
-	}
-
-	if (conversations == null) {
-		throw new GetConversationsError("チャットの取得に失敗しました");
-	}
+	const { conversations, user } = validatedResult;
 
 	const results: GetConversationsUseCaseResponse = conversations.map(
 		(conversation) => {
 			const messages = conversation.messages;
 			let messageEntities: Message[] = [];
 			if (messages) {
-				messageEntities = messages.map((message) =>
+				messageEntities = messages.map((message: PrismaMessage) =>
 					Message.create({
 						id: message.id,
 						conversationId: message.conversationId,
@@ -83,7 +48,7 @@ export const getConversations = async (
 				messages: messageEntities,
 			});
 
-			const partnerUserId = conversationEntity.getPartnerIdByUserId(userId);
+			const partnerUserId = conversationEntity.getPartnerIdByUserId(user.id);
 			const partnerUserImage =
 				partnerUserId === conversation.employeeUserId
 					? conversation.employee.user.image
@@ -101,7 +66,7 @@ export const getConversations = async (
 				PartnerImageURL: partnerUserImage ?? "",
 				lastMessage: conversationEntity.getLatestMessageContent(),
 				lastMessageAt: conversationEntity.getLatestMessageAt(),
-				unreadMessageCount: conversationEntity.getUnreadMessageCount(userId),
+				unreadMessageCount: conversationEntity.getUnreadMessageCount(user.id),
 			};
 		},
 	);
