@@ -11,6 +11,7 @@ export default function ApplicantLayout({
   return (
     <>
       <SiteHeader
+        type="applicant"
         firstItem={{
           href: "/applicant/search_employees",
           icon: <Search />,

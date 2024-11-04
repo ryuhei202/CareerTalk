@@ -11,10 +11,11 @@ export default function EmployeeLayout({
   return (
     <>
       <SiteHeader
+        type="employee"
         firstItem={{
-          href: "/employee/applicants",
+          href: "/employee/matches",
           icon: <Search />,
-          label: "転職希望者",
+          label: "転職希望者一覧",
         }}
         secondItem={{
           href: "/employee/dm",
