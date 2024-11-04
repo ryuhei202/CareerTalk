@@ -1,3 +1,4 @@
+import ErrorPage from "@/app/_components/page/ErrorPage";
 import { LogOutButton } from "@/app/_components/parts/Button/LogOutButton";
 import { Button } from "@/app/_components/ui/button";
 import { getEmployeeUserId, getServerSession } from "@/lib/auth";
@@ -19,7 +20,7 @@ export default async function MyPage() {
   const employee = await getEmployeeDetailUseCase({ employeeUserId: session.user.id })
 
   if (!employee.success) {
-    redirect("/signin")
+    return <ErrorPage message={employee.message} data={employee.data} />;
   }
 
   return (
