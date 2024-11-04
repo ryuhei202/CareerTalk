@@ -25,7 +25,7 @@ export default async function MyPageEdit() {
     <>
       <EditMyPageFormContent
         employee={employee.data}
-        session={session}
+        user={session.user}
         occupations={occupations}
         workLocations={workLocations}
       />

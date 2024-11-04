@@ -7,7 +7,7 @@ import { useForm } from '@conform-to/react';
 import { parseWithZod } from "@conform-to/zod";
 import type { Occupation, WorkLocation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
-import type { Session } from "next-auth"
+import type { Session } from "next-auth";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { updateEmployeeForMyPageAction } from "../_actions/updateEmployeeForMyPageAction";
@@ -50,8 +50,8 @@ const MEETING_METHOD = [
   },
 ] as const;
 
-export const EditMyPageFormContent = ({ employee, session, occupations, workLocations }:
-  { session: Session, employee: EmployeeDetailResponse, occupations: Occupation[], workLocations: WorkLocation[] }) => {
+export const EditMyPageFormContent = ({ employee, user, occupations, workLocations }:
+  { user: Session["user"], employee: EmployeeDetailResponse, occupations: Occupation[], workLocations: WorkLocation[] }) => {
   const [lastResult, action] = useFormState(updateEmployeeForMyPageAction, undefined);
   const [form, fields] = useForm({
     // 前回の送信結果を同期
@@ -84,7 +84,7 @@ export const EditMyPageFormContent = ({ employee, session, occupations, workLoca
                 <div className="text-2xl font-bold">{employee.name}</div>
                 <div className="text-gray-600 ms-2">{employee.gender}</div>
               </div>
-              <div className="text-gray-600 mb-4">{session.user.email}</div>
+              <div className="text-gray-600 mb-4">{user.email}</div>
             </div>
             <div className="my-5">
               <span>{employee.companyName}</span>
