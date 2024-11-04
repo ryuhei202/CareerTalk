@@ -7,9 +7,6 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 	params: UpdateEmployeeForMyPageParams,
 ) => {
 	// スキーマ定義
-
-	console.log(params);
-
 	const userIdSchema = z.string().trim().length(25);
 	const occupationIdSchema = z.number().int().positive();
 	const workLocationIdSchema = z.number().int().positive().optional();
