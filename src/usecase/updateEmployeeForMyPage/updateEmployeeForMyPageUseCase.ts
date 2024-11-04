@@ -21,7 +21,6 @@ export const updateEmployeeForMyPageUseCase = async (
 		// パラメータのバリデーション
 		const validatedParams =
 			validateUpdateEmployeeForMyPageUseCaseParams(params);
-		console.log(validatedParams);
 
 		// ドメインサービス① 現場社員登録インプットのバリデーション
 		const employee =
