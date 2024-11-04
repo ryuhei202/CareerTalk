@@ -15,12 +15,12 @@ export const validateUpdateEmployeeForMyPageInput = async (
 	params: UpdateEmployeeForMyPageParams,
 ): Promise<Employee> => {
 	// 全てのクエリを並列実行
-	const [user, employee, occupation, workLocation] = await Promise.all([
-		prisma.user.findUnique({
-			where: { id: params.userId },
-		}),
+	const [employee, occupation, workLocation] = await Promise.all([
 		prisma.employee.findUnique({
 			where: { userId: params.userId },
+			include: {
+				user: true,
+			},
 		}),
 		prisma.occupation.findUnique({
 			where: { id: params.occupationId },
@@ -31,9 +31,6 @@ export const validateUpdateEmployeeForMyPageInput = async (
 				})
 			: Promise.resolve(null),
 	]);
-	if (!user) {
-		throw new InvalidUpdateEmployeeForMyPageInputError("不正なユーザーIDです");
-	}
 	if (!employee) {
 		throw new InvalidUpdateEmployeeForMyPageInputError("不正なユーザーIDです");
 	}
@@ -47,7 +44,7 @@ export const validateUpdateEmployeeForMyPageInput = async (
 	// Employeeインスタンスの作成
 	const employeeEntity = Employee.create({
 		id: employee.id,
-		name: user.name,
+		name: employee.user.name,
 		userId: employee.userId,
 		occupationId: occupation.id,
 		gender: employee.gender as GenderEnum,
