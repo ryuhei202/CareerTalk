@@ -78,32 +78,32 @@ export default async function MyPage() {
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">自己紹介</h2>
-            <div className="mb-14">{employee.data.selfIntroduction}</div>
+            <div className="mb-14 whitespace-pre-line">{employee.data.selfIntroduction}</div>
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">話せる内容</h2>
             <div className="mb-4 border-b"> </div>
-            <div className="mb-14">{employee.data.talkableTopics}</div>
+            <div className="mb-14 whitespace-pre-line">{employee.data.talkableTopics}</div>
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">所属・経歴</h2>
             <div className="mb-4 border-b"> </div>
-            <div className="mb-14">{employee.data.careerDescription}</div>
+            <div className="mb-14 whitespace-pre-line">{employee.data.careerDescription}</div>
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">業務内容</h2>
             <div className="mb-4 border-b"> </div>
-            <div className="mb-14">{employee.data.jobDescription}</div>
+            <div className="mb-14 whitespace-pre-line">{employee.data.jobDescription}</div>
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">入社経緯</h2>
             <div className="mb-4 border-b"> </div>
-            <div className="mb-14">{employee.data.joiningDescription}</div>
+            <div className="mb-14 whitespace-pre-line">{employee.data.joiningDescription}</div>
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">その他</h2>
             <div className="mb-4 border-b"> </div>
-            <div className="mb-14">{employee.data.otherDescription}</div>
+            <div className="mb-14 whitespace-pre-line">{employee.data.otherDescription}</div>
           </div>
         </div >
       </div >
