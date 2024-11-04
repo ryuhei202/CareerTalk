@@ -120,7 +120,9 @@ describe("Conversation", () => {
 			};
 			const conversation = Conversation.create(params);
 			expect(conversation.messages.length).toBe(1);
-			expect(conversation.getLatestMessage()).toEqual(params.messages[0]);
+			expect(conversation.getLatestMessageContent()).toEqual(
+				params.messages[0].content,
+			);
 		});
 	});
 

@@ -35,7 +35,7 @@ export class LikedApplicantDetailDTO {
 		this.selfIntroduction = applicant.selfIntroduction;
 		this.imageUrl = applicant.imageUrl;
 		this.likeReason = conversation.toPurposeLabel();
-		this.likeMessage = conversation.getLatestMessage()?.content;
+		this.likeMessage = conversation.getLatestMessageContent();
 		this.conversationStatus = conversation.status;
 	}
 

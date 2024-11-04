@@ -63,8 +63,8 @@ export class Conversation {
 		this._messages.push(newMessage);
 	}
 
-	getLatestMessage(): Message | undefined {
-		return this._messages[this._messages.length - 1];
+	getLatestMessageContent(): string {
+		return this._messages[this._messages.length - 1]?.content ?? "";
 	}
 
 	toPurposeLabel(): ConversationPurposeLabel {
@@ -80,6 +80,22 @@ export class Conversation {
 			default:
 				throw new ConversationDomainError("無効な目的です");
 		}
+	}
+
+	getPartnerIdByUserId(userId: string): string {
+		return userId === this._applicantUserId
+			? this._employeeUserId
+			: this._applicantUserId;
+	}
+
+	getLatestMessageAt(): Date {
+		return this._messages[this._messages.length - 1]?.createdAt ?? new Date();
+	}
+
+	getUnreadMessageCount(userId: string): number {
+		return this._messages.filter(
+			(message) => message.senderId !== userId && !message.isRead,
+		).length;
 	}
 
 	get id(): string {
