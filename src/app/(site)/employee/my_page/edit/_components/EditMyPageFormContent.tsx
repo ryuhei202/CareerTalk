@@ -60,7 +60,7 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
   const [form, fields] = useForm({
     // 前回の送信結果を同期
     lastResult: lastResult?.submission,
-    shouldValidate: 'onBlur',
+    shouldValidate: 'onInput',
     // クライアントでバリデーション・ロジックを再利用する
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: updateEmployeeSchema });
