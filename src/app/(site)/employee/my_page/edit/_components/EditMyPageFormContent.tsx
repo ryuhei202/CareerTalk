@@ -68,7 +68,6 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
       onSubmit={form.onSubmit}
       action={action}
       className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12" >
-      <input type="text" name="userId" hidden value={employee.userId} />
       <div className="col-span-4">
         <div className="flex flex-col items-center shadow rounded-xl py-4 px-8">
           <div className="flex items-center gap-4">

@@ -1,4 +1,5 @@
 "use server";
+import { getEmployeeUserId } from "@/lib/auth";
 import { updateEmployeeForMyPageUseCase } from "@/usecase/updateEmployeeForMyPage/updateEmployeeForMyPageUseCase";
 import type { SubmissionResult } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
@@ -38,7 +39,7 @@ export async function updateEmployeeForMyPageAction(
 	}
 
 	const employeeData: UpdateEmployeeForMyPageParams = {
-		userId: formData.get("userId") as string,
+		userId: (await getEmployeeUserId()) as string,
 		occupationId: Number(formData.get("occupation")), // occupationからoccupationIdに変更し、Number型に変換
 		hiringType: formData.get("hiringType") as string | undefined,
 		workLocationId: formData.get("workLocation")
