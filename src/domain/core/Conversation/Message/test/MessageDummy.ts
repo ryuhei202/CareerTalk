@@ -8,6 +8,7 @@ const conversationId = "conversationId00000000000";
 const senderId = "employeeId000000000000000";
 const content = "テストメッセージ";
 const isRead = false;
+const createdAt = new Date("2024-01-01");
 
 export const messageDummyParams: MessageParams = {
 	id: messageId,
@@ -15,6 +16,7 @@ export const messageDummyParams: MessageParams = {
 	senderId: senderId,
 	content: content,
 	isRead: isRead,
+	createdAt: createdAt,
 };
 
 export const messageDummy = Message.create(messageDummyParams);
@@ -25,4 +27,5 @@ export const messageDummy2 = Message.create({
 	senderId: senderId,
 	content: "テストメッセージ2",
 	isRead: isRead,
+	createdAt: createdAt,
 });

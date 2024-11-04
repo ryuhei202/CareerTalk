@@ -54,6 +54,7 @@ export const validateHandleDMRequestInput = async (
 				senderId: message.senderId,
 				content: message.content,
 				isRead: message.isRead,
+				createdAt: message.createdAt,
 			}),
 		);
 	}

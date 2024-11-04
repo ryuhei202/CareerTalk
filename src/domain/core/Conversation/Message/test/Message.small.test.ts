@@ -12,6 +12,7 @@ describe("Message", () => {
 		expect(message.senderId).toBe(messageDummyParams.senderId);
 		expect(message.content).toBe(messageDummyParams.content);
 		expect(message.isRead).toBe(messageDummyParams.isRead);
+		expect(message.createdAt).toBe(messageDummyParams.createdAt);
 	});
 
 	test("不正な値でMessageを生成しようとするとエラーが発生する", () => {
@@ -44,6 +45,14 @@ describe("Message", () => {
 			Message.create({
 				...messageDummyParams,
 				isRead: "invalid" as unknown as boolean,
+			}),
+		).toThrow(ZodError);
+
+		// 不正なcreatedAt
+		expect(() =>
+			Message.create({
+				...messageDummyParams,
+				createdAt: "invalid" as unknown as Date,
 			}),
 		).toThrow(ZodError);
 	});

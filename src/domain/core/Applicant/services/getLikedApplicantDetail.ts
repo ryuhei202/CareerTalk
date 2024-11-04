@@ -75,6 +75,7 @@ export const getLikedApplicantDetail = async (
 			senderId: conversation.messages[0].senderId,
 			content: conversation.messages[0].content,
 			isRead: conversation.messages[0].isRead,
+			createdAt: conversation.messages[0].createdAt,
 		});
 	}
 

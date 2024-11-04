@@ -56,6 +56,7 @@ export const validateSendDMRequestInput = async (
 			senderId: params.applicantUserId,
 			content: params.message,
 			isRead: false,
+			createdAt: new Date(),
 		});
 	}
 

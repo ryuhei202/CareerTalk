@@ -13,7 +13,6 @@ export const handleDMRequest = async (
 		});
 	});
 
-	// ここをDTOに変換するようにする(statusを返したいから)
 	const handledConversationDTO = new HandledConversationDTO(
 		updatedConversation,
 	);

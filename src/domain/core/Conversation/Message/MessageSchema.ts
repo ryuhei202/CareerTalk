@@ -20,6 +20,8 @@ export const contentSchema = z
 	.max(1000, {
 		message: "メッセージは1000文字以下である必要があります",
 	});
+
+export const createdAtSchema = z.date();
 export const isReadSchema = z.boolean();
 
 export const messageParamsSchema = z.object({
@@ -28,4 +30,5 @@ export const messageParamsSchema = z.object({
 	senderId: userIdSchema,
 	content: contentSchema,
 	isRead: isReadSchema,
+	createdAt: createdAtSchema,
 });
