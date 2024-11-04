@@ -11,6 +11,7 @@ export default function EmployeeLayout({
   return (
     <>
       <SiteHeader
+        type="employee"
         firstItem={{
           href: "/employee/matches",
           icon: <Search />,

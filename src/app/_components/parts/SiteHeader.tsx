@@ -7,10 +7,12 @@ type Item = {
 };
 
 export default function SiteHeader({
+  type,
   firstItem,
   secondItem,
   thirdItem,
 }: {
+  type: "applicant" | "employee";
   firstItem: Item;
   secondItem: Item;
   thirdItem: Item;
@@ -52,7 +54,7 @@ export default function SiteHeader({
             <span className="text-sm">{thirdItem.label}</span>
           </Link>
           <Link
-            href="/employee/my_page"
+            href={`/${type}/my_page`}
             className="relative bg-blue-400 text-black px-12 h-full flex items-center justify-center overflow-hidden"
           >
             <span className="relative z-10 text-lg font-semibold text-white pl-8">
