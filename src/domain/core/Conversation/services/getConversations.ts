@@ -1,12 +1,6 @@
 import type { GetConversationsUseCaseResponse } from "@/usecase/getConversations/getConversationUseCase";
 import { NamedError } from "@/util/error";
-import type {
-	Applicant,
-	Employee,
-	Conversation as PrismaConversation,
-	Message as PrismaMessage,
-	User,
-} from "@prisma/client";
+import type { Message as PrismaMessage } from "@prisma/client";
 import { Conversation } from "../Conversation";
 import type { ConversationStatusEnum } from "../ConversationEnum";
 import type { ConversationPurposeEnum } from "../ConversationEnum";
