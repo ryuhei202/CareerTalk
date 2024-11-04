@@ -16,8 +16,16 @@ export default function ApplicantLayout({
           icon: <Search />,
           label: "社員検索",
         }}
-        secondItem={{ href: "/dm", icon: <MessageCircle />, label: "DM" }}
-        thirdItem={{ href: "/events", icon: <Calendar />, label: "イベント" }}
+        secondItem={{
+          href: "/applicant/chat",
+          icon: <MessageCircle />,
+          label: "DM",
+        }}
+        thirdItem={{
+          href: "/applicant/events",
+          icon: <Calendar />,
+          label: "イベント",
+        }}
       />
       {modal}
       {children}
