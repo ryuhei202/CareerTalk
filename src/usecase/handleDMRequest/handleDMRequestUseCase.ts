@@ -26,11 +26,9 @@ export const handleDMRequestUseCase = async (
 		// パラメーターのバリデーション
 		const validatedParams = await validateHandleDMRequestParams(params);
 
-		// ドメインサービス1 インプットのバリデーション
 		const validatedDMRequest =
 			await validateHandleDMRequestInput(validatedParams);
 
-		// ドメインサービス2 DMリクエストの承認
 		const handledDMRequest = await handleDMRequest(validatedDMRequest);
 		if (handledDMRequest == null) {
 			return createFailure({
