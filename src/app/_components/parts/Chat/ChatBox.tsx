@@ -1,16 +1,34 @@
+import type { ConversationMessage } from "@/usecase/getConversationMessages/getConversationMessagesUseCase";
 import type { Message } from "ably";
 import { useChannel } from "ably/react";
 import type React from "react";
 import { useState } from "react";
 import { MessageArea } from "./Message";
 
-export default function ChatBox({ userId }: { userId: string }) {
+export default function ChatBox({
+  userId,
+  messages,
+}: {
+  userId: string;
+  messages: ConversationMessage[];
+}) {
+  const initialMessages: Message[] = messages.map((message) => ({
+    clientId: message.senderId,
+    // connectionId: message. senderId,
+    data: message.content,
+  }));
   const [messageText, setMessageText] = useState<string>("");
-  const [receivedMessages, setMessages] = useState<Message[]>([]);
+  const [receivedMessages, setMessages] = useState<Message[]>([
+    ...initialMessages,
+  ]);
   const messageTextIsEmpty = messageText.trim().length === 0;
+
+  console.log("receivedMessages", receivedMessages);
 
   const { channel } = useChannel("HighCareerTalk", (message) => {
     const history = receivedMessages.slice(-199);
+    console.log("message", message);
+
     setMessages([...history, message]);
   });
 
@@ -37,13 +55,15 @@ export default function ChatBox({ userId }: { userId: string }) {
     }
   };
 
-  const messages = receivedMessages.map((message: Message) => {
+  const messageComponents = receivedMessages.map((message: Message) => {
     return <MessageArea key={message.id} message={message} userId={userId} />;
   });
 
   return (
     <div className="flex flex-col h-[calc(100vh-110px)]">
-      <div className="flex-1 overflow-y-auto px-4 space-y-4">{messages}</div>
+      <div className="flex-1 overflow-y-auto px-4 space-y-4">
+        {messageComponents}
+      </div>
       <form onSubmit={handleFormSubmission} className="border-t bg-white p-4">
         <div className="flex gap-2">
           <textarea

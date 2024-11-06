@@ -1,20 +1,18 @@
 import { getApplicantUserId } from "@/lib/auth";
-import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
-const Chat = dynamic(() => import("@/app/_components/parts/Chat/Chat"), {
-  ssr: false,
-});
 
-export default async function Home() {
+export default async function ApplicantDMPage() {
   const applicantUserId = await getApplicantUserId();
   if (!applicantUserId) {
     redirect("/applicant/create_profile");
   }
   return (
-    <div className="container h-[calc(100vh-120px)]">
-      <main>
-        <Chat userId={applicantUserId} />
-      </main>
+    <div className="flex-1 flex flex-col items-center justify-center p-4 text-center">
+      <h2 className="text-2xl font-bold mb-2">メッセージを選択してください</h2>
+      <p className="text-muted-foreground mb-6">
+        Choose from your existing conversations, start a new one, or just keep
+        swimming.
+      </p>
     </div>
   );
 }

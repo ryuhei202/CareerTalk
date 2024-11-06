@@ -1,5 +1,9 @@
 import "server-only";
-import { getConversations } from "@/domain/core/Conversation/services/getConversations";
+import type { ConversationDomainError } from "@/domain/core/Conversation/Conversation";
+import {
+	type GetConversationsError,
+	getConversations,
+} from "@/domain/core/Conversation/services/getConversations";
 import { validateGetConversationsInput } from "@/domain/core/Conversation/services/validateGetConversationsInput";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
@@ -48,7 +52,8 @@ export const getConversationUseCase = async (
 			});
 		}
 		return createFailure({
-			message: "チャットの取得に失敗しました",
+			message: (error as GetConversationsError | ConversationDomainError)
+				.message,
 			data: undefined,
 		});
 	}
