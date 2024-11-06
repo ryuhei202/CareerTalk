@@ -18,7 +18,7 @@ export default function EmployeeLayout({
           label: "転職希望者一覧",
         }}
         secondItem={{
-          href: "/employee/dm",
+          href: "/employee/chat",
           icon: <MessageCircle />,
           label: "DM",
         }}

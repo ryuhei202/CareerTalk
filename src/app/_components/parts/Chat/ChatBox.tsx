@@ -4,11 +4,7 @@ import type React from "react";
 import { useState } from "react";
 import { MessageArea } from "./Message";
 
-export default function ChatBox({
-  applicantUserId,
-}: {
-  applicantUserId: string;
-}) {
+export default function ChatBox({ userId }: { userId: string }) {
   const [messageText, setMessageText] = useState<string>("");
   const [receivedMessages, setMessages] = useState<Message[]>([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
@@ -42,13 +38,7 @@ export default function ChatBox({
   };
 
   const messages = receivedMessages.map((message: Message) => {
-    return (
-      <MessageArea
-        key={message.id}
-        message={message}
-        userId={applicantUserId}
-      />
-    );
+    return <MessageArea key={message.id} message={message} userId={userId} />;
   });
 
   return (
