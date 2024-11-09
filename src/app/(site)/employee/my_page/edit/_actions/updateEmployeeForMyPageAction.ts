@@ -26,6 +26,7 @@ export type UpdateEmployeeForMyPageParams = {
 	jobDescription?: string;
 	joiningDescription?: string;
 	otherDescription?: string;
+	barkerMessage?: string;
 };
 
 export async function updateEmployeeForMyPageAction(
@@ -58,6 +59,7 @@ export async function updateEmployeeForMyPageAction(
 			| string
 			| undefined,
 		otherDescription: formData.get("otherDescription") as string | undefined,
+		barkerMessage: formData.get("barkerMessage") as string | undefined,
 	};
 
 	// TODO: Add updateEmployeeForMyPageUseCase call here

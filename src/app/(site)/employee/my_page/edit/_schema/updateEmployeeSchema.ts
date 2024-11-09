@@ -64,4 +64,10 @@ export const updateEmployeeSchema = z.object({
 			message: "1000文字以内で入力してください",
 		})
 		.optional(),
+	barkerMessage: z
+		.string()
+		.max(50, {
+			message: "50文字以内で入力してください",
+		})
+		.optional(),
 });

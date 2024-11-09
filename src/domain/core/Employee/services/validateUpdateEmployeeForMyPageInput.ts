@@ -48,7 +48,6 @@ export const validateUpdateEmployeeForMyPageInput = async (
 		userId: employee.userId,
 		occupationId: occupation.id,
 		gender: employee.gender as GenderEnum,
-		birthday: employee.birthday ?? undefined, // nullからundefinedに変更
 		joiningDate: employee.joiningDate,
 		status: StatusEnum.PENDING,
 		// imageUrl: employee.imageUrl ?? undefined,
@@ -57,6 +56,7 @@ export const validateUpdateEmployeeForMyPageInput = async (
 		meetingMethod: (employee.meetingMethod as MeetingMethodEnum) ?? undefined,
 		selfIntroduction: employee.selfIntroduction ?? undefined,
 		talkableTopics: employee.talkableTopics ?? undefined,
+		barkerMessage: employee.barkerMessage ?? undefined,
 		companyId: employee.companyId, // companyIdを追加
 	});
 	employeeEntity.changeOccupationId(params.occupationId);
@@ -80,6 +80,8 @@ export const validateUpdateEmployeeForMyPageInput = async (
 		employeeEntity.changeJoiningDescription(params.joiningDescription);
 	if (params.otherDescription)
 		employeeEntity.changeOtherDescription(params.otherDescription);
+	if (params.barkerMessage)
+		employeeEntity.changeBarkerMessage(params.barkerMessage);
 
 	return employeeEntity;
 };

@@ -174,7 +174,7 @@ export class Employee {
 		otherDescriptionSchema.parse(newOtherDescription);
 		this._otherDescription = newOtherDescription;
 	}
-	changebarkerMessage(newbarkerMessage: string): void {
+	changeBarkerMessage(newbarkerMessage: string): void {
 		barkerMessageSchema.parse(newbarkerMessage);
 		this._barkerMessage = newbarkerMessage;
 	}

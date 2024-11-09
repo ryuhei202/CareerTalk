@@ -172,6 +172,11 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
           </Link>
         </div>
         <div className="mt-6 mb-14">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">呼び込みメッセージ</h2>
+          <Textarea name="barkerMessage" className="h-44" defaultValue={employee.barkerMessage} />
+          <div className="text-red-500">{fields.barkerMessage.errors}</div>
+        </div>
+        <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">自己紹介</h2>
           <Textarea name="selfIntroduction" className="h-44" defaultValue={employee.selfIntroduction} />
           <div className="text-red-500">{fields.selfIntroduction.errors}</div>

@@ -18,6 +18,7 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 	const jobDescriptionSchema = z.string().trim().optional();
 	const joiningDescriptionSchema = z.string().trim().optional();
 	const otherDescriptionSchema = z.string().trim().optional();
+	const barkerMessageSchema = z.string().trim().max(50).optional();
 
 	const paramsSchema = z.object({
 		userId: userIdSchema,
@@ -31,6 +32,7 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 		jobDescription: jobDescriptionSchema,
 		joiningDescription: joiningDescriptionSchema,
 		otherDescription: otherDescriptionSchema,
+		barkerMessage: barkerMessageSchema,
 	});
 
 	return paramsSchema.parse(params);
