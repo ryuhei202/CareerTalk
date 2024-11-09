@@ -11,7 +11,6 @@ export interface RegisterEmployeeParams {
 	occupationId: number;
 	gender: string;
 	joiningDate: Date;
-	birthday?: Date;
 	imageUrl?: string;
 	workLocationId?: number;
 	hiringType?: string;
@@ -39,7 +38,6 @@ export async function registerEmployeeAction(
 	const occupationId = formData.get("occupation");
 	const gender = formData.get("gender");
 	const joiningDate = formData.get("joinDate");
-	const birthday = formData.get("birthday");
 	const workLocationId = formData.get("workLocation");
 	const hiringType = formData.get("hiringType");
 	const meetingMethod = formData.get("meetingMethod");
@@ -56,7 +54,6 @@ export async function registerEmployeeAction(
 		occupationId: Number.parseInt(occupationId as string),
 		gender: gender as string,
 		joiningDate: new Date(joiningDate as string),
-		birthday: birthday ? new Date(birthday as string) : undefined,
 		workLocationId: workLocationId
 			? Number.parseInt(workLocationId as string)
 			: undefined,
