@@ -102,7 +102,6 @@ model Employee {
   id                 String           @id
   userId             String           @unique
   user               User             @relation(fields: [userId], references: [id])
-  birthday           DateTime?
   gender             Gender
   companyId          Int           
   company            Company          @relation(fields: [companyId], references: [id])
