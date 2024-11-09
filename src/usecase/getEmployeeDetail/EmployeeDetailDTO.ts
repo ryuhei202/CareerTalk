@@ -34,6 +34,7 @@ export type EmployeeDetailResponse = {
 	imageUrl: string;
 	meetingMethod: string;
 	selfIntroduction: string;
+	barkerMessage: string;
 };
 
 export class EmployeeDetailDto {
@@ -53,6 +54,7 @@ export class EmployeeDetailDto {
 	public readonly workLocation: WorkLocation | undefined;
 	public readonly imageUrl: string;
 	public readonly meetingMethod: string;
+	public readonly barkerMessage: string;
 
 	constructor({
 		employee,
@@ -81,6 +83,7 @@ export class EmployeeDetailDto {
 		this.workLocation = workLocation;
 		this.meetingMethod = employee.toMeetingMethodLabel() ?? "";
 		this.imageUrl = employee.imageUrl ?? "";
+		this.barkerMessage = employee.barkerMessage ?? "";
 	}
 
 	// あえてわかりやすいように分割代入はしない
@@ -102,6 +105,7 @@ export class EmployeeDetailDto {
 			meetingMethod: this.meetingMethod,
 			imageUrl: this.imageUrl,
 			selfIntroduction: this.selfIntroduction,
+			barkerMessage: this.barkerMessage,
 		};
 	}
 }

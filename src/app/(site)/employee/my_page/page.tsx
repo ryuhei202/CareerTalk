@@ -23,6 +23,7 @@ export default async function MyPage() {
     return <ErrorPage message={employee.message} data={employee.data} />;
   }
 
+
   return (
     <>
       <div className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12">
@@ -75,6 +76,10 @@ export default async function MyPage() {
                 編集
               </Button>
             </Link>
+          </div>
+          <div className="mt-6">
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">呼び込みメッセージ</h2>
+            <div className="mb-14 whitespace-pre-line">{employee.data.barkerMessage}</div>
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">自己紹介</h2>

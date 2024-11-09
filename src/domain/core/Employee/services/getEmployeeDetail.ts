@@ -44,7 +44,7 @@ export const getEmployeeDetail = async (
 		joiningDate: employee.joiningDate,
 		status: employee.status as StatusEnum,
 		imageUrl: employee.user.image ?? undefined,
-		birthday: employee.birthday ?? undefined,
+		barkerMessage: employee.barkerMessage ?? undefined,
 		workLocationId: employee.workLocationId ?? undefined,
 		hiringType: (employee.hiringType as HiringTypeEnum) ?? undefined,
 		meetingMethod: (employee.meetingMethod as MeetingMethodEnum) ?? undefined,

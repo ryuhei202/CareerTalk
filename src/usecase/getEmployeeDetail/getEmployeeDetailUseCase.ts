@@ -31,6 +31,7 @@ export type EmployeeDetailResponse = {
 	imageUrl: string;
 	meetingMethod: string;
 	selfIntroduction: string;
+	barkerMessage: string;
 };
 
 export type GetEmployeeDetailUseCaseResult = Result<
