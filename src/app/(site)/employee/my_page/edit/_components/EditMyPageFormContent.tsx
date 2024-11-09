@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useFormState } from "react-dom";
 import { type UpdateEmployeeForMyPageActionResult, updateEmployeeForMyPageAction } from "../_actions/updateEmployeeForMyPageAction";
 import { updateEmployeeSchema } from "../_schema/updateEmployeeSchema";
+import { Input } from "@/app/_components/ui/input";
 
 // SearchEmployeeBox.tsxと共通化したい
 const HIRING_TYPE = [
@@ -90,9 +91,12 @@ export const EditMyPageFormContent = ({ employee, user, occupations, workLocatio
           </div>
           <div className="w-full">
             <div className="my-5">
-              <div className="flex items-center">
-                <div className="text-2xl font-bold">{employee.name}</div>
-                <div className="text-gray-600 ms-2">{employee.gender}</div>
+              <div className="flex flex-col items-start">
+                <div className="bg-gray-100 p-2 rounded-md mb-2">名前(必須)</div>
+                <Input name="name" type="text" defaultValue={employee.name} className="ms-4 text-2xl font-bold"></Input>
+                <div className="text-red-500 ms-4 mb-4">
+                  {fields.name.errors}</div>
+                <div className="text-gray-600 ">{employee.gender}</div>
               </div>
               <div className="text-gray-600 mb-4">{user.email}</div>
             </div>

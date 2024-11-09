@@ -59,6 +59,7 @@ export const validateUpdateEmployeeForMyPageInput = async (
 		barkerMessage: employee.barkerMessage ?? undefined,
 		companyId: employee.companyId, // companyIdを追加
 	});
+	employeeEntity.changeName(params.name);
 	employeeEntity.changeOccupationId(params.occupationId);
 	employeeEntity.changeHiringType(
 		(params.hiringType as HiringTypeEnum) ?? undefined,

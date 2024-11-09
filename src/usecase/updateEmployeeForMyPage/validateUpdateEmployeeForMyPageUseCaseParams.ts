@@ -8,6 +8,7 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 ) => {
 	// スキーマ定義
 	const userIdSchema = z.string().trim().length(25);
+	const nameSchema = z.string().trim().min(1).max(100);
 	const occupationIdSchema = z.number().int().positive();
 	const workLocationIdSchema = z.number().int().positive().optional();
 	const hiringTypeSchema = z.nativeEnum(HiringTypeEnum).optional();
@@ -22,6 +23,7 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 
 	const paramsSchema = z.object({
 		userId: userIdSchema,
+		name: nameSchema,
 		occupationId: occupationIdSchema,
 		workLocationId: workLocationIdSchema,
 		hiringType: hiringTypeSchema,
