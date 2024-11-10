@@ -4,6 +4,7 @@ import { NamedError } from "@/util/error";
 import {
 	applicantParamsSchema,
 	imageUrlSchema,
+	joiningDateSchema,
 	nameSchema,
 	occupationIdSchema,
 	selfCompanySchema,
@@ -26,7 +27,7 @@ export type ApplicantParams = {
 	userId: string;
 	occupationId: number;
 	gender: GenderEnum;
-	joiningDate: Date;
+	joiningDate?: Date;
 	status: StatusEnum;
 	imageUrl?: string;
 	birthday?: Date;
@@ -46,8 +47,8 @@ export class Applicant {
 		private _name: string,
 		private _occupationId: number,
 		private readonly _gender: GenderEnum,
-		private readonly _joiningDate: Date,
 		private _status: StatusEnum,
+		private _joiningDate?: Date | undefined,
 		private _imageUrl?: string,
 		private readonly _birthday?: Date,
 		private _selfIntroduction?: string,
@@ -64,8 +65,8 @@ export class Applicant {
 			params.name,
 			params.occupationId,
 			params.gender,
-			params.joiningDate,
 			params.status,
+			params.joiningDate,
 			params.imageUrl,
 			params.birthday,
 			params.selfIntroduction,
@@ -93,6 +94,10 @@ export class Applicant {
 		imageUrlSchema.parse(newImageUrl);
 		this._imageUrl = newImageUrl;
 	}
+	changeJoiningDate(newJoiningDate: Date): void {
+		joiningDateSchema.parse(newJoiningDate);
+		this._joiningDate = newJoiningDate;
+	}
 
 	changeSelfIntroduction(newSelfIntroduction: string): void {
 		selfIntroductionSchema.parse(newSelfIntroduction);
@@ -102,11 +107,11 @@ export class Applicant {
 		selfCompanySchema.parse(newCompany);
 		this._company = newCompany;
 	}
-	changeworkHistory(newWorkHistory: string): void {
+	changeWorkHistory(newWorkHistory: string): void {
 		selfWorkHistorySchema.parse(newWorkHistory);
 		this._workHistory = newWorkHistory;
 	}
-	changeeducation(newEducation: string): void {
+	changeEducation(newEducation: string): void {
 		selfEducationSchema.parse(newEducation);
 		this._education = newEducation;
 	}
@@ -136,7 +141,7 @@ export class Applicant {
 		return this._gender;
 	}
 
-	get joiningDate(): Date {
+	get joiningDate(): Date | undefined {
 		return this._joiningDate;
 	}
 
@@ -212,9 +217,10 @@ export class Applicant {
 		return age;
 	}
 
-	toYearsOfExperience(): number {
+	toYearsOfExperience(): number | undefined {
 		// 継続年数を返却するロジックを書く
 		// 一旦仮置き
-		return new Date().getFullYear() - this._joiningDate.getFullYear();
+		if (this._joiningDate)
+			return new Date().getFullYear() - this._joiningDate.getFullYear();
 	}
 }

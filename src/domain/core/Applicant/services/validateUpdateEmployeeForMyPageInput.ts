@@ -31,7 +31,6 @@ export const validateUpdateApplicantForMyPageInput = async (
 		throw new InvalidUpdateApplicantForMyPageInputError("不正な職種です");
 	}
 
-	// Employeeインスタンスの作成
 	const applicantEntity = Applicant.create({
 		id: applicant.id,
 		name: applicant.user.name,
@@ -39,14 +38,21 @@ export const validateUpdateApplicantForMyPageInput = async (
 		occupationId: occupation.id,
 		gender: applicant.gender as GenderEnum,
 		birthday: applicant.birthday ?? undefined, // nullからundefinedに変更
-		joiningDate: applicant.joiningDate,
+		joiningDate: applicant.joiningDate ?? undefined,
 		status: StatusEnum.PENDING,
 		// imageUrl: applicant.imageUrl ?? undefined,
 		selfIntroduction: applicant.selfIntroduction ?? undefined,
+		workHistory: applicant.workHistory ?? undefined,
+		company: applicant.company ?? undefined,
+		education: applicant.education ?? undefined,
 	});
 	applicantEntity.changeOccupationId(params.occupationId);
 	if (params.selfIntroduction)
 		applicantEntity.changeSelfIntroduction(params.selfIntroduction);
+	if (params.joiningDate) applicantEntity.changeJoiningDate(params.joiningDate);
+	if (params.workHistory) applicantEntity.changeWorkHistory(params.workHistory);
+	if (params.company) applicantEntity.changeCompany(params.company);
+	if (params.education) applicantEntity.changeEducation(params.education);
 
 	return applicantEntity;
 };

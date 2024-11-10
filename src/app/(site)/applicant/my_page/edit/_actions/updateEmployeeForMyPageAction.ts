@@ -18,6 +18,10 @@ export type UpdateApplicantForMyPageParams = {
 	userId: string;
 	occupationId: number;
 	selfIntroduction?: string;
+	joiningDate?: Date;
+	workHistory?: string;
+	company?: string;
+	education?: string;
 };
 
 export async function updateApplicantForMyPageAction(
@@ -38,6 +42,12 @@ export async function updateApplicantForMyPageAction(
 		userId: (await getApplicantUserId()) as string,
 		occupationId: Number(formData.get("occupation")),
 		selfIntroduction: formData.get("selfIntroduction") as string | undefined,
+		joiningDate: formData.get("joiningDate")
+			? new Date(formData.get("joiningDate") as string)
+			: undefined,
+		workHistory: formData.get("workHistory") as string | undefined,
+		company: formData.get("company") as string | undefined,
+		education: formData.get("education") as string | undefined,
 	};
 
 	// TODO: Add updateEmployeeForMyPageUseCase call here

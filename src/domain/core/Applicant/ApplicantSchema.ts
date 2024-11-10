@@ -23,13 +23,16 @@ export const occupationIdSchema = z
 export const genderSchema = z.nativeEnum(GenderEnum, {
 	message: "無効な性別です",
 });
-export const joiningDateSchema = z.date().refine(
-	(date) => {
-		const now = new Date();
-		return date <= now;
-	},
-	{ message: "無効な入社日です" },
-);
+export const joiningDateSchema = z
+	.date()
+	.refine(
+		(date) => {
+			const now = new Date();
+			return date <= now;
+		},
+		{ message: "無効な入社日です" },
+	)
+	.optional();
 export const statusSchema = z.nativeEnum(StatusEnum);
 
 // 以下必須ではない項目

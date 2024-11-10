@@ -21,6 +21,11 @@ export type ApplicantDetailResponse = {
 	gender: GenderLabel;
 	imageUrl: string;
 	selfIntroduction: string;
+	yearsOfExperience: number | undefined;
+	joiningDate: Date | undefined;
+	company: string;
+	workHistory: string;
+	education: string;
 };
 
 export type GetApplicantDetailUseCaseResult = Result<
