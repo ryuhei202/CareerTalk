@@ -10,6 +10,7 @@ import {
 import { StatusEnum, type StatusLabel } from "@/domain/shared/Status";
 import { NamedError } from "@/util/error";
 import {
+	barkerMessageSchema,
 	careerDescriptionSchema,
 	employeeParamsSchema,
 	hiringTypeSchema,
@@ -53,6 +54,7 @@ export type EmployeeParams = {
 	jobDescription?: string;
 	joiningDescription?: string;
 	otherDescription?: string;
+	barkerMessage?: string;
 };
 
 /**
@@ -79,6 +81,7 @@ export class Employee {
 		private _jobDescription?: string,
 		private _joiningDescription?: string,
 		private _otherDescription?: string,
+		private _barkerMessage?: string,
 	) {}
 
 	static create(params: EmployeeParams): Employee {
@@ -103,6 +106,7 @@ export class Employee {
 			params.jobDescription,
 			params.joiningDescription,
 			params.otherDescription,
+			params.barkerMessage,
 		);
 	}
 
@@ -169,6 +173,10 @@ export class Employee {
 	changeOtherDescription(newOtherDescription: string): void {
 		otherDescriptionSchema.parse(newOtherDescription);
 		this._otherDescription = newOtherDescription;
+	}
+	changeBarkerMessage(newbarkerMessage: string): void {
+		barkerMessageSchema.parse(newbarkerMessage);
+		this._barkerMessage = newbarkerMessage;
 	}
 
 	changeStatus(newStatus: StatusEnum): void {
@@ -250,6 +258,9 @@ export class Employee {
 
 	get otherDescription(): string | undefined {
 		return this._otherDescription;
+	}
+	get barkerMessage(): string | undefined {
+		return this._barkerMessage;
 	}
 
 	toGenderLabel(): GenderLabel {

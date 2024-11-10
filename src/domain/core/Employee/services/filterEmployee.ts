@@ -83,7 +83,6 @@ export const filterEmployees = async (
 			gender: employee.gender as GenderEnum,
 			status: employee.status as StatusEnum,
 			joiningDate: employee.joiningDate,
-			birthday: employee.birthday ?? undefined,
 			imageUrl: employee.user.image ?? undefined,
 			workLocationId: employee.workLocationId ?? undefined,
 			hiringType: (employee.hiringType as HiringTypeEnum) ?? undefined,

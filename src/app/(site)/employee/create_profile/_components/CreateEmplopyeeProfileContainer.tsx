@@ -51,19 +51,6 @@ const formSchema = z.object({
   gender: z.enum(genderOptions, {
     message: "性別は必須です",
   }),
-  birthday: z
-    .string()
-    .refine(
-      (date) => {
-        const selectedDate = new Date(date);
-        const today = new Date();
-        return selectedDate <= today;
-      },
-      {
-        message: "生年月日は今日以前の日付を選択してください",
-      }
-    )
-    .optional(),
   companyCode: z
     .string()
     .trim()
@@ -73,14 +60,14 @@ const formSchema = z.object({
     .length(8, {
       message: "企業コードは8文字で入力してください",
     }),
-  joinDate: z.string({ message: "入社日は必須です" }).refine(
+  joinDate: z.string({ message: "社会人歴は必須です" }).refine(
     (date) => {
       const selectedDate = new Date(date);
       const today = new Date();
       return selectedDate <= today;
     },
     {
-      message: "入社日は今日以前の日付を選択してください",
+      message: "社会人歴は今日以前の日付を選択してください",
     }
   ),
   occupation: z.string().trim().min(1, {
@@ -118,7 +105,6 @@ export default function CreateProfileEmployee({
     defaultValues: {
       name: (state.data?.name as string) || userName,
       gender: (state.data?.gender as string) ?? undefined,
-      birthday: (state.data?.birthday as string) ?? undefined,
       companyCode: (state.data?.companyCode as string) ?? "",
       joinDate: (state.data?.joinDate as string) ?? "",
       occupation: (state.data?.occupation as string) ?? "",
@@ -203,23 +189,6 @@ export default function CreateProfileEmployee({
           />
           <FormField
             control={form.control}
-            name="birthday"
-            render={({ field }) => (
-              <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  生年月日
-                </FormLabel>
-                <div className="col-span-2">
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="companyCode"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
@@ -241,11 +210,11 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
                 <FormLabel className="text-sm font-medium text-gray-700">
-                  入社日（必須）
+                  社会人歴（必須）
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <Input type="month" {...field} />
                   </FormControl>
                   <FormMessage />
                 </div>

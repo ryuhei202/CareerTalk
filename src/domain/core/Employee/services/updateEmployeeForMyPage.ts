@@ -22,6 +22,7 @@ export const updateEmployeeForMyPage = async (
 				careerDescription: employee.careerDescription,
 				jobDescription: employee.jobDescription,
 				joiningDescription: employee.joiningDescription,
+				barkerMessage: employee.barkerMessage,
 			},
 		});
 		return result;
