@@ -6,7 +6,10 @@ import {
 	imageUrlSchema,
 	nameSchema,
 	occupationIdSchema,
+	selfCompanySchema,
+	selfEducationSchema,
 	selfIntroductionSchema,
+	selfWorkHistorySchema,
 	statusSchema,
 } from "./ApplicantSchema";
 
@@ -28,6 +31,9 @@ export type ApplicantParams = {
 	imageUrl?: string;
 	birthday?: Date;
 	selfIntroduction?: string;
+	company?: string;
+	workHistory?: string;
+	education?: string;
 };
 
 /**
@@ -45,6 +51,9 @@ export class Applicant {
 		private _imageUrl?: string,
 		private readonly _birthday?: Date,
 		private _selfIntroduction?: string,
+		private _company?: string,
+		private _workHistory?: string,
+		private _education?: string,
 	) {}
 
 	static create(params: ApplicantParams): Applicant {
@@ -60,6 +69,9 @@ export class Applicant {
 			params.imageUrl,
 			params.birthday,
 			params.selfIntroduction,
+			params.company,
+			params.workHistory,
+			params.education,
 		);
 	}
 
@@ -85,6 +97,18 @@ export class Applicant {
 	changeSelfIntroduction(newSelfIntroduction: string): void {
 		selfIntroductionSchema.parse(newSelfIntroduction);
 		this._selfIntroduction = newSelfIntroduction;
+	}
+	changeCompany(newCompany: string): void {
+		selfCompanySchema.parse(newCompany);
+		this._company = newCompany;
+	}
+	changeworkHistory(newWorkHistory: string): void {
+		selfWorkHistorySchema.parse(newWorkHistory);
+		this._workHistory = newWorkHistory;
+	}
+	changeeducation(newEducation: string): void {
+		selfEducationSchema.parse(newEducation);
+		this._education = newEducation;
 	}
 
 	changeStatus(newStatus: StatusEnum): void {
@@ -130,6 +154,15 @@ export class Applicant {
 
 	get selfIntroduction(): string | undefined {
 		return this._selfIntroduction;
+	}
+	get company(): string | undefined {
+		return this._company;
+	}
+	get workHistory(): string | undefined {
+		return this._workHistory;
+	}
+	get education(): string | undefined {
+		return this._education;
 	}
 
 	toGenderLabel(): GenderLabel {

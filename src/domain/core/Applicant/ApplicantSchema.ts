@@ -56,6 +56,18 @@ export const selfIntroductionSchema = z
 	.string()
 	.max(1000, { message: "自己紹介は1000文字以下である必要があります" })
 	.optional();
+export const selfCompanySchema = z
+	.string()
+	.max(100, { message: "企業名は100文字以下である必要があります" })
+	.optional();
+export const selfWorkHistorySchema = z
+	.string()
+	.max(1000, { message: "職務経歴は1000文字以下である必要があります" })
+	.optional();
+export const selfEducationSchema = z
+	.string()
+	.max(1000, { message: "学歴は1000文字以下である必要があります" })
+	.optional();
 
 export const applicantParamsSchema = z.object({
 	id: applicantIdSchema,
