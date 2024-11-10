@@ -8,7 +8,7 @@ export class LikedApplicantDTO {
 	public readonly name: string;
 	public readonly gender: GenderLabel;
 	public readonly age?: number;
-	public readonly yearsOfExperience: number;
+	public readonly yearsOfExperience: number | undefined;
 	public readonly occupationName: string;
 	public readonly selfIntroduction?: string;
 	public readonly imageUrl?: string;
@@ -24,7 +24,7 @@ export class LikedApplicantDTO {
 		this.name = applicant.name;
 		this.gender = applicant.toGenderLabel();
 		this.age = applicant.getAge();
-		this.yearsOfExperience = applicant.toYearsOfExperience();
+		this.yearsOfExperience = applicant.toYearsOfExperience() ?? undefined;
 		this.occupationName = occupation.name;
 		this.selfIntroduction = applicant.selfIntroduction;
 		this.imageUrl = applicant.imageUrl;

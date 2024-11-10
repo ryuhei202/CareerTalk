@@ -222,5 +222,6 @@ export class Applicant {
 		// 一旦仮置き
 		if (this._joiningDate)
 			return new Date().getFullYear() - this._joiningDate.getFullYear();
+		return undefined;
 	}
 }

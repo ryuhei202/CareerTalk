@@ -52,7 +52,7 @@ export const getLikedApplicants = async (
 			name: conversation.applicant.user.name,
 			occupationId: conversation.applicant.occupationId,
 			gender: conversation.applicant.gender as GenderEnum,
-			joiningDate: conversation.applicant.joiningDate,
+			joiningDate: conversation.applicant.joiningDate ?? undefined,
 			status: conversation.applicant.status as StatusEnum,
 			imageUrl: conversation.applicant.user.image ?? undefined,
 			birthday: conversation.applicant.birthday ?? undefined,
