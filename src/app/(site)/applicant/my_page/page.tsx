@@ -8,16 +8,20 @@ import * as Avatar from "@radix-ui/react-avatar";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+// RSC React Server Component
 export default async function ApplicantMyPage() {
   const session = await getServerSession();
   if (!session) {
     redirect("/signin");
   }
-  const userId = getApplicantUserId()
+  const userId = getApplicantUserId();
   if (!userId) {
     redirect("/applicant/create_profile");
   }
-  const applicant = await getApplicantDetailUseCase({ applicantUserId: session.user.id })
+
+  const applicant = await getApplicantDetailUseCase({
+    applicantUserId: session.user.id,
+  });
 
   if (!applicant.success) {
     return <ErrorPage message={applicant.message} data={applicant.data} />;
@@ -30,22 +34,35 @@ export default async function ApplicantMyPage() {
           <div className="flex flex-col items-center shadow rounded-xl py-4 px-8  bg-gradient-to-r from-white to-blue-50">
             <div className="flex items-center gap-4">
               <Avatar.Root className="w-44 h-44 rounded-full">
-                {applicant.data.imageUrl &&
-                  <Avatar.Image className="w-full h-full rounded-full" src={applicant.data.imageUrl} alt={applicant.data.name} />}
+                {applicant.data.imageUrl && (
+                  <Avatar.Image
+                    className="w-full h-full rounded-full"
+                    src={applicant.data.imageUrl}
+                    alt={applicant.data.name}
+                  />
+                )}
                 <Avatar.Fallback>{applicant.data.name[0]}</Avatar.Fallback>
               </Avatar.Root>
             </div>
             <div className="w-full">
               <div className="my-5">
                 <div className="flex items-center">
-                  <div className="text-2xl font-bold">{applicant.data.name}</div>
-                  <div className="text-gray-600 ms-2">{applicant.data.gender}</div>
+                  <div className="text-2xl font-bold">
+                    {applicant.data.name}
+                  </div>
+                  <div className="text-gray-600 ms-2">
+                    {applicant.data.gender}
+                  </div>
                 </div>
                 <div className="text-gray-600 mb-4">{session.user.email}</div>
               </div>
               <div className="my-5 flex flex-col items-start">
                 <div className="bg-gray-100 p-2 rounded-md">職種</div>
-                <span className="ms-4 mt-2">{applicant.data.occupation ? applicant.data.occupation?.name : "選択されていません"}</span>
+                <span className="ms-4 mt-2">
+                  {applicant.data.occupation
+                    ? applicant.data.occupation?.name
+                    : "選択されていません"}
+                </span>
               </div>
               <div className="mt-12  mb-5 flex justify-center">
                 <LogOutButton />
@@ -56,17 +73,19 @@ export default async function ApplicantMyPage() {
         <div className="col-span-8">
           <div className="flex justify-end">
             <Link href="/applicant/my_page/edit">
-              <Button variant={"secondary"}>
-                編集
-              </Button>
+              <Button variant={"secondary"}>編集</Button>
             </Link>
           </div>
           <div className="mt-6">
-            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">自己紹介</h2>
-            <div className="mb-14 whitespace-pre-line">{applicant.data.selfIntroduction}</div>
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+              自己紹介
+            </h2>
+            <div className="mb-14 whitespace-pre-line">
+              {applicant.data.selfIntroduction}
+            </div>
           </div>
-        </div >
-      </div >
+        </div>
+      </div>
     </>
   );
 }

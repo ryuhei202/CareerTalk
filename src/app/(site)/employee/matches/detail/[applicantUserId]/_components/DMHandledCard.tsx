@@ -3,7 +3,7 @@ import { CardFooter } from "@/app/_components/ui/card";
 import likeIcon from "@/assets/images/like_icon.svg";
 import rejectIcon from "@/assets/images/reject_icon.svg";
 import { ConversationStatusEnum } from "@/domain/core/Conversation/ConversationEnum";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function DMResultCardSwitcher({
   conversationStatus,
@@ -12,6 +12,12 @@ export default function DMResultCardSwitcher({
   conversationStatus: ConversationStatusEnum;
   onClickBack: () => void;
 }) {
+  const router = useRouter();
+
+  const handleDMClick = () => {
+    router.push("/employee/chat");
+  };
+
   return (
     <>
       {conversationStatus === ConversationStatusEnum.APPROVED ? (
@@ -21,8 +27,9 @@ export default function DMResultCardSwitcher({
           onClickBack={onClickBack}
         >
           <CardFooter className="flex justify-center">
-            <Link
-              href={"/employee/DM"}
+            <button
+              type="button"
+              onClick={handleDMClick}
               className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-colors duration-200"
             >
               DM画面へ
@@ -41,7 +48,7 @@ export default function DMResultCardSwitcher({
                   d="M13 7l5 5m0 0l-5 5m5-5H6"
                 />
               </svg>
-            </Link>
+            </button>
           </CardFooter>
         </DMResultCard>
       ) : (

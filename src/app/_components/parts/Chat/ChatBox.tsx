@@ -1,41 +1,68 @@
+import { changeMessageIsReadAction } from "@/app/_actions/changeMessageIsReadAction";
+import { createConversationMessageAction } from "@/app/_actions/createConversationMessageAction";
 import type { ConversationMessage } from "@/usecase/getConversationMessages/getConversationMessagesUseCase";
 import type { Message } from "ably";
 import { useChannel } from "ably/react";
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageArea } from "./Message";
+
+type CustomMessage = Message & { createdAt?: Date; isRead?: boolean };
 
 export default function ChatBox({
   userId,
   messages,
+  conversationId,
+  partnerUserId,
+  isApplicant,
 }: {
   userId: string;
   messages: ConversationMessage[];
+  conversationId: string;
+  partnerUserId: string;
+  isApplicant: boolean;
 }) {
-  const initialMessages: Message[] = messages.map((message) => ({
+  const initialMessages: CustomMessage[] = messages.map((message) => ({
+    id: message.id,
     clientId: message.senderId,
-    // connectionId: message. senderId,
     data: message.content,
+    isRead: message.isRead,
+    createdAt: message.createdAt,
   }));
+  let messageEnd: HTMLDivElement | null = null;
   const [messageText, setMessageText] = useState<string>("");
-  const [receivedMessages, setMessages] = useState<Message[]>([
+
+  const [allMessages, setAllMessages] = useState<CustomMessage[]>([
     ...initialMessages,
   ]);
   const messageTextIsEmpty = messageText.trim().length === 0;
 
-  console.log("receivedMessages", receivedMessages);
-
-  const { channel } = useChannel("HighCareerTalk", (message) => {
-    const history = receivedMessages.slice(-199);
-    console.log("message", message);
-
-    setMessages([...history, message]);
+  const { channel } = useChannel(`chat:${conversationId}`, (message) => {
+    if (message.clientId !== userId) {
+      setAllMessages([...allMessages, message]);
+    }
   });
 
-  // これはこのまま使える
-  const sendChatMessage = (messageText: string) => {
-    channel.publish({ name: "chat-message", data: messageText });
-    // ここにサーバーアクションを実装する。
+  const sendChatMessage = async (messageText: string) => {
+    channel.publish({ name: `chat:${conversationId}`, data: messageText });
+    const result = await createConversationMessageAction({
+      conversationId,
+      partnerUserId,
+      content: messageText,
+      isApplicant,
+    });
+    if (result.success && result.data) {
+      setAllMessages([
+        ...allMessages,
+        {
+          id: result.data.id,
+          clientId: result.data.senderId,
+          data: result.data.content,
+          isRead: result.data.isRead,
+          createdAt: result.data.createdAt,
+        } as CustomMessage,
+      ]);
+    }
     setMessageText("");
   };
 
@@ -55,14 +82,41 @@ export default function ChatBox({
     }
   };
 
-  const messageComponents = receivedMessages.map((message: Message) => {
-    return <MessageArea key={message.id} message={message} userId={userId} />;
-  });
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (messageEnd) {
+      messageEnd.scrollIntoView({ behavior: "instant" });
+    }
+  }, [messageEnd, allMessages]);
+
+  useEffect(() => {
+    // 未読メッセージを既読にする
+    const unreadMessages = allMessages.filter(
+      (message) => message.clientId !== userId && !message.isRead
+    );
+    if (unreadMessages.length > 0) {
+      changeMessageIsReadAction(conversationId, isApplicant, partnerUserId);
+    }
+  }, [allMessages, userId, conversationId, isApplicant, partnerUserId]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-110px)]">
+    <div className="flex flex-col h-[calc(100vh-180px)]">
       <div className="flex-1 overflow-y-auto px-4 space-y-4">
-        {messageComponents}
+        <div className="text-center py-4">
+          <div className="inline-flex items-center bg-blue-50 text-blue-700 px-4 py-2 rounded-full">
+            <span className="text-sm font-medium">🎉 マッチング成功！</span>
+          </div>
+        </div>
+        {allMessages.map((message: CustomMessage) => {
+          return (
+            <MessageArea key={message.id} message={message} userId={userId} />
+          );
+        })}
+        <div
+          ref={(element) => {
+            messageEnd = element;
+          }}
+        />
       </div>
       <form onSubmit={handleFormSubmission} className="border-t bg-white p-4">
         <div className="flex gap-2">

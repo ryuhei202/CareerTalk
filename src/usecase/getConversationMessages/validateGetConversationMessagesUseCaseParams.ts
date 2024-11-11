@@ -4,11 +4,13 @@ export const validateGetConversationMessagesUseCaseParams = (
 	params: GetConversationMessagesUseCaseParams,
 ) => {
 	// スキーマ定義
-	const conversationIdSchema = z.string().trim().length(25);
+	const userIdSchema = z.string().trim().length(25);
+	const partnerUserIdSchema = z.string().trim().length(25);
 
 	// パラメータスキーマ
 	const paramsSchema = z.object({
-		conversationId: conversationIdSchema,
+		userId: userIdSchema,
+		partnerUserId: partnerUserIdSchema,
 	});
 
 	return paramsSchema.parse(params);

@@ -6,40 +6,50 @@ import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
 import { validateGetConversationMessagesUseCaseParams } from "./validateGetConversationMessagesUseCaseParams";
-
+import "server-only";
 export interface GetConversationMessagesUseCaseParams {
-	conversationId: string;
+	userId: string;
+	partnerUserId: string;
 }
 
-export type ConversationMessage = {
+export interface ConversationMessage {
 	id: string;
 	content: string;
 	senderId: string;
 	isRead: boolean;
 	createdAt: Date;
-};
+}
 
-export type GetConversationMessagesUseCaseResponse = ConversationMessage[];
+export interface PartnerUser {
+	id: string;
+	name: string;
+	image: string;
+}
+
+export type GetConversationMessagesUseCaseResponse = {
+	conversationId: string;
+	partnerUser: PartnerUser;
+	messages: ConversationMessage[];
+};
 
 export const getConversationMessagesUseCase = async (
 	params: GetConversationMessagesUseCaseParams,
 ): Promise<Result<GetConversationMessagesUseCaseResponse, undefined>> => {
 	try {
-		console.log("params", params);
 		const validatedParams =
 			validateGetConversationMessagesUseCaseParams(params);
-		const messages = await getConversationMessages(validatedParams);
+		const result = await getConversationMessages(validatedParams);
 
-		if (messages === null) {
+		if (result === null) {
 			return createFailure({
 				message: "チャットの取得に失敗しました",
-				data: messages,
+				data: undefined,
 			});
 		}
 
 		return createSuccess({
 			message: "チャットの取得に成功しました",
-			data: messages,
+			data: result,
 		});
 	} catch (error) {
 		if (error instanceof ZodError) {

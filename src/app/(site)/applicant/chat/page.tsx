@@ -1,3 +1,3 @@
-export default function ChatPage() {
+export default function ApplicantChatPage() {
   return null;
 }

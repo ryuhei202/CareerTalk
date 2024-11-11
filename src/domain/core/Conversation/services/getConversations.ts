@@ -61,10 +61,15 @@ export const getConversations = async (
 				PartnerImageURL: partnerUserImage ?? "",
 				lastMessage: conversationEntity.getLatestMessageContent(),
 				lastMessageAt: conversationEntity.getLatestMessageAt(),
-				unreadMessageCount: conversationEntity.getUnreadMessageCount(user.id),
+				hasUnreadMessage: conversationEntity.getUnreadMessageCount(user.id) > 0,
 			};
 		},
 	);
 
-	return results;
+	// 最後のメッセージの日時で降順にソート
+	const sortedResults = results.sort((a, b) => {
+		return b.lastMessageAt.getTime() - a.lastMessageAt.getTime();
+	});
+
+	return sortedResults;
 };

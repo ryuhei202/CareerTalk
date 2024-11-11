@@ -1,19 +1,11 @@
-import { getEmployeeUserId } from "@/lib/auth";
-import dynamic from "next/dynamic";
-import { redirect } from "next/navigation";
-const Chat = dynamic(() => import("@/app/_components/parts/Chat/Chat"), {
-  ssr: false,
-});
-export default async function Home() {
-  const employeeUserId = await getEmployeeUserId();
-  if (!employeeUserId) {
-    redirect("/employee/create_profile");
-  }
+export default async function EmployeeDMPage() {
   return (
-    <div className="container h-[calc(100vh-120px)]">
-      <main>
-        <Chat userId={employeeUserId} />
-      </main>
+    <div className="flex-1 flex flex-col items-center justify-center p-4 text-center">
+      <h2 className="text-2xl font-bold mb-2">メッセージを選択してください</h2>
+      <p className="text-muted-foreground mb-6">
+        Choose from your existing conversations, start a new one, or just keep
+        swimming.
+      </p>
     </div>
   );
 }

@@ -13,12 +13,25 @@ export class GetConversationMessagesError extends NamedError {
 export const getConversationMessages = async (
 	params: GetConversationMessagesUseCaseParams,
 ): Promise<GetConversationMessagesUseCaseResponse> => {
-	const { conversationId } = params;
-	console.log("conversationId", conversationId);
+	const { userId, partnerUserId } = params;
+
+	// 相手のユーザーが存在するかの確認
+	const partnerUser = await prisma.user.findUnique({
+		where: {
+			id: partnerUserId,
+		},
+	});
+	if (!partnerUser) {
+		throw new GetConversationMessagesError("相手のユーザーが存在しません");
+	}
+
 	// 会話が存在するかの確認
 	const conversation = await prisma.conversation.findFirst({
 		where: {
-			id: conversationId,
+			OR: [
+				{ applicantUserId: userId, employeeUserId: partnerUserId },
+				{ applicantUserId: partnerUserId, employeeUserId: userId },
+			],
 		},
 		include: {
 			messages: {
@@ -33,8 +46,6 @@ export const getConversationMessages = async (
 		throw new GetConversationMessagesError("このDMは存在しません");
 	}
 
-	console.log("conversation", conversation);
-
 	const messageEntities = conversation.messages.map((message) => {
 		return Message.create({
 			id: message.id,
@@ -46,11 +57,21 @@ export const getConversationMessages = async (
 		});
 	});
 
-	return messageEntities.map((message) => ({
+	const messages = messageEntities.map((message) => ({
 		id: message.id,
 		content: message.content,
 		senderId: message.senderId,
 		isRead: message.isRead,
 		createdAt: message.createdAt,
 	}));
+
+	return {
+		conversationId: conversation.id,
+		partnerUser: {
+			id: partnerUser.id,
+			name: partnerUser.name,
+			image: partnerUser.image ?? "",
+		},
+		messages,
+	};
 };

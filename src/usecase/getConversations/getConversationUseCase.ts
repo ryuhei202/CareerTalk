@@ -21,7 +21,7 @@ export type MatchedConversation = {
 	PartnerImageURL: string;
 	lastMessage: string;
 	lastMessageAt: Date;
-	unreadMessageCount: number;
+	hasUnreadMessage: boolean;
 };
 
 export type GetConversationsUseCaseResponse = MatchedConversation[];
