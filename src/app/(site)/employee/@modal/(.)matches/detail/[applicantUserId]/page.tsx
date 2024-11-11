@@ -1,4 +1,3 @@
-import ApplicantCardContainer from "@/app/(site)/employee/matches/detail/[applicantUserId]/_components/ApplicantCardContainer";
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { getEmployeeUserId } from "@/lib/auth";
 import {
@@ -43,11 +42,12 @@ export default async function ApplicantDetailPage({ params }: Props) {
 
   return (
     // <Modal>
-    <ApplicantCardContainer
-      applicant={result.data.applicant}
-      likeReason={result.data.likeReason}
-      likeMessage={result.data.likeMessage}
-    />
+    // <ApplicantCardContainer
+    //   applicant={result.data.applicant}
+    //   likeReason={result.data.likeReason}
+    //   likeMessage={result.data.likeMessage}
+    // />
+    <h1>test</h1>
     // </Modal>
   );
 }
