@@ -76,7 +76,7 @@ export default function SearchEmployeeContainer({
   );
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen">
       {/* Left Sidebar */}
       <div className="w-1/4 p-4 md:p-6 lg:p-8">
         <SearchEmployeeBox

@@ -1,7 +1,8 @@
 import Pagenation from "@/app/_components/parts/Pagenation";
+import denkyu from "@/assets/images/denkyu.png";
 import type { FilteredEmployee } from "@/usecase/getFilteredEmployee/getFilteredEmployeesUseCase";
+import Image from "next/image";
 import SearchEmployeeListItem from "./SearchEmployeeListItem";
-
 export default function SearchEmployeeList({
   employees,
   currentPage,
@@ -17,9 +18,21 @@ export default function SearchEmployeeList({
 }) {
   return (
     <div className="flex-1 p-6">
-      <h1 className="text-2xl font-bold mb-6">
-        現場社員一覧（{totalCount}件）
-      </h1>
+      <div className="relative mb-6">
+        <div className="flex items-center">
+          <div className="relative">
+            <Image
+              src={denkyu}
+              alt="あなたにおすすめの現場社員"
+              width={50}
+              height={50}
+            />
+          </div>
+          <h1 className="text-2xl border-b-2 border-gray-400 pb-2 flex-grow">
+            あなたにおすすめの現場社員（{totalCount}件）
+          </h1>
+        </div>
+      </div>
       {employees.length > 0 ? (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

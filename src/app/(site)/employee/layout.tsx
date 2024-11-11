@@ -1,5 +1,7 @@
 import SiteHeader from "@/app/_components/parts/SiteHeader";
-import { Calendar, MessageCircle, Search } from "lucide-react";
+import DMIcon from "@/assets/images/dmicon.jpeg";
+import EventIcon from "@/assets/images/event.jpeg";
+import searchEmployeeIcon from "@/assets/images/serch_employee.jpeg";
 
 export default function EmployeeLayout({
   children,
@@ -14,17 +16,17 @@ export default function EmployeeLayout({
         type="employee"
         firstItem={{
           href: "/employee/matches",
-          icon: <Search />,
+          icon: searchEmployeeIcon,
           label: "転職希望者一覧",
         }}
         secondItem={{
           href: "/employee/chat",
-          icon: <MessageCircle />,
+          icon: DMIcon,
           label: "DM",
         }}
         thirdItem={{
           href: "/employee/events",
-          icon: <Calendar />,
+          icon: EventIcon,
           label: "イベント",
         }}
       />

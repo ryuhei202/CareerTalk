@@ -106,7 +106,7 @@ export default function SearchEmployeeBox({
   };
 }) {
   return (
-    <Card className="w-full max-w-md mx-auto bg-white shadow-lg bg-[#f0f7ff] ">
+    <Card className="w-full max-w-md mx-auto bg-white shadow-lg bg-customOrange-light">
       <CardHeader>
         <CardTitle>社員検索</CardTitle>
         <CardDescription>条件を指定して社員を検索できます</CardDescription>
@@ -157,7 +157,7 @@ export default function SearchEmployeeBox({
           {[
             {
               id: "company",
-              label: "会社",
+              label: "会社名",
               content: (
                 <Select
                   onValueChange={onChangeParamsMethods.onChangeCompany}

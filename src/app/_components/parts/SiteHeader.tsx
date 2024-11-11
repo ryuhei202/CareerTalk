@@ -1,8 +1,9 @@
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 
 type Item = {
   href: string;
-  icon: React.ReactNode;
+  icon: StaticImageData;
   label: string;
 };
 
@@ -34,34 +35,49 @@ export default function SiteHeader({
         <nav className="hidden md:flex items-center h-full flex-grow justify-end">
           <Link
             href={firstItem.href}
-            className="flex flex-col items-center justify-center h-full px-8 text-gray-600 hover:text-gray-900 border-r border-gray-200"
+            className="flex flex-col items-center justify-center h-full px-12 text-gray-600 hover:text-gray-900 border-r border-gray-200 min-w-[160px]"
           >
-            {firstItem.icon}
+            <Image
+              src={firstItem.icon}
+              alt={firstItem.label}
+              width={40}
+              height={40}
+            />
             <span className="text-sm">{firstItem.label}</span>
           </Link>
           <Link
             href={secondItem.href}
-            className="flex flex-col items-center justify-center h-full px-8 text-gray-600 hover:text-gray-900 border-r border-gray-200"
+            className="flex flex-col items-center justify-center h-full px-12 text-gray-600 hover:text-gray-900 border-r border-gray-200 min-w-[160px]"
           >
-            {secondItem.icon}
+            <Image
+              src={secondItem.icon}
+              alt={secondItem.label}
+              width={40}
+              height={40}
+            />
             <span className="text-sm">{secondItem.label}</span>
           </Link>
           <Link
             href={thirdItem.href}
-            className="flex flex-col items-center justify-center h-full px-8 text-gray-600 hover:text-gray-900 border-r border-gray-200"
+            className="flex flex-col items-center justify-center h-full px-12 text-gray-600 hover:text-gray-900 border-r border-gray-200 min-w-[160px]"
           >
-            {thirdItem.icon}
+            <Image
+              src={thirdItem.icon}
+              alt={thirdItem.label}
+              width={40}
+              height={40}
+            />
             <span className="text-sm">{thirdItem.label}</span>
           </Link>
           <Link
             href={`/${type}/my_page`}
-            className="relative bg-blue-400 text-black px-12 h-full flex items-center justify-center overflow-hidden"
+            className="relative bg-customBlue-dark text-black px-12 h-full flex items-center justify-center overflow-hidden"
           >
-            <span className="relative z-10 text-lg font-semibold text-white pl-8">
+            <span className="relative z-10 text-lg font-semibold text-white pl-12">
               MY PAGE
             </span>
             <span
-              className="absolute top-0 left-0 w-16 h-full bg-white transform -skew-x-12 -translate-x-8"
+              className="absolute top-0 left-0 w-24 h-full bg-white transform -skew-x-[30deg] -translate-x-14"
               aria-hidden="true"
             />
           </Link>
