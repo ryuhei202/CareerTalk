@@ -43,12 +43,12 @@ export default async function ApplicantDetailPage({ params }: Props) {
   }
 
   return (
-    <Modal>
-      <ApplicantCardContainer
-        applicant={result.data.applicant}
-        likeReason={result.data.likeReason}
-        likeMessage={result.data.likeMessage}
-      />
-    </Modal>
+    // <Modal>
+    <ApplicantCardContainer
+      applicant={result.data.applicant}
+      likeReason={result.data.likeReason}
+      likeMessage={result.data.likeMessage}
+    />
+    // </Modal>
   );
 }
