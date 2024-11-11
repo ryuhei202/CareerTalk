@@ -10,7 +10,7 @@ export default function ConversationList({
   isApplicant: boolean;
 }) {
   return (
-    <div className="h-[calc(100vh-150px)] overflow-y-auto w-1/3 border">
+    <div className="h-[calc(100vh-150px)] overflow-y-auto border-r w-1/3 ">
       <div className="divide-y border-b mx-auto">
         {conversations.map((conversation) => (
           <Link
