@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import ApplicantCardContainer from "@/app/(site)/employee/matches/detail/[applicantUserId]/_components/ApplicantCardContainer";
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { Modal } from "@/app/_components/parts/Modal";
@@ -20,43 +22,35 @@ type Props = {
 };
 
 export default async function ApplicantDetailPage({ params }: Props) {
-  try {
-    const employeeUserId = await getEmployeeUserId();
-    if (!employeeUserId) {
-      redirect("/employee/create_profile");
-    }
-
-    const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams =
-      {
-        applicantUserId: params.applicantUserId,
-        employeeUserId,
-      };
-
-    const result: GetLikedApplicantDetailUseCaseResult =
-      await getLikedApplicantDetailUseCase(
-        getLikedApplicantDetailUseCaseParams
-      );
-
-    if (!result.success) {
-      return (
-        <ErrorPage
-          message={result.message}
-          data={getLikedApplicantDetailUseCaseParams}
-        />
-      );
-    }
-
-    return (
-      <Modal>
-        <ApplicantCardContainer
-          applicant={result.data.applicant}
-          likeReason={result.data.likeReason}
-          likeMessage={result.data.likeMessage}
-        />
-      </Modal>
-    );
-  } catch (error) {
-    console.error("Modal page error:", error);
-    return <ErrorPage message="予期せぬエラーが発生しました" data={params} />;
+  const employeeUserId = await getEmployeeUserId();
+  if (!employeeUserId) {
+    redirect("/employee/create_profile");
   }
+
+  const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams = {
+    applicantUserId: params.applicantUserId,
+    employeeUserId,
+  };
+
+  const result: GetLikedApplicantDetailUseCaseResult =
+    await getLikedApplicantDetailUseCase(getLikedApplicantDetailUseCaseParams);
+
+  if (!result.success) {
+    return (
+      <ErrorPage
+        message={result.message}
+        data={getLikedApplicantDetailUseCaseParams}
+      />
+    );
+  }
+
+  return (
+    <Modal>
+      <ApplicantCardContainer
+        applicant={result.data.applicant}
+        likeReason={result.data.likeReason}
+        likeMessage={result.data.likeMessage}
+      />
+    </Modal>
+  );
 }
