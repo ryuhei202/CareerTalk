@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 // import localFont from "next/font/local";
 
 // TODO: 今後必要になるフォントを設定する
@@ -24,7 +25,10 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
