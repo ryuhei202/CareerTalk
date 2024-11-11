@@ -4,17 +4,15 @@ import { Button } from "@/app/_components/ui/button";
 import { getApplicantUserId, getServerSession } from "@/lib/auth";
 import { getApplicantDetailUseCase } from "@/usecase/getApplicantDetail/getApplicantDetailUseCase";
 import * as Avatar from "@radix-ui/react-avatar";
-
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-// RSC React Server Component
 export default async function ApplicantMyPage() {
   const session = await getServerSession();
   if (!session) {
     redirect("/signin");
   }
-  const userId = getApplicantUserId();
+  const userId = await getApplicantUserId();
   if (!userId) {
     redirect("/applicant/create_profile");
   }
