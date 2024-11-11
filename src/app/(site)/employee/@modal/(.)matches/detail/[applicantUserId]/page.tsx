@@ -1,6 +1,5 @@
 import ApplicantCardContainer from "@/app/(site)/employee/matches/detail/[applicantUserId]/_components/ApplicantCardContainer";
 import ErrorPage from "@/app/_components/page/ErrorPage";
-import { Modal } from "@/app/_components/parts/Modal";
 import { getEmployeeUserId } from "@/lib/auth";
 import {
   type GetLikedApplicantDetailUseCaseResult,
