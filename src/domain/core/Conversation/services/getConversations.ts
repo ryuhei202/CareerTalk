@@ -1,6 +1,5 @@
 import type { GetConversationsUseCaseResponse } from "@/usecase/getConversations/getConversationUseCase";
 import { NamedError } from "@/util/error";
-import type { Message as PrismaMessage } from "@prisma/client";
 import { Conversation } from "../Conversation";
 import type { ConversationStatusEnum } from "../ConversationEnum";
 import type { ConversationPurposeEnum } from "../ConversationEnum";
@@ -19,18 +18,20 @@ export const getConversations = async (
 	const results: GetConversationsUseCaseResponse = conversations.map(
 		(conversation) => {
 			const messages = conversation.messages;
+			// パフォーマンスの観点から、最後のメッセージのみを取得する
 			let messageEntities: Message[] = [];
-			if (messages) {
-				messageEntities = messages.map((message: PrismaMessage) =>
+			const latestMessage = messages[messages.length - 1];
+			if (latestMessage) {
+				messageEntities = [
 					Message.create({
-						id: message.id,
-						conversationId: message.conversationId,
-						senderId: message.senderId,
-						content: message.content,
-						isRead: message.isRead,
-						createdAt: message.createdAt,
+						id: latestMessage.id,
+						conversationId: latestMessage.conversationId,
+						senderId: latestMessage.senderId,
+						content: latestMessage.content,
+						isRead: latestMessage.isRead,
+						createdAt: latestMessage.createdAt,
 					}),
-				);
+				];
 			}
 
 			const conversationEntity = Conversation.create({
@@ -60,10 +61,15 @@ export const getConversations = async (
 				PartnerImageURL: partnerUserImage ?? "",
 				lastMessage: conversationEntity.getLatestMessageContent(),
 				lastMessageAt: conversationEntity.getLatestMessageAt(),
-				unreadMessageCount: conversationEntity.getUnreadMessageCount(user.id),
+				hasUnreadMessage: conversationEntity.getUnreadMessageCount(user.id) > 0,
 			};
 		},
 	);
 
-	return results;
+	// 最後のメッセージの日時で降順にソート
+	const sortedResults = results.sort((a, b) => {
+		return b.lastMessageAt.getTime() - a.lastMessageAt.getTime();
+	});
+
+	return sortedResults;
 };

@@ -50,7 +50,11 @@ export const validateGetConversationsInput = async (
 						user: true,
 					},
 				},
-				messages: true,
+				messages: {
+					orderBy: {
+						createdAt: "asc",
+					},
+				},
 			},
 		}),
 	]);

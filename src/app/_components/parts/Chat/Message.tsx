@@ -1,7 +1,7 @@
 import type { Message } from "ably";
 
 type MessageProps = {
-  message: Message;
+  message: Message & { createdAt?: Date };
   userId: string;
 };
 
@@ -27,13 +27,12 @@ export const MessageArea = ({ message, userId }: MessageProps) => {
           {message.data}
         </div>
         <span className="text-xs text-gray-500 mt-1">
-          {new Date(message.timestamp || Date.now()).toLocaleTimeString(
-            "ja-JP",
-            {
-              hour: "2-digit",
-              minute: "2-digit",
-            }
-          )}
+          {new Date(
+            message.timestamp || message.createdAt || Date.now()
+          ).toLocaleTimeString("ja-JP", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </span>
       </div>
     </div>
