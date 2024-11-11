@@ -38,7 +38,7 @@ export const validateSendDMRequestInput = async (
 		throw new InvalidSendDMRequestInputError("該当の社員が存在しません。");
 	}
 	if (conversation) {
-		throw new InvalidSendDMRequestInputError("すでに存在する会話です。");
+		throw new InvalidSendDMRequestInputError("すでにいいねを送信しています");
 	}
 
 	if (
