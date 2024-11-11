@@ -1,10 +1,12 @@
-// import ErrorPage from "@/app/_components/page/ErrorPage";
-// import { getEmployeeUserId } from "@/lib/auth";
-// import {
-//   type GetLikedApplicantDetailUseCaseResult,
-//   getLikedApplicantDetailUseCase,
-// } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
-// import { redirect } from "next/navigation";
+import ApplicantCardContainer from "@/app/(site)/employee/matches/detail/[applicantUserId]/_components/ApplicantCardContainer";
+import ErrorPage from "@/app/_components/page/ErrorPage";
+import { Modal } from "@/app/_components/parts/Modal";
+import { getEmployeeUserId } from "@/lib/auth";
+import {
+  type GetLikedApplicantDetailUseCaseResult,
+  getLikedApplicantDetailUseCase,
+} from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
+import { redirect } from "next/navigation";
 
 export type GetLikedApplicantDetailParams = {
   applicantUserId: string;
@@ -20,36 +22,35 @@ type Props = {
 export default async function ApplicantDetailPage({ params }: Props) {
   console.log(params);
 
-  // const employeeUserId = await getEmployeeUserId();
-  // if (!employeeUserId) {
-  //   redirect("/employee/create_profile");
-  // }
+  const employeeUserId = await getEmployeeUserId();
+  if (!employeeUserId) {
+    redirect("/employee/create_profile");
+  }
 
-  // const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams = {
-  //   applicantUserId: params.applicantUserId,
-  //   employeeUserId,
-  // };
+  const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams = {
+    applicantUserId: params.applicantUserId,
+    employeeUserId,
+  };
 
-  // const result: GetLikedApplicantDetailUseCaseResult =
-  //   await getLikedApplicantDetailUseCase(getLikedApplicantDetailUseCaseParams);
+  const result: GetLikedApplicantDetailUseCaseResult =
+    await getLikedApplicantDetailUseCase(getLikedApplicantDetailUseCaseParams);
 
-  // if (!result.success) {
-  //   return (
-  //     <ErrorPage
-  //       message={result.message}
-  //       data={getLikedApplicantDetailUseCaseParams}
-  //     />
-  //   );
-  // }
+  if (!result.success) {
+    return (
+      <ErrorPage
+        message={result.message}
+        data={getLikedApplicantDetailUseCaseParams}
+      />
+    );
+  }
 
   return (
-    // <Modal>
-    // <ApplicantCardContainer
-    //   applicant={result.data.applicant}
-    //   likeReason={result.data.likeReason}
-    //   likeMessage={result.data.likeMessage}
-    // />
-    <h1>test</h1>
-    // </Modal>
+    <Modal>
+      <ApplicantCardContainer
+        applicant={result.data.applicant}
+        likeReason={result.data.likeReason}
+        likeMessage={result.data.likeMessage}
+      />
+    </Modal>
   );
 }
