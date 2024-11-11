@@ -18,6 +18,8 @@ type Props = {
 };
 
 export default async function ApplicantDetailPage({ params }: Props) {
+  console.log(params);
+
   // const employeeUserId = await getEmployeeUserId();
   // if (!employeeUserId) {
   //   redirect("/employee/create_profile");
