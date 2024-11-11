@@ -8,7 +8,7 @@ import {
 import { redirect } from "next/navigation";
 import { getParamsFromQueryStrings } from "../../applicant/search_employees/_util/getParamsFromQueryStrings";
 import type { SearchParams } from "../../applicant/search_employees/page";
-// import LikeApplicationsContainer from "./_components/LikeApplicationsContainer";
+import LikeApplicationsContainer from "./_components/LikeApplicationsContainer";
 export default async function MatchesPage({
   searchParams,
 }: {
@@ -35,10 +35,9 @@ export default async function MatchesPage({
   }
 
   return (
-    <h1>test</h1>
-    // <LikeApplicationsContainer
-    //   totalCount={result.data.totalCount}
-    //   applicants={result.data.applicants}
-    // />
+    <LikeApplicationsContainer
+      totalCount={result.data.totalCount}
+      applicants={result.data.applicants}
+    />
   );
 }
