@@ -20,35 +20,43 @@ type Props = {
 };
 
 export default async function ApplicantDetailPage({ params }: Props) {
-  const employeeUserId = await getEmployeeUserId();
-  if (!employeeUserId) {
-    redirect("/employee/create_profile");
-  }
+  try {
+    const employeeUserId = await getEmployeeUserId();
+    if (!employeeUserId) {
+      redirect("/employee/create_profile");
+    }
 
-  const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams = {
-    applicantUserId: params.applicantUserId,
-    employeeUserId,
-  };
+    const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams =
+      {
+        applicantUserId: params.applicantUserId,
+        employeeUserId,
+      };
 
-  const result: GetLikedApplicantDetailUseCaseResult =
-    await getLikedApplicantDetailUseCase(getLikedApplicantDetailUseCaseParams);
+    const result: GetLikedApplicantDetailUseCaseResult =
+      await getLikedApplicantDetailUseCase(
+        getLikedApplicantDetailUseCaseParams
+      );
 
-  if (!result.success) {
+    if (!result.success) {
+      return (
+        <ErrorPage
+          message={result.message}
+          data={getLikedApplicantDetailUseCaseParams}
+        />
+      );
+    }
+
     return (
-      <ErrorPage
-        message={result.message}
-        data={getLikedApplicantDetailUseCaseParams}
-      />
+      <Modal>
+        <ApplicantCardContainer
+          applicant={result.data.applicant}
+          likeReason={result.data.likeReason}
+          likeMessage={result.data.likeMessage}
+        />
+      </Modal>
     );
+  } catch (error) {
+    console.error("Modal page error:", error);
+    return <ErrorPage message="予期せぬエラーが発生しました" data={params} />;
   }
-
-  return (
-    <Modal>
-      <ApplicantCardContainer
-        applicant={result.data.applicant}
-        likeReason={result.data.likeReason}
-        likeMessage={result.data.likeMessage}
-      />
-    </Modal>
-  );
 }

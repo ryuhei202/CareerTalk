@@ -14,30 +14,37 @@ export default async function MatchesPage({
 }: {
   searchParams: SearchParams;
 }) {
-  const employeeUserId = await getEmployeeUserId();
-  if (!employeeUserId) {
-    redirect("/employee/create_profile");
+  try {
+    const employeeUserId = await getEmployeeUserId();
+    if (!employeeUserId) {
+      redirect("/employee/create_profile");
+    }
+
+    const { currentPage } = getParamsFromQueryStrings(searchParams);
+
+    const getLikedApplicantsUseCaseParams: GetLikedApplicantsUseCaseParams = {
+      page: currentPage,
+      employeeUserId,
+    };
+
+    const result = await getLikedApplicantsUseCase(
+      getLikedApplicantsUseCaseParams
+    );
+
+    if (!result.success) {
+      return <ErrorPage message={result.message} data={result.data} />;
+    }
+
+    return (
+      <LikeApplicationsContainer
+        totalCount={result.data.totalCount}
+        applicants={result.data.applicants}
+      />
+    );
+  } catch (error) {
+    console.error("Modal page error:", error);
+    return (
+      <ErrorPage message="予期せぬエラーが発生しました" data={searchParams} />
+    );
   }
-
-  const { currentPage } = getParamsFromQueryStrings(searchParams);
-
-  const getLikedApplicantsUseCaseParams: GetLikedApplicantsUseCaseParams = {
-    page: currentPage,
-    employeeUserId,
-  };
-
-  const result = await getLikedApplicantsUseCase(
-    getLikedApplicantsUseCaseParams
-  );
-
-  if (!result.success) {
-    return <ErrorPage message={result.message} data={result.data} />;
-  }
-
-  return (
-    <LikeApplicationsContainer
-      totalCount={result.data.totalCount}
-      applicants={result.data.applicants}
-    />
-  );
 }

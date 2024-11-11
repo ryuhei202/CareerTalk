@@ -14,26 +14,22 @@ type Props = {
 };
 
 export default async function EmployeeDetailModalPage({ params }: Props) {
-  try {
-    const session = await getServerSession();
-    if (!session) {
-      redirect("/");
-    }
-
-    const result: GetEmployeeDetailUseCaseResult =
-      await getEmployeeDetailUseCase({ employeeUserId: params.employeeUserId });
-
-    if (!result.success) {
-      return <ErrorPage message={result.message} data={params} />;
-    }
-
-    return (
-      <Modal>
-        <EmployeeCardContainer employee={result.data} />
-      </Modal>
-    );
-  } catch (error) {
-    console.error("Modal page error:", error);
-    return <ErrorPage message="予期せぬエラーが発生しました" data={params} />;
+  const session = await getServerSession();
+  if (!session) {
+    redirect("/");
   }
+
+  const result: GetEmployeeDetailUseCaseResult = await getEmployeeDetailUseCase(
+    { employeeUserId: params.employeeUserId }
+  );
+
+  if (!result.success) {
+    return <ErrorPage message={result.message} data={params} />;
+  }
+
+  return (
+    <Modal>
+      <EmployeeCardContainer employee={result.data} />
+    </Modal>
+  );
 }
