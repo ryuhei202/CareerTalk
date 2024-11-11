@@ -1,10 +1,10 @@
-import ErrorPage from "@/app/_components/page/ErrorPage";
-import { getEmployeeUserId } from "@/lib/auth";
-import {
-  type GetLikedApplicantDetailUseCaseResult,
-  getLikedApplicantDetailUseCase,
-} from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
-import { redirect } from "next/navigation";
+// import ErrorPage from "@/app/_components/page/ErrorPage";
+// import { getEmployeeUserId } from "@/lib/auth";
+// import {
+//   type GetLikedApplicantDetailUseCaseResult,
+//   getLikedApplicantDetailUseCase,
+// } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
+// import { redirect } from "next/navigation";
 
 export type GetLikedApplicantDetailParams = {
   applicantUserId: string;
