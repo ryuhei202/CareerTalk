@@ -18,27 +18,27 @@ type Props = {
 };
 
 export default async function ApplicantDetailPage({ params }: Props) {
-  const employeeUserId = await getEmployeeUserId();
-  if (!employeeUserId) {
-    redirect("/employee/create_profile");
-  }
+  // const employeeUserId = await getEmployeeUserId();
+  // if (!employeeUserId) {
+  //   redirect("/employee/create_profile");
+  // }
 
-  const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams = {
-    applicantUserId: params.applicantUserId,
-    employeeUserId,
-  };
+  // const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams = {
+  //   applicantUserId: params.applicantUserId,
+  //   employeeUserId,
+  // };
 
-  const result: GetLikedApplicantDetailUseCaseResult =
-    await getLikedApplicantDetailUseCase(getLikedApplicantDetailUseCaseParams);
+  // const result: GetLikedApplicantDetailUseCaseResult =
+  //   await getLikedApplicantDetailUseCase(getLikedApplicantDetailUseCaseParams);
 
-  if (!result.success) {
-    return (
-      <ErrorPage
-        message={result.message}
-        data={getLikedApplicantDetailUseCaseParams}
-      />
-    );
-  }
+  // if (!result.success) {
+  //   return (
+  //     <ErrorPage
+  //       message={result.message}
+  //       data={getLikedApplicantDetailUseCaseParams}
+  //     />
+  //   );
+  // }
 
   return (
     // <Modal>
