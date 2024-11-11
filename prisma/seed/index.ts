@@ -1,20 +1,25 @@
 import { PrismaClient } from "@prisma/client";
 import { company } from "./company";
+import { employee } from "./employee";
 import { occupation } from "./occupation";
-// import { employee } from "./employee";
-// import { user } from "./user";
+import { user } from "./user";
 import { workLocation } from "./worklocation";
 export const prisma = new PrismaClient();
 
 const main = async () => {
 	console.log("Start seeding ...");
-	await prisma.$transaction([
-		...occupation(),
-		...company(),
-		...workLocation(),
-		// ...user(),  // テストデータを入れたい時だけコメントアウトをはずしてください
-		// ...employee(),
-	]);
+
+	// 基本データは常に実行
+	const baseOperations = [...occupation(), ...company(), ...workLocation()];
+
+	// 開発環境の場合のみユーザーと従業員データを追加
+	const operations =
+		process.env.NODE_ENV === "development"
+			? [...baseOperations, ...user(), ...employee()]
+			: baseOperations;
+
+	await prisma.$transaction(operations);
+
 	console.log("Seeding finished.");
 };
 
