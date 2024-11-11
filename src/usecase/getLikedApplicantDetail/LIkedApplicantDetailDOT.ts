@@ -10,7 +10,7 @@ export class LikedApplicantDetailDTO {
 	public readonly name: string;
 	public readonly gender: GenderLabel;
 	public readonly age?: number;
-	public readonly yearsOfExperience: number;
+	public readonly yearsOfExperience: number | undefined;
 	public readonly occupationName: string;
 	public readonly likeReason: string;
 	public readonly selfIntroduction?: string;

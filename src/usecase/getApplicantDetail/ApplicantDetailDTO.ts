@@ -6,20 +6,28 @@ export type ApplicantDetailResponse = {
 	userId: string;
 	name: string;
 	occupation: Occupation;
-	yearsOfExperience: number;
+	yearsOfExperience: number | undefined;
 	gender: GenderLabel;
 	imageUrl: string;
 	selfIntroduction: string;
+	joiningDate: Date | undefined;
+	company: string;
+	workHistory: string;
+	education: string;
 };
 
 export class ApplicantDetailDto {
 	public readonly userId: string;
 	public readonly name: string;
 	public readonly occupation: Occupation;
-	public readonly yearsOfExperience: number;
+	public readonly yearsOfExperience: number | undefined;
 	public readonly gender: GenderLabel;
 	public readonly selfIntroduction: string;
+	public readonly joiningDate: Date | undefined;
 	public readonly imageUrl: string;
+	public readonly company: string;
+	public readonly workHistory: string;
+	public readonly education: string;
 
 	constructor({
 		applicant,
@@ -34,7 +42,11 @@ export class ApplicantDetailDto {
 		this.yearsOfExperience = applicant.toYearsOfExperience();
 		this.gender = applicant.toGenderLabel();
 		this.selfIntroduction = applicant.selfIntroduction ?? "";
+		this.joiningDate = applicant.joiningDate ?? undefined;
 		this.imageUrl = applicant.imageUrl ?? "";
+		this.company = applicant.company ?? "";
+		this.workHistory = applicant.workHistory ?? "";
+		this.education = applicant.education ?? "";
 	}
 
 	// あえてわかりやすいように分割代入はしない
@@ -47,6 +59,10 @@ export class ApplicantDetailDto {
 			gender: this.gender,
 			imageUrl: this.imageUrl,
 			selfIntroduction: this.selfIntroduction,
+			joiningDate: this.joiningDate,
+			company: this.company,
+			workHistory: this.workHistory,
+			education: this.education,
 		};
 	}
 }

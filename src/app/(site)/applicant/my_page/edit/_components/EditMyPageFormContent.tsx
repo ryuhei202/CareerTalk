@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
+import { Input } from "@/app/_components/ui/input";
 import { Textarea } from "@/app/_components/ui/textarea";
 import type { ApplicantDetailResponse } from "@/usecase/getApplicantDetail/getApplicantDetailUseCase";
 import { useForm } from "@conform-to/react";
@@ -41,11 +42,11 @@ export const EditMyPageFormContent = ({
 
     onSubmit() {
       if (lastResult?.result && lastResult.result.success === false) {
-        alert(`入力に間違いがあります。¥n${lastResult.result.message}`);
+        alert(`入力に間違いがあります。
+          ${lastResult.result.message}`);
       }
     },
   });
-
   return (
     <form
       id={form.id}
@@ -76,6 +77,13 @@ export const EditMyPageFormContent = ({
               <div className="text-gray-600 mb-4">{user.email}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
+              <div className="bg-gray-100 p-2 rounded-md">会社名</div>
+              <Input type="text" name="company" className="ms-4 mt-2" defaultValue={applicant.company} />
+              <div className="text-red-500 ms-4">
+                {fields.company.errors}
+              </div>
+            </div>
+            <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">職種(必須)</div>
               <select
                 name="occupation"
@@ -92,6 +100,13 @@ export const EditMyPageFormContent = ({
               </select>
               <div className="text-red-500 ms-4">
                 {fields.occupation.errors}
+              </div>
+            </div>
+            <div className="my-5 flex flex-col items-start">
+              <div className="bg-gray-100 p-2 rounded-md">社会人になった月</div>
+              <Input type="month" name="joiningDate" className="ms-4 mt-2" defaultValue={applicant.joiningDate ? applicant.joiningDate.toISOString().slice(0, 7) : undefined} />
+              <div className="text-red-500 ms-4">
+                {fields.joiningDate.errors}
               </div>
             </div>
           </div>
@@ -113,6 +128,28 @@ export const EditMyPageFormContent = ({
             defaultValue={applicant.selfIntroduction}
           />
           <div className="text-red-500">{fields.selfIntroduction.errors}</div>
+        </div>
+        <div className="mt-6 mb-14">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+            職務経歴
+          </h2>
+          <Textarea
+            name="workHistory"
+            className="h-44"
+            defaultValue={applicant.workHistory}
+          />
+          <div className="text-red-500">{fields.workHistory.errors}</div>
+        </div>
+        <div className="mt-6 mb-14">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+            学歴
+          </h2>
+          <Textarea
+            name="education"
+            className="h-44"
+            defaultValue={applicant.education}
+          />
+          <div className="text-red-500">{fields.education.errors}</div>
         </div>
         <div className="flex justify-end">
           <Button type="submit">保存</Button>

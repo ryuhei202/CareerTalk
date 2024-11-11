@@ -14,6 +14,10 @@ export const updateApplicantForMyPage = async (
 			data: {
 				occupationId: applicant.occupationId,
 				selfIntroduction: applicant.selfIntroduction,
+				joiningDate: applicant.joiningDate,
+				workHistory: applicant.workHistory,
+				company: applicant.company,
+				education: applicant.education,
 			},
 		});
 		return result;

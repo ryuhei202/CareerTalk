@@ -60,5 +60,8 @@ export const validateRegisterApplicantInput = async (
 		status: StatusEnum.PENDING,
 		imageUrl: params.imageUrl ?? undefined,
 		selfIntroduction: params.selfIntroduction ?? undefined,
+		company: params.company ?? undefined,
+		workHistory: params.workHistory ?? undefined,
+		education: params.education ?? undefined,
 	});
 };

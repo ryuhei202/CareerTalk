@@ -4,9 +4,13 @@ import { NamedError } from "@/util/error";
 import {
 	applicantParamsSchema,
 	imageUrlSchema,
+	joiningDateSchema,
 	nameSchema,
 	occupationIdSchema,
+	selfCompanySchema,
+	selfEducationSchema,
 	selfIntroductionSchema,
+	selfWorkHistorySchema,
 	statusSchema,
 } from "./ApplicantSchema";
 
@@ -23,11 +27,14 @@ export type ApplicantParams = {
 	userId: string;
 	occupationId: number;
 	gender: GenderEnum;
-	joiningDate: Date;
+	joiningDate?: Date;
 	status: StatusEnum;
 	imageUrl?: string;
 	birthday?: Date;
 	selfIntroduction?: string;
+	company?: string;
+	workHistory?: string;
+	education?: string;
 };
 
 /**
@@ -40,11 +47,14 @@ export class Applicant {
 		private _name: string,
 		private _occupationId: number,
 		private readonly _gender: GenderEnum,
-		private readonly _joiningDate: Date,
 		private _status: StatusEnum,
+		private _joiningDate?: Date | undefined,
 		private _imageUrl?: string,
 		private readonly _birthday?: Date,
 		private _selfIntroduction?: string,
+		private _company?: string,
+		private _workHistory?: string,
+		private _education?: string,
 	) {}
 
 	static create(params: ApplicantParams): Applicant {
@@ -55,11 +65,14 @@ export class Applicant {
 			params.name,
 			params.occupationId,
 			params.gender,
-			params.joiningDate,
 			params.status,
+			params.joiningDate,
 			params.imageUrl,
 			params.birthday,
 			params.selfIntroduction,
+			params.company,
+			params.workHistory,
+			params.education,
 		);
 	}
 
@@ -81,10 +94,26 @@ export class Applicant {
 		imageUrlSchema.parse(newImageUrl);
 		this._imageUrl = newImageUrl;
 	}
+	changeJoiningDate(newJoiningDate: Date): void {
+		joiningDateSchema.parse(newJoiningDate);
+		this._joiningDate = newJoiningDate;
+	}
 
 	changeSelfIntroduction(newSelfIntroduction: string): void {
 		selfIntroductionSchema.parse(newSelfIntroduction);
 		this._selfIntroduction = newSelfIntroduction;
+	}
+	changeCompany(newCompany: string): void {
+		selfCompanySchema.parse(newCompany);
+		this._company = newCompany;
+	}
+	changeWorkHistory(newWorkHistory: string): void {
+		selfWorkHistorySchema.parse(newWorkHistory);
+		this._workHistory = newWorkHistory;
+	}
+	changeEducation(newEducation: string): void {
+		selfEducationSchema.parse(newEducation);
+		this._education = newEducation;
 	}
 
 	changeStatus(newStatus: StatusEnum): void {
@@ -112,7 +141,7 @@ export class Applicant {
 		return this._gender;
 	}
 
-	get joiningDate(): Date {
+	get joiningDate(): Date | undefined {
 		return this._joiningDate;
 	}
 
@@ -130,6 +159,15 @@ export class Applicant {
 
 	get selfIntroduction(): string | undefined {
 		return this._selfIntroduction;
+	}
+	get company(): string | undefined {
+		return this._company;
+	}
+	get workHistory(): string | undefined {
+		return this._workHistory;
+	}
+	get education(): string | undefined {
+		return this._education;
 	}
 
 	toGenderLabel(): GenderLabel {
@@ -179,9 +217,11 @@ export class Applicant {
 		return age;
 	}
 
-	toYearsOfExperience(): number {
+	toYearsOfExperience(): number | undefined {
 		// 継続年数を返却するロジックを書く
 		// 一旦仮置き
-		return new Date().getFullYear() - this._joiningDate.getFullYear();
+		if (this._joiningDate)
+			return new Date().getFullYear() - this._joiningDate.getFullYear();
+		return undefined;
 	}
 }

@@ -134,11 +134,14 @@ model Applicant {
   gender           Gender
   occupationId     Int
   occupation       Occupation      @relation(fields: [occupationId], references: [id])
-  joiningDate      DateTime
+  joiningDate      DateTime?
   selfIntroduction String?         @default("") @db.Text
   status           ApplicantStatus @default(PENDING)
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
+  workHistory      String?         @default("") @db.Text
+  education        String?         @default("") @db.Text
+  company          String?         @default("") @db.Text
 }
 
 enum ConversationStatus {

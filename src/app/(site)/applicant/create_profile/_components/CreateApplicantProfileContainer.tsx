@@ -54,20 +54,23 @@ const formSchema = z.object({
       }
     )
     .optional(),
-  joinDate: z.string({ message: "入社日は必須です" }).refine(
+  joinDate: z.string().refine(
     (date) => {
       const selectedDate = new Date(date);
       const today = new Date();
       return selectedDate <= today;
     },
     {
-      message: "入社日は今日以前の日付を選択してください",
+      message: "社会人になった月は今日以前の日付を選択してください",
     }
   ),
   occupation: z.string().trim().min(1, {
     message: "職種は必須です",
   }),
   selfIntroduction: z.string().trim().optional(),
+  workHistory: z.string().trim().optional(),
+  company: z.string().trim().optional(),
+  education: z.string().trim().optional(),
 });
 
 // TODO: あとでしっかりとコンポーネントを分割する。（デザイン待ち）
@@ -97,6 +100,9 @@ export default function CreateProfileApplicant({
       joinDate: (state.data?.joinDate as string) ?? "",
       occupation: (state.data?.occupation as string) ?? "",
       selfIntroduction: (state.data?.selfIntroduction as string) ?? undefined,
+      company: (state.data?.company as string) ?? undefined,
+      workHistory: (state.data?.workHistory as string) ?? undefined,
+      education: (state.data?.education as string) ?? undefined,
     },
   });
 
@@ -177,24 +183,7 @@ export default function CreateProfileApplicant({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
                 <FormLabel className="text-sm font-medium text-gray-700">
-                  生年月日
-                </FormLabel>
-                <div className="col-span-2">
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="joinDate"
-            render={({ field }) => (
-              <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  入社日（必須）
+                  生年月日（必須）
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -240,6 +229,24 @@ export default function CreateProfileApplicant({
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="joinDate"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3 gap-4 items-center">
+                <FormLabel className="text-sm font-medium text-gray-700">
+                  社会人になった月
+                </FormLabel>
+                <div className="col-span-2">
+                  <FormControl>
+                    <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="selfIntroduction"
@@ -251,6 +258,57 @@ export default function CreateProfileApplicant({
                 <div className="col-span-2">
                   <FormControl>
                     <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="workHistory"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3 gap-4 items-start">
+                <FormLabel className="text-sm font-medium text-gray-700 pt-2">
+                  職務経歴
+                </FormLabel>
+                <div className="col-span-2">
+                  <FormControl>
+                    <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="education"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3 gap-4 items-start">
+                <FormLabel className="text-sm font-medium text-gray-700 pt-2">
+                  学歴
+                </FormLabel>
+                <div className="col-span-2">
+                  <FormControl>
+                    <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="company"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3 gap-4 items-start">
+                <FormLabel className="text-sm font-medium text-gray-700 pt-2">
+                  会社名
+                </FormLabel>
+                <div className="col-span-2">
+                  <FormControl>
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </div>
