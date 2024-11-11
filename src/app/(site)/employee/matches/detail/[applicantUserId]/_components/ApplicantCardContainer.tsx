@@ -1,4 +1,3 @@
-"use client";
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import type { ApplicantDetail } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
 import type { HandleDMRequestUseCaseResponse } from "@/usecase/handleDMRequest/handleDMRequestUseCase";

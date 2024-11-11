@@ -7,7 +7,6 @@ import {
   getLikedApplicantDetailUseCase,
 } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
 import { redirect } from "next/navigation";
-import ApplicantDetailModal from "./_components/ApplicantDetailModal";
 
 export type GetLikedApplicantDetailParams = {
   applicantUserId: string;
