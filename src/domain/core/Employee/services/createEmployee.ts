@@ -21,7 +21,6 @@ export const createEmployee = async (
 				meetingMethod: employee.meetingMethod,
 				selfIntroduction: employee.selfIntroduction,
 				talkableTopics: employee.talkableTopics,
-				birthday: employee.birthday,
 			},
 		});
 

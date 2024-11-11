@@ -99,6 +99,11 @@ export const otherDescriptionSchema = z
 	.trim()
 	.max(1000, { message: "その他は1000文字以下である必要があります" })
 	.optional();
+export const barkerMessageSchema = z
+	.string()
+	.trim()
+	.max(50, { message: "呼び込みメッセージは50文字以下である必要があります" })
+	.optional();
 
 export const employeeParamsSchema = z.object({
 	id: employeeIdSchema,
@@ -120,4 +125,5 @@ export const employeeParamsSchema = z.object({
 	jobDescription: jobDescriptionSchema,
 	joiningDescription: joiningDescriptionSchema,
 	otherDescription: otherDescriptionSchema,
+	barkerMessage: barkerMessageSchema,
 });

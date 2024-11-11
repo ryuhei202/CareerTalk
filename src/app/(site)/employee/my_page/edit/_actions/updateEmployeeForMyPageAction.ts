@@ -16,6 +16,7 @@ export type UpdateEmployeeForMyPageActionResult = {
 
 export type UpdateEmployeeForMyPageParams = {
 	userId: string;
+	name: string;
 	occupationId: number; // stringからnumberに変更
 	hiringType?: string;
 	workLocationId?: number; // 追加
@@ -26,6 +27,7 @@ export type UpdateEmployeeForMyPageParams = {
 	jobDescription?: string;
 	joiningDescription?: string;
 	otherDescription?: string;
+	barkerMessage?: string;
 };
 
 export async function updateEmployeeForMyPageAction(
@@ -44,6 +46,7 @@ export async function updateEmployeeForMyPageAction(
 	}
 	const employeeData: UpdateEmployeeForMyPageParams = {
 		userId: (await getEmployeeUserId()) as string,
+		name: formData.get("name") as string,
 		occupationId: Number(formData.get("occupation")), // occupationからoccupationIdに変更し、Number型に変換
 		hiringType: formData.get("hiringType") as string | undefined,
 		workLocationId: formData.get("workLocation")
@@ -58,6 +61,7 @@ export async function updateEmployeeForMyPageAction(
 			| string
 			| undefined,
 		otherDescription: formData.get("otherDescription") as string | undefined,
+		barkerMessage: formData.get("barkerMessage") as string | undefined,
 	};
 
 	// TODO: Add updateEmployeeForMyPageUseCase call here

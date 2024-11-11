@@ -14,7 +14,6 @@ export const validateRegisterEmployeeUseCaseParams = (
   const occupationIdSchema = z.number().int().positive();
   const genderSchema = z.nativeEnum(GenderEnum);
   const joiningDateSchema = z.date();
-  const birthdaySchema = z.date().optional();
   const workLocationIdSchema = z.number().int().positive().optional();
   const hiringTypeSchema = z.nativeEnum(HiringTypeEnum).optional();
   const meetingMethodSchema = z.nativeEnum(MeetingMethodEnum).optional();
@@ -28,7 +27,6 @@ export const validateRegisterEmployeeUseCaseParams = (
     occupationId: occupationIdSchema,
     gender: genderSchema,
     joiningDate: joiningDateSchema,
-    birthday: birthdaySchema,
     workLocationId: workLocationIdSchema,
     hiringType: hiringTypeSchema,
     meetingMethod: meetingMethodSchema,

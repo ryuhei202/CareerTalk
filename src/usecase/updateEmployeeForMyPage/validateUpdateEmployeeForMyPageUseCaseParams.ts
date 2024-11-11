@@ -8,6 +8,7 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 ) => {
 	// スキーマ定義
 	const userIdSchema = z.string().trim().length(25);
+	const nameSchema = z.string().trim().min(1).max(100);
 	const occupationIdSchema = z.number().int().positive();
 	const workLocationIdSchema = z.number().int().positive().optional();
 	const hiringTypeSchema = z.nativeEnum(HiringTypeEnum).optional();
@@ -18,9 +19,11 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 	const jobDescriptionSchema = z.string().trim().optional();
 	const joiningDescriptionSchema = z.string().trim().optional();
 	const otherDescriptionSchema = z.string().trim().optional();
+	const barkerMessageSchema = z.string().trim().max(50).optional();
 
 	const paramsSchema = z.object({
 		userId: userIdSchema,
+		name: nameSchema,
 		occupationId: occupationIdSchema,
 		workLocationId: workLocationIdSchema,
 		hiringType: hiringTypeSchema,
@@ -31,6 +34,7 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 		jobDescription: jobDescriptionSchema,
 		joiningDescription: joiningDescriptionSchema,
 		otherDescription: otherDescriptionSchema,
+		barkerMessage: barkerMessageSchema,
 	});
 
 	return paramsSchema.parse(params);
