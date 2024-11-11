@@ -24,7 +24,7 @@ export default async function ApplicantDMPage({
     return <ErrorPage message={result.message} data={result.data} />;
   }
   return (
-    <div className="container">
+    <div className="container w-2/3">
       <main>
         <Chat
           userId={applicantUserId}
