@@ -37,11 +37,14 @@ export const getApplicantDetail = async (
 		userId: applicant.userId,
 		occupationId: applicant.occupationId,
 		gender: applicant.gender as GenderEnum,
-		joiningDate: applicant.joiningDate,
+		joiningDate: applicant.joiningDate ?? undefined,
 		status: applicant.status as StatusEnum,
 		imageUrl: applicant.user.image ?? undefined,
 		birthday: applicant.birthday ?? undefined,
 		selfIntroduction: applicant.selfIntroduction ?? undefined,
+		company: applicant.company ?? undefined,
+		workHistory: applicant.workHistory ?? undefined,
+		education: applicant.education ?? undefined,
 	});
 
 	return new ApplicantDetailDto({

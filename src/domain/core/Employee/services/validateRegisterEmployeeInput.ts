@@ -68,7 +68,6 @@ export const validateRegisterEmployeeInput = async (
 		companyId: company.id,
 		occupationId: occupation.id,
 		gender: params.gender as GenderEnum,
-		birthday: params.birthday,
 		joiningDate: params.joiningDate,
 		status: StatusEnum.PENDING,
 		imageUrl: params.imageUrl ?? undefined,

@@ -57,12 +57,26 @@ export default async function ApplicantMyPage() {
                 <div className="text-gray-600 mb-4">{session.user.email}</div>
               </div>
               <div className="my-5 flex flex-col items-start">
+                <div className="bg-gray-100 p-2 rounded-md">会社名</div>
+                <span className="ms-4 mt-2">
+                  {applicant.data.company
+                    ? applicant.data.company
+                    : "入力がありません"}
+                </span>
+              </div>
+              <div className="my-5 flex flex-col items-start">
                 <div className="bg-gray-100 p-2 rounded-md">職種</div>
                 <span className="ms-4 mt-2">
                   {applicant.data.occupation
                     ? applicant.data.occupation?.name
                     : "選択されていません"}
                 </span>
+              </div>
+              <div className="my-5 flex flex-col items-start">
+                <div className="bg-gray-100 p-2 rounded-md">社会人歴</div>
+                <div className="ms-4 mt-2">
+                  {applicant.data.yearsOfExperience}年
+                </div>
               </div>
               <div className="mt-12  mb-5 flex justify-center">
                 <LogOutButton />
@@ -82,6 +96,22 @@ export default async function ApplicantMyPage() {
             </h2>
             <div className="mb-14 whitespace-pre-line">
               {applicant.data.selfIntroduction}
+            </div>
+          </div>
+          <div className="mt-6">
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+              職務経歴
+            </h2>
+            <div className="mb-14 whitespace-pre-line">
+              {applicant.data.workHistory}
+            </div>
+          </div>
+          <div className="mt-6">
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+              学歴
+            </h2>
+            <div className="mb-14 whitespace-pre-line">
+              {applicant.data.education}
             </div>
           </div>
         </div>

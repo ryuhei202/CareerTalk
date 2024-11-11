@@ -17,6 +17,9 @@ export type CreatedApplicantResponse = {
 	age?: number;
 	imageUrl?: string;
 	selfIntroduction?: string;
+	company?: string;
+	workHistory?: string;
+	education?: string;
 };
 
 export interface RegisterApplicantParams {
@@ -28,6 +31,9 @@ export interface RegisterApplicantParams {
 	joiningDate: Date;
 	imageUrl?: string;
 	selfIntroduction?: string;
+	company?: string;
+	workHistory?: string;
+	education?: string;
 }
 
 export async function registerApplicantAction(
@@ -50,6 +56,9 @@ export async function registerApplicantAction(
 	const birthday = formData.get("birthday");
 	const joiningDate = formData.get("joinDate");
 	const selfIntroduction = formData.get("selfIntroduction");
+	const company = formData.get("company");
+	const workHistory = formData.get("workHistory");
+	const education = formData.get("education");
 	// 後で画像も入れれるようにする
 	// const imageUrl = formData.get("imageUrl");
 	const formDataObject = Object.fromEntries(formData.entries());
@@ -62,6 +71,10 @@ export async function registerApplicantAction(
 		birthday: new Date(birthday as string),
 		joiningDate: new Date(joiningDate as string),
 		selfIntroduction: (selfIntroduction as string) || undefined,
+		company: (company as string) || undefined,
+		workHistory: (workHistory as string) || undefined,
+		education: (education as string) || undefined,
+
 		// imageUrl: (imageUrl as string) || undefined,
 	};
 

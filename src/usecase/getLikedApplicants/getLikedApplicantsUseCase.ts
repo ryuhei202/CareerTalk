@@ -16,7 +16,7 @@ export type LikedApplicant = {
 	name: string;
 	gender: GenderLabel;
 	age?: number;
-	yearsOfExperience: number;
+	yearsOfExperience: number | undefined;
 	occupationName: string;
 	selfIntroduction?: string;
 	imageUrl?: string;

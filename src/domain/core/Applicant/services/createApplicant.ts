@@ -17,6 +17,9 @@ export const createApplicant = async (
 				status: applicant.status,
 				selfIntroduction: applicant.selfIntroduction,
 				birthday: applicant.birthday,
+				company: applicant.company,
+				workHistory: applicant.workHistory,
+				education: applicant.education,
 			},
 		});
 
