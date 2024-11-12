@@ -6,8 +6,6 @@ import type {
   PartnerUser,
 } from "@/usecase/getConversationMessages/getConversationMessagesUseCase";
 import { AblyProvider, ChannelProvider } from "ably/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import ChatBox from "./ChatBox";
 import { ChatHeader } from "./ChatHeader";
 
@@ -24,10 +22,6 @@ export default function Chat({
   partnerUser: PartnerUser;
   isApplicant: boolean;
 }) {
-  const router = useRouter();
-  useEffect(() => {
-    router.refresh();
-  }, [router]);
   return (
     <AblyProvider client={client}>
       <ChannelProvider channelName={`chat:${conversationId}`}>
