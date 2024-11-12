@@ -1,4 +1,3 @@
-import { createId } from "@/lib/cuid";
 import { prisma } from "@/lib/prisma";
 import type { CreateConversationMessageUseCaseParams } from "@/usecase/createConversationMessage/createConversationMessageUseCase";
 import type { ConversationMessage } from "@/usecase/getConversationMessages/getConversationMessagesUseCase";
@@ -11,7 +10,7 @@ export class CreateConversationMessageError extends NamedError {
 export const createConversationMessage = async (
 	params: CreateConversationMessageUseCaseParams,
 ): Promise<ConversationMessage> => {
-	const { conversationId, senderId, content } = params;
+	const { conversationId, messageId, senderId, content } = params;
 
 	const conversation = await prisma.conversation.findFirst({
 		where: {
@@ -31,7 +30,7 @@ export const createConversationMessage = async (
 	}
 
 	const messageEntity = Message.create({
-		id: createId(),
+		id: messageId,
 		conversationId,
 		senderId,
 		content,

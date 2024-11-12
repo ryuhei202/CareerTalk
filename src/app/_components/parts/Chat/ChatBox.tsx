@@ -1,5 +1,6 @@
 import { changeMessageIsReadAction } from "@/app/_actions/changeMessageIsReadAction";
 import { createConversationMessageAction } from "@/app/_actions/createConversationMessageAction";
+import { createId } from "@/lib/cuid";
 import type { ConversationMessage } from "@/usecase/getConversationMessages/getConversationMessagesUseCase";
 import type { Message } from "ably";
 import { useChannel } from "ably/react";
@@ -44,11 +45,12 @@ export default function ChatBox({
   });
 
   const sendChatMessage = async (messageText: string) => {
+    const messageId = createId();
     channel.publish({ name: `chat:${conversationId}`, data: messageText });
     setAllMessages([
       ...allMessages,
       {
-        id: "",
+        id: messageId,
         clientId: userId,
         data: messageText,
         isRead: false,
@@ -58,6 +60,7 @@ export default function ChatBox({
     setMessageText("");
     await createConversationMessageAction({
       conversationId,
+      messageId,
       partnerUserId,
       content: messageText,
       isApplicant,

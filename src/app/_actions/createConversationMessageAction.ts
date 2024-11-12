@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 
 export interface CreateConversationMessageParams {
 	conversationId: string;
+	messageId: string;
 	partnerUserId: string;
 	content: string;
 	isApplicant: boolean;
@@ -25,6 +26,7 @@ export const createConversationMessageAction = async (
 
 	const useCaseResult = await createConversationMessageUseCase({
 		conversationId: params.conversationId,
+		messageId: params.messageId,
 		senderId: session.user.id,
 		content: params.content,
 	});

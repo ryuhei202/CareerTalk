@@ -10,6 +10,7 @@ import { ZodError } from "zod";
 import type { ConversationMessage } from "../getConversationMessages/getConversationMessagesUseCase";
 export interface CreateConversationMessageUseCaseParams {
 	conversationId: string;
+	messageId: string;
 	senderId: string;
 	content: string;
 }
