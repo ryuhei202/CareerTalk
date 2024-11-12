@@ -42,8 +42,6 @@ export default async function ApplicantDetailPage({ params }: Props) {
     );
   }
 
-  console.log("fix");
-
   return (
     <Modal>
       <ApplicantCardContainer
