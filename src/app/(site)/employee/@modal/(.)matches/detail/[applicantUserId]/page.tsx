@@ -23,6 +23,7 @@ export default async function ApplicantDetailPage({ params }: Props) {
   if (!employeeUserId) {
     redirect("/employee/create_profile");
   }
+  console.log("fix");
 
   const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams = {
     applicantUserId: params.applicantUserId,
