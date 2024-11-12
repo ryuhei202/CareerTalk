@@ -4,6 +4,7 @@
 // 外部画像のドメイン許可設定
 // @see https://dev.classmethod.jp/articles/tsnote-cognito-change-password-error/
 const nextConfig = {
+  productionBrowserSourceMaps: true,
   images: {
     remotePatterns: [
       {
