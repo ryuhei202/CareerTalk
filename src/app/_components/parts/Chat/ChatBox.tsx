@@ -55,26 +55,13 @@ export default function ChatBox({
         createdAt: new Date(),
       },
     ]);
+    setMessageText("");
     await createConversationMessageAction({
       conversationId,
       partnerUserId,
       content: messageText,
       isApplicant,
     });
-    // メッセージを作成した結果を反映するのではなく、メッセージを作成した時点でメッセージを反映する
-    // if (result.success && result.data) {
-    //   setAllMessages([
-    //     ...allMessages,
-    //     {
-    //       id: result.data.id,
-    //       clientId: result.data.senderId,
-    //       data: result.data.content,
-    //       isRead: result.data.isRead,
-    //       createdAt: result.data.createdAt,
-    //     } as CustomMessage,
-    //   ]);
-    // }
-    setMessageText("");
   };
 
   const handleFormSubmission = (event: React.FormEvent<HTMLFormElement>) => {
