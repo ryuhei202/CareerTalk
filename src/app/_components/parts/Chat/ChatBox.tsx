@@ -45,24 +45,35 @@ export default function ChatBox({
 
   const sendChatMessage = async (messageText: string) => {
     channel.publish({ name: `chat:${conversationId}`, data: messageText });
-    const result = await createConversationMessageAction({
+    setAllMessages([
+      ...allMessages,
+      {
+        id: "",
+        clientId: userId,
+        data: messageText,
+        isRead: false,
+        createdAt: new Date(),
+      },
+    ]);
+    await createConversationMessageAction({
       conversationId,
       partnerUserId,
       content: messageText,
       isApplicant,
     });
-    if (result.success && result.data) {
-      setAllMessages([
-        ...allMessages,
-        {
-          id: result.data.id,
-          clientId: result.data.senderId,
-          data: result.data.content,
-          isRead: result.data.isRead,
-          createdAt: result.data.createdAt,
-        } as CustomMessage,
-      ]);
-    }
+    // メッセージを作成した結果を反映するのではなく、メッセージを作成した時点でメッセージを反映する
+    // if (result.success && result.data) {
+    //   setAllMessages([
+    //     ...allMessages,
+    //     {
+    //       id: result.data.id,
+    //       clientId: result.data.senderId,
+    //       data: result.data.content,
+    //       isRead: result.data.isRead,
+    //       createdAt: result.data.createdAt,
+    //     } as CustomMessage,
+    //   ]);
+    // }
     setMessageText("");
   };
 
