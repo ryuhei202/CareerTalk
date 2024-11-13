@@ -58,63 +58,62 @@ describe("Applicant", () => {
 		expect(() =>
 			Applicant.create({ ...applicantDummyParams, name: "a".repeat(101) }),
 		).toThrow(ZodError);
+
+		// 不正なuserId
+		expect(() =>
+			Applicant.create({ ...applicantDummyParams, userId: "" }),
+		).toThrow(ZodError);
+
+		// 不正なoccupationId
+		expect(() =>
+			Applicant.create({ ...applicantDummyParams, occupationId: 0 }),
+		).toThrow(ZodError);
+
+		// 不正なgender
+		expect(() =>
+			Applicant.create({
+				...applicantDummyParams,
+				gender: "invalid" as GenderEnum,
+			}),
+		).toThrow(ZodError);
+
+		// 不正なjoiningDate
+		expect(() =>
+			Applicant.create({
+				...applicantDummyParams,
+				joiningDate: new Date("invalid"),
+			}),
+		).toThrow(ZodError);
+
+		// 不正なstatus
+		expect(() =>
+			Applicant.create({
+				...applicantDummyParams,
+				status: "invalid" as StatusEnum,
+			}),
+		).toThrow(ZodError);
+
+		// 不正なimageUrl
+		expect(() =>
+			Applicant.create({ ...applicantDummyParams, imageUrl: "あああ" }),
+		).toThrow(ZodError);
+
+		// 不正なbirthday
+		expect(() =>
+			Applicant.create({
+				...applicantDummyParams,
+				birthday: new Date("2999-01-01"),
+			}),
+		).toThrow(ZodError);
+
+		// 不正なselfIntroduction
+		expect(() =>
+			Applicant.create({
+				...applicantDummyParams,
+				selfIntroduction: "a".repeat(1001),
+			}),
+		).toThrow(ZodError);
 	});
-
-	// 不正なuserId
-	expect(() =>
-		Applicant.create({ ...applicantDummyParams, userId: "" }),
-	).toThrow(ZodError);
-
-	// 不正なoccupationId
-	expect(() =>
-		Applicant.create({ ...applicantDummyParams, occupationId: 0 }),
-	).toThrow(ZodError);
-
-	// 不正なgender
-	expect(() =>
-		Applicant.create({
-			...applicantDummyParams,
-			gender: "invalid" as GenderEnum,
-		}),
-	).toThrow(ZodError);
-
-	// 不正なjoiningDate
-	expect(() =>
-		Applicant.create({
-			...applicantDummyParams,
-			joiningDate: new Date("invalid"),
-		}),
-	).toThrow(ZodError);
-
-	// 不正なstatus
-	expect(() =>
-		Applicant.create({
-			...applicantDummyParams,
-			status: "invalid" as StatusEnum,
-		}),
-	).toThrow(ZodError);
-
-	// 不正なimageUrl
-	expect(() =>
-		Applicant.create({ ...applicantDummyParams, imageUrl: "あああ" }),
-	).toThrow(ZodError);
-
-	// 不正なbirthday
-	expect(() =>
-		Applicant.create({
-			...applicantDummyParams,
-			birthday: new Date("2999-01-01"),
-		}),
-	).toThrow(ZodError);
-
-	// 不正なselfIntroduction
-	expect(() =>
-		Applicant.create({
-			...applicantDummyParams,
-			selfIntroduction: "a".repeat(1001),
-		}),
-	).toThrow(ZodError);
-
 	describe("changeName", () => {
 		test("正常にnameを変更できる", () => {
 			const applicant = Applicant.create({
