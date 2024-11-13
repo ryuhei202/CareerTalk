@@ -41,20 +41,17 @@ const formSchema = z.object({
   gender: z.enum(genderOptions, {
     message: "性別は必須です",
   }),
-  birthday: z
-    .string()
-    .refine(
-      (date) => {
-        const selectedDate = new Date(date);
-        const today = new Date();
-        return selectedDate <= today;
-      },
-      {
-        message: "生年月日は今日以前の日付を選択してください",
-      }
-    )
-    .optional(),
-  joinDate: z.string().refine(
+  birthday: z.string({ message: "生年月日は必須です" }).refine(
+    (date) => {
+      const selectedDate = new Date(date);
+      const today = new Date();
+      return selectedDate <= today;
+    },
+    {
+      message: "生年月日は今日以前の日付を選択してください",
+    }
+  ),
+  joinDate: z.string({ message: "社会人になった月は必須です" }).refine(
     (date) => {
       const selectedDate = new Date(date);
       const today = new Date();
@@ -64,13 +61,35 @@ const formSchema = z.object({
       message: "社会人になった月は今日以前の日付を選択してください",
     }
   ),
-  occupation: z.string().trim().min(1, {
-    message: "職種は必須です",
-  }),
-  selfIntroduction: z.string().trim().optional(),
-  workHistory: z.string().trim().optional(),
-  company: z.string().trim().optional(),
-  education: z.string().trim().optional(),
+  occupation: z.string({ message: "職種は必須です" }),
+  selfIntroduction: z
+    .string()
+    .trim()
+    .max(1000, {
+      message: "自己紹介は1000文字以内で入力してください",
+    })
+    .optional(),
+  workHistory: z
+    .string()
+    .trim()
+    .max(1000, {
+      message: "職務経歴は1000文字以内で入力してください",
+    })
+    .optional(),
+  company: z
+    .string()
+    .trim()
+    .max(100, {
+      message: "会社名は100文字以内で入力してください",
+    })
+    .optional(),
+  education: z
+    .string()
+    .trim()
+    .max(100, {
+      message: "学歴は100文字以内で入力してください",
+    })
+    .optional(),
 });
 
 // TODO: あとでしっかりとコンポーネントを分割する。（デザイン待ち）
@@ -97,8 +116,8 @@ export default function CreateProfileApplicant({
       name: (state.data?.name as string) || userName,
       gender: (state.data?.gender as string) ?? undefined,
       birthday: (state.data?.birthday as string) ?? undefined,
-      joinDate: (state.data?.joinDate as string) ?? "",
-      occupation: (state.data?.occupation as string) ?? "",
+      joinDate: (state.data?.joinDate as string) ?? undefined,
+      occupation: (state.data?.occupation as string) ?? undefined,
       selfIntroduction: (state.data?.selfIntroduction as string) ?? undefined,
       company: (state.data?.company as string) ?? undefined,
       workHistory: (state.data?.workHistory as string) ?? undefined,

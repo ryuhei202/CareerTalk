@@ -3,15 +3,15 @@ import { StatusEnum, type StatusLabel } from "@/domain/shared/Status";
 import { NamedError } from "@/util/error";
 import {
 	applicantParamsSchema,
+	companySchema,
+	educationSchema,
 	imageUrlSchema,
 	joiningDateSchema,
 	nameSchema,
 	occupationIdSchema,
-	selfCompanySchema,
-	selfEducationSchema,
 	selfIntroductionSchema,
-	selfWorkHistorySchema,
 	statusSchema,
+	workHistorySchema,
 } from "./ApplicantSchema";
 
 export class ApplicantDomainError extends NamedError {
@@ -104,15 +104,15 @@ export class Applicant {
 		this._selfIntroduction = newSelfIntroduction;
 	}
 	changeCompany(newCompany: string): void {
-		selfCompanySchema.parse(newCompany);
+		companySchema.parse(newCompany);
 		this._company = newCompany;
 	}
 	changeWorkHistory(newWorkHistory: string): void {
-		selfWorkHistorySchema.parse(newWorkHistory);
+		workHistorySchema.parse(newWorkHistory);
 		this._workHistory = newWorkHistory;
 	}
 	changeEducation(newEducation: string): void {
-		selfEducationSchema.parse(newEducation);
+		educationSchema.parse(newEducation);
 		this._education = newEducation;
 	}
 

@@ -15,6 +15,9 @@ const status = StatusEnum.PENDING;
 const imageUrl = "https://example.com/image.png";
 const birthday = new Date("1990-01-01");
 const selfIntroduction = "自己紹介";
+const company = "テストカンパニー";
+const workHistory = "職務経歴";
+const education = "東大卒";
 
 export const applicantDummyParams: ApplicantParams = {
 	id: applicantId,
@@ -27,5 +30,8 @@ export const applicantDummyParams: ApplicantParams = {
 	imageUrl,
 	birthday,
 	selfIntroduction,
+	company,
+	workHistory,
+	education,
 };
 export const applicantDummy = Applicant.create(applicantDummyParams);

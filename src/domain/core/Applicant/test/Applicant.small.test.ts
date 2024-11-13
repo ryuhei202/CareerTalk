@@ -20,6 +20,9 @@ describe("Applicant", () => {
 		expect(applicant.selfIntroduction).toBe(
 			applicantDummyParams.selfIntroduction,
 		);
+		expect(applicant.company).toBe(applicantDummyParams.company);
+		expect(applicant.workHistory).toBe(applicantDummyParams.workHistory);
+		expect(applicant.education).toBe(applicantDummyParams.education);
 	});
 
 	test("未設定のプロパティはundefinedを返す", () => {
@@ -28,6 +31,9 @@ describe("Applicant", () => {
 			imageUrl: undefined,
 			birthday: undefined,
 			selfIntroduction: undefined,
+			company: undefined,
+			workHistory: undefined,
+			education: undefined,
 		});
 
 		expect(applicant.id).toBe(applicantDummyParams.id);
@@ -41,6 +47,9 @@ describe("Applicant", () => {
 		expect(applicant.imageUrl).toBeUndefined();
 		expect(applicant.birthday).toBeUndefined();
 		expect(applicant.selfIntroduction).toBeUndefined();
+		expect(applicant.company).toBeUndefined();
+		expect(applicant.workHistory).toBeUndefined();
+		expect(applicant.education).toBeUndefined();
 	});
 
 	test("不正な値でApplicantを生成しようとするとエラーが発生する", () => {
@@ -111,6 +120,27 @@ describe("Applicant", () => {
 			Applicant.create({
 				...applicantDummyParams,
 				selfIntroduction: "a".repeat(1001),
+			}),
+		).toThrow(ZodError);
+
+		// 不正なcompany
+		expect(() =>
+			Applicant.create({ ...applicantDummyParams, company: "a".repeat(101) }),
+		).toThrow(ZodError);
+
+		// 不正なworkHistory
+		expect(() =>
+			Applicant.create({
+				...applicantDummyParams,
+				workHistory: "a".repeat(1001),
+			}),
+		).toThrow(ZodError);
+
+		// 不正なeducation
+		expect(() =>
+			Applicant.create({
+				...applicantDummyParams,
+				education: "a".repeat(1001),
 			}),
 		).toThrow(ZodError);
 	});
@@ -203,6 +233,79 @@ describe("Applicant", () => {
 
 			expect(applicant.selfIntroduction).toBe("自己紹介");
 			expect(() => applicant.changeSelfIntroduction("a".repeat(1001))).toThrow(
+				ZodError,
+			);
+		});
+	});
+
+	describe("changeCompany", () => {
+		test("正常にcompanyを変更できる", () => {
+			const applicant = Applicant.create({
+				...applicantDummyParams,
+				company: "テストカンパニー",
+			});
+
+			expect(applicant.company).toBe("テストカンパニー");
+			applicant.changeCompany("テストカンパニー2");
+			expect(applicant.company).toBe("テストカンパニー2");
+		});
+
+		test("不正なcompanyでcompanyを変更しようとするとエラーが発生する", () => {
+			const applicant = Applicant.create({
+				...applicantDummyParams,
+				company: "テストカンパニー",
+			});
+
+			expect(applicant.company).toBe("テストカンパニー");
+			expect(() => applicant.changeCompany("a".repeat(101))).toThrow(ZodError);
+		});
+	});
+
+	describe("changeWorkHistory", () => {
+		test("正常にworkHistoryを変更できる", () => {
+			const applicant = Applicant.create({
+				...applicantDummyParams,
+				workHistory: "職務経歴",
+			});
+
+			expect(applicant.workHistory).toBe("職務経歴");
+			applicant.changeWorkHistory("職務経歴2");
+			expect(applicant.workHistory).toBe("職務経歴2");
+		});
+
+		test("不正なworkHistoryでworkHistoryを変更しようとするとエラーが発生する", () => {
+			const applicant = Applicant.create({
+				...applicantDummyParams,
+				workHistory: "職務経歴",
+			});
+
+			expect(applicant.workHistory).toBe("職務経歴");
+			expect(() => applicant.changeWorkHistory("a".repeat(1001))).toThrow(
+				ZodError,
+			);
+		});
+	});
+
+	describe("changeEducation", () => {
+		test("正常にeducationを変更できる", () => {
+			const applicant = Applicant.create({
+				...applicantDummyParams,
+				education: "東大卒",
+			});
+
+			expect(applicant.education).toBe("東大卒");
+			applicant.changeEducation("大阪大学");
+			expect(applicant.education).toBe("大阪大学");
+		});
+
+		test("不正なeducationでeducationを変更しようとするとエラーが発生する", () => {
+			const applicant = Applicant.create({
+				...applicantDummyParams,
+				education: "東大卒",
+			});
+
+			expect(applicant.education).toBe("東大卒");
+			expect(() => applicant.changeEducation("a".repeat(1001))).toThrow(
 				ZodError,
 			);
 		});
