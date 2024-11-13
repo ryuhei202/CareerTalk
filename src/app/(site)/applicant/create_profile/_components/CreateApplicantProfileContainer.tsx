@@ -1,5 +1,6 @@
 "use client";
 import { Alert } from "@/app/_components/ui/alert";
+import { Button } from "@/app/_components/ui/button";
 import {
   Form,
   FormControl,
@@ -19,13 +20,12 @@ import {
 import { Textarea } from "@/app/_components/ui/textarea";
 import { GenderEnum } from "@/domain/shared/Gender";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { registerApplicantAction } from "../_actions/registerApplicantAction";
 import type { TOccupation } from "../page";
-import { SubmitCreateApplicantProfileButton } from "./SubmitCreateApplicantProfileButton";
 
 export type FormState = {
   message: string;
@@ -100,6 +100,7 @@ export default function CreateProfileApplicant({
   occupations: TOccupation[];
   userName: string;
 }) {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [state, formAction] = useFormState<FormState, FormData>(
     registerApplicantAction,
     {
@@ -138,6 +139,7 @@ export default function CreateProfileApplicant({
         <form
           ref={formRef}
           onSubmit={form.handleSubmit(() => {
+            setIsButtonDisabled(true);
             formRef.current?.submit();
           })}
           className="space-y-6"
@@ -335,7 +337,9 @@ export default function CreateProfileApplicant({
             )}
           />
           <div className="flex justify-end">
-            <SubmitCreateApplicantProfileButton />
+            <Button type="submit" disabled={isButtonDisabled}>
+              送信
+            </Button>
           </div>
         </form>
       </Form>

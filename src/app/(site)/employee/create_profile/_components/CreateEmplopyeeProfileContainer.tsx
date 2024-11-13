@@ -1,6 +1,7 @@
 "use client";
 import { registerEmployeeAction } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
 import { Alert } from "@/app/_components/ui/alert";
+import { Button } from "@/app/_components/ui/button";
 import {
   Form,
   FormControl,
@@ -23,11 +24,10 @@ import { HiringTypeEnum } from "@/domain/shared/HiringType";
 import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Occupation, WorkLocation } from "@prisma/client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { SubmitCreateEmployeeProfileButton } from "./SubmitCreateEmployeeProfileButton";
 
 export type FormState = {
   message: string;
@@ -90,6 +90,7 @@ export default function CreateProfileEmployee({
   userName: string;
   workLocations: WorkLocation[];
 }) {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [state, formAction] = useFormState<FormState, FormData>(
     registerEmployeeAction,
     {
@@ -129,6 +130,7 @@ export default function CreateProfileEmployee({
         <form
           ref={formRef}
           onSubmit={form.handleSubmit(() => {
+            setIsButtonDisabled(true);
             formRef.current?.submit();
           })}
           className="space-y-6"
@@ -387,7 +389,9 @@ export default function CreateProfileEmployee({
             )}
           />
           <div className="flex justify-end">
-            <SubmitCreateEmployeeProfileButton />
+            <Button type="submit" disabled={isButtonDisabled}>
+              送信
+            </Button>
           </div>
         </form>
       </Form>
