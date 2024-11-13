@@ -20,7 +20,7 @@ export default async function ApplicantDMPage({
     partnerUserId: employeeUserId,
   });
 
-  if (!result.data) {
+  if (!result.success) {
     return <ErrorPage message={result.message} data={result.data} />;
   }
   return (
