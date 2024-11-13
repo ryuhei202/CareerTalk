@@ -9,6 +9,8 @@ export default function ConversationList({
   conversations: GetConversationsUseCaseResponse;
   isApplicant: boolean;
 }) {
+  console.log("lastMessageAt", conversations[0].lastMessageAt);
+
   return (
     <div className="h-[calc(100vh-150px)] overflow-y-auto border-r w-1/3">
       <div className="divide-y border-b mx-auto">
