@@ -59,8 +59,7 @@ export async function registerApplicantAction(
 	const company = formData.get("company");
 	const workHistory = formData.get("workHistory");
 	const education = formData.get("education");
-	// 後で画像も入れれるようにする
-	// const imageUrl = formData.get("imageUrl");
+	const imageUrl = formData.get("imageUrl");
 	const formDataObject = Object.fromEntries(formData.entries());
 
 	const useCaseParams: RegisterApplicantParams = {
@@ -74,11 +73,9 @@ export async function registerApplicantAction(
 		company: (company as string) || undefined,
 		workHistory: (workHistory as string) || undefined,
 		education: (education as string) || undefined,
-
-		// imageUrl: (imageUrl as string) || undefined,
+		imageUrl: (imageUrl as string) || undefined,
 	};
 
-	// ここ
 	const useCaseResult = await registerApplicantUseCase(useCaseParams);
 
 	if (useCaseResult.success) {

@@ -1,5 +1,6 @@
 "use client";
 import { Alert } from "@/app/_components/ui/alert";
+import { Avatar, AvatarFallback } from "@/app/_components/ui/avatar";
 import { Button } from "@/app/_components/ui/button";
 import {
   Form,
@@ -20,6 +21,7 @@ import {
 import { Textarea } from "@/app/_components/ui/textarea";
 import { GenderEnum } from "@/domain/shared/Gender";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
@@ -90,15 +92,18 @@ const formSchema = z.object({
       message: "学歴は100文字以内で入力してください",
     })
     .optional(),
+  imageUrl: z.string().optional(),
 });
 
 // TODO: あとでしっかりとコンポーネントを分割する。（デザイン待ち）
 export default function CreateProfileApplicant({
   occupations,
   userName,
+  userImage,
 }: {
   occupations: TOccupation[];
   userName: string;
+  userImage: string;
 }) {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [state, formAction] = useFormState<FormState, FormData>(
@@ -123,8 +128,11 @@ export default function CreateProfileApplicant({
       company: (state.data?.company as string) ?? undefined,
       workHistory: (state.data?.workHistory as string) ?? undefined,
       education: (state.data?.education as string) ?? undefined,
+      imageUrl: (state.data?.imageUrl as string) || userImage,
     },
   });
+
+  console.log("form", form.watch());
 
   const formRef = useRef<HTMLFormElement>(null);
   return (
@@ -145,6 +153,68 @@ export default function CreateProfileApplicant({
           className="space-y-6"
           action={formAction}
         >
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3 gap-4 items-center">
+                <FormLabel className="text-sm font-medium text-gray-700">
+                  プロフィール画像
+                </FormLabel>
+                <div className="col-span-2">
+                  <div className="flex items-center gap-4">
+                    <Avatar className="w-20 h-20">
+                      {field.value ? (
+                        <Image
+                          src={field.value}
+                          alt={userName}
+                          width={80}
+                          height={80}
+                          className="rounded-full object-cover"
+                        />
+                      ) : (
+                        <AvatarFallback>{userName[0]}</AvatarFallback>
+                      )}
+                    </Avatar>
+                    <FormControl>
+                      <div className="flex items-center gap-2">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          id="imageUpload"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                field.onChange(reader.result as string);
+                              };
+                              reader.readAsDataURL(file);
+
+                              const formData = new FormData();
+                              formData.append("file", file);
+                              // TODO: ここで画像アップロードのAPIを呼び出す
+                            }
+                          }}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => {
+                            document.getElementById("imageUpload")?.click();
+                          }}
+                        >
+                          画像を選択
+                        </Button>
+                      </div>
+                    </FormControl>
+                  </div>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="name"
