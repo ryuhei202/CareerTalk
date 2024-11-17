@@ -33,6 +33,7 @@ export default async function CreateProfileApplicantPage() {
     <CreateProfileApplicant
       occupations={occupations}
       userName={session?.user.name ?? ""}
+      userImage={session?.user.image ?? ""}
     />
   );
 }

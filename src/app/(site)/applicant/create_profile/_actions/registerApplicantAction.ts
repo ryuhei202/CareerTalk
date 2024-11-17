@@ -15,7 +15,7 @@ export type CreatedApplicantResponse = {
 	yearsOfExperience: number;
 	status: StatusLabel;
 	age?: number;
-	imageUrl?: string;
+	imageBase64?: string;
 	selfIntroduction?: string;
 	company?: string;
 	workHistory?: string;
@@ -29,7 +29,7 @@ export interface RegisterApplicantParams {
 	gender: string;
 	birthday: Date;
 	joiningDate: Date;
-	imageUrl?: string;
+	imageBase64?: string;
 	selfIntroduction?: string;
 	company?: string;
 	workHistory?: string;
@@ -59,8 +59,7 @@ export async function registerApplicantAction(
 	const company = formData.get("company");
 	const workHistory = formData.get("workHistory");
 	const education = formData.get("education");
-	// 後で画像も入れれるようにする
-	// const imageUrl = formData.get("imageUrl");
+	const imageBase64 = formData.get("imageBase64");
 	const formDataObject = Object.fromEntries(formData.entries());
 
 	const useCaseParams: RegisterApplicantParams = {
@@ -74,11 +73,8 @@ export async function registerApplicantAction(
 		company: (company as string) || undefined,
 		workHistory: (workHistory as string) || undefined,
 		education: (education as string) || undefined,
-
-		// imageUrl: (imageUrl as string) || undefined,
+		imageBase64: (imageBase64 as string) || undefined,
 	};
-
-	// ここ
 	const useCaseResult = await registerApplicantUseCase(useCaseParams);
 
 	if (useCaseResult.success) {
