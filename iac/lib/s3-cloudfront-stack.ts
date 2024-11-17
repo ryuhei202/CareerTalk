@@ -9,17 +9,22 @@ export class S3CloudFrontStack extends cdk.Stack {
 		super(scope, id);
 
 		const userImageBucket = new s3.Bucket(this, "user-image-bucket", {
+			bucketName: "high-career-talk-user-images-bucket",
 			removalPolicy: cdk.RemovalPolicy.RETAIN,
-			blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
 			versioned: true,
 			encryption: s3.BucketEncryption.S3_MANAGED,
 			cors: [
 				{
-					allowedMethods: [s3.HttpMethods.GET, s3.HttpMethods.POST],
+					allowedMethods: [
+						s3.HttpMethods.GET,
+						s3.HttpMethods.POST,
+						s3.HttpMethods.PUT,
+					],
 					allowedOrigins: ["*"],
 					allowedHeaders: ["*"],
 				},
 			],
+			blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
 		});
 
 		// バケット名を出力
@@ -29,6 +34,7 @@ export class S3CloudFrontStack extends cdk.Stack {
 
 		// CloudFront ディストリビューションの作成
 		const distribution = new cloudfront.Distribution(this, "Distribution", {
+			defaultRootObject: "index.html",
 			defaultBehavior: {
 				origin:
 					cloudfront_origins.S3BucketOrigin.withOriginAccessControl(
