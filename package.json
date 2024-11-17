@@ -17,7 +17,7 @@
     "db-seed": "prisma db seed",
     "db-studio": "prisma studio",
     "postinstall": "prisma generate",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build && prisma db seed",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build && prisma db seed && cd iac && npm install && npm run build && cd ..",
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --write"
