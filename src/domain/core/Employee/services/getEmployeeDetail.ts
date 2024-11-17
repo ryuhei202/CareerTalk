@@ -18,6 +18,8 @@ export const getEmployeeDetail = async (
 ): Promise<EmployeeDetailResponse> => {
 	const employeeUserId = params.employeeUserId;
 
+	console.log("employeeUserId", employeeUserId);
+
 	const employee = await prisma.employee.findUnique({
 		where: {
 			userId: employeeUserId,
