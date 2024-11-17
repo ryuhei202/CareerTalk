@@ -4,7 +4,6 @@ import { getServerSession as originalGetServerSession } from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import LineProvider from "next-auth/providers/line";
-import { cache } from "react";
 
 declare module "next-auth" {
 	interface Session {
