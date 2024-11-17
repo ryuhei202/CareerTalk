@@ -54,8 +54,6 @@ export const EditMyPageFormContent = ({
     },
   });
 
-  console.log("fields.imageBase64.value", fields.imageBase64.value);
-
   return (
     <form
       id={form.id}

@@ -65,8 +65,6 @@ export async function updateApplicantForMyPageAction(
 		imageBase64: (imageBase64 as string) ?? undefined,
 	};
 
-	console.log("imageBase64", imageBase64);
-
 	// TODO: Add updateEmployeeForMyPageUseCase call here
 	const useCaseResult = await updateApplicantForMyPageUseCase(applicantData);
 

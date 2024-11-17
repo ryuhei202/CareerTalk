@@ -16,7 +16,7 @@ import { validateUpdateApplicantForMyPageUseCaseParams } from "./validateUpdateA
 export type UpdateApplicantUseCaseResult = Result<undefined, undefined>;
 
 const storageRepository = createStorageRepository({
-	bucketName: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || "",
+	bucketName: process.env.AWS_BUCKET_NAME || "",
 });
 
 export const updateApplicantForMyPageUseCase = async (
@@ -37,9 +37,7 @@ export const updateApplicantForMyPageUseCase = async (
 				userId: validatedParams.userId,
 				imageData: validatedParams.imageBase64,
 			});
-			applicant.changeImageUrl(
-				`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${imageUrl}`,
-			);
+			applicant.changeImageUrl(`${process.env.CLOUDFRONT_URL}/${imageUrl}`);
 		}
 
 		// ドメインサービス② 転職者の登録
