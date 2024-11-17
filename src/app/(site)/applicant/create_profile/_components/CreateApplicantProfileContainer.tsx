@@ -26,17 +26,9 @@ import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { convertFileToBase64 } from "../../search_employees/_util/convertFileToBase64";
 import { registerApplicantAction } from "../_actions/registerApplicantAction";
 import type { TOccupation } from "../page";
-
-const convertFileToBase64 = (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-};
 
 export type FormState = {
   message: string;
