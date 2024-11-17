@@ -18,7 +18,7 @@ export type RegisterApplicantUseCase = (
 ) => Promise<RegisterApplicantUseCaseResult>;
 
 const storageRepository = createStorageRepository({
-	bucketName: "high-career-talk-user-images-bucket",
+	bucketName: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || "",
 });
 
 export const registerApplicantUseCase = async (
@@ -33,12 +33,12 @@ export const registerApplicantUseCase = async (
 
 		// S3に画像をアップロードし、画像URLを更新する
 		if (validatedParams.imageBase64) {
-			await storageRepository.saveImage({
+			const imageUrl = await storageRepository.saveImage({
 				userId: validatedParams.userId,
 				imageData: validatedParams.imageBase64,
 			});
 			applicant.changeImageUrl(
-				`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${validatedParams.userId}.jpg`,
+				`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${imageUrl}`,
 			);
 		}
 
