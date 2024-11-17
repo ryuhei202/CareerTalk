@@ -66,11 +66,11 @@ export const authOptions: NextAuthOptions = {
 	},
 };
 
-export const getServerSession = cache(async () => {
+export const getServerSession = async () => {
 	return originalGetServerSession(authOptions);
-});
+};
 
-export const getApplicantUserId = cache(async () => {
+export const getApplicantUserId = async () => {
 	const session = await getServerSession();
 	if (!session) {
 		return null;
@@ -80,9 +80,9 @@ export const getApplicantUserId = cache(async () => {
 		include: { user: true },
 	});
 	return applicant?.user.id;
-});
+};
 
-export const getEmployeeUserId = cache(async () => {
+export const getEmployeeUserId = async () => {
 	const session = await getServerSession();
 	if (!session) {
 		return null;
@@ -92,4 +92,4 @@ export const getEmployeeUserId = cache(async () => {
 		include: { user: true },
 	});
 	return employee?.user.id;
-});
+};
