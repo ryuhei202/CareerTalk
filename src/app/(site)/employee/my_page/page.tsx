@@ -13,20 +13,15 @@ export default async function MyPage() {
   if (!session) {
     redirect("/signin");
   }
-  console.log("session", session.user.id);
 
   const userId = await getEmployeeUserId();
   if (!userId) {
     redirect("/employee/create_profile");
   }
 
-  console.log("userId", userId);
-
   const employee = await getEmployeeDetailUseCase({
     employeeUserId: session.user.id,
   });
-
-  console.log("employee", employee);
 
   if (!employee.success) {
     return <ErrorPage message={employee.message} data={employee.data} />;

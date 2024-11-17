@@ -4,6 +4,7 @@ import { getServerSession as originalGetServerSession } from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import LineProvider from "next-auth/providers/line";
+import { cache } from "react";
 
 declare module "next-auth" {
 	interface Session {
@@ -72,11 +73,11 @@ export const authOptions: NextAuthOptions = {
 	},
 };
 
-export const getServerSession = async () => {
+export const getServerSession = cache(async () => {
 	return originalGetServerSession(authOptions);
-};
+});
 
-export const getApplicantUserId = async () => {
+export const getApplicantUserId = cache(async () => {
 	const session = await getServerSession();
 	if (!session) {
 		return null;
@@ -86,9 +87,9 @@ export const getApplicantUserId = async () => {
 		include: { user: true },
 	});
 	return applicant?.user.id;
-};
+});
 
-export const getEmployeeUserId = async () => {
+export const getEmployeeUserId = cache(async () => {
 	const session = await getServerSession();
 	if (!session) {
 		return null;
@@ -98,4 +99,4 @@ export const getEmployeeUserId = async () => {
 		include: { user: true },
 	});
 	return employee?.user.id;
-};
+});
