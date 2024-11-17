@@ -16,17 +16,34 @@ export const createStorageRepository = ({
 			const base64Data = imageData.replace(/^data:image\/\w+;base64,/, "");
 			const buffer = Buffer.from(base64Data, "base64");
 
+			const now = new Date();
+			const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}:${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+			const mimeType =
+				imageData.match(/^data:([^;]+);base64,/)?.[1] || "image/jpeg";
+			const uploadKey = `user:${userId}/${formattedDate}.${getExtension(mimeType)}`;
 			const upload = new Upload({
 				client: s3,
 				params: {
 					Bucket: bucketName,
-					Key: `${userId}.jpg`,
+					Key: uploadKey,
 					Body: buffer,
-					ContentType: "image/jpeg",
+					ContentType: mimeType,
 				},
 			});
 
 			await upload.done();
+
+			return uploadKey;
 		},
 	};
+};
+
+const getExtension = (mimeType: string): string => {
+	const extensions: Record<string, string> = {
+		"image/jpeg": "jpg",
+		"image/png": "png",
+		"image/gif": "gif",
+		"image/webp": "webp",
+	};
+	return extensions[mimeType] || "jpg";
 };
