@@ -44,4 +44,5 @@ export const updateApplicantForMyPageSchema = z.object({
 			},
 		)
 		.optional(),
+	imageBase64: z.string().optional(),
 });

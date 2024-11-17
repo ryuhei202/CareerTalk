@@ -20,6 +20,16 @@ export const updateApplicantForMyPage = async (
 				education: applicant.education,
 			},
 		});
+
+		// ユーザー情報更新
+		await tx.user.update({
+			where: {
+				id: applicant.userId,
+			},
+			data: {
+				image: applicant.imageUrl,
+			},
+		});
 		return result;
 	});
 	return updatedApplicant;
