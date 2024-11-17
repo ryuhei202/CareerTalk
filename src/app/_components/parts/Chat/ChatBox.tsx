@@ -6,7 +6,6 @@ import type { Message } from "ably";
 import { useChannel } from "ably/react";
 import type React from "react";
 import { useEffect, useState } from "react";
-import { z } from "zod";
 import { MessageArea } from "./Message";
 
 type CustomMessage = Message & { createdAt?: Date; isRead?: boolean };
