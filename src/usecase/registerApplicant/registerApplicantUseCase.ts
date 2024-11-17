@@ -6,6 +6,7 @@ import {
 	type InvalidRegisterApplicantInputError,
 	validateRegisterApplicantInput,
 } from "@/domain/core/Applicant/services/validateRegisterApplicantInput";
+import { createStorageRepository } from "@/infrastructure/external/Storage/StorageRepository";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import type { ZodError } from "zod";
 import { validateRegisterApplicantUseCaseParams } from "./validateRegisterApplicantUseCaseParams";
@@ -16,6 +17,10 @@ export type RegisterApplicantUseCase = (
 	params: RegisterApplicantParams,
 ) => Promise<RegisterApplicantUseCaseResult>;
 
+const storageRepository = createStorageRepository({
+	bucketName: "high-career-talk-user-images-bucket",
+});
+
 export const registerApplicantUseCase = async (
 	params: RegisterApplicantParams,
 ): Promise<RegisterApplicantUseCaseResult> => {
@@ -25,6 +30,17 @@ export const registerApplicantUseCase = async (
 
 		// ドメインサービス① 転職者登録インプットのバリデーション
 		const applicant = await validateRegisterApplicantInput(validatedParams);
+
+		// S3に画像をアップロードし、画像URLを更新する
+		if (validatedParams.imageBase64) {
+			await storageRepository.saveImage({
+				userId: validatedParams.userId,
+				imageData: validatedParams.imageBase64,
+			});
+			applicant.changeImageUrl(
+				`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${validatedParams.userId}.jpg`,
+			);
+		}
 
 		// ドメインサービス② 転職者の登録
 		const createdApplicant = await createApplicant(applicant);
@@ -41,6 +57,7 @@ export const registerApplicantUseCase = async (
 			data: undefined,
 		});
 	} catch (error) {
+		console.log("error", error);
 		return createFailure({
 			message: (error as InvalidRegisterApplicantInputError | ZodError).message,
 			data: undefined,

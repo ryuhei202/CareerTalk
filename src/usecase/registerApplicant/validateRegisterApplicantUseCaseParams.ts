@@ -15,7 +15,7 @@ export const validateRegisterApplicantUseCaseParams = (
 	const companySchema = z.string().trim().optional();
 	const workHistorySchema = z.string().trim().optional();
 	const educationSchema = z.string().trim().optional();
-	const imageUrlSchema = z.string().trim().optional();
+	const imageBase64Schema = z.string().trim().optional();
 
 	const paramsSchema = z.object({
 		userId: userIdSchema,
@@ -28,7 +28,7 @@ export const validateRegisterApplicantUseCaseParams = (
 		company: companySchema,
 		workHistory: workHistorySchema,
 		education: educationSchema,
-		imageUrl: imageUrlSchema,
+		imageBase64: imageBase64Schema,
 	});
 
 	return paramsSchema.parse(params);

@@ -29,6 +29,15 @@ import * as z from "zod";
 import { registerApplicantAction } from "../_actions/registerApplicantAction";
 import type { TOccupation } from "../page";
 
+const convertFileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
 export type FormState = {
   message: string;
   success: boolean | undefined;
@@ -93,6 +102,7 @@ const formSchema = z.object({
     })
     .optional(),
   imageUrl: z.string().optional(),
+  imageBase64: z.string().optional(),
 });
 
 // TODO: あとでしっかりとコンポーネントを分割する。（デザイン待ち）
@@ -131,8 +141,6 @@ export default function CreateProfileApplicant({
       imageUrl: (state.data?.imageUrl as string) || userImage,
     },
   });
-
-  console.log("form", form.watch());
 
   const formRef = useRef<HTMLFormElement>(null);
   return (
@@ -178,6 +186,11 @@ export default function CreateProfileApplicant({
                     </Avatar>
                     <FormControl>
                       <div className="flex items-center gap-2">
+                        <input
+                          type="hidden"
+                          name="imageBase64"
+                          value={field.value !== userImage ? field.value : ""}
+                        />
                         <Input
                           type="file"
                           accept="image/*"
@@ -186,15 +199,9 @@ export default function CreateProfileApplicant({
                           onChange={async (e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                              const reader = new FileReader();
-                              reader.onloadend = () => {
-                                field.onChange(reader.result as string);
-                              };
-                              reader.readAsDataURL(file);
-
-                              const formData = new FormData();
-                              formData.append("file", file);
-                              // TODO: ここで画像アップロードのAPIを呼び出す
+                              const base64 = await convertFileToBase64(file);
+                              field.onChange(base64);
+                              form.setValue("imageBase64", base64);
                             }
                           }}
                         />

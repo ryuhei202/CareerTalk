@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "example.com",
       },
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_CLOUDFRONT_URL,
+      },
     ],
   },
 };
