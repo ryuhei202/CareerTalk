@@ -32,14 +32,6 @@ export default function EmployeeCard({
             <ArrowLeft className="h-4 w-4" />
             <span className="sr-only">戻る</span>
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            className="bg-white text-blue-600 hover:bg-blue-50 rounded-full text-xs"
-            onClick={onClickOpenDMRequest}
-          >
-            この社員とトークする
-          </Button>
         </div>
 
         <div className="flex items-start space-x-3 mt-4">
