@@ -1,7 +1,7 @@
 import EmployeeCardContainer from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/_components/EmployeeCardContainer";
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { Modal } from "@/app/_components/parts/Modal";
-import { getServerSession } from "@/lib/auth";
+import { getApplicantUserId } from "@/lib/auth";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,
@@ -14,9 +14,9 @@ type Props = {
 };
 
 export default async function EmployeeDetailModalPage({ params }: Props) {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/");
+  const applicantUserId = await getApplicantUserId();
+  if (!applicantUserId) {
+    redirect("/applicant/create_profile");
   }
 
   const result: GetEmployeeDetailUseCaseResult = await getEmployeeDetailUseCase(
