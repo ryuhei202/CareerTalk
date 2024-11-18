@@ -11,8 +11,8 @@ export default function EmployeeCard({
   onClickOpenDMRequest,
 }: {
   employee: EmployeeDetailResponse;
-  onClickBack: () => void;
-  onClickOpenDMRequest: () => void;
+  onClickBack?: () => void;
+  onClickOpenDMRequest?: () => void;
 }) {
   return (
     <Card className="w-full max-w-md mx-auto h-[calc(100vh-80px)] overflow-y-auto my-4">
@@ -22,17 +22,19 @@ export default function EmployeeCard({
         </h2>
       </CardHeader>
       <CardContent className="p-4">
-        <div className="flex justify-between items-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-blue-600 hover:text-white hover:bg-blue-600 p-1"
-            onClick={onClickBack}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">戻る</span>
-          </Button>
-        </div>
+        {onClickBack && (
+          <div className="flex justify-between items-center">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-blue-600 hover:text-white hover:bg-blue-600 p-1"
+              onClick={onClickBack}
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="sr-only">戻る</span>
+            </Button>
+          </div>
+        )}
 
         <div className="flex items-start space-x-3 mt-4">
           <div className="flex-shrink-0">
@@ -78,15 +80,17 @@ export default function EmployeeCard({
           <CardCommentBox title="その他" comment={employee.otherDescription} />
         </div>
       </CardContent>
-      <div className="sticky bottom-0 bg-white p-4 border-t">
-        <Button
-          type="button"
-          className="w-full bg-blue-600 text-white hover:bg-blue-700 rounded-full py-3 text-sm font-medium"
-          onClick={onClickOpenDMRequest}
-        >
-          この社員とトークする
-        </Button>
-      </div>
+      {onClickOpenDMRequest && (
+        <div className="sticky bottom-0 bg-white p-4 border-t">
+          <Button
+            type="button"
+            className="w-full bg-blue-600 text-white hover:bg-blue-700 rounded-full py-3 text-sm font-medium"
+            onClick={onClickOpenDMRequest}
+          >
+            この社員とトークする
+          </Button>
+        </div>
+      )}
     </Card>
   );
 }
