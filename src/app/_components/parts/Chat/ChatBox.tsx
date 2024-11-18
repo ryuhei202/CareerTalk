@@ -141,8 +141,11 @@ export default function ChatBox({
           }}
         />
       </div>
-      <form onSubmit={handleFormSubmission} className="border-t bg-white p-4">
-        <div className="flex gap-2">
+      <form
+        onSubmit={handleFormSubmission}
+        className="border-t bg-white p-4 mt-auto"
+      >
+        <div className="flex gap-2 items-end">
           <textarea
             value={messageText}
             placeholder="メッセージを入力...（Command + Enter または Ctrl + Enter で送信）"
@@ -151,17 +154,17 @@ export default function ChatBox({
             className="flex-1 resize-none rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 [field-sizing:content] max-h-[240px]"
             rows={1}
           />
-          {messageError && (
-            <span className="text-sm text-red-500">{messageError}</span>
-          )}
           <button
             type="submit"
             disabled={isButtonDisabled}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors h-[40px]"
           >
             送信
           </button>
         </div>
+        {messageError && (
+          <span className="text-sm text-red-500 mt-1">{messageError}</span>
+        )}
       </form>
     </div>
   );
