@@ -27,6 +27,7 @@ export default function Chat({
       <ChannelProvider channelName={`chat:${conversationId}`}>
         <div className="flex flex-col h-full">
           <ChatHeader
+            partnerUserId={partnerUser.id}
             partnerName={partnerUser.name}
             partnerImageUrl={partnerUser.image}
             isApplicant={isApplicant}
