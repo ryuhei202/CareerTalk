@@ -1,16 +1,13 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import ConversationList from "@/app/_components/parts/Conversation/ConversationList";
-import { getApplicantUserId } from "@/lib/auth";
+import { handleUserView } from "@/lib/auth";
 import { getConversationUseCase } from "@/usecase/getConversations/getConversationUseCase";
-import { redirect } from "next/navigation";
 
 export default async function ConversationsPage() {
-  const applicantUserId = await getApplicantUserId();
-  if (!applicantUserId) {
-    redirect("/applicant/create_profile");
-  }
+  const { applicantUserId } = await handleUserView({ isApplicantPage: true });
+
   const result = await getConversationUseCase({
-    userId: applicantUserId,
+    userId: applicantUserId as string,
   });
 
   if (!result.success) {
