@@ -76,9 +76,9 @@ export default function SearchEmployeeContainer({
   );
 
   return (
-    <div className="flex min-h-screen">
+    <div className="grid grid-cols-12">
       {/* Left Sidebar */}
-      <div className="w-1/4 p-4 md:p-6 lg:p-8">
+      <div className="p-4 col-span-6 lg:col-span-4">
         <SearchEmployeeBox
           occupations={occupations}
           companies={companies}
@@ -99,13 +99,15 @@ export default function SearchEmployeeContainer({
       </div>
 
       {/* Main Content */}
-      <SearchEmployeeList
-        employees={employees}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        totalCount={totalCount}
-        onPageChange={handleChangePage}
-      />
+      <div className="col-span-4 sm:col-span-6 md:col-span-6 lg:col-span-8">
+        <SearchEmployeeList
+          employees={employees}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalCount={totalCount}
+          onPageChange={handleChangePage}
+        />
+      </div>
     </div>
   );
 }

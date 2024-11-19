@@ -28,8 +28,6 @@ export default async function EmployeeDetailModalPage({ params }: Props) {
   }
 
   return (
-    <Modal>
-      <EmployeeCardContainer employee={result.data} />
-    </Modal>
+    <EmployeeCardContainer employee={result.data} />
   );
 }

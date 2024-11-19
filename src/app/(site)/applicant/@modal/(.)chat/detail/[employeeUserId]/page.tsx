@@ -34,7 +34,7 @@ export default async function ApplicantChatDetailEmployeePage({
     );
   }
   return (
-    <Modal>
+    <Modal contentClassName="h-[90%] max-w-[60%]">
       <EmployeeCard employee={result.data} />
     </Modal>
   );

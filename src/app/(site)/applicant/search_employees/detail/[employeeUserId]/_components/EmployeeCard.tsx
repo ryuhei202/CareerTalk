@@ -21,7 +21,7 @@ export default function EmployeeCard({
   onClickOpenDMRequest?: () => void;
 }) {
   return (
-    <Card className="w-full max-w-[60%] mx-auto border-0 my-4 overflow-auto">
+    <Card className="w-full mx-auto border-0 my-4 overflow-auto">
       <CardHeader className=" text-white p-0 relative top-0 z-10 flex justify-center items-center overflow-hidden">
         <div className="w-full h-full absolute overflow-hidden">
           <Image src={bakerBackGround} alt="bakerBackGround" className="w-full h-full object-cover" />
@@ -45,7 +45,7 @@ export default function EmployeeCard({
               </Button>
             </div>
           )}
-          <Button variant="outline" className="rounded-full border-2 text-lg py-6 px-8">この社員とトークする</Button>
+          <Button variant="outline" className="rounded-full border-2 text-lg py-6 px-8" onClick={onClickOpenDMRequest}>この社員とトークする</Button>
         </div>
 
         <div className="px-12">
