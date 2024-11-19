@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { getServerSession as originalGetServerSession } from "next-auth";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import LineProvider from "next-auth/providers/line";
+import { redirect } from "next/navigation";
 import { cache } from "react";
 
 declare module "next-auth" {
@@ -100,3 +101,42 @@ export const getEmployeeUserId = cache(async () => {
 	});
 	return employee?.user.id;
 });
+
+// ユーザーがログインしているかつ、ユーザーが存在するかつ、ユーザーがバンされていないかをチェックする
+export const handleUserView = async <T>({
+	isApplicantPage,
+}: { isApplicantPage: boolean }): Promise<{
+	applicantUserId?: string;
+	employeeUserId?: string;
+	user: Session["user"];
+}> => {
+	const session = await getServerSession();
+	if (!session) {
+		redirect("/");
+	}
+	if (isApplicantPage) {
+		const applicant = await prisma.applicant.findUnique({
+			where: { userId: session.user.id },
+			include: { user: true },
+		});
+		if (!applicant) {
+			redirect("/applicant/create_profile");
+		} else if (applicant.user.isBaned) {
+			redirect("/applicant/sorry");
+		}
+		return { applicantUserId: applicant.user.id, user: session.user };
+	}
+	if (!isApplicantPage) {
+		const employee = await prisma.employee.findUnique({
+			where: { userId: session.user.id },
+			include: { user: true },
+		});
+		if (!employee) {
+			redirect("/employee/create_profile");
+		} else if (employee.user.isBaned) {
+			redirect("/employee/sorry");
+		}
+		return { employeeUserId: employee.user.id, user: session.user };
+	}
+	return { user: session.user };
+};
