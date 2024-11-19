@@ -14,11 +14,13 @@ import {
 	type GetApplicantDetailParams,
 	validateGetApplicantDetailUseCaseParams,
 } from "./validateGetApplicantDetailUseCaseParams";
+
 export type ApplicantDetailResponse = {
 	userId: string;
 	name: string;
 	occupation: Occupation | undefined;
 	gender: GenderLabel;
+	age: number | undefined;
 	imageUrl: string;
 	selfIntroduction: string;
 	yearsOfExperience: number | undefined;

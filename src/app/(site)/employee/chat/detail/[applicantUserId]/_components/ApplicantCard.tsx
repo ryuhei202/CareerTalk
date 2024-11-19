@@ -1,5 +1,6 @@
 "use client";
 
+import LikeReasonCard from "@/app/(site)/employee/matches/detail/[applicantUserId]/_components/LikeReasonCard";
 import CardCommentBox from "@/app/_components/parts/CardCommentBox";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
@@ -8,7 +9,17 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function ApplicantCard({ applicant }: { applicant: Applicant }) {
+export default function ApplicantCard({
+  applicant,
+  likedApplicantContent,
+}: {
+  applicant: Applicant;
+  likedApplicantContent?: {
+    likeReason: string;
+    likeMessage?: string;
+    action: (payload: FormData) => void;
+  };
+}) {
   const router = useRouter();
   return (
     <Card className="w-full max-w-md mx-auto h-[calc(100vh-80px)] overflow-y-auto my-4">
@@ -53,12 +64,45 @@ export default function ApplicantCard({ applicant }: { applicant: Applicant }) {
         </div>
 
         <div className="space-y-4 mt-6">
+          {likedApplicantContent && (
+            <LikeReasonCard
+              reason={likedApplicantContent.likeReason}
+              message={likedApplicantContent.likeMessage}
+            />
+          )}
           <CardCommentBox
             title="自己紹介"
             comment={applicant.selfIntroduction ?? ""}
           />
+          <CardCommentBox
+            title="職務経歴"
+            comment={applicant.workHistory ?? ""}
+          />
+          <CardCommentBox title="学歴" comment={applicant.education ?? ""} />
         </div>
       </CardContent>
+      {likedApplicantContent && (
+        <div className="sticky bottom-0 bg-white p-4 border-t">
+          <form action={likedApplicantContent.action}>
+            <input type="hidden" name="isApprove" value="true" />
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 text-white hover:bg-blue-700 rounded-full py-3 text-sm font-medium"
+            >
+              この転職希望者の申請を許可する
+            </Button>
+          </form>
+          <form action={likedApplicantContent.action}>
+            <input type="hidden" name="isApprove" value="false" />
+            <Button
+              type="submit"
+              className="w-full bg-red-600 text-white hover:bg-red-700 rounded-full py-3 text-sm font-medium mt-2"
+            >
+              この転職希望者の申請を拒否する
+            </Button>
+          </form>
+        </div>
+      )}
     </Card>
   );
 }
