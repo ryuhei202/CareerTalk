@@ -12,6 +12,9 @@ export class LikedApplicantDTO {
 	public readonly occupationName: string;
 	public readonly selfIntroduction?: string;
 	public readonly imageUrl?: string;
+	public readonly company?: string;
+	public readonly workHistory?: string;
+	public readonly education?: string;
 
 	constructor({
 		applicant,
@@ -28,6 +31,9 @@ export class LikedApplicantDTO {
 		this.occupationName = occupation.name;
 		this.selfIntroduction = applicant.selfIntroduction;
 		this.imageUrl = applicant.imageUrl;
+		this.company = applicant.company;
+		this.workHistory = applicant.workHistory;
+		this.education = applicant.education;
 	}
 
 	toJson(): LikedApplicant {
@@ -40,6 +46,9 @@ export class LikedApplicantDTO {
 			occupationName: this.occupationName,
 			selfIntroduction: this.selfIntroduction,
 			imageUrl: this.imageUrl,
+			company: this.company,
+			workHistory: this.workHistory,
+			education: this.education,
 		};
 	}
 }

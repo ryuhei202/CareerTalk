@@ -20,6 +20,9 @@ export type LikedApplicant = {
 	occupationName: string;
 	selfIntroduction?: string;
 	imageUrl?: string;
+	company?: string;
+	workHistory?: string;
+	education?: string;
 };
 
 export type LikedApplicantResponse = {

@@ -20,7 +20,7 @@ export default function ApplicantDetailModal({
   const shouldShowModal = pathname.includes("/detail/");
   return (
     shouldShowModal && (
-      <Modal>
+      <Modal contentClassName="h-[90%] max-w-[60%]">
         <ApplicantCardContainer
           applicant={applicant}
           likeReason={likeReason}
