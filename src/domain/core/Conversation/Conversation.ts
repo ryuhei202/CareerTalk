@@ -63,8 +63,8 @@ export class Conversation {
 		this._messages.push(newMessage);
 	}
 
-	getLatestMessageContent(): string {
-		return this._messages[this._messages.length - 1]?.content ?? "";
+	getLatestMessageContent(): string | undefined {
+		return this._messages[this._messages.length - 1]?.content;
 	}
 
 	toPurposeLabel(): ConversationPurposeLabel {
@@ -88,8 +88,8 @@ export class Conversation {
 			: this._applicantUserId;
 	}
 
-	getLatestMessageAt(): Date {
-		return this._messages[this._messages.length - 1]?.createdAt ?? new Date();
+	getLatestMessageAt(): Date | undefined {
+		return this._messages[this._messages.length - 1]?.createdAt;
 	}
 
 	getUnreadMessageCount(userId: string): number {

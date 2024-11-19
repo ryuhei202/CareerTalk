@@ -17,12 +17,22 @@ export const MessageArea = ({ message, userId }: MessageProps) => {
         }`}
       >
         <div
-          className={`px-4 py-2 rounded-2xl text-sm break-words whitespace-pre-line
+          className={`relative px-4 py-2 rounded-2xl text-sm break-words whitespace-pre-line
+            ${isMe ? "bg-blue-600 text-white" : "bg-white text-gray-800"}
             ${
               isMe
-                ? "bg-blue-600 text-white rounded-br-lg"
-                : "bg-gray-100 text-gray-800 rounded-bl-lg"
-            }`}
+                ? "before:content-[''] before:absolute before:top-[6px]"
+                : "before:content-[''] before:absolute before:top-[2px]"
+            }
+            ${
+              isMe ? "before:border-[10px]" : "before:border-[9px]"
+            } before:border-solid
+            ${
+              isMe
+                ? "before:-right-[9px] before:rotate-[80deg] before:border-y-transparent before:border-r-transparent before:border-l-blue-600"
+                : "before:-left-[6px] before:rotate-[150deg] before:border-y-transparent before:border-l-transparent before:border-r-white"
+            }
+          `}
         >
           {message.data}
         </div>

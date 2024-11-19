@@ -123,10 +123,10 @@ export default function ChatBox({
   }, [allMessages, userId, conversationId, isApplicant, partnerUserId]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-180px)]">
+    <div className="flex flex-col h-[calc(100vh-180px)] bg-customBlue-light">
       <div className="flex-1 overflow-y-auto px-4 space-y-4">
         <div className="text-center py-4">
-          <div className="inline-flex items-center bg-blue-50 text-blue-700 px-4 py-2 rounded-full">
+          <div className="inline-flex items-center bg-white text-blue-700 px-4 py-2 rounded-full">
             <span className="text-sm font-medium">🎉 マッチング成功！</span>
           </div>
         </div>

@@ -19,7 +19,7 @@ export type MatchedConversation = {
 	PartnerUserId: string;
 	PartnerName: string;
 	PartnerImageURL: string;
-	lastMessage: string;
+	lastMessage: string | undefined;
 	lastMessageAt: Date;
 	hasUnreadMessage: boolean;
 };

@@ -28,6 +28,9 @@ export const createStorageRepository = ({
 					Key: uploadKey,
 					Body: buffer,
 					ContentType: mimeType,
+					Metadata: {
+						URL: `${process.env.CLOUDFRONT_URL}/${uploadKey}`,
+					},
 				},
 			});
 

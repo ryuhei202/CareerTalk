@@ -24,6 +24,7 @@ export default function ConversationList({
         </div>
       ) : (
         <div className="divide-y border-b mx-auto">
+          <h2 className="text-xl font-semibold text-gray-800 p-4">トーク</h2>
           {conversations.map((conversation) => (
             <Link
               key={conversation.id}
@@ -50,6 +51,7 @@ export default function ConversationList({
                       {new Date(conversation.lastMessageAt).toLocaleString(
                         "ja-JP",
                         {
+                          timeZone: "Asia/Tokyo",
                           month: "numeric",
                           day: "numeric",
                           hour: "2-digit",
@@ -61,10 +63,7 @@ export default function ConversationList({
                 </div>
                 <LatestMessageWithAbly
                   conversationId={conversation.id}
-                  lastMessage={
-                    conversation.lastMessage ??
-                    "マッチング成立！メッセージはまだありません"
-                  }
+                  lastMessage={conversation.lastMessage}
                   hasUnreadMessage={conversation.hasUnreadMessage}
                   partnerUserId={conversation.PartnerUserId}
                 />
