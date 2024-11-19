@@ -1,10 +1,9 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
-import { getEmployeeUserId } from "@/lib/auth";
+import { handleUserView } from "@/lib/auth";
 import {
   type GetApplicantDetailUseCaseResult,
   getApplicantDetailUseCase,
 } from "@/usecase/getApplicantDetail/getApplicantDetailUseCase";
-import { redirect } from "next/navigation";
 import ApplicantCard from "./_components/ApplicantCard";
 
 export default async function EmployeeChatDetailPage({
@@ -12,10 +11,9 @@ export default async function EmployeeChatDetailPage({
 }: {
   params: { applicantUserId: string };
 }) {
-  const employeeUserId = await getEmployeeUserId();
-  if (!employeeUserId) {
-    redirect("/employee/create_profile");
-  }
+  await handleUserView({
+    isApplicantPage: false,
+  });
 
   const result: GetApplicantDetailUseCaseResult =
     await getApplicantDetailUseCase({

@@ -1,26 +1,19 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { LogOutButton } from "@/app/_components/parts/Button/LogOutButton";
 import { Button } from "@/app/_components/ui/button";
-import { getEmployeeUserId, getServerSession } from "@/lib/auth";
+import { handleUserView } from "@/lib/auth";
 import { getEmployeeDetailUseCase } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import * as Avatar from "@radix-ui/react-avatar";
 
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default async function MyPage() {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/signin");
-  }
-
-  const userId = await getEmployeeUserId();
-  if (!userId) {
-    redirect("/employee/create_profile");
-  }
+  const { user } = await handleUserView({
+    isApplicantPage: false,
+  });
 
   const employee = await getEmployeeDetailUseCase({
-    employeeUserId: session.user.id,
+    employeeUserId: user.id,
   });
 
   if (!employee.success) {
@@ -52,7 +45,7 @@ export default async function MyPage() {
                     {employee.data.gender}
                   </div>
                 </div>
-                <div className="text-gray-600 mb-4">{session.user.email}</div>
+                <div className="text-gray-600 mb-4">{user.email}</div>
               </div>
               <div className="my-5">
                 <span>{employee.data.companyName}</span>

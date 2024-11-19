@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import { RoundedPillButton } from "../_components/parts/Button/RoundedPillButton";
 
 export default async function HomePage() {
+  // すでにログインユーザーがいたら各メインページにリダイレクト
   const [applicantUserId, employeeUserId] = await Promise.all([
     getApplicantUserId(),
     getEmployeeUserId(),

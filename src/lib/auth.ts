@@ -106,8 +106,6 @@ export const getEmployeeUserId = cache(async () => {
 export const handleUserView = async <T>({
 	isApplicantPage,
 }: { isApplicantPage: boolean }): Promise<{
-	applicantUserId?: string;
-	employeeUserId?: string;
 	user: Session["user"];
 }> => {
 	const session = await getServerSession();
@@ -124,7 +122,6 @@ export const handleUserView = async <T>({
 		} else if (applicant.user.isBaned) {
 			redirect("/applicant/sorry");
 		}
-		return { applicantUserId: applicant.user.id, user: session.user };
 	}
 	if (!isApplicantPage) {
 		const employee = await prisma.employee.findUnique({
@@ -136,7 +133,6 @@ export const handleUserView = async <T>({
 		} else if (employee.user.isBaned) {
 			redirect("/employee/sorry");
 		}
-		return { employeeUserId: employee.user.id, user: session.user };
 	}
 	return { user: session.user };
 };
