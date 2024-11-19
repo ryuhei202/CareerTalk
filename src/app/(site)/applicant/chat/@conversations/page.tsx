@@ -4,10 +4,9 @@ import { handleUserView } from "@/lib/auth";
 import { getConversationUseCase } from "@/usecase/getConversations/getConversationUseCase";
 
 export default async function ConversationsPage() {
-  const { applicantUserId } = await handleUserView({ isApplicantPage: true });
-
+  const { user } = await handleUserView({ isApplicantPage: true });
   const result = await getConversationUseCase({
-    userId: applicantUserId as string,
+    userId: user.id,
   });
 
   if (!result.success) {

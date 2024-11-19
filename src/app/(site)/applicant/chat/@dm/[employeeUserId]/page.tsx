@@ -1,19 +1,18 @@
 export const dynamic = "force-dynamic";
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import Chat from "@/app/_components/parts/Chat/Chat";
-import { getApplicantUserId, handleUserView } from "@/lib/auth";
+import { handleUserView } from "@/lib/auth";
 import { getConversationMessagesUseCase } from "@/usecase/getConversationMessages/getConversationMessagesUseCase";
-import { redirect } from "next/navigation";
 export default async function ApplicantDMPage({
   params,
 }: {
   params: { employeeUserId: string };
 }) {
-  const { applicantUserId } = await handleUserView({ isApplicantPage: true });
+  const { user } = await handleUserView({ isApplicantPage: true });
   const employeeUserId = params.employeeUserId;
 
   const result = await getConversationMessagesUseCase({
-    userId: applicantUserId as string,
+    userId: user.id,
     partnerUserId: employeeUserId,
   });
 
@@ -24,7 +23,7 @@ export default async function ApplicantDMPage({
     <div className="container w-2/3">
       <main>
         <Chat
-          userId={applicantUserId as string}
+          userId={user.id}
           messages={result.data.messages}
           conversationId={result.data.conversationId}
           partnerUser={result.data.partnerUser}

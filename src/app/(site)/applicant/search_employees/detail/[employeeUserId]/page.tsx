@@ -1,10 +1,9 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
-import { getApplicantUserId, handleUserView } from "@/lib/auth";
+import { handleUserView } from "@/lib/auth";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,
 } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
-import { redirect } from "next/navigation";
 import EmployeeCardContainer from "./_components/EmployeeCardContainer";
 
 /**

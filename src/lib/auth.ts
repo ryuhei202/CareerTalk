@@ -103,7 +103,7 @@ export const getEmployeeUserId = cache(async () => {
 });
 
 // ユーザーがログインしているかつ、ユーザーが存在するかつ、ユーザーがバンされていないかをチェックする
-export const handleUserView = async <T>({
+export const handleUserView = async ({
 	isApplicantPage,
 }: { isApplicantPage: boolean }): Promise<{
 	user: Session["user"];

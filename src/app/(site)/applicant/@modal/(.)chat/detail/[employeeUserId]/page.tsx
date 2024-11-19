@@ -2,7 +2,7 @@ import EmployeeCard from "@/app/(site)/applicant/search_employees/detail/[employ
 import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/page";
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { Modal } from "@/app/_components/parts/Modal";
-import { getApplicantUserId, handleUserView } from "@/lib/auth";
+import { handleUserView } from "@/lib/auth";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,

@@ -7,12 +7,10 @@ import * as Avatar from "@radix-ui/react-avatar";
 import Link from "next/link";
 
 export default async function ApplicantMyPage() {
-  const { user, applicantUserId } = await handleUserView({
-    isApplicantPage: true,
-  });
+  const { user } = await handleUserView({ isApplicantPage: true });
 
   const applicant = await getApplicantDetailUseCase({
-    applicantUserId: applicantUserId as string,
+    applicantUserId: user.id,
   });
 
   if (!applicant.success) {
