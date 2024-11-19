@@ -5,7 +5,7 @@ import monitorPeople from "@/assets/images/homepage-monitor-people.svg";
 import topImage from "@/assets/images/homepage-top-image.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { RoundedPillButton } from "../_components/parts/Button/RoundedPillButton";
+import { RoundedPillButton } from "../_components/ui/RoundedPillButton";
 
 
 

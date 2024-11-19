@@ -3,9 +3,7 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogOverlay,
-  DialogTitle,
 } from "@/app/_components/ui/dialog";
 import { useRouter } from "next/navigation";
 
@@ -19,11 +17,7 @@ export function Modal({ children }: { children: React.ReactNode }) {
   return (
     <Dialog defaultOpen={true} open={true} onOpenChange={handleOpenChange}>
       <DialogOverlay className="bg-black/10" />
-      <DialogContent className="border-none bg-transparent shadow-none p-0">
-        <DialogTitle className="sr-only">モーダルウィンドウ</DialogTitle>
-        <DialogDescription className="sr-only">
-          詳細情報を表示するモーダルウィンドウです
-        </DialogDescription>
+      <DialogContent className="w-screen border-none bg-transparent shadow-none p-0 h-[90%] max-w-none overflow-y-scroll">
         {children}
       </DialogContent>
     </Dialog>

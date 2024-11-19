@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
-import { Button, type ButtonProps } from "../../ui/button";
+import { Button, type ButtonProps } from "./button";
 
 type RoundedPillButtonProps = ButtonProps & {
 	childClassName?: string;
