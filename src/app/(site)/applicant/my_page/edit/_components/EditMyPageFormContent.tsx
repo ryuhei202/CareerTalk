@@ -8,6 +8,7 @@ import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import type { Occupation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
+import { Select, SelectTrigger } from "@radix-ui/react-select";
 import type { Session } from "next-auth";
 import Link from "next/link";
 import { useState } from "react";
@@ -62,7 +63,7 @@ export const EditMyPageFormContent = ({
       className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12"
     >
       <div className="col-span-4">
-        <div className="flex flex-col items-center shadow rounded-xl py-4 px-8">
+        <div className="flex flex-col items-center shadow rounded-xl py-4 px-8 bg-background-accent">
           <div className="flex items-center gap-4">
             <Avatar.Root className="w-44 h-44 rounded-full relative">
               {(imagePreview || applicant.imageUrl) && (
@@ -117,7 +118,7 @@ export const EditMyPageFormContent = ({
               <div className="text-gray-600 mb-4">{user.email}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
-              <div className="bg-gray-100 p-2 rounded-md">会社名</div>
+              <div className="bg-white p-2 rounded-md">会社名</div>
               <Input
                 type="text"
                 name="company"
@@ -127,7 +128,7 @@ export const EditMyPageFormContent = ({
               <div className="text-red-500 ms-4">{fields.company.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
-              <div className="bg-gray-100 p-2 rounded-md">職種(必須)</div>
+              <div className="bg-white p-2 rounded-md">職種(必須)</div>
               <select
                 name="occupation"
                 className="ms-4 mt-2 border p-2 rounded"
@@ -146,7 +147,7 @@ export const EditMyPageFormContent = ({
               </div>
             </div>
             <div className="my-5 flex flex-col items-start">
-              <div className="bg-gray-100 p-2 rounded-md">社会人になった月</div>
+              <div className="bg-white p-2 rounded-md">社会人になった月</div>
               <Input
                 type="month"
                 name="joiningDate"
@@ -167,11 +168,11 @@ export const EditMyPageFormContent = ({
       <div className="col-span-8">
         <div className="flex justify-end">
           <Link href={"/applicant/my_page"}>
-            <Button variant={"secondary"}>戻る</Button>
+            <Button variant="outline">戻る</Button>
           </Link>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3 border-gray-400">
             自己紹介
           </h2>
           <Textarea
@@ -182,7 +183,7 @@ export const EditMyPageFormContent = ({
           <div className="text-red-500">{fields.selfIntroduction.errors}</div>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3 border-gray-400">
             職務経歴
           </h2>
           <Textarea
@@ -193,7 +194,7 @@ export const EditMyPageFormContent = ({
           <div className="text-red-500">{fields.workHistory.errors}</div>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3 border-gray-400">
             学歴
           </h2>
           <Textarea

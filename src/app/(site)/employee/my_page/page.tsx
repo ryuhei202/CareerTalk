@@ -31,7 +31,7 @@ export default async function MyPage() {
     <>
       <div className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12">
         <div className="col-span-4">
-          <div className="flex flex-col items-center shadow rounded-xl py-4 px-8  bg-gradient-to-r from-white to-blue-50">
+          <div className="flex flex-col items-center shadow rounded-xl py-4 px-8 bg-background-accent">
             <div className="flex items-center gap-4">
               <Avatar.Root className="w-44 h-44 rounded-full">
                 {employee.data.imageUrl && (
@@ -58,7 +58,7 @@ export default async function MyPage() {
                 <span>{employee.data.companyName}</span>
               </div>
               <div className="my-5 flex flex-col items-start">
-                <div className="bg-gray-100 p-2 rounded-md">職種</div>
+                <div className="bg-white p-2 rounded-md">職種</div>
                 <span className="ms-4 mt-2">
                   {employee.data.occupation
                     ? employee.data.occupation?.name
@@ -66,13 +66,13 @@ export default async function MyPage() {
                 </span>
               </div>
               <div className="my-5 flex flex-col items-start">
-                <div className="bg-gray-100 p-2 rounded-md">入社歴</div>
+                <div className="bg-white p-2 rounded-md">入社歴</div>
                 <span className="ms-4 mt-2">
                   {employee.data.yearsOfExperience}年
                 </span>
               </div>
               <div className="my-5 flex flex-col items-start">
-                <div className="bg-gray-100 p-2 rounded-md">勤務地</div>
+                <div className="bg-white p-2 rounded-md">勤務地</div>
                 <div className="ms-4 mt-2">
                   {employee.data.workLocation
                     ? employee.data.workLocation.name
@@ -80,7 +80,7 @@ export default async function MyPage() {
                 </div>
               </div>
               <div className="my-5 flex flex-col items-start">
-                <div className="bg-gray-100 p-2 rounded-md">面談方法</div>
+                <div className="bg-white p-2 rounded-md">面談方法</div>
                 <div className="ms-4 mt-2">
                   {employee.data.meetingMethod
                     ? employee.data.meetingMethod
@@ -96,11 +96,11 @@ export default async function MyPage() {
         <div className="col-span-8">
           <div className="flex justify-end">
             <Link href="/employee/my_page/edit">
-              <Button variant={"secondary"}>編集</Button>
+              <Button>編集</Button>
             </Link>
           </div>
           <div className="mt-6">
-            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
               呼び込みメッセージ
             </h2>
             <div className="mb-14 whitespace-pre-line">
@@ -108,7 +108,7 @@ export default async function MyPage() {
             </div>
           </div>
           <div className="mt-6">
-            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
               自己紹介
             </h2>
             <div className="mb-14 whitespace-pre-line">
@@ -119,7 +119,7 @@ export default async function MyPage() {
             <h2 className="text-gray-700 text-3xl font-bold mb-3">
               話せる内容
             </h2>
-            <div className="mb-4 border-b"> </div>
+            <div className="mb-4 border-b border-gray-400"> </div>
             <div className="mb-14 whitespace-pre-line">
               {employee.data.talkableTopics}
             </div>
@@ -128,28 +128,28 @@ export default async function MyPage() {
             <h2 className="text-gray-700 text-3xl font-bold mb-3">
               所属・経歴
             </h2>
-            <div className="mb-4 border-b"> </div>
+            <div className="mb-4 border-b border-gray-400"> </div>
             <div className="mb-14 whitespace-pre-line">
               {employee.data.careerDescription}
             </div>
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">業務内容</h2>
-            <div className="mb-4 border-b"> </div>
+            <div className="mb-4 border-b border-gray-400"> </div>
             <div className="mb-14 whitespace-pre-line">
               {employee.data.jobDescription}
             </div>
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">入社経緯</h2>
-            <div className="mb-4 border-b"> </div>
+            <div className="mb-4 border-b border-gray-400"> </div>
             <div className="mb-14 whitespace-pre-line">
               {employee.data.joiningDescription}
             </div>
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">その他</h2>
-            <div className="mb-4 border-b"> </div>
+            <div className="mb-4 border-b border-gray-400"> </div>
             <div className="mb-14 whitespace-pre-line">
               {employee.data.otherDescription}
             </div>
