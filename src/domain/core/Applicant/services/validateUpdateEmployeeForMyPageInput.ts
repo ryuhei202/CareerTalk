@@ -40,12 +40,13 @@ export const validateUpdateApplicantForMyPageInput = async (
 		birthday: applicant.birthday ?? undefined, // nullからundefinedに変更
 		joiningDate: applicant.joiningDate ?? undefined,
 		status: StatusEnum.PENDING,
-		// imageUrl: applicant.imageUrl ?? undefined,
+		imageUrl: applicant.user.image ?? undefined,
 		selfIntroduction: applicant.selfIntroduction ?? undefined,
 		workHistory: applicant.workHistory ?? undefined,
 		company: applicant.company ?? undefined,
 		education: applicant.education ?? undefined,
 	});
+
 	applicantEntity.changeOccupationId(params.occupationId);
 	if (params.selfIntroduction)
 		applicantEntity.changeSelfIntroduction(params.selfIntroduction);

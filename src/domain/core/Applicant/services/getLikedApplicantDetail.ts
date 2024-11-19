@@ -3,7 +3,7 @@ import type { GenderEnum } from "@/domain/shared/Gender";
 import type { StatusEnum } from "@/domain/shared/Status";
 import { prisma } from "@/lib/prisma";
 import { LikedApplicantDetailDTO } from "@/usecase/getLikedApplicantDetail/LIkedApplicantDetailDOT";
-import type { ApplicantDetailResponse } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
+import type { LikedApplicantDetailResponse } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
 import { NamedError } from "@/util/error";
 import { Conversation } from "../../Conversation/Conversation";
 import type {
@@ -19,7 +19,7 @@ export class GetLikedApplicantDetailError extends NamedError {
 
 export const getLikedApplicantDetail = async (
 	params: GetLikedApplicantDetailParams,
-): Promise<ApplicantDetailResponse> => {
+): Promise<LikedApplicantDetailResponse> => {
 	const applicantUserId = params.applicantUserId;
 	const employeeUserId = params.employeeUserId;
 

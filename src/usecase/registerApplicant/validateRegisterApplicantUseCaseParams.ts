@@ -12,9 +12,10 @@ export const validateRegisterApplicantUseCaseParams = (
 	const joiningDateSchema = z.date();
 	const birthdaySchema = z.date();
 	const selfIntroductionSchema = z.string().trim().optional();
-	const company = z.string().trim().optional();
-	const workHistory = z.string().trim().optional();
-	const education = z.string().trim().optional();
+	const companySchema = z.string().trim().optional();
+	const workHistorySchema = z.string().trim().optional();
+	const educationSchema = z.string().trim().optional();
+	const imageBase64Schema = z.string().trim().optional();
 
 	const paramsSchema = z.object({
 		userId: userIdSchema,
@@ -24,9 +25,10 @@ export const validateRegisterApplicantUseCaseParams = (
 		joiningDate: joiningDateSchema,
 		birthday: birthdaySchema,
 		selfIntroduction: selfIntroductionSchema,
-		company: company,
-		workHistory: workHistory,
-		education: education,
+		company: companySchema,
+		workHistory: workHistorySchema,
+		education: educationSchema,
+		imageBase64: imageBase64Schema,
 	});
 
 	return paramsSchema.parse(params);

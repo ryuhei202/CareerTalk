@@ -32,12 +32,12 @@ export default function ChatBox({
   }));
   let messageEnd: HTMLDivElement | null = null;
   const [messageText, setMessageText] = useState<string>("");
+  const [messageError, setMessageError] = useState<string | null>(null);
 
   const [allMessages, setAllMessages] = useState<CustomMessage[]>([
     ...initialMessages,
   ]);
-  const messageTextIsEmpty = messageText.trim().length === 0;
-
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   const { channel } = useChannel(`chat:${conversationId}`, (message) => {
     if (message.clientId !== userId) {
       setAllMessages([...allMessages, message]);
@@ -45,6 +45,11 @@ export default function ChatBox({
   });
 
   const sendChatMessage = async (messageText: string) => {
+    if (!validateMessageLength(messageText)) {
+      alert(messageError);
+      return;
+    }
+
     const messageId = createId();
     channel.publish({ name: `chat:${conversationId}`, data: messageText });
     setAllMessages([
@@ -76,11 +81,28 @@ export default function ChatBox({
     if (
       event.key === "Enter" &&
       (event.metaKey || event.ctrlKey) &&
-      !messageTextIsEmpty
+      !isButtonDisabled
     ) {
       sendChatMessage(messageText);
       event.preventDefault();
     }
+  };
+
+  const validateMessageLength = (text: string) => {
+    if (text.length > 1000) {
+      setMessageError("1000文字以内で入力してください");
+      setIsButtonDisabled(true);
+      return false;
+    }
+    setIsButtonDisabled(text.length === 0);
+    setMessageError(null);
+    return true;
+  };
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = e.target.value;
+    setMessageText(newText);
+    validateMessageLength(newText);
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -119,24 +141,30 @@ export default function ChatBox({
           }}
         />
       </div>
-      <form onSubmit={handleFormSubmission} className="border-t bg-white p-4">
-        <div className="flex gap-2">
+      <form
+        onSubmit={handleFormSubmission}
+        className="border-t bg-white p-4 mt-auto"
+      >
+        <div className="flex gap-2 items-end">
           <textarea
             value={messageText}
             placeholder="メッセージを入力...（Command + Enter または Ctrl + Enter で送信）"
-            onChange={(e) => setMessageText(e.target.value)}
+            onChange={handleMessageChange}
             onKeyDown={handleKeyPress}
-            className="flex-1 resize-none rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 resize-none rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 [field-sizing:content] max-h-[240px]"
             rows={1}
           />
           <button
             type="submit"
-            disabled={messageTextIsEmpty}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+            disabled={isButtonDisabled}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors h-[40px]"
           >
             送信
           </button>
         </div>
+        {messageError && (
+          <span className="text-sm text-red-500 mt-1">{messageError}</span>
+        )}
       </form>
     </div>
   );

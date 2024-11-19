@@ -10,7 +10,9 @@ import type { Occupation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
 import type { Session } from "next-auth";
 import Link from "next/link";
+import { useState } from "react";
 import { useFormState } from "react-dom";
+import { convertFileToBase64 } from "../../../search_employees/_util/convertFileToBase64";
 import {
   type UpdateApplicantForMyPageActionResult,
   updateApplicantForMyPageAction,
@@ -26,6 +28,7 @@ export const EditMyPageFormContent = ({
   applicant: ApplicantDetailResponse;
   occupations: Occupation[];
 }) => {
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [lastResult, action] = useFormState<
     UpdateApplicantForMyPageActionResult,
     FormData
@@ -46,7 +49,11 @@ export const EditMyPageFormContent = ({
           ${lastResult.result.message}`);
       }
     },
+    defaultValue: {
+      imageBase64: "", // 初期値を設定
+    },
   });
+
   return (
     <form
       id={form.id}
@@ -57,17 +64,50 @@ export const EditMyPageFormContent = ({
       <div className="col-span-4">
         <div className="flex flex-col items-center shadow rounded-xl py-4 px-8">
           <div className="flex items-center gap-4">
-            <Avatar.Root className="w-44 h-44 rounded-full">
-              {applicant.imageUrl && (
+            <Avatar.Root className="w-44 h-44 rounded-full relative">
+              {(imagePreview || applicant.imageUrl) && (
                 <Avatar.Image
                   className="w-full h-full rounded-full"
-                  src={applicant.imageUrl}
+                  src={imagePreview || applicant.imageUrl}
                   alt={applicant.name}
                 />
               )}
               <Avatar.Fallback>{applicant.name[0]}</Avatar.Fallback>
+              <input
+                type="hidden"
+                name="imageBase64"
+                value={fields.imageBase64.value}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                id="imageUpload"
+                onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const base64 = await convertFileToBase64(file);
+                    setImagePreview(base64);
+
+                    form.update({
+                      name: "imageBase64",
+                      value: base64,
+                    });
+                  }
+                }}
+              />
             </Avatar.Root>
           </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="mt-4"
+            onClick={() => {
+              document.getElementById("imageUpload")?.click();
+            }}
+          >
+            画像を変更
+          </Button>
           <div className="w-full">
             <div className="my-5">
               <div className="flex items-center">
@@ -78,10 +118,13 @@ export const EditMyPageFormContent = ({
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">会社名</div>
-              <Input type="text" name="company" className="ms-4 mt-2" defaultValue={applicant.company} />
-              <div className="text-red-500 ms-4">
-                {fields.company.errors}
-              </div>
+              <Input
+                type="text"
+                name="company"
+                className="ms-4 mt-2"
+                defaultValue={applicant.company}
+              />
+              <div className="text-red-500 ms-4">{fields.company.errors}</div>
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">職種(必須)</div>
@@ -104,7 +147,16 @@ export const EditMyPageFormContent = ({
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-gray-100 p-2 rounded-md">社会人になった月</div>
-              <Input type="month" name="joiningDate" className="ms-4 mt-2" defaultValue={applicant.joiningDate ? applicant.joiningDate.toISOString().slice(0, 7) : undefined} />
+              <Input
+                type="month"
+                name="joiningDate"
+                className="ms-4 mt-2"
+                defaultValue={
+                  applicant.joiningDate
+                    ? applicant.joiningDate.toISOString().slice(0, 7)
+                    : undefined
+                }
+              />
               <div className="text-red-500 ms-4">
                 {fields.joiningDate.errors}
               </div>

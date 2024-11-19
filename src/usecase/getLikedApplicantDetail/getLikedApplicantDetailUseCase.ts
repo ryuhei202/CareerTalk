@@ -9,20 +9,20 @@ import {
 	getLikedApplicantDetail,
 } from "@/domain/core/Applicant/services/getLikedApplicantDetail";
 import type { ConversationStatusEnum } from "@/domain/core/Conversation/ConversationEnum";
-import type { LikedApplicant } from "../getLikedApplicants/getLikedApplicantsUseCase";
+import type { ApplicantDetailResponse } from "../getApplicantDetail/getApplicantDetailUseCase";
 import { validateGetLikedApplicantDetailUseCaseParams } from "./validateGetLikedApplicantDetailUseCaseParams";
 
-export type ApplicantDetail = LikedApplicant & {
+export type ApplicantDetail = ApplicantDetailResponse & {
 	conversationStatus: ConversationStatusEnum;
 };
-export type ApplicantDetailResponse = {
+export type LikedApplicantDetailResponse = {
 	applicant: ApplicantDetail;
 	likeReason: string;
 	likeMessage?: string;
 };
 
 export type GetLikedApplicantDetailUseCaseResult = Result<
-	ApplicantDetailResponse,
+	LikedApplicantDetailResponse,
 	undefined
 >;
 

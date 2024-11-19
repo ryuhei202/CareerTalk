@@ -1,20 +1,7 @@
 import type { Applicant } from "@/domain/core/Applicant/Applicant";
 import type { GenderLabel } from "@/domain/shared/Gender";
 import type { Occupation } from "@prisma/client";
-
-export type ApplicantDetailResponse = {
-	userId: string;
-	name: string;
-	occupation: Occupation;
-	yearsOfExperience: number | undefined;
-	gender: GenderLabel;
-	imageUrl: string;
-	selfIntroduction: string;
-	joiningDate: Date | undefined;
-	company: string;
-	workHistory: string;
-	education: string;
-};
+import type { ApplicantDetailResponse } from "./getApplicantDetailUseCase";
 
 export class ApplicantDetailDto {
 	public readonly userId: string;
@@ -28,7 +15,7 @@ export class ApplicantDetailDto {
 	public readonly company: string;
 	public readonly workHistory: string;
 	public readonly education: string;
-
+	public readonly age: number | undefined;
 	constructor({
 		applicant,
 		occupation,
@@ -47,6 +34,7 @@ export class ApplicantDetailDto {
 		this.company = applicant.company ?? "";
 		this.workHistory = applicant.workHistory ?? "";
 		this.education = applicant.education ?? "";
+		this.age = applicant.getAge() ?? undefined;
 	}
 
 	// あえてわかりやすいように分割代入はしない
@@ -58,6 +46,7 @@ export class ApplicantDetailDto {
 			yearsOfExperience: this.yearsOfExperience,
 			gender: this.gender,
 			imageUrl: this.imageUrl,
+			age: this.age,
 			selfIntroduction: this.selfIntroduction,
 			joiningDate: this.joiningDate,
 			company: this.company,

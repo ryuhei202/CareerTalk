@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 
+const cloudFrontUrlWithoutHttps = process.env.CLOUDFRONT_URL.replace("https://", "");
 
 // 外部画像のドメイン許可設定
 // @see https://dev.classmethod.jp/articles/tsnote-cognito-change-password-error/
@@ -17,6 +18,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "example.com",
+      },
+      {
+        protocol: "https",
+        hostname: cloudFrontUrlWithoutHttps,
       },
     ],
   },

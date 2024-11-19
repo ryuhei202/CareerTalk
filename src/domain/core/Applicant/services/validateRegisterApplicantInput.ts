@@ -58,7 +58,7 @@ export const validateRegisterApplicantInput = async (
 		birthday: params.birthday,
 		joiningDate: params.joiningDate,
 		status: StatusEnum.PENDING,
-		imageUrl: params.imageUrl ?? undefined,
+		imageUrl: user.image ?? undefined,
 		selfIntroduction: params.selfIntroduction ?? undefined,
 		company: params.company ?? undefined,
 		workHistory: params.workHistory ?? undefined,

@@ -13,10 +13,12 @@ export default async function MyPage() {
   if (!session) {
     redirect("/signin");
   }
+
   const userId = await getEmployeeUserId();
   if (!userId) {
     redirect("/employee/create_profile");
   }
+
   const employee = await getEmployeeDetailUseCase({
     employeeUserId: session.user.id,
   });

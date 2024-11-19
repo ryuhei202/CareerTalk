@@ -1,3 +1,7 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function ChatLayout({
   children,
   conversations,
@@ -7,12 +11,13 @@ export default function ChatLayout({
   conversations: React.ReactNode;
   dm: React.ReactNode;
 }>) {
+  const pathname = usePathname();
   return (
     <div className="px-8">
       {children}
       <div className="flex gap-4 py-4">
-        {conversations}
-        {dm}
+        {!pathname.includes("/detail") && conversations}
+        {!pathname.includes("/detail") && dm}
       </div>
     </div>
   );

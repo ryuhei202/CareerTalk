@@ -30,6 +30,7 @@ export const validateUpdateApplicantForMyPageUseCaseParams = (
 		})
 		.optional();
 	const joiningDateSchema = z.date().optional();
+	const imageBase64Schema = z.string().optional();
 
 	const paramsSchema = z.object({
 		userId: userIdSchema,
@@ -39,6 +40,7 @@ export const validateUpdateApplicantForMyPageUseCaseParams = (
 		workHistory: workHistorySchema,
 		company: companySchema,
 		education: educationSchema,
+		imageBase64: imageBase64Schema,
 	});
 	return paramsSchema.parse(params);
 };
