@@ -19,6 +19,7 @@ const roundedPillButtonVariants = cva(
 				outline:
 					"border-accent text-accent hover:border-accent-foreground hover:text-accent-foreground",
 				white: "border-primary",
+				secondary: "",
 				ghost: "border-primary text-primary hover:border-white hover:bg-accent hover:text-accent-foreground",
 				link: "text-primary underline-offset-4 hover:underline",
 			},
