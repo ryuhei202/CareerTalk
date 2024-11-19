@@ -6,7 +6,7 @@ import type { HandleDMRequestUseCaseResponse } from "@/usecase/handleDMRequest/h
 import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
 import { handleDMRequestAction } from "../_actions/handleDMRequestAction";
-import ApplicantCard from "./ApplicantCard";
+import LikedApplicantCard from "./LikedApplicantCard";
 
 export type FormState = {
   success: boolean | undefined;
@@ -42,7 +42,7 @@ export default function ApplicantCardContainer({
     return <ErrorPage message={state.message} data={state.data} />;
   }
   return (
-    <ApplicantCard
+    <LikedApplicantCard
       applicant={applicant}
       likeReason={likeReason}
       likeMessage={likeMessage}

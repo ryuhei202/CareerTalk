@@ -8,7 +8,7 @@ import Image from "next/image";
 import DMResultCardSwitcher from "./DMHandledCard";
 import LikeReasonCard from "./LikeReasonCard";
 
-export default function ApplicantCard({
+export default function LikedApplicantCard({
   applicant,
   likeReason,
   likeMessage,

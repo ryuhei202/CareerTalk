@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import EmployeeCard from "../../../search_employees/detail/[employeeUserId]/_components/EmployeeCard";
 import type { GetEmployeeDetailParams } from "../../../search_employees/detail/[employeeUserId]/page";
 
-export default async function ApplicantChatDetailEmployeePage({
+export default async function ApplicantChatDetailPage({
   params,
 }: {
   params: { employeeUserId: string };
