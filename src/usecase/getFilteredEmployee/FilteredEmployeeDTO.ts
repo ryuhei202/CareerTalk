@@ -19,6 +19,7 @@ export class FilteredEmployeeDTO {
 	public readonly meetingMethod?: MeetingMethodLabel;
 	public readonly selfIntroduction?: string;
 	public readonly talkableTopics?: string;
+	public readonly barkerMessage?: string;
 
 	constructor({
 		employee,
@@ -44,6 +45,7 @@ export class FilteredEmployeeDTO {
 		this.meetingMethod = employee.toMeetingMethodLabel();
 		this.selfIntroduction = employee.selfIntroduction;
 		this.talkableTopics = employee.talkableTopics;
+		this.barkerMessage = employee.barkerMessage;
 	}
 
 	toJson(): FilteredEmployee {
@@ -61,6 +63,7 @@ export class FilteredEmployeeDTO {
 			meetingMethod: this.meetingMethod,
 			selfIntroduction: this.selfIntroduction,
 			talkableTopics: this.talkableTopics,
+			bakerMessage: this.barkerMessage,
 		};
 	}
 }

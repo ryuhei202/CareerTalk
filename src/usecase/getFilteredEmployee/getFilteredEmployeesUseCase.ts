@@ -32,6 +32,7 @@ export type FilteredEmployee = {
 	meetingMethod?: MeetingMethodLabel;
 	selfIntroduction?: string;
 	talkableTopics?: string;
+	bakerMessage?: string;
 };
 
 export type SearchEmployeeResponse = {
