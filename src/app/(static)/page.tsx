@@ -4,13 +4,27 @@ import humans from "@/assets/images/homepage-humans.svg";
 import monitorPeople from "@/assets/images/homepage-monitor-people.svg";
 import topImage from "@/assets/images/homepage-top-image.svg";
 import logo from "@/assets/images/logo.svg"
+import { getApplicantUserId, getEmployeeUserId } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { RoundedPillButton } from "../_components/ui/RoundedPillButton";
 
 
 
 export default function HomePage() {
+
+	// すでにログインユーザーがいたら各メインページにリダイレクト
+	const [applicantUserId, employeeUserId] = await Promise.all([
+		getApplicantUserId(),
+		getEmployeeUserId(),
+	]);
+	if (applicantUserId) {
+		redirect("/applicant/search_employees");
+	}
+	if (employeeUserId) {
+		redirect("/employee/matches");
+	}
 	return (
 		<main>
 			<div className="bg-muted">

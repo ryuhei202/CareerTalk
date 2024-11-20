@@ -60,7 +60,8 @@ export const getConversations = async (
 				PartnerName: partnerName,
 				PartnerImageURL: partnerUserImage ?? "",
 				lastMessage: conversationEntity.getLatestMessageContent(),
-				lastMessageAt: conversationEntity.getLatestMessageAt(),
+				lastMessageAt:
+					conversationEntity.getLatestMessageAt() ?? conversation.updatedAt,
 				hasUnreadMessage: conversationEntity.getUnreadMessageCount(user.id) > 0,
 			};
 		},

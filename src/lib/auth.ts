@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { getServerSession as originalGetServerSession } from "next-auth";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import LineProvider from "next-auth/providers/line";
+import { redirect } from "next/navigation";
 import { cache } from "react";
 
 declare module "next-auth" {
@@ -13,6 +14,7 @@ declare module "next-auth" {
 			name?: string | null;
 			email?: string | null;
 			image?: string | null;
+			isBaned: boolean;
 		};
 	}
 }
@@ -58,6 +60,7 @@ export const authOptions: NextAuthOptions = {
 				name: dbUser.name,
 				email: dbUser.email,
 				picture: dbUser.image,
+				isBaned: dbUser.isBaned,
 			};
 		},
 
@@ -67,6 +70,7 @@ export const authOptions: NextAuthOptions = {
 				session.user.name = token.name;
 				session.user.email = token.email;
 				session.user.image = token.picture;
+				session.user.isBaned = token.isBaned as boolean;
 			}
 			return session;
 		},
@@ -100,3 +104,39 @@ export const getEmployeeUserId = cache(async () => {
 	});
 	return employee?.user.id;
 });
+
+// ユーザーがログインしているかつ、ユーザーが存在するかつ、ユーザーがバンされていないかをチェックする
+export const handleUserView = async ({
+	isApplicantPage,
+}: { isApplicantPage: boolean }): Promise<{
+	user: Session["user"];
+}> => {
+	const session = await getServerSession();
+	if (!session) {
+		redirect("/");
+	}
+	console.log(session.user);
+	console.log(session.user.isBaned);
+	if (session.user.isBaned) {
+		redirect("/sorry");
+	}
+	if (isApplicantPage) {
+		const applicant = await prisma.applicant.findUnique({
+			where: { userId: session.user.id },
+			include: { user: true },
+		});
+		if (!applicant) {
+			redirect("/applicant/create_profile");
+		}
+	}
+	if (!isApplicantPage) {
+		const employee = await prisma.employee.findUnique({
+			where: { userId: session.user.id },
+			include: { user: true },
+		});
+		if (!employee) {
+			redirect("/employee/create_profile");
+		}
+	}
+	return { user: session.user };
+};

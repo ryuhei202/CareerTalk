@@ -19,7 +19,8 @@ export const MessageArea = ({ message, userId }: MessageProps) => {
             ${isMe
               ? "bg-primary text-white rounded-br-lg"
               : "bg-white text-foreground rounded-bl-lg"
-            }`}
+            }`
+          }
         >
           {message.data}
         </div>

@@ -2,21 +2,17 @@ import EmployeeCard from "@/app/(site)/applicant/search_employees/detail/[employ
 import type { GetEmployeeDetailParams } from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/page";
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { Modal } from "@/app/_components/parts/Modal";
-import { getApplicantUserId } from "@/lib/auth";
+import { handleUserView } from "@/lib/auth";
 import {
   type GetEmployeeDetailUseCaseResult,
   getEmployeeDetailUseCase,
 } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
-import { redirect } from "next/navigation";
 export default async function ApplicantChatDetailEmployeePage({
   params,
 }: {
   params: { employeeUserId: string };
 }) {
-  const applicantUserId = await getApplicantUserId();
-  if (!applicantUserId) {
-    redirect("/applicant/create_profile");
-  }
+  await handleUserView({ isApplicantPage: true });
   const getEmployeeDetailUseCaseParams: GetEmployeeDetailParams = {
     employeeUserId: params.employeeUserId,
   };

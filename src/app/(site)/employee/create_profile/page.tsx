@@ -13,6 +13,14 @@ export default async function CreateProfileEmployeePage() {
     getEmployeeUserId(),
     getApplicantUserId(),
   ]);
+  // ログインしていない場合はホーム画面にリダイレクト
+  if (!session) {
+    redirect("/");
+  }
+  // バンされている場合はsorry画面にリダイレクト
+  if (session?.user.isBaned) {
+    redirect("/sorry");
+  }
   // 既に転職希望者として登録済みの場合は転職希望者検索画面にリダイレクト
   if (applicantUserId) {
     redirect("/applicant/search_employees");
