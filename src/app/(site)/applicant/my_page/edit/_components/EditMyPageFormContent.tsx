@@ -8,7 +8,6 @@ import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import type { Occupation } from "@prisma/client";
 import * as Avatar from "@radix-ui/react-avatar";
-import { Select, SelectTrigger } from "@radix-ui/react-select";
 import type { Session } from "next-auth";
 import Link from "next/link";
 import { useState } from "react";

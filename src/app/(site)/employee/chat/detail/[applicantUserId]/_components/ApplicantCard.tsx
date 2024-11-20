@@ -9,7 +9,6 @@ import type { ApplicantDetailResponse as Applicant } from "@/usecase/getApplican
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { FaUserGraduate } from "react-icons/fa";
 
 export default function ApplicantCard({
   applicant,

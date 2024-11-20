@@ -1,7 +1,6 @@
 "use client";
 
 import ApplicantCardContainer from "@/app/(site)/employee/matches/detail/[applicantUserId]/_components/ApplicantCardContainer";
-import { Modal } from "@/app/_components/parts/Modal";
 import type { ApplicantDetail } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
 import { usePathname } from "next/navigation";
 
