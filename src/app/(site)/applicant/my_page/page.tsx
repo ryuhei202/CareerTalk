@@ -1,24 +1,16 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
 import { LogOutButton } from "@/app/_components/parts/Button/LogOutButton";
 import { Button } from "@/app/_components/ui/button";
-import { getApplicantUserId, getServerSession } from "@/lib/auth";
+import { handleUserView } from "@/lib/auth";
 import { getApplicantDetailUseCase } from "@/usecase/getApplicantDetail/getApplicantDetailUseCase";
 import * as Avatar from "@radix-ui/react-avatar";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default async function ApplicantMyPage() {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/signin");
-  }
-  const userId = await getApplicantUserId();
-  if (!userId) {
-    redirect("/applicant/create_profile");
-  }
+  const { user } = await handleUserView({ isApplicantPage: true });
 
   const applicant = await getApplicantDetailUseCase({
-    applicantUserId: session.user.id,
+    applicantUserId: user.id,
   });
 
   if (!applicant.success) {
@@ -52,7 +44,7 @@ export default async function ApplicantMyPage() {
                     {applicant.data.gender}
                   </div>
                 </div>
-                <div className="text-gray-600 mb-4">{session.user.email}</div>
+                <div className="text-gray-600 mb-4">{user.email}</div>
               </div>
               <div className="my-5 flex flex-col items-start">
                 <div className="bg-gray-100 p-2 rounded-md">会社名</div>

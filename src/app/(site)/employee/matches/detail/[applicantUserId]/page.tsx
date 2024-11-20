@@ -1,10 +1,9 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
-import { getEmployeeUserId } from "@/lib/auth";
+import { handleUserView } from "@/lib/auth";
 import {
   type GetLikedApplicantDetailUseCaseResult,
   getLikedApplicantDetailUseCase,
 } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
-import { redirect } from "next/navigation";
 import ApplicantCardContainer from "./_components/ApplicantCardContainer";
 
 export type GetLikedApplicantDetailParams = {
@@ -19,14 +18,13 @@ type Props = {
 };
 
 export default async function ApplicantDetailPage({ params }: Props) {
-  const employeeUserId = await getEmployeeUserId();
-  if (!employeeUserId) {
-    redirect("/employee/create_profile");
-  }
+  const { user } = await handleUserView({
+    isApplicantPage: false,
+  });
 
   const getLikedApplicantDetailUseCaseParams: GetLikedApplicantDetailParams = {
     applicantUserId: params.applicantUserId,
-    employeeUserId,
+    employeeUserId: user.id,
   };
 
   const result: GetLikedApplicantDetailUseCaseResult =
