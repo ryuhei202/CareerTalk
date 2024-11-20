@@ -3,6 +3,7 @@ import BakerImage from "@/assets/images/homepage-baker.svg";
 import humans from "@/assets/images/homepage-humans.svg";
 import monitorPeople from "@/assets/images/homepage-monitor-people.svg";
 import topImage from "@/assets/images/homepage-top-image.svg";
+import logo from "@/assets/images/logo.svg"
 import Image from "next/image";
 import Link from "next/link";
 import { RoundedPillButton } from "../_components/ui/RoundedPillButton";
@@ -14,12 +15,14 @@ export default function HomePage() {
 		<main>
 			<div className="bg-muted">
 				<div className="container m-auto flex flex-col p-8">
-					<h2 className="text-4xl text-center font-bold mb-8">ハイキャリトーク（後でロゴ入れます）</h2>
 					<div className="container flex justify-center items-center sm:flex-col relative">
-						<div className="relative z-10 pr-[30%]">
-							<h3 className="text-3xl lg:text-4xl text-secondary font-bold mb-4 leading-snug">
+						<div className="w-full relative z-10 pr-0 md:pr-[30%]">
+							<h2 className="text-4xl text-center font-bold mb-8">
+								<Image src={logo} alt="logo" />
+							</h2>
+							<div className="text-2xl lg:text-4xl text-primary font-bold mb-4 leading-snug">
 								エージェントに頼らない<br />新しい転職のカタチ。
-							</h3>
+							</div>
 							<p className="text-accent leading-9 mb-4">
 								転職したい人と現場社員を結ぶ。<br />
 								現場社員の「生の声」をリアルに届ける。<br />
@@ -27,12 +30,12 @@ export default function HomePage() {
 								全く新しい転職サービス。
 							</p>
 							<Link href="/signin">
-								<RoundedPillButton childClassName="py-6 text-xl" className="w-full my-3">
+								<RoundedPillButton childClassName="py-6 md:text-xl" className="w-[300px] md:w-[400px] my-3">
 									ログインして現場社員を探す
 								</RoundedPillButton>
 							</Link>
 							<Link href="/signin">
-								<RoundedPillButton variant="white" childClassName="py-6 text-xl" className="w-full my-3">
+								<RoundedPillButton variant="white" childClassName="py-6 md:text-xl" className="w-[300px] md:w-[400px] my-3">
 									現場社員としてログインする方はこちら
 								</RoundedPillButton>
 							</Link>
@@ -46,18 +49,18 @@ export default function HomePage() {
 				</div>
 			</div>
 			<section className="container m-auto my-32">
-				<h2 className="text-accent font-bold text-4xl flex flex-col  text-center">
+				<h2 className="text-accent font-bold text-sm md:text-lg lg:text-2xl flex flex-col  text-center">
 					<span>“一人一人が納得のいくキャリアを歩める世界を作りたい”</span>
 					<span>そんな想いからハイキャリトークは生まれました。</span>
 				</h2>
-				<div className="mt-20 grid grid-cols-2 gap-4">
-					<div className="col-span-1 flex flex-col justify-end items-end">
+				<div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div className="col-span-1 flex flex-col justify-end items-center md:items-end">
 						<div className="w-fit relative">
 							<div className="absolute inset-0 -z-10">
 								<Image src={beigeCloud} alt="beigeCloud" />
 							</div>
-							<h3 className="text-secondary text-5xl leading-tight font-bold">自分で話したい社員を<br />選んでいる絵</h3>
-							<div className="ml-7 mt-4 leading-relaxed flex flex-col text-accent">
+							<h3 className="text-primary text-2xl md:text-3xl lg:text-5xl leading-tight font-bold">自分で話したい社員を<br />選んでいる絵</h3>
+							<div className="ml-7 md:ml-0 mt-4 leading-relaxed flex flex-col text-accent">
 								<span>転職したい人と現場社員を結ぶ。</span>
 								<span>現場社員の「生の声」をリアルに届ける。</span>
 								<span>転職活動に悩む人の背中を押す、</span>
@@ -68,32 +71,32 @@ export default function HomePage() {
 							</div>
 						</div>
 					</div>
-					<div className="col-span-1 flex flex-col items-start">
+					<div className="col-span-1 flex flex-col items-center md:items-start">
 						<div className="">
 							<Image src={monitorPeople} alt="monitor-people" className="w-full" />
 							<Link href="/signin">
-								<RoundedPillButton className="mt-4 py-6 text-xl w-full" childClassName="" >ログインして現場社員を探す</RoundedPillButton>
+								<RoundedPillButton className="mt-4 text-xl w-full" childClassName="" >ログインして現場社員を探す</RoundedPillButton>
 							</Link>
 						</div>
 					</div>
 				</div>
 			</section>
 			<section className="container m-auto my-32">
-				<div className="mt-20 grid grid-cols-2  gap-4">
-					<div className="col-span-1 flex flex-col items-end">
+				<div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div className="order-2 md:order-1 col-span-1 flex flex-col items-center md:items-start">
 						<div className="">
 							<Image src={humans} alt="monitor-people" className="w-full" />
 							<Link href="/signin">
-								<RoundedPillButton className="mt-4 px-24 py-6 text-xl w-full" childClassName="px-32" >ログインして現場社員を探す</RoundedPillButton>
+								<RoundedPillButton className="mt-4 text-xl w-full" childClassName="px-18 md:px-32" >ログインして現場社員を探す</RoundedPillButton>
 							</Link>
 						</div>
 					</div>
-					<div className="col-span-1 flex flex-col justify-end items-start">
+					<div className="order-1 md:order-2 col-span-1 flex flex-col justify-end items-center md:items-start">
 						<div className="w-fit relative">
 							<div className="absolute inset-0 -z-10">
 								<Image src={beigeCloud} alt="beigeCloud" />
 							</div>
-							<h3 className="text-secondary text-5xl leading-tight font-bold">選んだ現場社員と<br />直接喋っている絵</h3>
+							<h3 className="text-primary text-2xl md:text-3xl lg:text-5xl leading-tight font-bold">選んだ現場社員と<br />直接喋っている絵</h3>
 							<div className="ml-7 mt-4 leading-relaxed flex flex-col text-accent">
 								<span>転職したい人と現場社員を結ぶ。</span>
 								<span>現場社員の「生の声」をリアルに届ける。</span>
@@ -108,17 +111,17 @@ export default function HomePage() {
 				</div>
 			</section>
 			<section className="relative overflow-hidden">
-				<div className="bg-primary w-full absolute -z-10">
-					<Image src={BakerImage} alt="BakerImage" className="w-full" />
+				<div className="bg-primary h-full w-full absolute -z-10">
+					<Image src={BakerImage} alt="BakerImage" className="w-full h-full object-cover" />
 				</div>
 				<div className="flex flex-col justify-center py-28">
-					<h2 className="text-white text-center text-5xl font-bold">ハイキャリトークで転職への一歩を踏み出しませんか？</h2>
-					<div className="flex justify-center mt-8 gap-4">
+					<h2 className="text-white text-center md:text-3xl lg:text-4xl font-bold">ハイキャリトークで転職への一歩を踏み出しませんか？</h2>
+					<div className="flex flex-col md:flex-row items-center justify-center mt-8 gap-4">
 						<Link href="/signin">
-							<RoundedPillButton size="lg" childClassName="py-7 text-2xl" className="border-2 border-white w-[500px]">ログインして現場社員を探す</RoundedPillButton>
+							<RoundedPillButton childClassName="py-3 md:py-7 text-lg lg:text-xl" className="border-2 p-1 md:p-2 border-white w-[400px] md:w-[350px] lg:w-[500px]">ログインして現場社員を探す</RoundedPillButton>
 						</Link>
 						<Link href="/signin">
-							<RoundedPillButton size="lg" variant="white" childClassName="py-7 text-2xl" className=" w-[500px]">現場社員としてログインする方はこちら</RoundedPillButton>
+							<RoundedPillButton variant="white" childClassName="py-3 md:py-7 text-lg lg:text-xl" className="p-1 md:p-2 w-[400px] md:w-[350px] lg:w-[500px]">現場社員としてログインする方はこちら</RoundedPillButton>
 						</Link>
 					</div>
 				</div>

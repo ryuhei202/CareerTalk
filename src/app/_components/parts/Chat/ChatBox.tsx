@@ -6,6 +6,7 @@ import type { Message } from "ably";
 import { useChannel } from "ably/react";
 import type React from "react";
 import { useEffect, useState } from "react";
+import { Button } from "../../ui/button";
 import { MessageArea } from "./Message";
 
 type CustomMessage = Message & { createdAt?: Date; isRead?: boolean };
@@ -123,10 +124,10 @@ export default function ChatBox({
   }, [allMessages, userId, conversationId, isApplicant, partnerUserId]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-180px)]">
+    <div className="flex flex-col h-[calc(100vh-180px)] bg-muted">
       <div className="flex-1 overflow-y-auto px-4 space-y-4">
         <div className="text-center py-4">
-          <div className="inline-flex items-center bg-blue-50 text-blue-700 px-4 py-2 rounded-full">
+          <div className="inline-flex items-center bg-white text-blue-700 px-4 py-2 rounded-full">
             <span className="text-sm font-medium">🎉 マッチング成功！</span>
           </div>
         </div>
@@ -143,7 +144,7 @@ export default function ChatBox({
       </div>
       <form
         onSubmit={handleFormSubmission}
-        className="border-t bg-white p-4 mt-auto"
+        className="border-t border-gray-200 bg-white p-4 mt-auto"
       >
         <div className="flex gap-2 items-end">
           <textarea
@@ -151,16 +152,16 @@ export default function ChatBox({
             placeholder="メッセージを入力...（Command + Enter または Ctrl + Enter で送信）"
             onChange={handleMessageChange}
             onKeyDown={handleKeyPress}
-            className="flex-1 resize-none rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 [field-sizing:content] max-h-[240px]"
+            className="flex-1 resize-none rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-primary [field-sizing:content] max-h-[240px]"
             rows={1}
           />
-          <button
+          <Button
             type="submit"
             disabled={isButtonDisabled}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors h-[40px]"
+            className="mb-1"
           >
             送信
-          </button>
+          </Button>
         </div>
         {messageError && (
           <span className="text-sm text-red-500 mt-1">{messageError}</span>

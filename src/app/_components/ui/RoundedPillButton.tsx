@@ -40,7 +40,7 @@ const roundedPillButtonVariants = cva(
 export const RoundedPillButton = ({ className, variant, size, asChild = false, childClassName, ...props }: RoundedPillButtonProps) => {
 	return (
 		<Button
-			className={cn(className, "p-2 block h-auto", variant === "outline" ? "border-none" : "")}
+			className={cn("p-2 block h-auto", variant === "outline" ? "border-none" : "", className)}
 			variant={variant}
 			size={size}
 			asChild={asChild}
