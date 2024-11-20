@@ -11,7 +11,6 @@ export default function ConversationList({
 }) {
   return (
     <div className="h-[calc(100vh-150px)] overflow-y-auto w-1/3 border-r border-gray-300">
-      <h2 className="text-2xl">DM</h2>
       {conversations.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full p-4 text-center">
           <p className="text-lg font-medium text-gray-700 mb-2">
@@ -24,7 +23,7 @@ export default function ConversationList({
           </p>
         </div>
       ) : (
-        <div className="divide-y border-b mx-auto">
+        <div className="divide-y mx-auto">
           <h2 className="text-xl font-semibold text-gray-800 p-4">トーク</h2>
           {conversations.map((conversation) => (
             <Link

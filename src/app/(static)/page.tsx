@@ -12,7 +12,7 @@ import { RoundedPillButton } from "../_components/ui/RoundedPillButton";
 
 
 
-export default function HomePage() {
+export default async function HomePage() {
 
 	// すでにログインユーザーがいたら各メインページにリダイレクト
 	const [applicantUserId, employeeUserId] = await Promise.all([
