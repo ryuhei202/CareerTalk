@@ -14,6 +14,7 @@ declare module "next-auth" {
 			name?: string | null;
 			email?: string | null;
 			image?: string | null;
+			isBaned: boolean;
 		};
 	}
 }
@@ -59,6 +60,7 @@ export const authOptions: NextAuthOptions = {
 				name: dbUser.name,
 				email: dbUser.email,
 				picture: dbUser.image,
+				isBaned: dbUser.isBaned,
 			};
 		},
 
@@ -68,6 +70,7 @@ export const authOptions: NextAuthOptions = {
 				session.user.name = token.name;
 				session.user.email = token.email;
 				session.user.image = token.picture;
+				session.user.isBaned = token.isBaned as boolean;
 			}
 			return session;
 		},
@@ -112,6 +115,11 @@ export const handleUserView = async ({
 	if (!session) {
 		redirect("/");
 	}
+	console.log(session.user);
+	console.log(session.user.isBaned);
+	if (session.user.isBaned) {
+		redirect("/sorry");
+	}
 	if (isApplicantPage) {
 		const applicant = await prisma.applicant.findUnique({
 			where: { userId: session.user.id },
@@ -119,8 +127,6 @@ export const handleUserView = async ({
 		});
 		if (!applicant) {
 			redirect("/applicant/create_profile");
-		} else if (applicant.user.isBaned) {
-			redirect("/applicant/sorry");
 		}
 	}
 	if (!isApplicantPage) {
@@ -130,8 +136,6 @@ export const handleUserView = async ({
 		});
 		if (!employee) {
 			redirect("/employee/create_profile");
-		} else if (employee.user.isBaned) {
-			redirect("/employee/sorry");
 		}
 	}
 	return { user: session.user };
