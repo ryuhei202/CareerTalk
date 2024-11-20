@@ -19,6 +19,14 @@ export default async function CreateProfileApplicantPage() {
     getApplicantUserId(),
   ]);
 
+  // ログインしていない場合はホーム画面にリダイレクト
+  if (!session) {
+    redirect("/");
+  }
+  // バンされている場合はsorry画面にリダイレクト
+  if (session?.user.isBaned) {
+    redirect("/sorry");
+  }
   // すでに現場社員として会員登録済みの場合は現場社員検索画面にリダイレクト
   if (employeeUserId) {
     redirect("/employee/matches");
