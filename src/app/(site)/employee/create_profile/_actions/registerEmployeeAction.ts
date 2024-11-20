@@ -17,6 +17,7 @@ export interface RegisterEmployeeParams {
 	meetingMethod?: string;
 	selfIntroduction?: string;
 	talkableTopics?: string;
+	imageId: number;
 }
 
 export async function registerEmployeeAction(
@@ -43,7 +44,7 @@ export async function registerEmployeeAction(
 	const meetingMethod = formData.get("meetingMethod");
 	const selfIntroduction = formData.get("selfIntroduction");
 	const talkableTopics = formData.get("talkableTopics");
-	// const imageUrl = formData.get("imageUrl"); // 後で画像も入れれるようにする
+	const imageId = formData.get("imageId");
 
 	const formDataObject = Object.fromEntries(formData.entries());
 
@@ -61,7 +62,7 @@ export async function registerEmployeeAction(
 		meetingMethod: (meetingMethod as string) || undefined,
 		selfIntroduction: (selfIntroduction as string) || undefined,
 		talkableTopics: (talkableTopics as string) || undefined,
-		// imageUrl: (imageUrl as string) || undefined,
+		imageId: Number.parseInt(imageId as string),
 	};
 
 	const useCaseResult = await registerEmployeeUseCase(useCaseParams);

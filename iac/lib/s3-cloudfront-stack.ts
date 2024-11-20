@@ -27,13 +27,22 @@ export class S3CloudFrontStack extends cdk.Stack {
 			blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
 		});
 
-		// バケット名を出力
-		new cdk.CfnOutput(this, "AvatarBucketName", {
-			value: userImageBucket.bucketName,
+		const employeeImageBucket = new s3.Bucket(this, "employee-image-bucket", {
+			bucketName: "high-career-talk-employee-images-bucket",
+			removalPolicy: cdk.RemovalPolicy.RETAIN,
+			versioned: true,
+			encryption: s3.BucketEncryption.S3_MANAGED,
+			cors: [
+				{
+					allowedMethods: [s3.HttpMethods.GET],
+					allowedOrigins: ["*"],
+					allowedHeaders: ["*"],
+				},
+			],
 		});
 
 		// CloudFront ディストリビューションの作成
-		const distribution = new cloudfront.Distribution(this, "Distribution", {
+		new cloudfront.Distribution(this, "Distribution", {
 			defaultRootObject: "index.html",
 			defaultBehavior: {
 				origin:
@@ -43,9 +52,14 @@ export class S3CloudFrontStack extends cdk.Stack {
 			},
 		});
 
-		// CloudFront Distribution の URL を出力
-		new cdk.CfnOutput(this, "DistributionUrl", {
-			value: `https://${distribution.distributionDomainName}`,
+		new cloudfront.Distribution(this, "EmployeeImageDistribution", {
+			defaultRootObject: "index.html",
+			defaultBehavior: {
+				origin:
+					cloudfront_origins.S3BucketOrigin.withOriginAccessControl(
+						employeeImageBucket,
+					),
+			},
 		});
 	}
 }

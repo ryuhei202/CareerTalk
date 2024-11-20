@@ -185,4 +185,9 @@ model Message {
 }
 
 
+model EmployeeImage {
+  id        Int    @id @default(autoincrement())
+  url       String
+}
+
 

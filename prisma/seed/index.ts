@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { employeeImage } from "./EmployeeImage";
 import { company } from "./company";
 import { employee } from "./employee";
 import { occupation } from "./occupation";
@@ -10,7 +11,12 @@ const main = async () => {
 	console.log("Start seeding ...");
 
 	// 基本データは常に実行
-	const baseOperations = [...occupation(), ...company(), ...workLocation()];
+	const baseOperations = [
+		...occupation(),
+		...company(),
+		...workLocation(),
+		...employeeImage(),
+	];
 
 	// 開発環境の場合のみユーザーと従業員データを追加
 	const operations =

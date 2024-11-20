@@ -16,23 +16,27 @@ export const validateRegisterEmployeeInput = async (
 	params: RegisterEmployeeParams,
 ): Promise<Employee> => {
 	// 全てのクエリを並列実行
-	const [user, company, occupation, workLocation] = await Promise.all([
-		prisma.user.findUnique({
-			where: { id: params.userId },
-			include: { employee: true, applicant: true },
-		}),
-		prisma.company.findUnique({
-			where: { code: params.companyCode },
-		}),
-		prisma.occupation.findUnique({
-			where: { id: params.occupationId },
-		}),
-		params.workLocationId
-			? prisma.workLocation.findUnique({
-					where: { id: params.workLocationId },
-				})
-			: Promise.resolve(null),
-	]);
+	const [user, company, occupation, workLocation, employeeImage] =
+		await Promise.all([
+			prisma.user.findUnique({
+				where: { id: params.userId },
+				include: { employee: true, applicant: true },
+			}),
+			prisma.company.findUnique({
+				where: { code: params.companyCode },
+			}),
+			prisma.occupation.findUnique({
+				where: { id: params.occupationId },
+			}),
+			params.workLocationId
+				? prisma.workLocation.findUnique({
+						where: { id: params.workLocationId },
+					})
+				: Promise.resolve(null),
+			prisma.employeeImage.findUnique({
+				where: { id: params.imageId },
+			}),
+		]);
 
 	// バリデーションチェック
 	if (!user) {
@@ -59,6 +63,11 @@ export const validateRegisterEmployeeInput = async (
 	if (params.workLocationId && !workLocation) {
 		throw new InvalidRegisterEmployeeInputError("不正な勤務地です");
 	}
+	if (!employeeImage) {
+		throw new InvalidRegisterEmployeeInputError("不正な画像です");
+	}
+
+	const imageUrl = employeeImage.url;
 
 	// Employeeインスタンスの作成
 	return Employee.create({
@@ -70,7 +79,7 @@ export const validateRegisterEmployeeInput = async (
 		gender: params.gender as GenderEnum,
 		joiningDate: params.joiningDate,
 		status: StatusEnum.PENDING,
-		imageUrl: params.imageUrl ?? undefined,
+		imageUrl: imageUrl,
 		workLocationId: params.workLocationId ?? undefined,
 		hiringType: (params.hiringType as HiringTypeEnum) ?? undefined,
 		meetingMethod: (params.meetingMethod as MeetingMethodEnum) ?? undefined,
