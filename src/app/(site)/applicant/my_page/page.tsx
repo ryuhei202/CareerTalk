@@ -21,7 +21,7 @@ export default async function ApplicantMyPage() {
     <>
       <div className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12">
         <div className="col-span-4">
-          <div className="flex flex-col items-center shadow rounded-xl py-4 px-8  bg-gradient-to-r from-white to-blue-50">
+          <div className="flex flex-col items-center shadow rounded-xl py-4 px-8  bg-background-accent">
             <div className="flex items-center gap-4">
               <Avatar.Root className="w-44 h-44 rounded-full">
                 {applicant.data.imageUrl && (
@@ -47,7 +47,7 @@ export default async function ApplicantMyPage() {
                 <div className="text-gray-600 mb-4">{user.email}</div>
               </div>
               <div className="my-5 flex flex-col items-start">
-                <div className="bg-gray-100 p-2 rounded-md">会社名</div>
+                <div className="bg-white p-2 rounded-md">会社名</div>
                 <span className="ms-4 mt-2">
                   {applicant.data.company
                     ? applicant.data.company
@@ -55,7 +55,7 @@ export default async function ApplicantMyPage() {
                 </span>
               </div>
               <div className="my-5 flex flex-col items-start">
-                <div className="bg-gray-100 p-2 rounded-md">職種</div>
+                <div className="bg-white p-2 rounded-md">職種</div>
                 <span className="ms-4 mt-2">
                   {applicant.data.occupation
                     ? applicant.data.occupation?.name
@@ -63,7 +63,7 @@ export default async function ApplicantMyPage() {
                 </span>
               </div>
               <div className="my-5 flex flex-col items-start">
-                <div className="bg-gray-100 p-2 rounded-md">社会人歴</div>
+                <div className="bg-white p-2 rounded-md">社会人歴</div>
                 <div className="ms-4 mt-2">
                   {applicant.data.yearsOfExperience}年
                 </div>
@@ -77,11 +77,11 @@ export default async function ApplicantMyPage() {
         <div className="col-span-8">
           <div className="flex justify-end">
             <Link href="/applicant/my_page/edit">
-              <Button variant={"secondary"}>編集</Button>
+              <Button variant="outline">編集</Button>
             </Link>
           </div>
           <div className="mt-6">
-            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3 border-gray-400">
               自己紹介
             </h2>
             <div className="mb-14 whitespace-pre-line">
@@ -89,7 +89,7 @@ export default async function ApplicantMyPage() {
             </div>
           </div>
           <div className="mt-6">
-            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3 border-gray-400">
               職務経歴
             </h2>
             <div className="mb-14 whitespace-pre-line">
@@ -97,7 +97,7 @@ export default async function ApplicantMyPage() {
             </div>
           </div>
           <div className="mt-6">
-            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3 border-gray-400">
               学歴
             </h2>
             <div className="mb-14 whitespace-pre-line">

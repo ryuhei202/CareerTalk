@@ -1,3 +1,4 @@
+import logo from "@/assets/images/logo.svg"
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { LoginButton } from "./Button/LoginButton";
@@ -22,16 +23,11 @@ export default function SiteHeader({
   return (
     <header className="bg-white border-b border-gray-200">
       <div className="flex items-center justify-between h-20">
-        <div className="flex items-center space-x-4 pl-8">
-          <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <div className="w-6 h-6 bg-black rounded-full" />
-            </div>
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-black">ハイキャリトーク</h1>
-          </div>
-        </div>
+        <Link href={"/"} className="h-full">
+          <h1 className="h-full">
+            <Image src={logo} alt="logo" className="h-full" />
+          </h1>
+        </Link>
         <nav className="hidden md:flex items-center h-full flex-grow justify-end">
           {firstItem && (
             <Link
@@ -64,7 +60,7 @@ export default function SiteHeader({
           {thirdItem && (
             <Link
               href={thirdItem.href}
-              className="flex flex-col items-center justify-center h-full px-12 text-gray-600 hover:text-gray-900 border-r border-gray-200 min-w-[160px]"
+              className="flex flex-col items-center justify-center h-full px-12 text-gray-600 hover:text-gray-900 min-w-[160px]"
             >
               <Image
                 src={thirdItem.icon}

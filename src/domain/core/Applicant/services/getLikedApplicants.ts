@@ -57,6 +57,9 @@ export const getLikedApplicants = async (
 			imageUrl: conversation.applicant.user.image ?? undefined,
 			birthday: conversation.applicant.birthday ?? undefined,
 			selfIntroduction: conversation.applicant.selfIntroduction ?? undefined,
+			company: conversation.applicant.company ?? undefined,
+			workHistory: conversation.applicant.workHistory ?? undefined,
+			education: conversation.applicant.education ?? undefined,
 		});
 
 		return new LikedApplicantDTO({

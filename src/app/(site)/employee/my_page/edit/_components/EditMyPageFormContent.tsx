@@ -94,7 +94,7 @@ export const EditMyPageFormContent = ({
       className="grid grid-cols-12 gap-8 container mt-16 mx-auto mb-12"
     >
       <div className="col-span-4">
-        <div className="flex flex-col items-center shadow rounded-xl py-4 px-8">
+        <div className="flex flex-col items-center shadow rounded-xl py-4 px-8 bg-background-accent">
           <div className="flex items-center gap-4">
             <Avatar.Root className="w-44 h-44 rounded-full">
               {employee.imageUrl && (
@@ -110,7 +110,7 @@ export const EditMyPageFormContent = ({
           <div className="w-full">
             <div className="my-5">
               <div className="flex flex-col items-start">
-                <div className="bg-gray-100 p-2 rounded-md mb-2">
+                <div className="bg-white p-2 rounded-md mb-2">
                   名前(必須)
                 </div>
                 <Input
@@ -130,7 +130,7 @@ export const EditMyPageFormContent = ({
               <span>{employee.companyName}</span>
             </div>
             <div className="my-5 flex flex-col items-start">
-              <div className="bg-gray-100 p-2 rounded-md">職種(必須)</div>
+              <div className="bg-white p-2 rounded-md">職種(必須)</div>
               <select
                 name="occupation"
                 className="ms-4 mt-2 border p-2 rounded"
@@ -147,11 +147,11 @@ export const EditMyPageFormContent = ({
               </div>
             </div>
             <div className="my-5 flex flex-col items-start">
-              <div className="bg-gray-100 p-2 rounded-md">入社歴</div>
+              <div className="bg-white p-2 rounded-md">入社歴</div>
               <span className="ms-4 mt-2">{employee.yearsOfExperience}年</span>
             </div>
             <div className="my-5 flex flex-col items-start">
-              <div className="bg-gray-100 p-2 rounded-md">入社方法</div>
+              <div className="bg-white p-2 rounded-md">入社方法</div>
               <select
                 name="hiringType"
                 className="ms-4 mt-2 border p-2 rounded"
@@ -168,7 +168,7 @@ export const EditMyPageFormContent = ({
               </div>
             </div>
             <div className="my-5 flex flex-col items-start">
-              <div className="bg-gray-100 p-2 rounded-md">勤務地</div>
+              <div className="bg-white p-2 rounded-md">勤務地</div>
               <select
                 name="workLocation"
                 className="ms-4 mt-2 border p-2 rounded"
@@ -185,7 +185,7 @@ export const EditMyPageFormContent = ({
               </div>
             </div>
             <div className="my-5 flex flex-col items-start">
-              <div className="bg-gray-100 p-2 rounded-md">面談方法</div>
+              <div className="bg-white p-2 rounded-md">面談方法</div>
               <select
                 name="meetingMethod"
                 className="ms-4 mt-2 border p-2 rounded"
@@ -207,82 +207,82 @@ export const EditMyPageFormContent = ({
       <div className="col-span-8">
         <div className="flex justify-end">
           <Link href={"/employee/my_page"}>
-            <Button variant={"secondary"}>戻る</Button>
+            <Button>戻る</Button>
           </Link>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             呼び込みメッセージ
           </h2>
           <Textarea
             name="barkerMessage"
-            className="h-44"
+            className="min-h-44 [field-sizing:content]"
             defaultValue={employee.barkerMessage}
           />
           <div className="text-red-500">{fields.barkerMessage.errors}</div>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             自己紹介
           </h2>
           <Textarea
             name="selfIntroduction"
-            className="h-44"
+            className="min-h-44 [field-sizing:content]"
             defaultValue={employee.selfIntroduction}
           />
           <div className="text-red-500">{fields.selfIntroduction.errors}</div>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             話せる内容
           </h2>
           <Textarea
             name="talkableTopics"
-            className="h-44"
+            className="min-h-44 [field-sizing:content]"
             defaultValue={employee.talkableTopics}
           />
           <div className="text-red-500">{fields.talkableTopics.errors}</div>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             所属・経歴
           </h2>
           <Textarea
             name="careerDescription"
-            className="h-44"
+            className="min-h-44 [field-sizing:content]"
             defaultValue={employee.careerDescription}
           />
           <div className="text-red-500">{fields.careerDescription.errors}</div>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             業務内容
           </h2>
           <Textarea
             name="jobDescription"
-            className="h-44"
+            className="min-h-44 [field-sizing:content]"
             defaultValue={employee.jobDescription}
           />
           <div className="text-red-500">{fields.jobDescription.errors}</div>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             入社経緯
           </h2>
           <Textarea
             name="joiningDescription"
-            className="h-44"
+            className="min-h-44 [field-sizing:content]"
             defaultValue={employee.joiningDescription}
           />
           <div className="text-red-500">{fields.joiningDescription.errors}</div>
         </div>
         <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b pb-3">
+          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             その他
           </h2>
           <Textarea
             name="otherDescription"
-            className="h-44"
+            className="min-h-44 [field-sizing:content]"
             defaultValue={employee.otherDescription}
           />
           <div className="text-red-500">{fields.otherDescription.errors}</div>

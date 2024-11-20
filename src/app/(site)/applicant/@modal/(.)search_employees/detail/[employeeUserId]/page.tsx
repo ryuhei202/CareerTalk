@@ -1,6 +1,5 @@
 import EmployeeCardContainer from "@/app/(site)/applicant/search_employees/detail/[employeeUserId]/_components/EmployeeCardContainer";
 import ErrorPage from "@/app/_components/page/ErrorPage";
-import { Modal } from "@/app/_components/parts/Modal";
 import { handleUserView } from "@/lib/auth";
 import {
   type GetEmployeeDetailUseCaseResult,
@@ -24,8 +23,6 @@ export default async function EmployeeDetailModalPage({ params }: Props) {
   }
 
   return (
-    <Modal>
-      <EmployeeCardContainer employee={result.data} />
-    </Modal>
+    <EmployeeCardContainer employee={result.data} />
   );
 }

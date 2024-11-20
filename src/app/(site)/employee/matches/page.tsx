@@ -28,6 +28,7 @@ export default async function MatchesPage({
     getLikedApplicantsUseCaseParams
   );
 
+
   if (!result.success) {
     return <ErrorPage message={result.message} data={result.data} />;
   }
