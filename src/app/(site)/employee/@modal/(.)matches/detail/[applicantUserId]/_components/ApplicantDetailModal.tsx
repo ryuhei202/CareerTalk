@@ -1,7 +1,6 @@
 "use client";
 
 import ApplicantCardContainer from "@/app/(site)/employee/matches/detail/[applicantUserId]/_components/ApplicantCardContainer";
-import { Modal } from "@/app/_components/parts/Modal";
 import type { ApplicantDetail } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
 import { usePathname } from "next/navigation";
 
@@ -20,13 +19,11 @@ export default function ApplicantDetailModal({
   const shouldShowModal = pathname.includes("/detail/");
   return (
     shouldShowModal && (
-      <Modal>
-        <ApplicantCardContainer
-          applicant={applicant}
-          likeReason={likeReason}
-          likeMessage={likeMessage}
-        />
-      </Modal>
+      <ApplicantCardContainer
+        applicant={applicant}
+        likeReason={likeReason}
+        likeMessage={likeMessage}
+      />
     )
   );
 }

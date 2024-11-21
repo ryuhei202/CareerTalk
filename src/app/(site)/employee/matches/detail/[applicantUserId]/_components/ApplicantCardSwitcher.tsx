@@ -1,4 +1,5 @@
 import ApplicantCard from "@/app/(site)/employee/chat/detail/[applicantUserId]/_components/ApplicantCard";
+import { Modal } from "@/app/_components/parts/Modal";
 import { ConversationStatusEnum } from "@/domain/core/Conversation/ConversationEnum";
 import type { ApplicantDetail } from "@/usecase/getLikedApplicantDetail/getLikedApplicantDetailUseCase";
 import DMResultCardSwitcher from "./DMHandledCard";
@@ -21,19 +22,23 @@ export default function ApplicantCardSwitcher({
   return (
     <>
       {conversationStatus === ConversationStatusEnum.PENDING ? (
-        <ApplicantCard
-          applicant={applicant}
-          likedApplicantContent={{
-            likeReason,
-            likeMessage,
-            action,
-          }}
-        />
+        <Modal contentClassName="h-[90%] max-w-[60%]">
+          <ApplicantCard
+            applicant={applicant}
+            likedApplicantContent={{
+              likeReason,
+              likeMessage,
+              action,
+            }}
+          />
+        </Modal>
       ) : (
-        <DMResultCardSwitcher
-          conversationStatus={conversationStatus}
-          onClickBack={onClickBack}
-        />
+        <Modal contentClassName="">
+          <DMResultCardSwitcher
+            conversationStatus={conversationStatus}
+            onClickBack={onClickBack}
+          />
+        </Modal>
       )}
     </>
   );

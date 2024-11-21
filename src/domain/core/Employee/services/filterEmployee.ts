@@ -89,6 +89,7 @@ export const filterEmployees = async (
 			meetingMethod: (employee.meetingMethod as MeetingMethodEnum) ?? undefined,
 			selfIntroduction: employee.selfIntroduction ?? undefined,
 			talkableTopics: employee.talkableTopics ?? undefined,
+			barkerMessage: employee.barkerMessage ?? undefined,
 		});
 
 		return new FilteredEmployeeDTO({

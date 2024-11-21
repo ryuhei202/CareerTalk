@@ -106,7 +106,7 @@ export default function SearchEmployeeBox({
   };
 }) {
   return (
-    <Card className="w-full max-w-md mx-auto bg-white shadow-lg bg-customOrange-light">
+    <Card className="w-full mx-auto shadow-lg bg-customOrange-light">
       <CardHeader>
         <CardTitle>社員検索</CardTitle>
         <CardDescription>条件を指定して社員を検索できます</CardDescription>

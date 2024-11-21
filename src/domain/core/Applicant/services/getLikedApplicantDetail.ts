@@ -65,6 +65,9 @@ export const getLikedApplicantDetail = async (
 		imageUrl: applicant.user.image ?? undefined,
 		birthday: applicant.birthday ?? undefined,
 		selfIntroduction: applicant.selfIntroduction ?? undefined,
+		company: applicant.company ?? undefined,
+		workHistory: applicant.workHistory ?? undefined,
+		education: applicant.education ?? undefined,
 	});
 
 	let firstMessageEntity: Message | undefined;

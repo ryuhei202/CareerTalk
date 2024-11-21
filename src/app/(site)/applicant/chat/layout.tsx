@@ -15,7 +15,7 @@ export default function ChatLayout({
   return (
     <div className="px-8">
       {children}
-      <div className="flex gap-4 py-4">
+      <div className="flex py-4">
         {!pathname.includes("/detail") && conversations}
         {!pathname.includes("/detail") && dm}
       </div>

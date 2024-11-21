@@ -1,6 +1,8 @@
 import DMResultCard from "@/app/_components/parts/DMRequestCard";
+import { Modal } from "@/app/_components/parts/Modal";
+import { Badge } from "@/app/_components/ui/badge";
 import { Button } from "@/app/_components/ui/button";
-import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/app/_components/ui/card";
 import { Label } from "@/app/_components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
 import { Textarea } from "@/app/_components/ui/textarea";
@@ -41,88 +43,93 @@ export default function DMRequestCard({
   return (
     <>
       {isSuccess ? (
-        <DMResultCard
-          imageSrc={kamihikouki}
-          title="リクエストを送信しました！"
-          onClickBack={onClickBackToSearch}
-        />
+        <Modal>
+          <DMResultCard
+            imageSrc={kamihikouki}
+            title="リクエストを送信しました！"
+            onClickBack={onClickBackToSearch}
+          />
+        </Modal>
       ) : (
-        <Card className="w-full max-w-md mx-auto h-[calc(100vh-80px)] overflow-y-auto my-4">
-          <CardHeader className="bg-blue-500 text-white p-3 sticky top-0 z-10">
-            <h2 className="text-sm font-medium">
-              この社員へDMをリクエストしますか？
-            </h2>
-          </CardHeader>
-          <form action={action}>
-            <CardContent className="p-4">
+        <Modal contentClassName="h-[90%] max-w-[60%]">
+          <Card className="w-full mx-auto border-0 overflow-auto">
+            <CardHeader className=" text-white p-3 top-0 z-10">
               <div className="flex justify-between items-center">
                 <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="text-blue-600 hover:text-white hover:bg-blue-600 p-1"
+                  variant="outline"
+                  className="border-0 shadow-none"
                   onClick={onClickBack}
                 >
                   <ArrowLeft className="h-4 w-4" />
-                  <span className="sr-only">戻る</span>
+                  <span className="">戻る</span>
                 </Button>
               </div>
-
-              <div className="space-y-6 mt-6">
-                <div className="space-y-3">
-                  <h3 className="text-sm font-bold border-b border-gray-200 pb-1">
-                    この社員と話したいと思ったきっかけを教えてください
-                  </h3>
-                  <RadioGroup
-                    name="conversationPurpose"
-                    className="space-y-2"
-                    required
-                  >
-                    {conversationPurposeOptions.map((option) => (
-                      <div
-                        key={option.id}
-                        className="flex items-center space-x-2"
-                      >
-                        <RadioGroupItem
-                          value={option.id.toString()}
-                          id={`option-${option.id}`}
-                        />
-                        <Label
-                          htmlFor={`option-${option.id}`}
-                          className="text-sm text-gray-600"
-                        >
-                          {option.reason}
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-2">
-                    <LightbulbIcon className="w-5 h-5 text-blue-400" />
-                    <h3 className="text-sm font-bold border-b border-gray-200 pb-1">
-                      DMリクエストにメッセージを添えてみませんか？
+              <h2 className="text-xl text-primary font-bold text-center pt-12">
+                この社員へDMをリクエストしますか？
+              </h2>
+            </CardHeader>
+            <form action={action}>
+              <CardContent className="py-4 px-20">
+                <div className="space-y-6 mt-6">
+                  <div className="space-y-3">
+                    <h3 className="text-foreground border-b border-gray-200 pb-1">
+                      この社員と話したいと思ったきっかけを教えてください。
+                      <span className="text-sm">（複数選択可）</span>
                     </h3>
+                    <RadioGroup
+                      name="conversationPurpose"
+                      className="space-y-2"
+                      required
+                    >
+                      {conversationPurposeOptions.map((option) => (
+                        <div
+                          key={option.id}
+                          className="flex items-center space-x-2"
+                        >
+                          <RadioGroupItem
+                            value={option.id.toString()}
+                            id={`option-${option.id}`}
+                          />
+                          <Label
+                            htmlFor={`option-${option.id}`}
+                            className="text-sm text-gray-600"
+                          >
+                            {option.reason}
+                          </Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
                   </div>
-                  <Textarea
-                    name="message"
-                    placeholder="気になった点や詳しく話を聞きたい点など、簡単なメッセージを送ることでトークをスムーズに進めることができます。"
-                    className="h-24 text-sm"
-                  />
+                  <div className="space-y-3 pt-4">
+                    <div className="flex items-center space-x-2 -translate-x-2">
+                      <LightbulbIcon className="w-8 h-8 text-gray-600" />
+                      <h3 className="">
+                        DMリクエストにメッセージを添えてみましょう。
+                      </h3>
+                      <Badge variant="destructive" className="rounded-full">必須</Badge>
+                    </div>
+                    <Textarea
+                      name="message"
+                      placeholder="気になった点や詳しく話を聞きたい点など、簡単なメッセージを送ることでトークをスムーズに進めることができます。"
+                      className="py-4 px-3 text-sm border border-gray-600 bg-background-accent [field-sizing:content]"
+                    />
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-            <div className="sticky bottom-0 bg-white p-4 border-t">
-              <Button
-                type="submit"
-                className="w-full bg-blue-600 text-white hover:bg-blue-700 rounded-full py-3 text-sm font-medium"
-              >
-                送信する
-              </Button>
-            </div>
-          </form>
-        </Card>
+              </CardContent>
+              <CardFooter>
+                <div className="mt-6 w-full flex justify-center items-center">
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    className="bg-accent hover:bg-white text-white hover:text-accent"
+                  >
+                    DMリクエストを送信する
+                  </Button>
+                </div>
+              </CardFooter>
+            </form>
+          </Card>
+        </Modal>
       )}
     </>
   );

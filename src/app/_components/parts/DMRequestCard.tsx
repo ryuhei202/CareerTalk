@@ -15,7 +15,7 @@ export default function DMResultCard({
   children?: React.ReactNode;
 }) {
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto h-auto">
       <CardHeader className="pb-0">
         <Button
           variant="ghost"

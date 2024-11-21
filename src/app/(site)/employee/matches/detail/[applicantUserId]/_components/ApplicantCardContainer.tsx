@@ -23,6 +23,7 @@ export default function ApplicantCardContainer({
   likeReason: string;
   likeMessage?: string;
 }) {
+
   const router = useRouter();
   const [state, formAction] = useFormState<FormState, FormData>(
     async (prevState, formData) => {

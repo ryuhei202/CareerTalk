@@ -1,6 +1,7 @@
 "use client";
 
 import ErrorPage from "@/app/_components/page/ErrorPage";
+import { Modal } from "@/app/_components/parts/Modal";
 import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/getEmployeeDetailUseCase";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -45,11 +46,13 @@ export default function EmployeeCardContainer({
           action={formAction}
         />
       ) : (
-        <EmployeeCard
-          employee={employee}
-          onClickBack={() => router.back()}
-          onClickOpenDMRequest={() => setIsRequestFormOpen(true)}
-        />
+        <Modal contentClassName="h-[90%] max-w-[60%]">
+          <EmployeeCard
+            employee={employee}
+            onClickBack={() => router.back()}
+            onClickOpenDMRequest={() => setIsRequestFormOpen(true)}
+          />
+        </Modal>
       )}
     </>
   );

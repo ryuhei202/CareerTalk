@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Button } from "../../ui/button";
 
 type ChatHeaderProps = {
   partnerUserId: string;
@@ -18,20 +19,21 @@ export function ChatHeader({
 }: ChatHeaderProps) {
   const router = useRouter();
   return (
-    <div className="flex items-center gap-4 p-4 border-b bg-white">
+    <div className="flex items-center gap-4 pb-3 border-b border-gray-200">
       <Link
         href={`/${isApplicant ? "applicant" : "employee"}/chat`}
         className="hover:text-gray-600 transition-colors"
       >
-        <ArrowLeft className="h-6 w-6" />
+        <Button variant="outline" className="border-none shadow-none">
+          <ArrowLeft className="h-10 w-10" />戻る
+        </Button>
       </Link>
       <button
         type="button"
         className="flex items-center gap-2"
         onClick={() =>
           router.push(
-            `/${
-              isApplicant ? "applicant" : "employee"
+            `/${isApplicant ? "applicant" : "employee"
             }/chat/detail/${partnerUserId}`
           )
         }
@@ -44,7 +46,7 @@ export function ChatHeader({
             className="rounded-full object-cover"
           />
         </div>
-        <h2 className="font-medium">{partnerName}</h2>
+        <h2 className="font-bold text-xl">{partnerName}</h2>
       </button>
     </div>
   );

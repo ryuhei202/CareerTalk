@@ -10,7 +10,7 @@ export default function ConversationList({
   isApplicant: boolean;
 }) {
   return (
-    <div className="h-[calc(100vh-150px)] overflow-y-auto border-r w-1/3">
+    <div className="h-[calc(100vh-150px)] overflow-y-auto w-1/3 border-r border-gray-300">
       {conversations.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full p-4 text-center">
           <p className="text-lg font-medium text-gray-700 mb-2">
@@ -23,22 +23,21 @@ export default function ConversationList({
           </p>
         </div>
       ) : (
-        <div className="divide-y border-b mx-auto">
+        <div className="divide-y mx-auto">
           <h2 className="text-xl font-semibold text-gray-800 p-4">トーク</h2>
           {conversations.map((conversation) => (
             <Link
               key={conversation.id}
-              href={`/${isApplicant ? "applicant" : "employee"}/chat/${
-                conversation.PartnerUserId
-              }`}
-              className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors"
+              href={`/${isApplicant ? "applicant" : "employee"}/chat/${conversation.PartnerUserId
+                }`}
+              className="flex items-center border-none gap-4 p-4 hover:bg-gray-50 transition-colors"
             >
               <div className="relative w-12 h-12">
                 <Image
                   src={conversation.PartnerImageURL}
                   alt="プロフィール画像"
                   fill
-                  className="rounded-full object-cover"
+                  className="rounded-full shadow border border-gray-100 object-cover"
                 />
               </div>
               <div className="flex-1 min-w-0">
