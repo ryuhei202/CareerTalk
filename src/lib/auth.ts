@@ -115,8 +115,7 @@ export const handleUserView = async ({
 	if (!session) {
 		redirect("/");
 	}
-	console.log(session.user);
-	console.log(session.user.isBaned);
+
 	if (session.user.isBaned) {
 		redirect("/sorry");
 	}

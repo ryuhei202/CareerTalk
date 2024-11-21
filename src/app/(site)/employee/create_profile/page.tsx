@@ -30,9 +30,10 @@ export default async function CreateProfileEmployeePage() {
     redirect("/employee/matches");
   }
 
-  const [occupations, workLocations] = await Promise.all([
+  const [occupations, workLocations, employeeImages] = await Promise.all([
     prisma.occupation.findMany(),
     prisma.workLocation.findMany(),
+    prisma.employeeImage.findMany(),
   ]);
 
   return (
@@ -40,6 +41,7 @@ export default async function CreateProfileEmployeePage() {
       occupations={occupations}
       userName={session?.user.name ?? ""}
       workLocations={workLocations}
+      employeeImages={employeeImages}
     />
   );
 }

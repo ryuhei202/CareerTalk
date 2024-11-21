@@ -255,10 +255,6 @@ export default function CreateProfileApplicant({
                       <SelectContent>
                         <SelectItem value="MALE">男性</SelectItem>
                         <SelectItem value="FEMALE">女性</SelectItem>
-                        <SelectItem value="OTHER">その他</SelectItem>
-                        <SelectItem value="PREFER_NOT_TO_SAY">
-                          回答しない
-                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

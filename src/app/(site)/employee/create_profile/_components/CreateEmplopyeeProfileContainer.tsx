@@ -23,11 +23,12 @@ import { GenderEnum } from "@/domain/shared/Gender";
 import { HiringTypeEnum } from "@/domain/shared/HiringType";
 import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Occupation, WorkLocation } from "@prisma/client";
+import type { EmployeeImage, Occupation, WorkLocation } from "@prisma/client";
 import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import DefaultImageSelector, { type ImageOption } from "./DefaultImageSelector";
 
 export type FormState = {
   message: string;
@@ -78,6 +79,10 @@ const formSchema = z.object({
   meetingMethod: z.enum(meetingMethodOptions).optional(),
   selfIntroduction: z.string().trim().optional(),
   talkableTopics: z.string().trim().optional(),
+  imageId: z
+    .string({ message: "プロフィール画像は必須です" })
+    .min(1, { message: "プロフィール画像は必須です" })
+    .trim(),
 });
 
 // TODO: あとでしっかりとコンポーネントを分割する。（デザイン待ち）
@@ -85,12 +90,17 @@ export default function CreateProfileEmployee({
   occupations,
   userName,
   workLocations,
+  employeeImages,
 }: {
   occupations: Occupation[];
   userName: string;
   workLocations: WorkLocation[];
+  employeeImages: EmployeeImage[];
 }) {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [selectedGender, setSelectedGender] = useState<
+    "MALE" | "FEMALE" | undefined
+  >(undefined);
   const [state, formAction] = useFormState<FormState, FormData>(
     registerEmployeeAction,
     {
@@ -99,6 +109,12 @@ export default function CreateProfileEmployee({
       data: undefined,
     }
   );
+
+  const imageOptions: ImageOption[] = employeeImages.map((image) => ({
+    id: image.id,
+    src: image.url,
+    alt: `プロフィール画像${image.id}`,
+  }));
 
   const form = useForm<z.infer<typeof formSchema>>({
     mode: "onChange",
@@ -114,6 +130,7 @@ export default function CreateProfileEmployee({
       meetingMethod: (state.data?.meetingMethod as string) ?? undefined,
       selfIntroduction: (state.data?.selfIntroduction as string) ?? undefined,
       talkableTopics: (state.data?.talkableTopics as string) ?? undefined,
+      imageId: (state.data?.imageId as string) ?? undefined,
     },
   });
 
@@ -164,7 +181,11 @@ export default function CreateProfileEmployee({
                   </FormLabel>
                   <div className="col-span-2">
                     <Select
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        setSelectedGender(value as "MALE" | "FEMALE");
+                        form.setValue("imageId", "");
+                      }}
                       value={field.value}
                       name="gender"
                       defaultValue={field.value}
@@ -177,10 +198,6 @@ export default function CreateProfileEmployee({
                       <SelectContent>
                         <SelectItem value="MALE">男性</SelectItem>
                         <SelectItem value="FEMALE">女性</SelectItem>
-                        <SelectItem value="OTHER">その他</SelectItem>
-                        <SelectItem value="PREFER_NOT_TO_SAY">
-                          回答しない
-                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -212,7 +229,7 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
                 <FormLabel className="text-sm font-medium text-gray-700">
-                  社会人歴（必須）
+                  社会歴（必須）
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -383,6 +400,31 @@ export default function CreateProfileEmployee({
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="imageId"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-3 gap-4 items-start">
+                <FormLabel className="text-sm font-medium text-gray-700">
+                  プロフィール画像（必須）
+                </FormLabel>
+                <div className="col-span-2">
+                  <FormControl>
+                    <input type="hidden" {...field} />
+                  </FormControl>
+                  <DefaultImageSelector
+                    selectedImageId={field.value}
+                    onSelect={(imageId) => {
+                      field.onChange(imageId);
+                    }}
+                    imageOptions={imageOptions}
+                    selectedGender={selectedGender}
+                  />
                   <FormMessage />
                 </div>
               </FormItem>

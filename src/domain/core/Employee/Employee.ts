@@ -265,14 +265,10 @@ export class Employee {
 
 	toGenderLabel(): GenderLabel {
 		switch (this._gender) {
-			case GenderEnum.OTHER:
-				return "その他";
 			case GenderEnum.MALE:
 				return "男性";
 			case GenderEnum.FEMALE:
 				return "女性";
-			case GenderEnum.PREFER_NOT_TO_SAY:
-				return "回答しない";
 			default:
 				throw new EmployeeDomainError("無効な性別です");
 		}
