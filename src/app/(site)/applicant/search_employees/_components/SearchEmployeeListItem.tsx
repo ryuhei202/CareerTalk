@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 
-import bakerBackGround from "@/assets/images/baker-background.png"
+import bakerBackGround from "@/assets/images/baker-background.png";
 import type { FilteredEmployee } from "@/usecase/getFilteredEmployee/getFilteredEmployeesUseCase";
 import { Briefcase, MapPin, PhoneCall, Users } from "lucide-react";
 import Image from "next/image";
@@ -20,11 +20,20 @@ export default function SearchEmployeeListItem({
 }) {
   return (
     <Link href={`/applicant/search_employees/detail/${employee.userId}`}>
-      <Card key={employee.userId} className="relative overflow-hidden border-none">
+      <Card
+        key={employee.userId}
+        className="relative overflow-hidden border-none"
+      >
         <CardHeader className=" text-white p-0 relative top-0 z-10 flex justify-center items-center overflow-hidden">
           <div className="w-full h-full absolute overflow-hidden">
-            <Image src={bakerBackGround} alt="bakerBackGround" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black opacity-60 w-full h-full"> </div>
+            <Image
+              src={bakerBackGround}
+              alt="bakerBackGround"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black opacity-60 w-full h-full">
+              {" "}
+            </div>
           </div>
           <CardTitle className="font-bold relative z-10 w-full m-0 px-6 py-4 leading-relaxed whitespace-pre-wrap">
             {employee.bakerMessage}
@@ -33,7 +42,9 @@ export default function SearchEmployeeListItem({
         <CardContent className="px-0 py-2">
           <div className="flex justify-between items-start">
             <div className="flex-grow">
-              <div className="ps-6 font-bold text-lg border-b border-gray-300">{employee.company.name}</div>
+              <div className="ps-6 font-bold text-lg border-b border-gray-300">
+                {employee.company.name}
+              </div>
               <div className="ps-6 py-2">
                 <div className="tracking-widest text-lg">{employee.name}</div>
                 <div className="ps-2 pt-1 list-none space-y-1">
@@ -53,12 +64,12 @@ export default function SearchEmployeeListItem({
                     <PhoneCall className="mr-2" size={16} />
                     <span>{employee.meetingMethod}</span>
                   </div>
-                  {employee.workLocation &&
+                  {employee.workLocation && (
                     <div className="text-sm flex items-center">
                       <MapPin className="mr-2" size={16} />
                       <span>{employee.workLocation.name}</span>
                     </div>
-                  }
+                  )}
                 </div>
               </div>
             </div>

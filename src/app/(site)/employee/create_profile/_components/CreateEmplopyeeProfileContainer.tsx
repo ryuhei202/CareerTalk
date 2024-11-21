@@ -79,9 +79,10 @@ const formSchema = z.object({
   meetingMethod: z.enum(meetingMethodOptions).optional(),
   selfIntroduction: z.string().trim().optional(),
   talkableTopics: z.string().trim().optional(),
-  imageId: z.string({
-    required_error: "プロフィール画像を選択してください",
-  }),
+  imageId: z
+    .string({ message: "プロフィール画像は必須です" })
+    .min(1, { message: "プロフィール画像は必須です" })
+    .trim(),
 });
 
 // TODO: あとでしっかりとコンポーネントを分割する。（デザイン待ち）
@@ -183,6 +184,7 @@ export default function CreateProfileEmployee({
                       onValueChange={(value) => {
                         field.onChange(value);
                         setSelectedGender(value as "MALE" | "FEMALE");
+                        form.setValue("imageId", "");
                       }}
                       value={field.value}
                       name="gender"
@@ -196,10 +198,6 @@ export default function CreateProfileEmployee({
                       <SelectContent>
                         <SelectItem value="MALE">男性</SelectItem>
                         <SelectItem value="FEMALE">女性</SelectItem>
-                        <SelectItem value="OTHER">その他</SelectItem>
-                        <SelectItem value="PREFER_NOT_TO_SAY">
-                          回答しない
-                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
