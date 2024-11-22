@@ -1,4 +1,3 @@
-import fs from "node:fs";
 import type { IStorageRepository } from "@/domain/external/Storage/StorageRepository";
 import { s3 } from "@/lib/s3";
 import { Upload } from "@aws-sdk/lib-storage";
