@@ -61,7 +61,7 @@ export default async function MyPage() {
               <div className="my-5 flex flex-col items-start">
                 <div className="bg-white p-2 rounded-md">入社歴</div>
                 <span className="ms-4 mt-2">
-                  {employee.data.yearsOfExperience}年
+                  {employee.data.yearsOfExperience}年目
                 </span>
               </div>
               <div className="my-5 flex flex-col items-start">

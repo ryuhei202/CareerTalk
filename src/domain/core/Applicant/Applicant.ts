@@ -214,10 +214,21 @@ export class Applicant {
 	}
 
 	toYearsOfExperience(): number | undefined {
-		// 継続年数を返却するロジックを書く
-		// 一旦仮置き
-		if (this._joiningDate)
-			return new Date().getFullYear() - this._joiningDate.getFullYear();
-		return undefined;
+		if (this._joiningDate == null) {
+			return undefined;
+		}
+		const today = new Date();
+		const joiningDate = new Date(this._joiningDate);
+		let years = today.getFullYear() - joiningDate.getFullYear();
+		const monthDiff = today.getMonth() - joiningDate.getMonth();
+
+		if (
+			monthDiff < 0 ||
+			(monthDiff === 0 && today.getDate() < joiningDate.getDate())
+		) {
+			years--;
+		}
+
+		return years + 1;
 	}
 }

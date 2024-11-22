@@ -110,9 +110,7 @@ export const EditMyPageFormContent = ({
           <div className="w-full">
             <div className="my-5">
               <div className="flex flex-col items-start">
-                <div className="bg-white p-2 rounded-md mb-2">
-                  名前(必須)
-                </div>
+                <div className="bg-white p-2 rounded-md mb-2">名前(必須)</div>
                 <Input
                   name="name"
                   type="text"
@@ -148,7 +146,9 @@ export const EditMyPageFormContent = ({
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-white p-2 rounded-md">入社歴</div>
-              <span className="ms-4 mt-2">{employee.yearsOfExperience}年</span>
+              <span className="ms-4 mt-2">
+                {employee.yearsOfExperience}年目
+              </span>
             </div>
             <div className="my-5 flex flex-col items-start">
               <div className="bg-white p-2 rounded-md">入社方法</div>

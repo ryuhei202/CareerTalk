@@ -49,7 +49,6 @@ export const getApplicantDetailUseCase = async (
 			data: employeeDetail,
 		});
 	} catch (error) {
-		console.error("error", error);
 		if (error instanceof ZodError) {
 			return createFailure({
 				message: getZodErrorMessages(error),

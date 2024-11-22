@@ -337,8 +337,18 @@ export class Employee {
 	}
 
 	toYearsOfExperience(): number {
-		// 継続年数を返却するロジックを書く
-		// 一旦仮置き
-		return new Date().getFullYear() - this._joiningDate.getFullYear();
+		const today = new Date();
+		const joiningDate = new Date(this._joiningDate);
+		let years = today.getFullYear() - joiningDate.getFullYear();
+		const monthDiff = today.getMonth() - joiningDate.getMonth();
+
+		if (
+			monthDiff < 0 ||
+			(monthDiff === 0 && today.getDate() < joiningDate.getDate())
+		) {
+			years--;
+		}
+
+		return years + 1;
 	}
 }

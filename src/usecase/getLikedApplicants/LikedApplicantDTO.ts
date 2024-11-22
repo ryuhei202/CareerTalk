@@ -27,7 +27,7 @@ export class LikedApplicantDTO {
 		this.name = applicant.name;
 		this.gender = applicant.toGenderLabel();
 		this.age = applicant.getAge();
-		this.yearsOfExperience = applicant.toYearsOfExperience() ?? undefined;
+		this.yearsOfExperience = applicant.toYearsOfExperience();
 		this.occupationName = occupation.name;
 		this.selfIntroduction = applicant.selfIntroduction;
 		this.imageUrl = applicant.imageUrl;

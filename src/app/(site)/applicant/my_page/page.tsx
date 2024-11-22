@@ -65,7 +65,9 @@ export default async function ApplicantMyPage() {
               <div className="my-5 flex flex-col items-start">
                 <div className="bg-white p-2 rounded-md">社会人歴</div>
                 <div className="ms-4 mt-2">
-                  {applicant.data.yearsOfExperience}年
+                  {applicant.data.yearsOfExperience
+                    ? `${applicant.data.yearsOfExperience}年目`
+                    : "入力がありません"}
                 </div>
               </div>
               <div className="mt-12  mb-5 flex justify-center">
