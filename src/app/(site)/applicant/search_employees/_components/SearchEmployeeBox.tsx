@@ -15,7 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/_components/ui/select";
-import { X } from "lucide-react";
 import type { Company, Occupation, SearchParams } from "../page";
 
 const YEARS_OF_EXPERIENCE = [
@@ -81,21 +80,11 @@ const MEETING_METHOD = [
 export default function SearchEmployeeBox({
   occupations,
   companies,
-  keyword,
-  setKeyword,
-  addTag,
-  removeTag,
-  tags,
   onChangeParamsMethods,
   currentParams,
 }: {
   occupations: Occupation[];
   companies: Company[];
-  keyword: string;
-  setKeyword: (keyword: string) => void;
-  addTag: (tag: string) => void;
-  removeTag: (tag: string) => void;
-  tags: string[];
   currentParams: SearchParams;
   onChangeParamsMethods: {
     onChangeCompany: (value: string) => void;
@@ -113,45 +102,18 @@ export default function SearchEmployeeBox({
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="relative">
-          <Input
-            type="text"
-            placeholder="キーワード"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                addTag(keyword);
-              }
-            }}
-            className="w-full pr-8 border-gray-300 rounded-full bg-white"
-          />
-          {keyword && (
-            <button
-              type="button"
-              onClick={() => setKeyword("")}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="bg-[#e0f0ff] text-blue-800 text-xs font-semibold px-3 py-1 rounded-full flex items-center"
-            >
-              {tag}
-              <button
-                type="button"
-                onClick={() => removeTag(tag)}
-                className="ml-1 text-blue-600 hover:text-blue-800"
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </span>
-          ))}
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder="キーワード"
+              disabled
+              className="w-full pr-8 border-gray-300 rounded-full bg-gray-100 cursor-not-allowed"
+            />
+            <div className="absolute inset-0 bg-gray-200 opacity-50 rounded-full" />
+          </div>
+          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+            <span className="text-gray-500 text-sm">準備中...</span>
+          </div>
         </div>
         <div className="space-y-4">
           {[
