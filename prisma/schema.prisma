@@ -48,10 +48,8 @@ model User {
 }
 
 enum Gender {
-  OTHER
   MALE
   FEMALE
-  PREFER_NOT_TO_SAY
 }
 
 enum ApplicantStatus {
