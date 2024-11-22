@@ -22,23 +22,6 @@ export default function SearchEmployeeContainer({
     useSearchParamsUpdate();
 
   const totalPages = Math.ceil(totalCount / 10);
-  const [tags, setTags] = useState([
-    "IT業界",
-    "フレックスタイム制",
-    "エンタメ業界",
-  ]);
-  const [keyword, setKeyword] = useState("");
-
-  const removeTag = (tag: string) => {
-    setTags(tags.filter((t) => t !== tag));
-  };
-
-  const addTag = (tag: string) => {
-    if (tag) {
-      setTags([...tags, tag]);
-      setKeyword("");
-    }
-  };
 
   const handleChangeCompany = useCallback(
     (company: string) => {
@@ -82,11 +65,6 @@ export default function SearchEmployeeContainer({
         <SearchEmployeeBox
           occupations={occupations}
           companies={companies}
-          keyword={keyword}
-          setKeyword={setKeyword}
-          addTag={addTag}
-          removeTag={removeTag}
-          tags={tags}
           onChangeParamsMethods={{
             onChangeCompany: handleChangeCompany,
             onChangeOccupation: handleChangeOccupation,
