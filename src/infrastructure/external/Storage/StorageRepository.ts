@@ -14,14 +14,11 @@ export const createStorageRepository = ({
 			imageData,
 		}: { userId: string; imageData: string }) => {
 			// Base64文字列からバイナリデータを抽出
-			fs.writeFileSync("output/svg/imageData.png", imageData);
 			const base64Data = imageData.replace(
 				/^data:image\/(svg\+xml|[\w-]+);base64,/,
 				"",
 			);
-			fs.writeFileSync("output/svg/base64Data.txt", base64Data);
 			const buffer = Buffer.from(base64Data, "base64");
-			fs.writeFileSync("output/svg/buffer.txt", buffer.toString("base64"));
 			const now = new Date();
 			const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}:${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
 			const mimeType =
