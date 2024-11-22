@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import type { IStorageRepository } from "@/domain/external/Storage/StorageRepository";
 import { s3 } from "@/lib/s3";
 import { Upload } from "@aws-sdk/lib-storage";
@@ -13,13 +14,20 @@ export const createStorageRepository = ({
 			imageData,
 		}: { userId: string; imageData: string }) => {
 			// Base64文字列からバイナリデータを抽出
-			const base64Data = imageData.replace(/^data:image\/\w+;base64,/, "");
+			fs.writeFileSync("output/svg/imageData.png", imageData);
+			const base64Data = imageData.replace(
+				/^data:image\/(svg\+xml|[\w-]+);base64,/,
+				"",
+			);
+			fs.writeFileSync("output/svg/base64Data.txt", base64Data);
 			const buffer = Buffer.from(base64Data, "base64");
-
+			fs.writeFileSync("output/svg/buffer.txt", buffer.toString("base64"));
 			const now = new Date();
 			const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}:${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
 			const mimeType =
-				imageData.match(/^data:([^;]+);base64,/)?.[1] || "image/jpeg";
+				imageData
+					.match(/^data:image\/(svg\+xml|[\w-]+);base64,/)?.[0]
+					?.replace(/^data:|\;base64,$/g, "") || "image/jpeg";
 			const uploadKey = `user:${userId}/${formattedDate}.${getExtension(mimeType)}`;
 			const upload = new Upload({
 				client: s3,
@@ -47,6 +55,7 @@ const getExtension = (mimeType: string): string => {
 		"image/png": "png",
 		"image/gif": "gif",
 		"image/webp": "webp",
+		"image/svg+xml": "svg",
 	};
 	return extensions[mimeType] || "jpg";
 };
