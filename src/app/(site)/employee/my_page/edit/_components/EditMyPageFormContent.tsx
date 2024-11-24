@@ -221,7 +221,7 @@ export const EditMyPageFormContent = ({
           />
           <div className="text-red-500">{fields.barkerMessage.errors}</div>
         </div>
-        <div className="mt-6 mb-14">
+        {/* <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             自己紹介
           </h2>
@@ -231,7 +231,7 @@ export const EditMyPageFormContent = ({
             defaultValue={employee.selfIntroduction}
           />
           <div className="text-red-500">{fields.selfIntroduction.errors}</div>
-        </div>
+        </div> */}
         <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             話せること

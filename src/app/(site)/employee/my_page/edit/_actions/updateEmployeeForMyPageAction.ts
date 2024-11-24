@@ -54,7 +54,7 @@ export async function updateEmployeeForMyPageAction(
 			: undefined,
 		meetingMethod: formData.get("meetingMethod") as string | undefined,
 		talkableTopics: formData.get("talkableTopics") as string | undefined,
-		selfIntroduction: formData.get("selfIntroduction") as string | undefined,
+		selfIntroduction: "",
 		careerDescription: formData.get("careerDescription") as string | undefined,
 		jobDescription: formData.get("jobDescription") as string | undefined,
 		joiningDescription: formData.get("joiningDescription") as
