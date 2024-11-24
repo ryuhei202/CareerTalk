@@ -74,7 +74,6 @@ export default function DMRequestCard({
                   <div className="space-y-3">
                     <h3 className="text-foreground border-b border-gray-200 pb-1">
                       この社員と話したいと思ったきっかけを教えてください。
-                      <span className="text-sm">（複数選択可）</span>
                     </h3>
                     <RadioGroup
                       name="conversationPurpose"
@@ -106,7 +105,6 @@ export default function DMRequestCard({
                       <h3 className="">
                         DMリクエストにメッセージを添えてみましょう。
                       </h3>
-                      <Badge variant="destructive" className="rounded-full">必須</Badge>
                     </div>
                     <Textarea
                       name="message"
