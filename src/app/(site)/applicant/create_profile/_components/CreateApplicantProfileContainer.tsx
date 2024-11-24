@@ -326,7 +326,7 @@ export default function CreateProfileApplicant({
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <Input type="month" {...field} />
                   </FormControl>
                   <FormMessage />
                 </div>
