@@ -61,14 +61,14 @@ const formSchema = z.object({
     .length(8, {
       message: "企業コードは8文字で入力してください",
     }),
-  joinDate: z.string({ message: "社会人歴は必須です" }).refine(
+  joinDate: z.string({ message: "社会人になった月は必須です" }).refine(
     (date) => {
       const selectedDate = new Date(date);
       const today = new Date();
       return selectedDate <= today;
     },
     {
-      message: "社会人歴は今日以前の日付を選択してください",
+      message: "社会人になった月は今日以前の日付を選択してください",
     }
   ),
   occupation: z.string().trim().min(1, {
@@ -229,7 +229,7 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
                 <FormLabel className="text-sm font-medium text-gray-700">
-                  社会歴（必須）
+                  社会になった月（必須）
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -394,7 +394,7 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
                 <FormLabel className="text-sm font-medium text-gray-700 pt-2">
-                  話せる内容
+                  話せること
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
