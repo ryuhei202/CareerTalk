@@ -111,7 +111,6 @@ model Employee {
   joiningDate        DateTime
   hiringType         HiringType?
   meetingMethod      MeetingMethod?
-  selfIntroduction   String?          @default("") @db.Text
   talkableTopics     String?          @default("")
   status             EmployeeStatus   @default(PENDING)
   conversations      Conversation[]

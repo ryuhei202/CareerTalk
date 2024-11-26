@@ -1,6 +1,7 @@
 "use client";
 import { registerEmployeeAction } from "@/app/(site)/employee/create_profile/_actions/registerEmployeeAction";
 import { Alert } from "@/app/_components/ui/alert";
+import { Badge } from "@/app/_components/ui/badge";
 import { Button } from "@/app/_components/ui/button";
 import {
   Form,
@@ -61,14 +62,14 @@ const formSchema = z.object({
     .length(8, {
       message: "企業コードは8文字で入力してください",
     }),
-  joinDate: z.string({ message: "社会人歴は必須です" }).refine(
+  joinDate: z.string({ message: "社会人になった月は必須です" }).refine(
     (date) => {
       const selectedDate = new Date(date);
       const today = new Date();
       return selectedDate <= today;
     },
     {
-      message: "社会人歴は今日以前の日付を選択してください",
+      message: "社会人になった月は今日以前の日付を選択してください",
     }
   ),
   occupation: z.string().trim().min(1, {
@@ -77,8 +78,11 @@ const formSchema = z.object({
   workLocation: z.string().trim().optional(),
   hiringType: z.enum(hiringTypeOptions).optional(),
   meetingMethod: z.enum(meetingMethodOptions).optional(),
-  selfIntroduction: z.string().trim().optional(),
-  talkableTopics: z.string().trim().optional(),
+  talkableTopics: z
+    .string()
+    .trim()
+    .max(1000, { message: "1000文字以内で入力してください" })
+    .optional(),
   imageId: z
     .string({ message: "プロフィール画像は必須です" })
     .min(1, { message: "プロフィール画像は必須です" })
@@ -128,7 +132,6 @@ export default function CreateProfileEmployee({
       workLocation: (state.data?.workLocation as string) ?? undefined,
       hiringType: (state.data?.hiringType as string) ?? undefined,
       meetingMethod: (state.data?.meetingMethod as string) ?? undefined,
-      selfIntroduction: (state.data?.selfIntroduction as string) ?? undefined,
       talkableTopics: (state.data?.talkableTopics as string) ?? undefined,
       imageId: (state.data?.imageId as string) ?? undefined,
     },
@@ -158,8 +161,14 @@ export default function CreateProfileEmployee({
             name="name"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  名前（必須）
+                <FormLabel className="text-sm font-bold text-gray-700">
+                  名前
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -176,8 +185,14 @@ export default function CreateProfileEmployee({
             render={({ field }) => {
               return (
                 <FormItem className="grid grid-cols-3 gap-4 items-center">
-                  <FormLabel className="text-sm font-medium text-gray-700">
-                    性別（必須）
+                  <FormLabel className="text-sm font-bold text-gray-700">
+                    性別
+                    <Badge
+                      className="ms-3 rounded-full font-normal"
+                      variant="destructive"
+                    >
+                      必須
+                    </Badge>
                   </FormLabel>
                   <div className="col-span-2">
                     <Select
@@ -211,8 +226,14 @@ export default function CreateProfileEmployee({
             name="companyCode"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  企業コード（必須）
+                <FormLabel className="text-sm font-bold text-gray-700">
+                  企業コード
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -228,8 +249,14 @@ export default function CreateProfileEmployee({
             name="joinDate"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  社会歴（必須）
+                <FormLabel className="text-sm font-bold text-gray-700">
+                  社会になった月
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -245,8 +272,14 @@ export default function CreateProfileEmployee({
             name="occupation"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  職種（必須）
+                <FormLabel className="text-sm font-bold text-gray-700">
+                  職種
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <Select
@@ -280,7 +313,7 @@ export default function CreateProfileEmployee({
             name="workLocation"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
+                <FormLabel className="text-sm font-bold text-gray-700">
                   勤務地
                 </FormLabel>
                 <div className="col-span-2">
@@ -315,7 +348,7 @@ export default function CreateProfileEmployee({
             name="hiringType"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
+                <FormLabel className="text-sm font-bold text-gray-700">
                   入社方法
                 </FormLabel>
                 <div className="col-span-2">
@@ -344,7 +377,7 @@ export default function CreateProfileEmployee({
             name="meetingMethod"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
+                <FormLabel className="text-sm font-bold text-gray-700">
                   訪問方法
                 </FormLabel>
                 <div className="col-span-2">
@@ -373,28 +406,11 @@ export default function CreateProfileEmployee({
           />
           <FormField
             control={form.control}
-            name="selfIntroduction"
-            render={({ field }) => (
-              <FormItem className="grid grid-cols-3 gap-4 items-start">
-                <FormLabel className="text-sm font-medium text-gray-700 pt-2">
-                  自己紹介
-                </FormLabel>
-                <div className="col-span-2">
-                  <FormControl>
-                    <Textarea {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="talkableTopics"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
-                <FormLabel className="text-sm font-medium text-gray-700 pt-2">
-                  話せる内容
+                <FormLabel className="text-sm font-bold text-gray-700 pt-2">
+                  話せること
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -410,8 +426,14 @@ export default function CreateProfileEmployee({
             name="imageId"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  プロフィール画像（必須）
+                <FormLabel className="text-sm font-bold text-gray-700">
+                  プロフィール画像
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>

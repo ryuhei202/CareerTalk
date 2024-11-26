@@ -101,16 +101,8 @@ export default async function MyPage() {
             </div>
           </div>
           <div className="mt-6">
-            <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
-              自己紹介
-            </h2>
-            <div className="mb-14 whitespace-pre-line">
-              {employee.data.selfIntroduction}
-            </div>
-          </div>
-          <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">
-              話せる内容
+              話せること
             </h2>
             <div className="mb-4 border-b border-gray-400"> </div>
             <div className="mb-14 whitespace-pre-line">

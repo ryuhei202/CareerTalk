@@ -2,8 +2,11 @@ import { HiringTypeEnum } from "@/domain/shared/HiringType";
 import { MeetingMethodEnum } from "@/domain/shared/MeetingMethod";
 import * as z from "zod";
 export const updateEmployeeSchema = z.object({
-	name: z.string({message: "必須項目です"}).trim().min(1, { message: "名前は1文字以上である必要があります" })
-	.max(100, { message: "名前は100文字以下である必要があります" }),
+	name: z
+		.string({ message: "必須項目です" })
+		.trim()
+		.min(1, { message: "名前は1文字以上である必要があります" })
+		.max(100, { message: "名前は100文字以下である必要があります" }),
 	occupation: z.string().trim().min(1, {
 		message: "職種は必須です",
 	}),
@@ -19,13 +22,6 @@ export const updateEmployeeSchema = z.object({
 			errorMap: () => ({
 				message: "雇用形態を選択してください",
 			}),
-		})
-		.optional(),
-	selfIntroduction: z
-		.string()
-		.trim()
-		.max(1000, {
-			message: "1000文字以内で入力してください",
 		})
 		.optional(),
 	talkableTopics: z

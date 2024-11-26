@@ -25,15 +25,10 @@ export default function DMResultCardSwitcher({
         <DMResultCard
           imageSrc={likeIcon}
           title="いいねを承認しました！"
-          onClickBack={handleDMClick}
+          onClickBack={onClickBack}
         >
           <CardFooter className="flex justify-center">
-            <Button
-              onClick={onClickBack}
-            >
-              DM画面へ
-            </Button>
-
+            <Button onClick={handleDMClick}>DM画面へ</Button>
           </CardFooter>
         </DMResultCard>
       ) : (

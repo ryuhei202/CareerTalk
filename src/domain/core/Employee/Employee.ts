@@ -21,7 +21,6 @@ import {
 	nameSchema,
 	occupationIdSchema,
 	otherDescriptionSchema,
-	selfIntroductionSchema,
 	statusSchema,
 	talkableTopicsSchema,
 	workLocationIdSchema,
@@ -48,7 +47,6 @@ export type EmployeeParams = {
 	workLocationId?: number;
 	hiringType?: HiringTypeEnum;
 	meetingMethod?: MeetingMethodEnum;
-	selfIntroduction?: string;
 	talkableTopics?: string;
 	careerDescription?: string;
 	jobDescription?: string;
@@ -75,7 +73,6 @@ export class Employee {
 		private _workLocationId?: number,
 		private _hiringType?: HiringTypeEnum,
 		private _meetingMethod?: MeetingMethodEnum,
-		private _selfIntroduction?: string,
 		private _talkableTopics?: string,
 		private _careerDescription?: string,
 		private _jobDescription?: string,
@@ -100,7 +97,6 @@ export class Employee {
 			params.workLocationId,
 			params.hiringType,
 			params.meetingMethod,
-			params.selfIntroduction,
 			params.talkableTopics,
 			params.careerDescription,
 			params.jobDescription,
@@ -143,11 +139,6 @@ export class Employee {
 	changeMeetingMethod(newMeetingMethod: MeetingMethodEnum): void {
 		meetingMethodSchema.parse(newMeetingMethod);
 		this._meetingMethod = newMeetingMethod;
-	}
-
-	changeSelfIntroduction(newSelfIntroduction: string): void {
-		selfIntroductionSchema.parse(newSelfIntroduction);
-		this._selfIntroduction = newSelfIntroduction;
 	}
 
 	changeTalkableTopics(newTalkableTopics: string): void {
@@ -234,10 +225,6 @@ export class Employee {
 
 	get meetingMethod(): MeetingMethodEnum | undefined {
 		return this._meetingMethod;
-	}
-
-	get selfIntroduction(): string | undefined {
-		return this._selfIntroduction;
 	}
 
 	get talkableTopics(): string | undefined {

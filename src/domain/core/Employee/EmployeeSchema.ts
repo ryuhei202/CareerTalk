@@ -69,15 +69,10 @@ export const hiringTypeSchema = z
 export const meetingMethodSchema = z
 	.nativeEnum(MeetingMethodEnum, { message: "無効な訪問方法です" })
 	.optional();
-export const selfIntroductionSchema = z
-	.string()
-	.trim()
-	.max(1000, { message: "自己紹介は1000文字以下である必要があります" })
-	.optional();
 export const talkableTopicsSchema = z
 	.string()
 	.trim()
-	.max(1000, { message: "話せる内容は1000文字以下である必要があります" })
+	.max(1000, { message: "話せることは1000文字以下である必要があります" })
 	.optional();
 export const careerDescriptionSchema = z
 	.string()
@@ -119,7 +114,6 @@ export const employeeParamsSchema = z.object({
 	workLocationId: workLocationIdSchema,
 	hiringType: hiringTypeSchema,
 	meetingMethod: meetingMethodSchema,
-	selfIntroduction: selfIntroductionSchema,
 	talkableTopics: talkableTopicsSchema,
 	careerDescription: careerDescriptionSchema,
 	jobDescription: jobDescriptionSchema,

@@ -23,9 +23,6 @@ describe("Employee", () => {
 		expect(employee.workLocationId).toBe(employeeDummyParams.workLocationId);
 		expect(employee.hiringType).toBe(employeeDummyParams.hiringType);
 		expect(employee.meetingMethod).toBe(employeeDummyParams.meetingMethod);
-		expect(employee.selfIntroduction).toBe(
-			employeeDummyParams.selfIntroduction,
-		);
 		expect(employee.talkableTopics).toBe(employeeDummyParams.talkableTopics);
 		expect(employee.status).toBe(employeeDummyParams.status);
 		expect(employee.careerDescription).toBe(
@@ -48,7 +45,6 @@ describe("Employee", () => {
 			workLocationId: undefined,
 			hiringType: undefined,
 			meetingMethod: undefined,
-			selfIntroduction: undefined,
 			talkableTopics: undefined,
 			careerDescription: undefined,
 			jobDescription: undefined,
@@ -70,7 +66,6 @@ describe("Employee", () => {
 		expect(employee.workLocationId).toBeUndefined();
 		expect(employee.hiringType).toBeUndefined();
 		expect(employee.meetingMethod).toBeUndefined();
-		expect(employee.selfIntroduction).toBeUndefined();
 		expect(employee.talkableTopics).toBeUndefined();
 		expect(employee.careerDescription).toBeUndefined();
 		expect(employee.jobDescription).toBeUndefined();
@@ -171,14 +166,6 @@ describe("Employee", () => {
 			Employee.create({
 				...employeeDummyParams,
 				meetingMethod: "INVALID" as MeetingMethodEnum,
-			}),
-		).toThrowError(ZodError);
-
-		// 不正なselfIntroduction
-		expect(() =>
-			Employee.create({
-				...employeeDummyParams,
-				selfIntroduction: "a".repeat(1001),
 			}),
 		).toThrowError(ZodError);
 
@@ -320,29 +307,6 @@ describe("Employee", () => {
 			expect(() =>
 				employee.changeMeetingMethod("INVALID" as MeetingMethodEnum),
 			).toThrow();
-		});
-	});
-
-	describe("changeSelfIntroduction", () => {
-		test("正常にselfIntroductionを変更できる", () => {
-			const employee = Employee.create({
-				...employeeDummyParams,
-				selfIntroduction: "自己紹介",
-			});
-
-			expect(employee.selfIntroduction).toBe("自己紹介");
-			employee.changeSelfIntroduction("自己紹介2");
-			expect(employee.selfIntroduction).toBe("自己紹介2");
-		});
-
-		test("不正なselfIntroductionでEmployeeを作成しようとするとエラーが発生する", () => {
-			const employee = Employee.create({
-				...employeeDummyParams,
-				selfIntroduction: "自己紹介",
-			});
-
-			expect(employee.selfIntroduction).toBe("自己紹介");
-			expect(() => employee.changeSelfIntroduction("a".repeat(1001))).toThrow();
 		});
 	});
 

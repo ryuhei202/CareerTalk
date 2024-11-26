@@ -17,7 +17,6 @@ export class FilteredEmployeeDTO {
 	public readonly workLocation?: WorkLocation;
 	public readonly hiringType?: HiringTypeLabel;
 	public readonly meetingMethod?: MeetingMethodLabel;
-	public readonly selfIntroduction?: string;
 	public readonly talkableTopics?: string;
 	public readonly barkerMessage?: string;
 
@@ -43,7 +42,6 @@ export class FilteredEmployeeDTO {
 		this.workLocation = workLocation;
 		this.hiringType = employee.toHiringTypeLabel();
 		this.meetingMethod = employee.toMeetingMethodLabel();
-		this.selfIntroduction = employee.selfIntroduction;
 		this.talkableTopics = employee.talkableTopics;
 		this.barkerMessage = employee.barkerMessage;
 	}
@@ -61,7 +59,6 @@ export class FilteredEmployeeDTO {
 			workLocation: this.workLocation,
 			hiringType: this.hiringType,
 			meetingMethod: this.meetingMethod,
-			selfIntroduction: this.selfIntroduction,
 			talkableTopics: this.talkableTopics,
 			bakerMessage: this.barkerMessage,
 		};

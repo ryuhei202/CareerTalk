@@ -4,7 +4,9 @@ import LikeReasonCard from "@/app/(site)/employee/matches/detail/[applicantUserI
 import CardCommentBox from "@/app/_components/parts/CardCommentBox";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
+import careerDescriptionIcon from "@/assets/images/icons/careerDescription.svg"
 import selfIntroductionIcon from "@/assets/images/icons/selfIntroduction.svg"
+import workHistoryIcon from "@/assets/images/icons/workHistory.svg"
 import type { ApplicantDetailResponse as Applicant } from "@/usecase/getApplicantDetail/getApplicantDetailUseCase";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
@@ -85,13 +87,13 @@ export default function ApplicantCard({
             <CardCommentBox
               title="職務経歴"
               comment={applicant.workHistory}
-              imageSrc={selfIntroductionIcon}
+              imageSrc={workHistoryIcon}
               imageAlt="workHistory"
             />
             <CardCommentBox
               title="学歴"
               comment={applicant.education}
-              imageSrc={selfIntroductionIcon}
+              imageSrc={careerDescriptionIcon}
               imageAlt="education"
             />
           </div>

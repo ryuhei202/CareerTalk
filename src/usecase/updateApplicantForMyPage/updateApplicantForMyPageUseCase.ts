@@ -6,7 +6,7 @@ import { updateApplicantForMyPage } from "@/domain/core/Applicant/services/updat
 import {
 	type InvalidUpdateApplicantForMyPageInputError,
 	validateUpdateApplicantForMyPageInput,
-} from "@/domain/core/Applicant/services/validateUpdateEmployeeForMyPageInput";
+} from "@/domain/core/Applicant/services/validateUpdateApplicantForMyPageInput";
 import { createStorageRepository } from "@/infrastructure/external/Storage/StorageRepository";
 import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";

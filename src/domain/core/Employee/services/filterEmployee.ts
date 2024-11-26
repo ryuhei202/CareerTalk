@@ -87,7 +87,6 @@ export const filterEmployees = async (
 			workLocationId: employee.workLocationId ?? undefined,
 			hiringType: (employee.hiringType as HiringTypeEnum) ?? undefined,
 			meetingMethod: (employee.meetingMethod as MeetingMethodEnum) ?? undefined,
-			selfIntroduction: employee.selfIntroduction ?? undefined,
 			talkableTopics: employee.talkableTopics ?? undefined,
 			barkerMessage: employee.barkerMessage ?? undefined,
 		});

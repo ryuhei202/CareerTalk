@@ -1,6 +1,7 @@
 "use client";
 import { Alert } from "@/app/_components/ui/alert";
 import { Avatar, AvatarFallback } from "@/app/_components/ui/avatar";
+import { Badge } from "@/app/_components/ui/badge";
 import { Button } from "@/app/_components/ui/button";
 import {
   Form,
@@ -158,7 +159,7 @@ export default function CreateProfileApplicant({
             name="imageUrl"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
+                <FormLabel className="text-sm font-bold text-gray-700">
                   プロフィール画像
                 </FormLabel>
                 <div className="col-span-2">
@@ -219,8 +220,8 @@ export default function CreateProfileApplicant({
             name="name"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  名前（必須）
+                <FormLabel className="text-sm font-bold text-gray-700">
+                  名前<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -237,8 +238,8 @@ export default function CreateProfileApplicant({
             render={({ field }) => {
               return (
                 <FormItem className="grid grid-cols-3 gap-4 items-center">
-                  <FormLabel className="text-sm font-medium text-gray-700">
-                    性別（必須）
+                  <FormLabel className="text-sm font-bold text-gray-700">
+                    性別<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
                   </FormLabel>
                   <div className="col-span-2">
                     <Select
@@ -268,8 +269,8 @@ export default function CreateProfileApplicant({
             name="birthday"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  生年月日（必須）
+                <FormLabel className="text-sm font-bold text-gray-700">
+                  生年月日<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -285,8 +286,8 @@ export default function CreateProfileApplicant({
             name="occupation"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
-                  職種（必須）
+                <FormLabel className="text-sm font-bold text-gray-700">
+                  職種<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <Select
@@ -321,12 +322,12 @@ export default function CreateProfileApplicant({
             name="joinDate"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
-                <FormLabel className="text-sm font-medium text-gray-700">
+                <FormLabel className="text-sm font-bold text-gray-700">
                   社会人になった月
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <Input type="month" {...field} />
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -338,7 +339,7 @@ export default function CreateProfileApplicant({
             name="selfIntroduction"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
-                <FormLabel className="text-sm font-medium text-gray-700 pt-2">
+                <FormLabel className="text-sm font-bold text-gray-700 pt-2">
                   自己紹介
                 </FormLabel>
                 <div className="col-span-2">
@@ -355,7 +356,7 @@ export default function CreateProfileApplicant({
             name="workHistory"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
-                <FormLabel className="text-sm font-medium text-gray-700 pt-2">
+                <FormLabel className="text-sm font-bold text-gray-700 pt-2">
                   職務経歴
                 </FormLabel>
                 <div className="col-span-2">
@@ -372,7 +373,7 @@ export default function CreateProfileApplicant({
             name="education"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
-                <FormLabel className="text-sm font-medium text-gray-700 pt-2">
+                <FormLabel className="text-sm font-bold text-gray-700 pt-2">
                   学歴
                 </FormLabel>
                 <div className="col-span-2">
@@ -389,7 +390,7 @@ export default function CreateProfileApplicant({
             name="company"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
-                <FormLabel className="text-sm font-medium text-gray-700 pt-2">
+                <FormLabel className="text-sm font-bold text-gray-700 pt-2">
                   会社名
                 </FormLabel>
                 <div className="col-span-2">

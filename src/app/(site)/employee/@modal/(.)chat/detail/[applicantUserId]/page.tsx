@@ -21,7 +21,7 @@ export default async function EmployeeChatDetailPage({
     return <ErrorPage message={result.message} data={result.data} />;
   }
   return (
-    <Modal>
+    <Modal contentClassName="h-[90%] max-w-[60%]">
       <ApplicantCard applicant={result.data} />
     </Modal>
   );

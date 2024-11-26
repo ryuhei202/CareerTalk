@@ -43,12 +43,12 @@ export default async function HomePage() {
 								転職活動に悩む人の背中を押す、<br />
 								全く新しい転職サービス。
 							</p>
-							<Link href="/signin">
+							<Link href="/signin?is_employee=false">
 								<RoundedPillButton childClassName="py-6 md:text-xl" className="w-[300px] md:w-[400px] my-3">
 									ログインして現場社員を探す
 								</RoundedPillButton>
 							</Link>
-							<Link href="/signin">
+							<Link href="/signin?is_employee=true">
 								<RoundedPillButton variant="white" childClassName="py-6 md:text-xl" className="w-[300px] md:w-[400px] my-3">
 									現場社員としてログインする方はこちら
 								</RoundedPillButton>
@@ -88,7 +88,7 @@ export default async function HomePage() {
 					<div className="col-span-1 flex flex-col items-center md:items-start">
 						<div className="">
 							<Image src={monitorPeople} alt="monitor-people" className="w-full" />
-							<Link href="/signin">
+							<Link href="/signin?is_employee=false">
 								<RoundedPillButton className="mt-4 text-xl w-full" childClassName="" >ログインして現場社員を探す</RoundedPillButton>
 							</Link>
 						</div>
@@ -100,7 +100,7 @@ export default async function HomePage() {
 					<div className="order-2 md:order-1 col-span-1 flex flex-col items-center md:items-start">
 						<div className="">
 							<Image src={humans} alt="monitor-people" className="w-full" />
-							<Link href="/signin">
+							<Link href="/signin?is_employee=false">
 								<RoundedPillButton className="mt-4 text-xl w-full" childClassName="px-18 md:px-32" >ログインして現場社員を探す</RoundedPillButton>
 							</Link>
 						</div>
@@ -131,10 +131,10 @@ export default async function HomePage() {
 				<div className="flex flex-col justify-center py-28">
 					<h2 className="text-white text-center md:text-3xl lg:text-4xl font-bold">ハイキャリトークで転職への一歩を踏み出しませんか？</h2>
 					<div className="flex flex-col md:flex-row items-center justify-center mt-8 gap-4">
-						<Link href="/signin">
+						<Link href="/signin?is_employee=false">
 							<RoundedPillButton childClassName="py-3 md:py-7 text-lg lg:text-xl" className="border-2 p-1 md:p-2 border-white w-[400px] md:w-[350px] lg:w-[500px]">ログインして現場社員を探す</RoundedPillButton>
 						</Link>
-						<Link href="/signin">
+						<Link href="/signin?is_employee=true">
 							<RoundedPillButton variant="white" childClassName="py-3 md:py-7 text-lg lg:text-xl" className="p-1 md:p-2 w-[400px] md:w-[350px] lg:w-[500px]">現場社員としてログインする方はこちら</RoundedPillButton>
 						</Link>
 					</div>

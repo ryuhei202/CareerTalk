@@ -30,7 +30,6 @@ export type FilteredEmployee = {
 	workLocation?: WorkLocation;
 	hiringType?: HiringTypeLabel;
 	meetingMethod?: MeetingMethodLabel;
-	selfIntroduction?: string;
 	talkableTopics?: string;
 	bakerMessage?: string;
 };

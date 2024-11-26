@@ -83,7 +83,6 @@ export const validateRegisterEmployeeInput = async (
 		workLocationId: params.workLocationId ?? undefined,
 		hiringType: (params.hiringType as HiringTypeEnum) ?? undefined,
 		meetingMethod: (params.meetingMethod as MeetingMethodEnum) ?? undefined,
-		selfIntroduction: params.selfIntroduction ?? undefined,
 		talkableTopics: params.talkableTopics ?? undefined,
 	});
 };
