@@ -11,7 +11,6 @@ import { getZodErrorMessages } from "@/util/error";
 import { type Result, createFailure, createSuccess } from "@/util/result";
 import { ZodError } from "zod";
 import { validateUpdateEmployeeForMyPageUseCaseParams } from "./validateUpdateEmployeeForMyPageUseCaseParams";
-import { updateEmployeeNameForMyPage } from "@/domain/core/Employee/services/updateEmployeeNameForMyPage";
 
 export type UpdateEmployeeUseCaseResult = Result<undefined, undefined>;
 
@@ -29,18 +28,11 @@ export const updateEmployeeForMyPageUseCase = async (
 
 		// ドメインサービス② 現場社員の登録
 		const updatedEmployee = await updateEmployeeForMyPage(employee);
-		const updatedEmployeeName = await updateEmployeeNameForMyPage(employee);
 
 		if (updatedEmployee == null) {
 			return createFailure({
 				message: "現場社員の更新に失敗しました",
 				data: updatedEmployee,
-			});
-		}
-		if (updatedEmployeeName == null) {
-			return createFailure({
-				message: "現場社員の更新に失敗しました",
-				data: updatedEmployeeName,
 			});
 		}
 
