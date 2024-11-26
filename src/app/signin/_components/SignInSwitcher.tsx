@@ -59,6 +59,23 @@ export const SignInCardSwitcher = ({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8 flex flex-col items-center">
+            <p className="text-center text-sm text-gray-500">
+              ログインすることで、
+              <a
+                href="/terms_of_service"
+                className="text-primary hover:underline"
+              >
+                利用規約
+              </a>
+              および
+              <a
+                href="/privacy_policy"
+                className="text-primary hover:underline"
+              >
+                プライバシーポリシー
+              </a>
+              に同意したものとみなされます。
+            </p>
             <SocialLoginButton
               callbackUrl={
                 isEmployee

@@ -5,18 +5,18 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 
 export const SocialLoginButton = ({ callbackUrl }: { callbackUrl: string }) => {
-	return (
-		<div className="space-y-2">
-			<div className="flex flex-col space-y-4">
-				<button type="button" onClick={() => signIn("google", { callbackUrl })}>
-					<Image src={googleLogo} alt="Google logo" />
-				</button>
-				<div className="flex justify-center">
-					<button type="button" onClick={() => signIn("line", { callbackUrl })}>
-						<Image src={lineLogo} alt="LINE logo" />
-					</button>
-				</div>
-			</div>
-		</div>
-	);
+  return (
+    <div className="space-y-2 border border-gray-200 rounded-lg p-20">
+      <div className="flex flex-col space-y-4">
+        <button type="button" onClick={() => signIn("google", { callbackUrl })}>
+          <Image src={googleLogo} alt="Google logo" />
+        </button>
+        <div className="flex justify-center">
+          <button type="button" onClick={() => signIn("line", { callbackUrl })}>
+            <Image src={lineLogo} alt="LINE logo" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
