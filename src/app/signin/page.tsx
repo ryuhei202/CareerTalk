@@ -5,5 +5,8 @@ export default function SignInPage({
 }: {
   searchParams: { is_employee: string | undefined };
 }) {
-  return <SignInCardSwitcher searchParams={searchParams} />;
+  const isEmployee = searchParams.is_employee
+    ? searchParams.is_employee === "true"
+    : undefined;
+  return <SignInCardSwitcher isEmployee={isEmployee} />;
 }

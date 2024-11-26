@@ -13,14 +13,15 @@ import {
 import { useRouter } from "next/navigation";
 
 export const SignInCardSwitcher = ({
-  searchParams,
+  isEmployee,
 }: {
-  searchParams: { is_employee: string | undefined };
+  isEmployee: boolean | undefined;
 }) => {
   const router = useRouter();
+
   return (
     <div className="min-h-screen bg-muted flex items-center justify-center p-4">
-      {searchParams.is_employee == null ? (
+      {isEmployee == null ? (
         <Card className="w-full max-w-md py-8">
           <CardHeader className="space-y-1 pb-8">
             <CardTitle className="text-2xl font-bold text-center">
@@ -54,15 +55,13 @@ export const SignInCardSwitcher = ({
               ハイキャリトークにログイン
             </CardTitle>
             <CardDescription className="text-center">
-              {searchParams.is_employee === "true"
-                ? "現場社員の方"
-                : "転職希望者の方"}
+              {isEmployee ? "現場社員の方" : "転職希望者の方"}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8 flex flex-col items-center">
             <SocialLoginButton
               callbackUrl={
-                searchParams.is_employee === "true"
+                isEmployee
                   ? "/employee/create_profile"
                   : "/applicant/create_profile"
               }
