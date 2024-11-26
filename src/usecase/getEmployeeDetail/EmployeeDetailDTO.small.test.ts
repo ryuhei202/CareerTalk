@@ -29,7 +29,7 @@ describe("EmployeeDetailDTO", () => {
 		expect(employeeDetailDTO.userId).toBe(employee.userId);
 		expect(employeeDetailDTO.name).toBe(employee.name);
 		expect(employeeDetailDTO.companyName).toBe(company.name);
-		expect(employeeDetailDTO.occupationName).toBe(occupation.name);
+		expect(employeeDetailDTO.occupation.name).toBe(occupation.name);
 		expect(employeeDetailDTO.yearsOfExperience).toBe(
 			employee.toYearsOfExperience(),
 		);
@@ -44,7 +44,7 @@ describe("EmployeeDetailDTO", () => {
 		);
 		expect(employeeDetailDTO.otherDescription).toBe(employee.otherDescription);
 		expect(employeeDetailDTO.hiringType).toBe(employee.toHiringTypeLabel());
-		expect(employeeDetailDTO.workLocationName).toBe(workLocation.name);
+		expect(employeeDetailDTO.workLocation?.name).toBe(workLocation.name);
 		expect(employeeDetailDTO.imageUrl).toBe(employee.imageUrl);
 	});
 
@@ -62,7 +62,7 @@ describe("EmployeeDetailDTO", () => {
 		expect(employeeDetailJson.userId).toBe(employee.userId);
 		expect(employeeDetailJson.name).toBe(employee.name);
 		expect(employeeDetailJson.companyName).toBe(company.name);
-		expect(employeeDetailJson.occupationName).toBe(occupation.name);
+		expect(employeeDetailJson.occupation?.name).toBe(occupation.name);
 		expect(employeeDetailJson.yearsOfExperience).toBe(
 			employee.toYearsOfExperience(),
 		);
@@ -77,7 +77,7 @@ describe("EmployeeDetailDTO", () => {
 		);
 		expect(employeeDetailJson.otherDescription).toBe(employee.otherDescription);
 		expect(employeeDetailJson.hiringType).toBe(employee.toHiringTypeLabel());
-		expect(employeeDetailJson.workLocationName).toBe(workLocation.name);
+		expect(employeeDetailJson.workLocation?.name).toBe(workLocation.name);
 		expect(employeeDetailJson.imageUrl).toBe(employee.imageUrl);
 	});
 });

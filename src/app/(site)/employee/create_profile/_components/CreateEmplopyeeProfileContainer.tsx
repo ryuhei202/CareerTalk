@@ -78,7 +78,6 @@ const formSchema = z.object({
   workLocation: z.string().trim().optional(),
   hiringType: z.enum(hiringTypeOptions).optional(),
   meetingMethod: z.enum(meetingMethodOptions).optional(),
-  selfIntroduction: z.string().trim().optional(),
   talkableTopics: z.string().trim().optional(),
   imageId: z
     .string({ message: "プロフィール画像は必須です" })
@@ -129,7 +128,6 @@ export default function CreateProfileEmployee({
       workLocation: (state.data?.workLocation as string) ?? undefined,
       hiringType: (state.data?.hiringType as string) ?? undefined,
       meetingMethod: (state.data?.meetingMethod as string) ?? undefined,
-      selfIntroduction: (state.data?.selfIntroduction as string) ?? undefined,
       talkableTopics: (state.data?.talkableTopics as string) ?? undefined,
       imageId: (state.data?.imageId as string) ?? undefined,
     },
@@ -160,7 +158,13 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
                 <FormLabel className="text-sm font-bold text-gray-700">
-                  名前<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
+                  名前
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -178,7 +182,13 @@ export default function CreateProfileEmployee({
               return (
                 <FormItem className="grid grid-cols-3 gap-4 items-center">
                   <FormLabel className="text-sm font-bold text-gray-700">
-                    性別<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
+                    性別
+                    <Badge
+                      className="ms-3 rounded-full font-normal"
+                      variant="destructive"
+                    >
+                      必須
+                    </Badge>
                   </FormLabel>
                   <div className="col-span-2">
                     <Select
@@ -213,7 +223,13 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
                 <FormLabel className="text-sm font-bold text-gray-700">
-                  企業コード<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
+                  企業コード
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -230,7 +246,13 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
                 <FormLabel className="text-sm font-bold text-gray-700">
-                  社会になった月<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
+                  社会になった月
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -247,7 +269,13 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
                 <FormLabel className="text-sm font-bold text-gray-700">
-                  職種<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
+                  職種
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <Select
@@ -374,23 +402,6 @@ export default function CreateProfileEmployee({
           />
           <FormField
             control={form.control}
-            name="selfIntroduction"
-            render={({ field }) => (
-              <FormItem className="grid grid-cols-3 gap-4 items-start">
-                <FormLabel className="text-sm font-bold text-gray-700 pt-2">
-                  自己紹介
-                </FormLabel>
-                <div className="col-span-2">
-                  <FormControl>
-                    <Textarea {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="talkableTopics"
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
@@ -412,7 +423,13 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
                 <FormLabel className="text-sm font-bold text-gray-700">
-                  プロフィール画像<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
+                  プロフィール画像
+                  <Badge
+                    className="ms-3 rounded-full font-normal"
+                    variant="destructive"
+                  >
+                    必須
+                  </Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>

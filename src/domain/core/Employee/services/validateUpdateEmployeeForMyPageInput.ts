@@ -54,7 +54,6 @@ export const validateUpdateEmployeeForMyPageInput = async (
 		workLocationId: employee.workLocationId ?? undefined,
 		hiringType: (employee.hiringType as HiringTypeEnum) ?? undefined,
 		meetingMethod: (employee.meetingMethod as MeetingMethodEnum) ?? undefined,
-		selfIntroduction: employee.selfIntroduction ?? undefined,
 		talkableTopics: employee.talkableTopics ?? undefined,
 		barkerMessage: employee.barkerMessage ?? undefined,
 		companyId: employee.companyId, // companyIdを追加
@@ -71,8 +70,6 @@ export const validateUpdateEmployeeForMyPageInput = async (
 	);
 	if (params.talkableTopics)
 		employeeEntity.changeTalkableTopics(params.talkableTopics);
-	if (params.selfIntroduction)
-		employeeEntity.changeSelfIntroduction(params.selfIntroduction);
 	if (params.careerDescription)
 		employeeEntity.changeCareerDescription(params.careerDescription);
 	if (params.jobDescription)

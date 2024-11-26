@@ -1,8 +1,12 @@
 import DMResultCard from "@/app/_components/parts/DMRequestCard";
 import { Modal } from "@/app/_components/parts/Modal";
-import { Badge } from "@/app/_components/ui/badge";
 import { Button } from "@/app/_components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/app/_components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/app/_components/ui/card";
 import { Label } from "@/app/_components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
 import { Textarea } from "@/app/_components/ui/textarea";

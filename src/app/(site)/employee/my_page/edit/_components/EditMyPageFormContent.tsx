@@ -221,17 +221,6 @@ export const EditMyPageFormContent = ({
           />
           <div className="text-red-500">{fields.barkerMessage.errors}</div>
         </div>
-        {/* <div className="mt-6 mb-14">
-          <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
-            自己紹介
-          </h2>
-          <Textarea
-            name="selfIntroduction"
-            className="min-h-44 [field-sizing:content]"
-            defaultValue={employee.selfIntroduction}
-          />
-          <div className="text-red-500">{fields.selfIntroduction.errors}</div>
-        </div> */}
         <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
             話せること

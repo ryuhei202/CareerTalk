@@ -33,11 +33,10 @@ export type EmployeeDetailResponse = {
 	workLocation: WorkLocation | undefined;
 	imageUrl: string;
 	meetingMethod: string;
-	selfIntroduction: string;
 	barkerMessage: string;
 };
 
-export class EmployeeDetailDto {
+export class EmployeeDetailDTO {
 	public readonly userId: string;
 	public readonly name: string;
 	public readonly companyName: string;
@@ -49,7 +48,6 @@ export class EmployeeDetailDto {
 	public readonly jobDescription: string;
 	public readonly joiningDescription: string;
 	public readonly otherDescription: string;
-	public readonly selfIntroduction: string;
 	public readonly hiringType: HiringTypeLabel | "";
 	public readonly workLocation: WorkLocation | undefined;
 	public readonly imageUrl: string;
@@ -78,7 +76,6 @@ export class EmployeeDetailDto {
 		this.jobDescription = employee.jobDescription ?? "";
 		this.joiningDescription = employee.joiningDescription ?? "";
 		this.otherDescription = employee.otherDescription ?? "";
-		this.selfIntroduction = employee.selfIntroduction ?? "";
 		this.hiringType = employee.toHiringTypeLabel() ?? "";
 		this.workLocation = workLocation;
 		this.meetingMethod = employee.toMeetingMethodLabel() ?? "";
@@ -104,7 +101,6 @@ export class EmployeeDetailDto {
 			workLocation: this.workLocation,
 			meetingMethod: this.meetingMethod,
 			imageUrl: this.imageUrl,
-			selfIntroduction: this.selfIntroduction,
 			barkerMessage: this.barkerMessage,
 		};
 	}

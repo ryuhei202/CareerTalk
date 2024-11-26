@@ -15,7 +15,6 @@ export interface RegisterEmployeeParams {
 	workLocationId?: number;
 	hiringType?: string;
 	meetingMethod?: string;
-	selfIntroduction?: string;
 	talkableTopics?: string;
 	imageId: number;
 }
@@ -42,7 +41,6 @@ export async function registerEmployeeAction(
 	const workLocationId = formData.get("workLocation");
 	const hiringType = formData.get("hiringType");
 	const meetingMethod = formData.get("meetingMethod");
-	const selfIntroduction = formData.get("selfIntroduction");
 	const talkableTopics = formData.get("talkableTopics");
 	const imageId = formData.get("imageId");
 
@@ -60,7 +58,6 @@ export async function registerEmployeeAction(
 			: undefined,
 		hiringType: (hiringType as string) || undefined,
 		meetingMethod: (meetingMethod as string) || undefined,
-		selfIntroduction: (selfIntroduction as string) || undefined,
 		talkableTopics: (talkableTopics as string) || undefined,
 		imageId: Number.parseInt(imageId as string),
 	};

@@ -37,7 +37,6 @@ describe("FilteredEmployeeDTO", () => {
 		expect(employeeDTO.workLocation).toBe(workLocation);
 		expect(employeeDTO.hiringType).toBe(employee.toHiringTypeLabel());
 		expect(employeeDTO.meetingMethod).toBe(employee.toMeetingMethodLabel());
-		expect(employeeDTO.selfIntroduction).toBe(employee.selfIntroduction);
 		expect(employeeDTO.talkableTopics).toBe(employee.talkableTopics);
 	});
 

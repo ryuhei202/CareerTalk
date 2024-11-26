@@ -19,7 +19,6 @@ export const createEmployee = async (
 				workLocationId: employee.workLocationId,
 				hiringType: employee.hiringType,
 				meetingMethod: employee.meetingMethod,
-				selfIntroduction: employee.selfIntroduction,
 				talkableTopics: employee.talkableTopics,
 			},
 		});

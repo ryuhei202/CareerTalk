@@ -17,7 +17,6 @@ export const validateRegisterEmployeeUseCaseParams = (
 	const workLocationIdSchema = z.number().int().positive().optional();
 	const hiringTypeSchema = z.nativeEnum(HiringTypeEnum).optional();
 	const meetingMethodSchema = z.nativeEnum(MeetingMethodEnum).optional();
-	const selfIntroductionSchema = z.string().trim().optional();
 	const talkableTopicsSchema = z.string().trim().optional();
 	const imageIdSchema = z.number().int().positive();
 
@@ -31,7 +30,6 @@ export const validateRegisterEmployeeUseCaseParams = (
 		workLocationId: workLocationIdSchema,
 		hiringType: hiringTypeSchema,
 		meetingMethod: meetingMethodSchema,
-		selfIntroduction: selfIntroductionSchema,
 		talkableTopics: talkableTopicsSchema,
 		imageId: imageIdSchema,
 	});

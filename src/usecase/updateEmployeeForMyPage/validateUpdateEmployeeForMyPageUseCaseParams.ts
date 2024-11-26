@@ -13,7 +13,6 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 	const workLocationIdSchema = z.number().int().positive().optional();
 	const hiringTypeSchema = z.nativeEnum(HiringTypeEnum).optional();
 	const meetingMethodSchema = z.nativeEnum(MeetingMethodEnum).optional();
-	const selfIntroductionSchema = z.string().trim().optional();
 	const talkableTopicsSchema = z.string().trim().optional();
 	const careerDescriptionSchema = z.string().trim().optional();
 	const jobDescriptionSchema = z.string().trim().optional();
@@ -28,7 +27,6 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 		workLocationId: workLocationIdSchema,
 		hiringType: hiringTypeSchema,
 		meetingMethod: meetingMethodSchema,
-		selfIntroduction: selfIntroductionSchema,
 		talkableTopics: talkableTopicsSchema,
 		careerDescription: careerDescriptionSchema,
 		jobDescription: jobDescriptionSchema,

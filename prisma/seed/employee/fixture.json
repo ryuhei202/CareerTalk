@@ -9,7 +9,6 @@
     "joiningDate": "2018-04-01T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "営業職として5年以上の経験があります。",
     "talkableTopics": "営業戦略、顧客管理について",
     "status": "APPROVED"
   },
@@ -23,7 +22,6 @@
     "joiningDate": "2020-09-01T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "Webアプリケーション開発のスペシャリストです。",
     "talkableTopics": "最新のフロントエンド技術、アジャイル開発手法",
     "status": "APPROVED"
   },
@@ -37,7 +35,6 @@
     "joiningDate": "2022-04-01T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "プロジェクトマネジメントに興味があります。",
     "talkableTopics": "チーム管理、スケジュール管理について",
     "status": "PENDING"
   },
@@ -51,7 +48,6 @@
     "joiningDate": "2015-07-01T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "経営コンサルタントとして10年の経験があります。",
     "talkableTopics": "企業戦略、組織改革について",
     "status": "APPROVED"
   },
@@ -65,7 +61,6 @@
     "joiningDate": "2019-01-15T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "新規事業の企画立案を担当しています。",
     "talkableTopics": "マーケティング戦略、ビジネスモデルについて",
     "status": "APPROVED"
   },
@@ -79,7 +74,6 @@
     "joiningDate": "2017-03-01T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "海外営業を担当しています。",
     "talkableTopics": "グローバルビジネス、異文化コミュニケーションについて",
     "status": "APPROVED"
   },
@@ -93,7 +87,6 @@
     "joiningDate": "2023-04-01T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "AIエンジニアとして働いています。",
     "talkableTopics": "機械学習、ディープラーニングについて",
     "status": "PENDING"
   },
@@ -107,7 +100,6 @@
     "joiningDate": "2016-09-01T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "大規模プロジェクトのマネジメント経験があります。",
     "talkableTopics": "リスク管理、stakeholder managementについて",
     "status": "APPROVED"
   },
@@ -121,7 +113,6 @@
     "joiningDate": "2021-01-10T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "ITコンサルタントとして働いています。",
     "talkableTopics": "デジタルトランスフォーメーション、クラウド戦略について",
     "status": "APPROVED"
   },
@@ -135,7 +126,6 @@
     "joiningDate": "2018-07-01T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "商品企画部門で働いています。",
     "talkableTopics": "ユーザーリサーチ、プロダクトデザインについて",
     "status": "APPROVED"
   },
@@ -149,7 +139,6 @@
     "joiningDate": "2014-04-01T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "法人営業として10年の経験があります。",
     "talkableTopics": "B2B営業戦略、長期的な顧客関係構築について",
     "status": "APPROVED"
   },
@@ -163,7 +152,6 @@
     "joiningDate": "2022-09-01T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "モバイルアプリ開発を専門としています。",
     "talkableTopics": "iOS/Android開発、クロスプラットフォーム技術について",
     "status": "PENDING"
   },
@@ -177,7 +165,6 @@
     "joiningDate": "2013-01-15T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "グローバルプロジェクトのマネジメント経験があります。",
     "talkableTopics": "異文化プロジェクト管理、リモートチーム運営について",
     "status": "APPROVED"
   },
@@ -191,7 +178,6 @@
     "joiningDate": "2019-04-01T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "人事コンサルタントとして働いています。",
     "talkableTopics": "組織開発、タレントマネジメントについて",
     "status": "APPROVED"
   },
@@ -205,7 +191,6 @@
     "joiningDate": "2017-06-01T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "新規事業開発部門でリーダーを務めています。",
     "talkableTopics": "イノベーション戦略、スタートアップ文化について",
     "status": "APPROVED"
   },
@@ -219,7 +204,6 @@
     "joiningDate": "2023-04-01T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "デジタルマーケティングを担当しています。",
     "talkableTopics": "SNSマーケティング、コンテンツ戦略について",
     "status": "PENDING"
   },
@@ -233,7 +217,6 @@
     "joiningDate": "2015-10-01T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "データサイエンティストとして働いています。",
     "talkableTopics": "ビッグデータ分析、予測モデリングについて",
     "status": "APPROVED"
   },
@@ -247,7 +230,6 @@
     "joiningDate": "2020-07-01T00:00:00Z",
     "hiringType": "MID_CAREER",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "アジャイル開発のスクラムマスターをしています。",
     "talkableTopics": "アジャイル手法、チーム生産性向上について",
     "status": "APPROVED"
   },
@@ -261,7 +243,6 @@
     "joiningDate": "2018-01-10T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "ONLINE",
-    "selfIntroduction": "財務コンサルタントとして働いています。",
     "talkableTopics": "財務戦略、コスト最適化について",
     "status": "APPROVED"
   },
@@ -275,7 +256,6 @@
     "joiningDate": "2021-04-01T00:00:00Z",
     "hiringType": "NEW_GRADUATE",
     "meetingMethod": "OFFLINE",
-    "selfIntroduction": "UXデザイナーとして働いています。",
     "talkableTopics": "ユーザー中心設計、プロトタイピングについて",
     "status": "APPROVED"
   }
