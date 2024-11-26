@@ -1,4 +1,5 @@
 import ErrorPage from "@/app/_components/page/ErrorPage";
+import { Modal } from "@/app/_components/parts/Modal";
 import { handleUserView } from "@/lib/auth";
 import {
   type GetApplicantDetailUseCaseResult,
@@ -23,5 +24,9 @@ export default async function EmployeeChatDetailPage({
   if (!result.success) {
     return <ErrorPage message={result.message} data={result.data} />;
   }
-  return <ApplicantCard applicant={result.data} />;
+  return (
+    <Modal contentClassName="h-[90%] max-w-[60%]">
+      <ApplicantCard applicant={result.data} />
+    </Modal>
+  );
 }
