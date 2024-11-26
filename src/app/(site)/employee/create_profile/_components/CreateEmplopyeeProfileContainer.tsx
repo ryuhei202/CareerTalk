@@ -78,7 +78,11 @@ const formSchema = z.object({
   workLocation: z.string().trim().optional(),
   hiringType: z.enum(hiringTypeOptions).optional(),
   meetingMethod: z.enum(meetingMethodOptions).optional(),
-  talkableTopics: z.string().trim().optional(),
+  talkableTopics: z
+    .string()
+    .trim()
+    .max(1000, { message: "1000文字以内で入力してください" })
+    .optional(),
   imageId: z
     .string({ message: "プロフィール画像は必須です" })
     .min(1, { message: "プロフィール画像は必須です" })

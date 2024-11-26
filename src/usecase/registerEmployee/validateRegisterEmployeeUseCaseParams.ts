@@ -17,7 +17,11 @@ export const validateRegisterEmployeeUseCaseParams = (
 	const workLocationIdSchema = z.number().int().positive().optional();
 	const hiringTypeSchema = z.nativeEnum(HiringTypeEnum).optional();
 	const meetingMethodSchema = z.nativeEnum(MeetingMethodEnum).optional();
-	const talkableTopicsSchema = z.string().trim().optional();
+	const talkableTopicsSchema = z
+		.string()
+		.trim()
+		.max(1000, { message: "1000文字以内で入力してください" })
+		.optional();
 	const imageIdSchema = z.number().int().positive();
 
 	const paramsSchema = z.object({
