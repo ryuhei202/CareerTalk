@@ -3,6 +3,12 @@
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Textarea } from "@/app/_components/ui/textarea";
+import {
+  EMPLOYEE_BARKER_MESSAGE_PLACEHOLDER,
+  EMPLOYEE_CAREER_DESCRIPTION_PLACEHOLDER,
+  EMPLOYEE_JOB_DESCRIPTION_PLACEHOLDER,
+  EMPLOYEE_JOINING_DESCRIPTION_PLACEHOLDER,
+} from "@/constants/placeholders/employee-placeholders";
 import type { EmployeeDetailResponse } from "@/usecase/getEmployeeDetail/EmployeeDetailDTO";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
@@ -218,6 +224,7 @@ export const EditMyPageFormContent = ({
             name="barkerMessage"
             className="min-h-44 [field-sizing:content]"
             defaultValue={employee.barkerMessage}
+            placeholder={EMPLOYEE_BARKER_MESSAGE_PLACEHOLDER}
           />
           <div className="text-red-500">{fields.barkerMessage.errors}</div>
         </div>
@@ -240,6 +247,7 @@ export const EditMyPageFormContent = ({
             name="careerDescription"
             className="min-h-44 [field-sizing:content]"
             defaultValue={employee.careerDescription}
+            placeholder={EMPLOYEE_CAREER_DESCRIPTION_PLACEHOLDER}
           />
           <div className="text-red-500">{fields.careerDescription.errors}</div>
         </div>
@@ -251,6 +259,7 @@ export const EditMyPageFormContent = ({
             name="jobDescription"
             className="min-h-44 [field-sizing:content]"
             defaultValue={employee.jobDescription}
+            placeholder={EMPLOYEE_JOB_DESCRIPTION_PLACEHOLDER}
           />
           <div className="text-red-500">{fields.jobDescription.errors}</div>
         </div>
@@ -262,6 +271,7 @@ export const EditMyPageFormContent = ({
             name="joiningDescription"
             className="min-h-44 [field-sizing:content]"
             defaultValue={employee.joiningDescription}
+            placeholder={EMPLOYEE_JOINING_DESCRIPTION_PLACEHOLDER}
           />
           <div className="text-red-500">{fields.joiningDescription.errors}</div>
         </div>

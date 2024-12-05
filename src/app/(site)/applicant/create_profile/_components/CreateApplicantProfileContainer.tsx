@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/app/_components/ui/select";
 import { Textarea } from "@/app/_components/ui/textarea";
+import { APPLICANT_SELF_INTRODUCTION_PLACEHOLDER, APPLICANT_WORK_HISTORY_PLACEHOLDER } from "@/constants/placeholders/applicant-placeholders";
 import { GenderEnum } from "@/domain/shared/Gender";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -323,7 +324,7 @@ export default function CreateProfileApplicant({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-center">
                 <FormLabel className="text-sm font-bold text-gray-700">
-                  社会人になった月
+                  社会人になった月<Badge className="ms-3 rounded-full font-normal" variant="destructive">必須</Badge>
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
@@ -344,7 +345,7 @@ export default function CreateProfileApplicant({
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
-                    <Textarea {...field} />
+                    <Textarea {...field} placeholder={APPLICANT_SELF_INTRODUCTION_PLACEHOLDER} />
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -361,7 +362,7 @@ export default function CreateProfileApplicant({
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
-                    <Textarea {...field} />
+                    <Textarea {...field} placeholder={APPLICANT_WORK_HISTORY_PLACEHOLDER} />
                   </FormControl>
                   <FormMessage />
                 </div>
