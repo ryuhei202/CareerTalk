@@ -99,7 +99,7 @@ export const otherDescriptionSchema = z
 export const barkerMessageSchema = z
 	.string()
 	.trim()
-	.max(50, { message: "呼び込みメッセージは50文字以下である必要があります" })
+	.max(30, { message: "話せる内容を一言で！は30文字以下である必要があります" })
 	.optional();
 
 export const employeeParamsSchema = z.object({

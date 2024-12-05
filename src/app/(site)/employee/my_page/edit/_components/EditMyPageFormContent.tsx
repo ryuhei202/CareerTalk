@@ -218,7 +218,7 @@ export const EditMyPageFormContent = ({
         </div>
         <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
-            呼び込みメッセージ
+            話せる内容を一言で！(30文字以内)
           </h2>
           <Textarea
             name="barkerMessage"

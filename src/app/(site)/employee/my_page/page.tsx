@@ -94,7 +94,7 @@ export default async function MyPage() {
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
-              呼び込みメッセージ
+              話せる内容を一言で！
             </h2>
             <div className="mb-14 whitespace-pre-line">
               {employee.data.barkerMessage}
