@@ -7,13 +7,13 @@ const YEARS_OF_EXPERIENCE = [
 		id: 1,
 		range: {
 			min: 0,
-			max: 5,
+			max: 4,
 		},
 	},
 	{
 		id: 2,
 		range: {
-			min: 5,
+			min: 4,
 			max: 10,
 		},
 	},

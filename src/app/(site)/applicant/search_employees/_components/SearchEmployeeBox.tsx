@@ -22,13 +22,13 @@ const YEARS_OF_EXPERIENCE = [
     id: 1,
     range: {
       min: 0,
-      max: 5,
+      max: 4,
     },
   },
   {
     id: 2,
     range: {
-      min: 5,
+      min: 4,
       max: 10,
     },
   },
@@ -198,7 +198,7 @@ export default function SearchEmployeeBox({
                       5年目~10年目
                     </SelectItem>
                     <SelectItem value={YEARS_OF_EXPERIENCE[2].id.toString()}>
-                      10年目以降
+                      11年目以降
                     </SelectItem>
                   </SelectContent>
                 </Select>
