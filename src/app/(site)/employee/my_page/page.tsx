@@ -102,7 +102,7 @@ export default async function MyPage() {
           </div>
           <div className="mt-6">
             <h2 className="text-gray-700 text-3xl font-bold mb-3">
-              話せること
+              話せる内容（詳細）
             </h2>
             <div className="mb-4 border-b border-gray-400"> </div>
             <div className="mb-14 whitespace-pre-line">

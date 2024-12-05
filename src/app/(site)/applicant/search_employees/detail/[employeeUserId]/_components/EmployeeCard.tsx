@@ -84,7 +84,7 @@ export default function EmployeeCard({
             <CardCommentBox
               imageSrc={talkableTopicsIcon}
               imageAlt="talkableTopics"
-              title="話せること"
+              title="話せる内容（詳細）"
               comment={employee.talkableTopics} />
             <CardCommentBox
               title="所属・経歴"

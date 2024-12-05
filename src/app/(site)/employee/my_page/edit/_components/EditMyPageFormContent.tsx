@@ -230,7 +230,7 @@ export const EditMyPageFormContent = ({
         </div>
         <div className="mt-6 mb-14">
           <h2 className="text-gray-700 text-3xl font-bold mb-3 border-b border-gray-400 pb-3">
-            話せること
+            話せる内容（詳細）
           </h2>
           <Textarea
             name="talkableTopics"

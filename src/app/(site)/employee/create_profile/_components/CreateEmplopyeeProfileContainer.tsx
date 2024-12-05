@@ -410,7 +410,7 @@ export default function CreateProfileEmployee({
             render={({ field }) => (
               <FormItem className="grid grid-cols-3 gap-4 items-start">
                 <FormLabel className="text-sm font-bold text-gray-700 pt-2">
-                  話せること
+                  話せる内容（詳細）
                 </FormLabel>
                 <div className="col-span-2">
                   <FormControl>
