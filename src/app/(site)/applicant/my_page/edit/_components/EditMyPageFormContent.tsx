@@ -3,6 +3,7 @@
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Textarea } from "@/app/_components/ui/textarea";
+import { APPLICANT_SELF_INTRODUCTION_PLACEHOLDER, APPLICANT_WORK_HISTORY_PLACEHOLDER } from "@/constants/placeholders/applicant-placeholders";
 import type { ApplicantDetailResponse } from "@/usecase/getApplicantDetail/getApplicantDetailUseCase";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
@@ -178,6 +179,7 @@ export const EditMyPageFormContent = ({
             name="selfIntroduction"
             className="h-44"
             defaultValue={applicant.selfIntroduction}
+            placeholder={APPLICANT_SELF_INTRODUCTION_PLACEHOLDER}
           />
           <div className="text-red-500">{fields.selfIntroduction.errors}</div>
         </div>
@@ -189,6 +191,7 @@ export const EditMyPageFormContent = ({
             name="workHistory"
             className="h-44"
             defaultValue={applicant.workHistory}
+            placeholder={APPLICANT_WORK_HISTORY_PLACEHOLDER}
           />
           <div className="text-red-500">{fields.workHistory.errors}</div>
         </div>

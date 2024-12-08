@@ -36,6 +36,7 @@ export default function SearchEmployeeListItem({
             </div>
           </div>
           <CardTitle className="font-bold relative z-10 w-full m-0 px-6 py-4 leading-relaxed whitespace-pre-wrap">
+            【募集内容】<br />
             {employee.bakerMessage}
           </CardTitle>
         </CardHeader>

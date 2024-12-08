@@ -35,7 +35,7 @@ export const SignInCardSwitcher = ({
                 router.push("/signin?is_employee=false");
               }}
             >
-              転職希望者
+              話を聞きたい方（ユーザー）
             </RoundedPillButton>
             <RoundedPillButton
               variant={"white"}
@@ -55,7 +55,7 @@ export const SignInCardSwitcher = ({
               ハイキャリトークにログイン
             </CardTitle>
             <CardDescription className="text-center">
-              {isEmployee ? "現場社員の方" : "転職希望者の方"}
+              {isEmployee ? "現場社員の方" : "話を聞きたい方（ユーザー）"}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8 flex flex-col items-center">

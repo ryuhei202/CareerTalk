@@ -18,7 +18,7 @@ export const validateUpdateEmployeeForMyPageUseCaseParams = (
 	const jobDescriptionSchema = z.string().trim().optional();
 	const joiningDescriptionSchema = z.string().trim().optional();
 	const otherDescriptionSchema = z.string().trim().optional();
-	const barkerMessageSchema = z.string().trim().max(50).optional();
+	const barkerMessageSchema = z.string().trim().max(30).optional();
 
 	const paramsSchema = z.object({
 		userId: userIdSchema,

@@ -18,7 +18,7 @@ export default function LikedApplicantList({
   return (
     <div className="flex-1 p-6">
       <h1 className="text-2xl font-bold mb-6">
-        いいねをしてくれた転職者一覧（{totalCount}件）
+        いいね一覧（{totalCount}件）
       </h1>
       {applicants.length > 0 ? (
         <>

@@ -28,6 +28,7 @@ export default function EmployeeCard({
           <div className="absolute inset-0 bg-black opacity-60 w-full h-full"> </div>
         </div>
         <h2 className="text-2xl font-bold relative z-10 w-3/4 m-0 py-12 leading-relaxed">
+          【募集内容】<br />
           {employee.barkerMessage}
         </h2>
       </CardHeader>
@@ -47,7 +48,6 @@ export default function EmployeeCard({
           )}
           <Button variant="outline" className="rounded-full border-2 text-lg py-6 px-8" onClick={onClickOpenDMRequest}>この社員とトークする</Button>
         </div>
-
         <div className="px-12">
           <div className="flex items-start gap-6 mt-4">
             <div className="">
@@ -65,7 +65,9 @@ export default function EmployeeCard({
               <h2 className="text-foreground text-3xl tracking-widest font-bold border-b border-gray-200 pb-2">
                 {employee.companyName}
               </h2>
-              <h3 className="text-2xl font-bold mt-1 tracking-widest text-foreground">{employee.name}</h3>
+              <h3 className="text-2xl font-bold mt-1 tracking-widest text-foreground">
+                {employee.name}
+              </h3>
               <ul className="mt-1 space-y-0.5 text-xs">
                 <li className="relative before:content-[''] before:absolute before:top-[50%] before:left-0 before:-translate-y-[50%] before:w-1 before:h-1 before:bg-gray-600 before:rounded-full pl-3 text-gray-600 text-base">{employee.occupation?.name}</li>
                 <li className="relative before:content-[''] before:absolute before:top-[50%] before:left-0 before:-translate-y-[50%] before:w-1 before:h-1 before:bg-gray-600 before:rounded-full pl-3 text-gray-600 text-base">
@@ -82,7 +84,7 @@ export default function EmployeeCard({
             <CardCommentBox
               imageSrc={talkableTopicsIcon}
               imageAlt="talkableTopics"
-              title="話せること"
+              title="話せる内容（詳細）"
               comment={employee.talkableTopics} />
             <CardCommentBox
               title="所属・経歴"

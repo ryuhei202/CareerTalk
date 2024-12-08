@@ -72,7 +72,9 @@ export const meetingMethodSchema = z
 export const talkableTopicsSchema = z
 	.string()
 	.trim()
-	.max(1000, { message: "話せることは1000文字以下である必要があります" })
+	.max(1000, {
+		message: "話せる内容（詳細）は1000文字以下である必要があります",
+	})
 	.optional();
 export const careerDescriptionSchema = z
 	.string()
@@ -97,7 +99,7 @@ export const otherDescriptionSchema = z
 export const barkerMessageSchema = z
 	.string()
 	.trim()
-	.max(50, { message: "呼び込みメッセージは50文字以下である必要があります" })
+	.max(30, { message: "話せる内容を一言で！は30文字以下である必要があります" })
 	.optional();
 
 export const employeeParamsSchema = z.object({
